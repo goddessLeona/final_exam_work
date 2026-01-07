@@ -1,0 +1,18 @@
+
+# Maven wrapper scripts
+/mvnw text eol=lf
+/mvnw.cmd text eol=crlf
+/*.sh text eol=lf
+
+# Windows batch scripts
+*.cmd text eol=crlf
+
+# Java source files and common text configs
+*.java text eol=lf
+*.xml text eol=lf
+*.properties text eol=lf
+*.yml text eol=lf
+
+# Let Git handle all other files automatically
+* text=auto
+
