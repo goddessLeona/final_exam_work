@@ -13,6 +13,14 @@
 *.properties text eol=lf
 *.yml text eol=lf
 
+# Git do not touch
+*.png binary
+*.jpg binary
+*.gif binary
+*.jar binary
+*.zip binary
+*.pdf binary
+
 # Let Git handle all other files automatically
 * text=auto
 
