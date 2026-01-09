@@ -3,7 +3,7 @@ RUN:<br>
 (without db)<br>
 .\mvnw.cmd verify -DskipTests <br>
 (with db)<br>
-.\mvnw.cmd verify
+.\mvnw.cmd verify <br>
 test if code style is consistent
 
 current Checkstyle config enforces the following rules:
