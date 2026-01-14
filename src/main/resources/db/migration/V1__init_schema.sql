@@ -46,3 +46,4 @@ CREATE TABLE users_consent_forms(
     FOREIGN KEY (consent_form_id) REFERENCES consent_forms(id) ON DELETE CASCADE
 );
 
+
