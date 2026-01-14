@@ -1,5 +1,6 @@
 package com.petra.final_exam_work.Entity;
 
+import com.petra.final_exam_work.Entity.Enum.ConsentStatus;
 import jakarta.persistence.*;
 
 @Entity
@@ -9,19 +10,19 @@ public class UserConsentForm {
     @EmbeddedId
     private UserConsentFormId id;
 
-    @ManyToMany
+    @ManyToOne
     @MapsId("userId")
     @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToMany
+    @ManyToOne
     @MapsId("consentFormId")
     @JoinColumn(name = "consent_form_id")
     private ConsentForm consentForm;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private CosentStatus status;
+    private ConsentStatus status;
 
     public UserConsentForm() {
     }
