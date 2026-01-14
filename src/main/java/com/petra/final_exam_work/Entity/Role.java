@@ -2,6 +2,8 @@ package com.petra.final_exam_work.Entity;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -12,11 +14,19 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "public_uuid", updatable = false, unique = true, nullable = false)
+    @Column(
+            name = "public_uuid",
+            updatable = false,
+            unique = true,
+            nullable = false
+    )
     private UUID publicUuid;
 
     @Column (name = "role", nullable = false, unique = true)
     private String role;
+
+    @ManyToMany(mappedBy = "roles")
+    private Set<User> users = new HashSet<>();
 
     public Role() {
     }
