@@ -3,11 +3,14 @@ CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
 CREATE TYPE consent_status AS ENUM ('pending', 'approved', 'rejected');
 
+CREATE TYPE content_status AS ENUM ('published', 'draft');
+
 -- INDEPENDENT TABLES
 
 CREATE TABLE users(
     id BIGSERIAL PRIMARY KEY,
     public_uuid UUID NOT NULL DEFAULT gen_random_uuid() UNIQUE,
+
     user_name TEXT NOT NULL UNIQUE,
     password TEXT NOT NULL,
     email TEXT NOT NULL UNIQUE,
@@ -19,12 +22,14 @@ CREATE TABLE users(
 CREATE TABLE roles(
     id BIGSERIAL PRIMARY KEY,
     public_uuid UUID NOT NULL DEFAULT gen_random_uuid() UNIQUE,
+
     role TEXT NOT NULL UNIQUE
 );
 
 CREATE TABLE consent_forms(
     id BIGSERIAL PRIMARY KEY,
     public_uuid UUID NOT NULL DEFAULT gen_random_uuid() UNIQUE,
+
     id_card_file_path TEXT NOT NULL,
     id_face_file_path TEXT NOT NULL,
     face_fff_file_path TEXT NOT NULL,
@@ -34,28 +39,49 @@ CREATE TABLE consent_forms(
 -- DEPENDENT TABLES (FK)
 
  CREATE TABLE photos(
+
     id BIGSERIAL PRIMARY KEY,
     public_uuid UUID NOT NULL DEFAULT gen_random_uuid() UNIQUE,
 
     uploaded_by_user_id BIGINT NOT NULL,
     photo_file_path TEXT NOT NULL,
-
     size_bytes BIGINT NOT NULL,
     mime_type TEXT NOT NULL,
     file_name TEXT NOT NULL,
-
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
 
     CONSTRAINT fk_photos_uploaded_by_user
     FOREIGN KEY (uploaded_by_user_id)
     REFERENCES users(id)
     ON DELETE CASCADE
-)
+);
+
+CREATE TABLE photo_albums(
+
+    id BIGSERIAL PRIMARY KEY,
+    public_uuid UUID NOT NULL DEFAULT gen_random_uuid() UNIQUE,
+
+    photo_album_name TEXT NOT NULL UNIQUE,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    published_date TIMESTAMPTZ NOT NULL,
+    status content_status NOT NULL,
+    rules_check BOOLEAN NOT NULL,
+
+    owner_user_id BIGINT NOT NULL,
+
+    CONSTRAINT fk_photo_album_owner_user
+    FOREIGN KEY (owner_user_id)
+    REFERENCES users(id)
+    ON DELETE CASCADE
+);
 
 -- INDEX
 
 CREATE INDEX idx_photos_uploaded_by_user_id
 ON photos(uploaded_by_user_id);
+
+CREATE INDEX idx_photo_albums_owner_user_id
+ON photo_albums(owner_user_id);
 
 -- JUNCTION TABLES
 
