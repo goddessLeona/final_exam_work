@@ -1,6 +1,7 @@
 package com.petra.final_exam_work.Entity;
 
 import com.petra.final_exam_work.Entity.Enum.ConsentStatus;
+import com.petra.final_exam_work.config.ConsentStatusConverter;
 import jakarta.persistence.*;
 
 @Entity
@@ -20,9 +21,9 @@ public class UserConsentForm {
     @JoinColumn(name = "consent_form_id")
     private ConsentForm consentForm;
 
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private ConsentStatus status;
+    @Convert(converter = ConsentStatusConverter.class)
+    @Column(name = "status", nullable = false)
+    private ConsentStatus consentStatus;
 
     public UserConsentForm() {
     }
