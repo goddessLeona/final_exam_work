@@ -19,11 +19,13 @@
     * table users_roles - entity (many to many) - User & Role 
     * table consent_forms - entity ConsentForm
     * table users_consent_forms - entity UsersConsentFormId + UsersConsentForm
-    * enum ConsentStatus - PENDING APPROVED REJECTED
+    * enum consent_status - PENDING APPROVED REJECTED
 
 ## task 3. - Build up db ##
 (part 2 - 15/1)
 * continued adding tables to the db
     * table photos - entity Photo
     * table photo_albums - entity PhotoAlbum
+    * enum content_status - PUBLISHED DRAFT
+    * index for photos and photo_albums
 * added enum status converter in config folder (to be able to use BIG letters in enum and small in db)
