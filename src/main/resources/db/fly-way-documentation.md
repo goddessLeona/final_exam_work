@@ -43,4 +43,7 @@ Then create db again and run until happy.
 * Extensions
 * Types (ENUMs)
 * Tables without FKs
-* Tables with FKs / junction tables
+* Tables with FKs
+* Indexes
+* Junction tables
+
