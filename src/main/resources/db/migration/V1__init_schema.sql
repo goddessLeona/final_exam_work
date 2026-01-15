@@ -3,6 +3,8 @@ CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
 CREATE TYPE consent_status AS ENUM ('pending', 'approved', 'rejected');
 
+-- INDEPENDENT TABLES
+
 CREATE TABLE users(
     id BIGSERIAL PRIMARY KEY,
     public_uuid UUID NOT NULL DEFAULT gen_random_uuid() UNIQUE,
@@ -28,6 +30,34 @@ CREATE TABLE consent_forms(
     face_fff_file_path TEXT NOT NULL,
     approve_rules BOOLEAN NOT NULL
 );
+
+-- DEPENDENT TABLES (FK)
+
+ CREATE TABLE photos(
+    id BIGSERIAL PRIMARY KEY,
+    public_uuid UUID NOT NULL DEFAULT gen_random_uuid() UNIQUE,
+
+    uploaded_by_user_id BIGINT NOT NULL,
+    photo_file_path TEXT NOT NULL,
+
+    size_bytes BIGINT NOT NULL,
+    mime_type TEXT NOT NULL,
+    file_name TEXT NOT NULL,
+
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+
+    CONSTRAINT fk_photos_uploaded_by_user
+    FOREIGN KEY (uploaded_by_user_id)
+    REFERENCES users(id)
+    ON DELETE CASCADE
+)
+
+-- INDEX
+
+CREATE INDEX idx_photos_uploaded_by_user_id
+ON photos(uploaded_by_user_id);
+
+-- JUNCTION TABLES
 
 CREATE TABLE users_roles(
     user_id BIGINT NOT NULL,
