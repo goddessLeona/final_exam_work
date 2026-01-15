@@ -34,7 +34,7 @@ public class ConsentForm {
     @Column(name = "approve_rules", nullable = false)
     private Boolean approvedRules;
 
-    @OneToMany(mappedBy = "consentForm", cascade =CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "consentForm", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<UserConsentForm> users = new HashSet<>();
 
     public ConsentForm() {
