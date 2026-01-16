@@ -1,7 +1,6 @@
-package com.petra.final_exam_work.Entity;
+package com.petra.final_exam_work.Entity.photo;
 
-import com.petra.final_exam_work.Entity.Enum.ConsentStatus;
-import com.petra.final_exam_work.Entity.Enum.ContentStatus;
+import com.petra.final_exam_work.Entity.user.User;
 import com.petra.final_exam_work.config.ContentStatusConverter;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -36,7 +35,7 @@ public class PhotoAlbum {
     private Instant publishedDate;
 
     @Convert(converter = ContentStatusConverter.class)
-    @Column(name = "status", nullable = false)
+    @Column(name = "content_status", nullable = false)
     private ContentStatus contentStatus;
 
     @Column(name = "rules_check", nullable = false)
