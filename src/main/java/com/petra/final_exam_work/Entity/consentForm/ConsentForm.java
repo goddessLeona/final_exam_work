@@ -1,5 +1,6 @@
-package com.petra.final_exam_work.Entity;
+package com.petra.final_exam_work.Entity.consentForm;
 
+import com.petra.final_exam_work.Entity.junktionTables.UserConsentForm;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
