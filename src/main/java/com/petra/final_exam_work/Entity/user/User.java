@@ -1,5 +1,6 @@
-package com.petra.final_exam_work.Entity;
+package com.petra.final_exam_work.Entity.user;
 
+import com.petra.final_exam_work.Entity.junktionTables.UserConsentForm;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
