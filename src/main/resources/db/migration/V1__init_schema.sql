@@ -1,11 +1,16 @@
 
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
-CREATE TYPE consent_status AS ENUM ('pending', 'approved', 'rejected');
+-- ENUM
 
+CREATE TYPE consent_status AS ENUM ('pending', 'approved', 'rejected');
 CREATE TYPE content_status AS ENUM ('published', 'draft');
+CREATE TYPE album_role AS ENUM ('owner', 'editor', 'viewer');
+
+-- TOTAL AMOUNT OF TABLES 8
 
 -- INDEPENDENT TABLES
+-- (users , roles , consent_forms)
 
 CREATE TABLE users(
     id BIGSERIAL PRIMARY KEY,
@@ -37,6 +42,7 @@ CREATE TABLE consent_forms(
 );
 
 -- DEPENDENT TABLES (FK)
+-- (photos, photo_albums)
 
  CREATE TABLE photos(
 
@@ -64,7 +70,7 @@ CREATE TABLE photo_albums(
     photo_album_name TEXT NOT NULL UNIQUE,
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     published_date TIMESTAMPTZ NOT NULL,
-    status content_status NOT NULL,
+    content_status content_status NOT NULL,
     rules_check BOOLEAN NOT NULL,
 
     owner_user_id BIGINT NOT NULL,
@@ -84,6 +90,7 @@ CREATE INDEX idx_photo_albums_owner_user_id
 ON photo_albums(owner_user_id);
 
 -- JUNCTION TABLES
+-- (users_roles , users_consent_forms, users_photo_albums)
 
 CREATE TABLE users_roles(
     user_id BIGINT NOT NULL,
@@ -96,10 +103,19 @@ CREATE TABLE users_roles(
 CREATE TABLE users_consent_forms(
     user_id BIGINT NOT NULL,
     consent_form_id BIGINT NOT NULL,
-    status consent_status NOT NULL,
-    PRIMARY KEY(user_id, consent_form_id),
+    consent_status consent_status NOT NULL,
+    PRIMARY KEY (user_id, consent_form_id),
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (consent_form_id) REFERENCES consent_forms(id) ON DELETE CASCADE
+);
+
+CREATE TABLE users_photo_albums(
+    user_id BIGINT NOT NULL,
+    photo_albums_id BIGINT NOT NULL,
+    album_role_status album_role NOT NULL,
+    PRIMARY KEY (user_id, photo_albums_id),
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (photo_albums_id) REFERENCES photo_albums(id) ON DELETE CASCADE
 );
 
 
