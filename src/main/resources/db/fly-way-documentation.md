@@ -9,7 +9,7 @@ __ → double underscore (mandatory)
 init_schema → free text (for humans)
 .sql → migration file
 
-v1_init_schema.sql = “Create the initial database structure”
+v1_init_schema.sql = “Create the initial database structure” MVP
 
 That typically includes:
 * Tables
