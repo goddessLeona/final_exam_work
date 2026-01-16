@@ -1,5 +1,6 @@
-package com.petra.final_exam_work.Entity;
+package com.petra.final_exam_work.Entity.photo;
 
+import com.petra.final_exam_work.Entity.user.User;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
