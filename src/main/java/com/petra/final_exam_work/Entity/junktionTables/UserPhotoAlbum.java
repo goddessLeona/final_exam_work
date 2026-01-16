@@ -1,6 +1,5 @@
 package com.petra.final_exam_work.Entity.junktionTables;
 
-import com.petra.final_exam_work.Entity.consentForm.ConsentForm;
 import com.petra.final_exam_work.Entity.photo.AlbumRoleStatus;
 import com.petra.final_exam_work.Entity.photo.PhotoAlbum;
 import com.petra.final_exam_work.Entity.user.User;
@@ -25,8 +24,8 @@ public class UserPhotoAlbum {
     private PhotoAlbum photoAlbum;
 
     @Convert(converter = AlbumRoleStatusConverter.class)
-    @Column(name = "album_role_status", nullable = false)
-    private AlbumRoleStatus albumRoleStatus;
+    @Column(name = "album_role", nullable = false)
+    private AlbumRoleStatus albumRole;
 
     public UserPhotoAlbum() {
     }
@@ -55,11 +54,11 @@ public class UserPhotoAlbum {
         this.photoAlbum = photoAlbum;
     }
 
-    public AlbumRoleStatus getAlbumRoleStatus() {
-        return albumRoleStatus;
+    public AlbumRoleStatus getAlbumRole() {
+        return albumRole;
     }
 
-    public void setAlbumRoleStatus(AlbumRoleStatus albumRoleStatus) {
-        this.albumRoleStatus = albumRoleStatus;
+    public void setAlbumRole(AlbumRoleStatus albumRole) {
+        this.albumRole = albumRole;
     }
 }
