@@ -44,6 +44,16 @@ Then create db again and run until happy.
 * Types (ENUMs)
 * Tables without FKs
 * Tables with FKs
-* Indexes
 * Junction tables
+* index
+
+
+# when to use index
+* index for all FKs in dependent tables.
+* For junction tables, index the first FK as part of PK (automatic), 
+add an index on the second FK only if your queries need it.
+* Plan indexes based on how your app queries data.
+
+# tips for later (related to when to use index and not)
+Use PostgreSQL’s tools (EXPLAIN ANALYZE, pg_stat_statements) to find slow queries.
 
