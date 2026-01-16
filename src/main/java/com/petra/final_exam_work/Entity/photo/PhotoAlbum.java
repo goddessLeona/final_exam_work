@@ -1,11 +1,14 @@
 package com.petra.final_exam_work.Entity.photo;
 
+import com.petra.final_exam_work.Entity.Tag;
 import com.petra.final_exam_work.Entity.user.User;
 import com.petra.final_exam_work.config.ContentStatusConverter;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 @Entity
@@ -31,7 +34,7 @@ public class PhotoAlbum {
     @Column(name = "created_at")
     private Instant createdAt;
 
-    @Column(name = "published_date", nullable = false)
+    @Column(name = "published_at")
     private Instant publishedDate;
 
     @Convert(converter = ContentStatusConverter.class)
@@ -44,6 +47,9 @@ public class PhotoAlbum {
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "owner_user_id", nullable = false)
     private User ownedByUser;
+
+    @ManyToMany(mappedBy = "photoAlbums")
+    private Set<Tag> tags = new HashSet<>();
 
     public PhotoAlbum() {
     }
