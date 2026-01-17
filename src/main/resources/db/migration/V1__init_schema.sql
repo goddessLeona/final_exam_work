@@ -2,7 +2,6 @@
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 CREATE EXTENSION IF NOT EXISTS citext;
 
-
 -- ENUM
 
 CREATE TYPE consent_status AS ENUM ('pending', 'approved', 'rejected');
@@ -23,6 +22,7 @@ CREATE TABLE users(
     email CITEXT NOT NULL UNIQUE,
     first_name TEXT NOT NULL,
     last_name TEXT NOT NULL,
+    is_contributor BOOLEAN NOT NULL DEFAULT false,
     created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
@@ -40,7 +40,11 @@ CREATE TABLE consent_forms(
     id_card_file_path TEXT NOT NULL,
     id_face_file_path TEXT NOT NULL,
     face_fff_file_path TEXT NOT NULL,
-    approve_rules BOOLEAN NOT NULL
+    approve_rules BOOLEAN NOT NULL,
+
+    id_card_reviewed BOOLEAN NOT NULL DEFAULT false,
+    id_face_reviewed BOOLEAN NOT NULL DEFAULT false,
+    face_fff_reviewed BOOLEAN NOT NULL DEFAULT false
 );
 
 CREATE TABLE tags(
@@ -78,11 +82,10 @@ CREATE TABLE photo_albums(
 
     owner_user_id BIGINT NOT NULL,
     photo_album_name TEXT NOT NULL,
-
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     published_at TIMESTAMPTZ,
     content_status content_status NOT NULL DEFAULT 'draft',
-    rules_check BOOLEAN NOT NULL,
+    rules_verified BOOLEAN NOT NULL,
 
     CONSTRAINT fk_photo_album_owner_user
     FOREIGN KEY (owner_user_id)
@@ -90,7 +93,7 @@ CREATE TABLE photo_albums(
     ON DELETE CASCADE,
 
     CONSTRAINT uq_album_owner_name
-        UNIQUE (owner_user_id, photo_album_name)
+    UNIQUE (owner_user_id, photo_album_name)
 );
 
 -- JUNCTION TABLES 7
@@ -109,6 +112,7 @@ CREATE TABLE users_consent_forms(
     user_id BIGINT NOT NULL,
     consent_form_id BIGINT NOT NULL,
     consent_status consent_status NOT NULL,
+    admin_comment TEXT,
     PRIMARY KEY (user_id, consent_form_id),
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (consent_form_id) REFERENCES consent_forms(id) ON DELETE CASCADE
@@ -127,7 +131,7 @@ CREATE TABLE photo_person_tags(
     user_id BIGINT NOT NULL,
     photo_id BIGINT NOT NULL,
 
-    can_remove BOOLEAN DEFAULT true,
+    can_remove BOOLEAN NOT NULL DEFAULT true,
     tagged_at TIMESTAMPTZ NOT NULL DEFAULT now(),
 
     tagged_by_user_id BIGINT NOT NULL,
@@ -139,7 +143,7 @@ CREATE TABLE photo_person_tags(
     FOREIGN KEY (tagged_by_user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 
-    CREATE TABLE photo_contributors (
+CREATE TABLE photo_contributors (
     user_id BIGINT NOT NULL,
     photo_id BIGINT NOT NULL,
 
@@ -148,57 +152,66 @@ CREATE TABLE photo_person_tags(
     PRIMARY KEY (user_id, photo_id),
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (photo_id) REFERENCES photos(id) ON DELETE CASCADE
-    );
+);
 
-    CREATE TABLE photo_albums_tags(
-        tag_id BIGINT NOT NULL,
-        photo_album_id BIGINT NOT NULL,
-        PRIMARY KEY(tag_id, photo_album_id),
-        FOREIGN KEY (tag_id) REFERENCES tags(id) ON DELETE CASCADE,
-        FOREIGN KEY (photo_album_id) REFERENCES photo_albums(id) ON DELETE CASCADE
-    );
+CREATE TABLE photo_albums_tags(
+    tag_id BIGINT NOT NULL,
+    photo_album_id BIGINT NOT NULL,
+    PRIMARY KEY(tag_id, photo_album_id),
+    FOREIGN KEY (tag_id) REFERENCES tags(id) ON DELETE CASCADE,
+    FOREIGN KEY (photo_album_id) REFERENCES photo_albums(id) ON DELETE CASCADE
+);
 
-    CREATE TABLE photo_albums_photos (
-        photo_album_id BIGINT NOT NULL,
-        photo_id BIGINT NOT NULL,
+CREATE TABLE photo_albums_photos (
+    photo_album_id BIGINT NOT NULL,
+    photo_id BIGINT NOT NULL,
 
-        position INTEGER NOT NULL,
-        added_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    position INTEGER NOT NULL,
+    added_at TIMESTAMPTZ NOT NULL DEFAULT now(),
 
-        PRIMARY KEY (photo_album_id, photo_id),
-        FOREIGN KEY (photo_album_id) REFERENCES photo_albums(id) ON DELETE CASCADE,
-        FOREIGN KEY (photo_id) REFERENCES photos(id) ON DELETE CASCADE
-    );
+    PRIMARY KEY (photo_album_id, photo_id),
+    FOREIGN KEY (photo_album_id) REFERENCES photo_albums(id) ON DELETE CASCADE,
+    FOREIGN KEY (photo_id) REFERENCES photos(id) ON DELETE CASCADE
+);
 
-    -- INDEX
+-- INDEX
 
-    --index photo
-    CREATE INDEX idx_photos_uploaded_by_user_id
-    ON photos(uploaded_by_user_id);
+--index photo
+CREATE INDEX idx_photos_uploaded_by_user_id
+ON photos(uploaded_by_user_id);
 
-    -- index photo_albums
-    CREATE INDEX idx_photo_albums_owner_user_id
-    ON photo_albums(owner_user_id);
+-- index photo_albums
+CREATE INDEX idx_photo_albums_owner_user_id
+ON photo_albums(owner_user_id);
 
-    --index users-photo-albums
-    CREATE INDEX idx_users_photo_albums_photo_album_id
-    ON users_photo_albums(photo_album_id);
+--index users-photo-albums
+CREATE INDEX idx_users_photo_albums_photo_album_id
+ON users_photo_albums(photo_album_id);
 
-    -- index photo_person_tags
-    CREATE INDEX idx_photo_person_tags_tagged_by_user_id
-    ON photo_person_tags(tagged_by_user_id);
+-- index photo_person_tags
+CREATE INDEX idx_photo_person_tags_tagged_by_user_id
+ON photo_person_tags(tagged_by_user_id);
 
-    --index photo_albums_photos
-    CREATE INDEX idx_photo_albums_photos_photo_id
-    ON photo_albums_photos(photo_id);
+--index photo_albums_photos
+CREATE INDEX idx_photo_albums_photos_photo_id
+ON photo_albums_photos(photo_id);
 
-    --index photo_contributors
-    CREATE INDEX idx_photo_contributors_photo_id
-    ON photo_contributors(photo_id);
+--index photo_contributors
+CREATE INDEX idx_photo_contributors_photo_id
+ON photo_contributors(photo_id);
 
-    --index photo_album_tags
-    CREATE INDEX idx_photo_albums_tags_photo_album_id
-    ON photo_albums_tags(photo_album_id);
+--index photo_album_tags
+CREATE INDEX idx_photo_albums_tags_photo_album_id
+ON photo_albums_tags(photo_album_id);
+
+--enforce one approved consent form per user
+--rejected can be sent back to users to compliment missing info
+CREATE UNIQUE INDEX uq_users_single_active_consent_form
+ON users_consent_forms (user_id)
+WHERE consent_status IN ('pending', 'approved');
+
+
+
 
 
 
