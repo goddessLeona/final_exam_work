@@ -1,4 +1,4 @@
-package com.petra.final_exam_work.Entity.junktionTables;
+package com.petra.final_exam_work.Entity.junktionTables.userConcentform;
 
 import com.petra.final_exam_work.Entity.consentForm.ConsentForm;
 import com.petra.final_exam_work.Entity.consentForm.ConsentStatus;

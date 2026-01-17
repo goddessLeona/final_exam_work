@@ -1,6 +1,6 @@
 package com.petra.final_exam_work.Entity.user;
 
-import com.petra.final_exam_work.Entity.junktionTables.UserConsentForm;
+import com.petra.final_exam_work.Entity.junktionTables.userConcentform.UserConsentForm;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -31,7 +31,12 @@ public class User {
     @Column(name = "password_hash", nullable = false)
     private String password;
 
-    @Column(name = "email", nullable = false, unique = true)
+    @Column(
+            name = "email",
+            nullable = false,
+            unique = true,
+            columnDefinition = "citext"
+    )
     private String email;
 
     @Column(name = "first_name", nullable = false)
@@ -40,8 +45,11 @@ public class User {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
+    @Column(name = "is_contributor", nullable = false)
+    private Boolean isContributor = false;
+
     @CreationTimestamp
-    @Column(name = "created_at", nullable = false, updatable = false)
+    @Column(name = "created_at", nullable = false, updatable = false, insertable = false)
     private Instant createdAt;
 
     @ManyToMany
@@ -54,6 +62,13 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<UserConsentForm> consentForms = new HashSet<>();
+
+    @PrePersist
+    private void prePersist() {
+        if (publicUuid == null) {
+            publicUuid = UUID.randomUUID();
+        }
+    }
 
     public User() {
     }
@@ -114,6 +129,14 @@ public class User {
         this.lastName = lastName;
     }
 
+    public Boolean getContributor() {
+        return isContributor;
+    }
+
+    public void setContributor(Boolean contributor) {
+        isContributor = contributor;
+    }
+
     public Instant getCreatedAt() {
         return createdAt;
     }
@@ -122,4 +145,19 @@ public class User {
         this.createdAt = createdAt;
     }
 
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public Set<UserConsentForm> getConsentForms() {
+        return consentForms;
+    }
+
+    public void setConsentForms(Set<UserConsentForm> consentForms) {
+        this.consentForms = consentForms;
+    }
 }

@@ -1,6 +1,6 @@
 package com.petra.final_exam_work.Entity.consentForm;
 
-import com.petra.final_exam_work.Entity.junktionTables.UserConsentForm;
+import com.petra.final_exam_work.Entity.junktionTables.userConcentform.UserConsentForm;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -35,8 +35,24 @@ public class ConsentForm {
     @Column(name = "approve_rules", nullable = false)
     private Boolean approvedRules;
 
+    @Column(name = "id_card_reviewed", nullable = false)
+    private Boolean idCardReviewed = false;
+
+    @Column(name = "id_face_reviewed", nullable = false)
+    private Boolean idFaceReviewed = false;
+
+    @Column(name = "face_fff_reviewed", nullable = false)
+    private Boolean facefffReviewed = false;
+
     @OneToMany(mappedBy = "consentForm", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<UserConsentForm> users = new HashSet<>();
+
+    @PrePersist
+    private void prePersist(){
+        if(publicUuid == null){
+            publicUuid = UUID.randomUUID();
+        }
+    }
 
     public ConsentForm() {
     }

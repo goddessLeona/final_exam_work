@@ -27,22 +27,21 @@ public class PhotoAlbum {
     )
     private UUID publicUuid;
 
-    @Column(name = "photo_album_name", nullable = false, unique = true)
+    @Column(name = "photo_album_name", nullable = false)
     private String photoAlbumName;
 
-    @CreationTimestamp
-    @Column(name = "created_at")
+    @Column(name = "created_at", updatable = false, insertable = false)
     private Instant createdAt;
 
-    @Column(name = "published_at")
+    @Column(name = "published_at", updatable = true)
     private Instant publishedDate;
 
     @Convert(converter = ContentStatusConverter.class)
     @Column(name = "content_status", nullable = false)
-    private ContentStatus contentStatus;
+    private ContentStatus contentStatus = ContentStatus.DRAFT;
 
-    @Column(name = "rules_check", nullable = false)
-    private Boolean rulesCheck;
+    @Column(name = "rules_verified", nullable = false)
+    private Boolean rulesVerified;
 
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "owner_user_id", nullable = false)
@@ -50,6 +49,13 @@ public class PhotoAlbum {
 
     @ManyToMany(mappedBy = "photoAlbums")
     private Set<Tag> tags = new HashSet<>();
+
+    @PrePersist
+    private void prePersist() {
+        if (publicUuid == null) {
+            publicUuid = UUID.randomUUID();
+        }
+    }
 
     public PhotoAlbum() {
     }
@@ -102,12 +108,12 @@ public class PhotoAlbum {
         this.contentStatus = contentStatus;
     }
 
-    public Boolean getRulesCheck() {
-        return rulesCheck;
+    public Boolean getRulesVerified() {
+        return rulesVerified;
     }
 
-    public void setRulesCheck(Boolean rulesCheck) {
-        this.rulesCheck = rulesCheck;
+    public void setRulesVerified(Boolean rulesVerified) {
+        this.rulesVerified = rulesVerified;
     }
 
     public User getOwnedByUser() {
@@ -116,5 +122,13 @@ public class PhotoAlbum {
 
     public void setOwnedByUser(User ownedByUser) {
         this.ownedByUser = ownedByUser;
+    }
+
+    public Set<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
     }
 }

@@ -1,6 +1,5 @@
-package com.petra.final_exam_work.Entity.junktionTables;
+package com.petra.final_exam_work.Entity.junktionTables.userPhotoAlbum;
 
-import com.petra.final_exam_work.Entity.photo.AlbumRoleStatus;
 import com.petra.final_exam_work.Entity.photo.PhotoAlbum;
 import com.petra.final_exam_work.Entity.user.User;
 import com.petra.final_exam_work.config.AlbumRoleStatusConverter;
@@ -20,7 +19,7 @@ public class UserPhotoAlbum {
 
     @ManyToOne
     @MapsId("photoAlbumId")
-    @JoinColumn(name = "photo_albums_id")
+    @JoinColumn(name = "photo_album_id")
     private PhotoAlbum photoAlbum;
 
     @Convert(converter = AlbumRoleStatusConverter.class)

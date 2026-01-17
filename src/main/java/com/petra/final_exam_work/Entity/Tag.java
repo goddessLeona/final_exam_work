@@ -23,7 +23,12 @@ public class Tag {
     )
     private UUID publicUuid;
 
-    @Column(name = "name_tag", nullable = false, unique = true)
+    @Column(
+            name = "name_tag",
+            nullable = false,
+            unique = true,
+            columnDefinition = "citext"
+    )
     private String nameTag;
 
     @ManyToMany
@@ -33,6 +38,13 @@ public class Tag {
             inverseJoinColumns = @JoinColumn(name = "photo_album_id")
     )
     private Set<PhotoAlbum> photoAlbums = new HashSet<>();
+
+    @PrePersist
+    private void prePersist() {
+        if (publicUuid == null) {
+            publicUuid = UUID.randomUUID();
+        }
+    }
 
     public Tag() {
     }

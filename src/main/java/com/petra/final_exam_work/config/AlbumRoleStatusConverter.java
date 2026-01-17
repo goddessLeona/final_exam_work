@@ -1,6 +1,6 @@
 package com.petra.final_exam_work.config;
 
-import com.petra.final_exam_work.Entity.photo.AlbumRoleStatus;
+import com.petra.final_exam_work.Entity.junktionTables.userPhotoAlbum.AlbumRoleStatus;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 

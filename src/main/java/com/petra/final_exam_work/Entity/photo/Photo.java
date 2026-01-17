@@ -39,9 +39,15 @@ public class Photo {
     @Column(name = "file_name", nullable = false)
     private String fileName;
 
-    @CreationTimestamp
-    @Column(name = "created_at")
+    @Column(name = "created_at", updatable = false, insertable = false)
     private Instant createdAt;
+
+    @PrePersist
+    private void prePersist() {
+        if (publicUuid == null) {
+            publicUuid = UUID.randomUUID();
+        }
+    }
 
     public Photo() {
     }

@@ -28,6 +28,13 @@ public class Role {
     @ManyToMany(mappedBy = "roles")
     private Set<User> users = new HashSet<>();
 
+    @PrePersist
+    private void prePersist() {
+        if (publicUuid == null) {
+            publicUuid = UUID.randomUUID();
+        }
+    }
+
     public Role() {
     }
 

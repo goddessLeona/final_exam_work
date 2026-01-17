@@ -1,5 +1,6 @@
-package com.petra.final_exam_work.Entity.junktionTables;
+package com.petra.final_exam_work.Entity.junktionTables.userPhotoAlbum;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
 
 import java.io.Serializable;
@@ -8,7 +9,10 @@ import java.util.Objects;
 @Embeddable
 public class UserPhotoAlbumId implements Serializable {
 
+    @Column(name = "user_id")
     private Long userId;
+
+    @Column(name = "photo_album_id")
     private Long photoAlbumId;
 
     public UserPhotoAlbumId() {
