@@ -31,17 +31,18 @@
 * added enum status converter in config folder (to be able to use BIG letters in enum and small in db)
 
 ## task 3. - Build up MVP db ##
-(part 3 - 16/1 - )
+(part 3 - 16/1 - 17/1 )
 * continued adding tables to the db
     * table users_photo_albums - entity UserPhotoAlbum + UserPhotoAlbumId
-    * table photo_person_tags
+    * table photo_person_tags - entity PhotoPersonTag + PhotoPersonTag
     * table tags - entity Tag
-    * table photo_contributors
+    * table photo_contributors - entity PhotoContributor + PhotoContributorId
     * table photo_album_tags - entity (many to many) Tag & PhotoAlbum
-    * table photo_albums_photos
+    * enum AlbumRoleStatus - OWNER, EDITOR, VIEWER
+    * table photo_albums_photos - entity PhotoAlbumPhoto + PhotoAlbumPhotoId
+    * index
 
 ## task 4. - ##
 
 * Start working in branches
 
-BioN69
