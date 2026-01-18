@@ -60,7 +60,7 @@ A **member-based platform** for members and contributors.
 * **Backend:** Java Spring Boot
 * **Authentication:** Spring Security (JWT)
 * **Database:** PostgreSQL
-* **Frontend:** React
+* **Frontend:** ~~React~~ Next.js
 * **Database Versioning:** Flyway
 
 ---
@@ -102,7 +102,7 @@ The MVP will be developed over three phases during **LIA 1**, **LIA 2**, and the
 * Database setup using PostgreSQL
 * Flyway integration
 * Backend development with Spring Boot
-* Frontend setup using React
+* Frontend setup using ~~React~~ Next.js
 * User authentication (sign-in / sign-out)
 * Spring Security with JWT
 
