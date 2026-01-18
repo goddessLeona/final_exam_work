@@ -1,0 +1,109 @@
+.page {
+  --background: #fafafa;
+  --foreground: #fff;
+
+  --text-primary: #000;
+  --text-secondary: #666;
+
+  --button-primary-hover: #383838;
+  --button-secondary-hover: #f2f2f2;
+  --button-secondary-border: #ebebeb;
+
+  display: flex;
+  min-height: 100vh;
+  align-items: flex-start;;
+  justify-content: center;
+  font-family: var(--font-geist-sans);
+  background-color: var(--background);
+}
+
+.main {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  max-width: 800px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--foreground);
+  padding: 120px 60px;
+}
+
+.intro {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.intro h1 {
+  max-width: 620px;
+  font-size: 40px;
+  font-weight: 600;
+  line-height: 48px;
+  letter-spacing: -2.4px;
+  text-wrap: balance;
+  color: var(--text-primary);
+  margin-top: 40px;
+}
+
+.intro p {
+  max-width: 340px;
+  font-size: 25px;
+  line-height: 32px;
+  text-wrap: balance;
+  color: var(--text-secondary);
+}
+
+.box ul {
+  list-style-position: inside; /* Bullets inside the content box */
+  padding-left: 20px;           /* Space for bullets */
+  margin-left: 0;               /* Remove extra margin */
+}
+
+.box ul ul {
+  padding-left: 20px;           /* Add padding for nested lists */
+  margin-left: 0;
+  list-style-type: disc;        /* Use disc for nested bullets */
+}
+
+.box li {
+  margin-bottom: 0.5rem;
+  padding-left: 0;
+  font-size: 20px;
+  line-height: 25px;
+  color: var(--text-secondary);
+}
+
+
+
+
+@media (max-width: 600px) {
+  .main {
+    padding: 48px 24px;
+  }
+
+  .intro {
+    gap: 15px;
+  }
+
+  .intro h1 {
+    font-size: 32px;
+    line-height: 40px;
+    letter-spacing: -1.92px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .logo {
+    filter: invert();
+  }
+
+  .page {
+    --background: #000;
+    --foreground: #000;
+
+    --text-primary: #ededed;
+    --text-secondary: #999;
+  }
+}

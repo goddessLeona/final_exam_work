@@ -1,0 +1,16 @@
+
+.header {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  background-color: #545454;
+  color: white;
+}
+
+.headerImage {
+  display: flex;
+  justify-content: center; /* centers horizontally */
+  margin: 0 auto;          /* optional: center block element */
+  max-width: 100%;         /* responsive max width */
+  padding: 10px 0;         /* spacing */
+}
