@@ -1,7 +1,8 @@
 
-* start a new project connect to GitHub
-* make sure it will work to work on project with different operating system
-* make a simple check for style on files
-* build up db version 1 MVP
-* add entity's
-* 
+## DONE
+
+* Initialized a new project and connected it to GitHub
+* Configured `.gitattributes` to support development across different operating systems
+* Added basic code style checks via `checkstyle.xml`
+* Implemented PostgreSQL database schema, V1__init_schema.sql using Flyway (MVP)
+* Created initial entities
