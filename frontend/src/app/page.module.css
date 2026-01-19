@@ -29,6 +29,32 @@
   padding: 120px 60px;
 }
 
+.introText{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.introText h1 {
+  max-width: 620px;
+  font-size: 40px;
+  font-weight: 600;
+  line-height: 48px;
+  letter-spacing: -2.4px;
+  text-wrap: balance;
+  color: var(--text-primary);
+  margin-top: 40px;
+}
+
+.introText p {
+  max-width: 740px;
+  font-size: 25px;
+  line-height: 32px;
+  text-wrap: balance;
+  color: var(--text-secondary);
+}
+
 .intro {
   display: flex;
   flex-direction: column;
