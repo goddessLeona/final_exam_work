@@ -5,6 +5,10 @@ export default function Home() {
   return (
     <div className={styles.page}>
       <main>
+        <div className={styles.introText}>
+        <h1>Welcome to my examen project</h1> 
+        <p>A member-based platform for members and contributors.</p>
+        </div>
         <div className={styles.intro}>
           <h1>MVP-Requirements</h1>
           <p className= {styles.textTitles}>Content & Access</p>

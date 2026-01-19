@@ -3,13 +3,13 @@
 * create a project in: start.spring.io + inteliji 
 * get it connected with a github repository
 
-## task 1. - multi operating system ##
+## task 1. - multi operating system 
 * setup gitattributes for multi operating system to be able to work together
 
-## task 2. - check style error ##  
+## task 2. - check style error   
 * make a simple way to check so the code style is consistent all over the project.
 
-## task 3 - Build up MVP db ##
+## task 3 - Build up MVP db 
 (part 1 - 14/1)
 * create a db and connect it to project -  application-local.properties
 * add flyway migration /main/resources/db/migration
@@ -21,7 +21,7 @@
     * table users_consent_forms - entity UsersConsentFormId + UsersConsentForm
     * enum consent_status - PENDING APPROVED REJECTED
 
-## task 3. - Build up MVP db ##
+## task 3. - Build up MVP db 
 (part 2 - 15/1)
 * continued adding tables to the db
     * table photos - entity Photo
@@ -30,7 +30,7 @@
     * index for photos and photo_albums
 * added enum status converter in config folder (to be able to use BIG letters in enum and small in db)
 
-## task 3. - Build up MVP db ##
+## task 3. - Build up MVP db
 (part 3 - 16/1 - 17/1 )
 * continued adding tables to the db
     * table users_photo_albums - entity UserPhotoAlbum + UserPhotoAlbumId
@@ -42,7 +42,13 @@
     * table photo_albums_photos - entity PhotoAlbumPhoto + PhotoAlbumPhotoId
     * index
 
-## task 4. - ##
+## task 4. - Add starter page - frontend
+(18/1 - 19/1 )
 
-* Start working in branches
+  * Installed Next.js
+  * added components for a simple nav
+  * added a simple into text on main page you land on
+  * added a Nav, header, footer
+  * added a become a contributor page
 
+## task 5. 
