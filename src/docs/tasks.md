@@ -47,8 +47,9 @@
 
   * Installed Next.js
   * added components for a simple nav
-  * added a simple into text on main page you land on
+  * added a simple into text on landing page
   * added a Nav, header, footer
   * added a become a contributor page
 
-## task 5. 
+## task 5. Log in
+
