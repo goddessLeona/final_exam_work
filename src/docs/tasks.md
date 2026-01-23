@@ -1,7 +1,7 @@
 ## task 0. - Start the project ##
 10/1. 
-* create a project in: start.spring.io + inteliji 
-* get it connected with a github repository
+* create a project in: start.spring.io + Inteliji 
+* get it connected with a GitHub repository
 
 ## task 1. - multi operating system 
 * setup gitattributes for multi operating system to be able to work together
@@ -52,4 +52,11 @@
   * added a become a contributor page
 
 ## task 5. Log in
+(22/1 -)
+
+  * added simple GlobalExceptionHandler
+  * added spring boots security dependency
+  * added UserRepository
+  * added CustomDetailService
+  * added password encoder
 
