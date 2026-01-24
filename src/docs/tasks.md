@@ -52,7 +52,7 @@
   * added a become a contributor page
 
 ## task 5. Log in
-(22/1, 23/1)
+(22/1, 23/1, 14,1)
 
   * added simple GlobalExceptionHandler
   * added spring boots security dependency
@@ -60,8 +60,10 @@
   * added CustomDetailService
   * added password encoder
   * 
-  * CustomUserDetailsService
-  * JwtAuthenticationFilter
-  * JwtKeyGenerator
-  * JwtService
+  * added CustomUserDetailsService
+  * added JwtAuthenticationFilter
+  * added JwtKeyGenerator
+  * added JwtService
+  * 
+  * added SecurityConfig
 

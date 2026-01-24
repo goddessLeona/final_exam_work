@@ -16,6 +16,7 @@ import java.util.function.Function;
 public class JwtService {
 
     // Must be at least 256 bits for HS256
+    // temporary location, just dor development
     private static final String SECRET_KEY =
             "ivseL/+tgTDjx+ZH1OrM7R9Ds0yfeIb+ya3FUK5XBY8=";
 
@@ -28,7 +29,7 @@ public class JwtService {
         return extractClaim(token, Claims::getSubject);
     }
 
-    public boolean isTolkenValid(String token, UserDetails userDetails){
+    public boolean isTokenValid(String token, UserDetails userDetails){
         final String username = extractUsername(token);
         return username.equals(userDetails.getUsername())
                 && !isTokenExpired(token);
