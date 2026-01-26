@@ -46,7 +46,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         jwt = authHeader.substring(7);
 
         //extract username from token
-        username = jwtService.extractUsername(jwt);
+        try{
+            username = jwtService.extractUsername(jwt);
+        } catch (Exception e) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
 
         // authenticate user if not already auticented
         if (username != null &&
