@@ -52,7 +52,7 @@
   * added a become a contributor page
 
 ## task 5. Log in
-(22/1 - 25/1)
+( (22/1 - 24/1) + (25/1 - ) )
 
   * added simple GlobalExceptionHandler
   * added spring boots security dependency
@@ -71,4 +71,7 @@
   * added Auth Controller +  LoginRequestDto + LoginResponseDto
   * added Spring-boot-starter-validation dependency
   * updated GlobalExceptionHandler with validation errors
+  * added a member controller for testing login
+  * made a simple Member-page for testing login
+
 
