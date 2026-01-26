@@ -5,18 +5,21 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Function;
 
 @Service
 public class JwtService {
 
     // Must be at least 256 bits for HS256
-    // temporary location, just dor development
+    // temporary location, just for development
     private static final String SECRET_KEY =
             "ivseL/+tgTDjx+ZH1OrM7R9Ds0yfeIb+ya3FUK5XBY8=";
 
@@ -36,7 +39,17 @@ public class JwtService {
     }
 
     public String generateToken(UserDetails userDetails){
+
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("roles",
+                userDetails.getAuthorities()
+                        .stream()
+                        .map(GrantedAuthority::getAuthority)
+                        .toList()
+                );
+
         return Jwts.builder()
+                .setClaims(claims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + EXPERATION_TIME))
