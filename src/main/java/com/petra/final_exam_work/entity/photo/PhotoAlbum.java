@@ -1,10 +1,9 @@
-package com.petra.final_exam_work.Entity.photo;
+package com.petra.final_exam_work.entity.photo;
 
-import com.petra.final_exam_work.Entity.Tag;
-import com.petra.final_exam_work.Entity.user.User;
+import com.petra.final_exam_work.entity.Tag;
+import com.petra.final_exam_work.entity.user.User;
 import com.petra.final_exam_work.config.ContentStatusConverter;
 import jakarta.persistence.*;
-import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.Instant;
 import java.util.HashSet;

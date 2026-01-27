@@ -1,6 +1,6 @@
-package com.petra.final_exam_work.Entity.user;
+package com.petra.final_exam_work.entity.user;
 
-import com.petra.final_exam_work.Entity.junktionTables.userConcentform.UserConsentForm;
+import com.petra.final_exam_work.entity.junktionTables.userConcentform.UserConsentForm;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -26,7 +26,7 @@ public class User {
     private UUID publicUuid;
 
     @Column(name = "user_name" , nullable = false, unique = true)
-    private String userName;
+    private String username;
 
     @Column(name = "password_hash", nullable = false)
     private String password;
@@ -89,12 +89,12 @@ public class User {
         this.publicUuid = publicUuid;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {

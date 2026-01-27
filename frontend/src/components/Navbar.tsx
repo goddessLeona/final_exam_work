@@ -5,7 +5,7 @@ export default function Navbar() {
     <nav className={styles.nav}>
       <div className={styles.left}>
         <a className={styles.link} href="/">Home</a>
-        <a className={styles.link} href="/contributor">Become a contributor</a>
+        <a className={styles.link} href="/subscribe.contributor">Become a contributor</a>
       </div>
 
       <div className={styles.right}>

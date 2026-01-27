@@ -1,6 +1,6 @@
 package com.petra.final_exam_work.repository;
 
-import com.petra.final_exam_work.Entity.user.User;
+import com.petra.final_exam_work.entity.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

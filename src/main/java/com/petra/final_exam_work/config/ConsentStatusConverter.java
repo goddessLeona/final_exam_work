@@ -1,6 +1,6 @@
 package com.petra.final_exam_work.config;
 
-import com.petra.final_exam_work.Entity.consentForm.ConsentStatus;
+import com.petra.final_exam_work.entity.consentForm.ConsentStatus;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 

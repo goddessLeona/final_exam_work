@@ -9,7 +9,7 @@
 ## task 2. - check style error   
 * make a simple way to check so the code style is consistent all over the project.
 
-## task 3 - Build up MVP db 
+## task 3 - Build up MVP db + Entities
 (part 1 - 14/1)
 * create a db and connect it to project -  application-local.properties
 * add flyway migration /main/resources/db/migration
@@ -21,7 +21,6 @@
     * table users_consent_forms - entity UsersConsentFormId + UsersConsentForm
     * enum consent_status - PENDING APPROVED REJECTED
 
-## task 3. - Build up MVP db 
 (part 2 - 15/1)
 * continued adding tables to the db
     * table photos - entity Photo
@@ -30,7 +29,6 @@
     * index for photos and photo_albums
 * added enum status converter in config folder (to be able to use BIG letters in enum and small in db)
 
-## task 3. - Build up MVP db
 (part 3 - 16/1 - 17/1 )
 * continued adding tables to the db
     * table users_photo_albums - entity UserPhotoAlbum + UserPhotoAlbumId
@@ -73,5 +71,7 @@
   * updated GlobalExceptionHandler with validation errors
   * added a member controller for testing login
   * made a simple Member-page for testing login
+  * 
+  * added PasswordMigrationRunner (to hash password on dummy user added manually in db )
 
 

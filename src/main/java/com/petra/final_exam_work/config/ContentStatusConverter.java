@@ -1,6 +1,6 @@
 package com.petra.final_exam_work.config;
 
-import com.petra.final_exam_work.Entity.photo.ContentStatus;
+import com.petra.final_exam_work.entity.photo.ContentStatus;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 

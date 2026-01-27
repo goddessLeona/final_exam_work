@@ -1,4 +1,4 @@
-package com.petra.final_exam_work.Entity.junktionTables.photoContributor;
+package com.petra.final_exam_work.entity.junktionTables.photoContributor;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;

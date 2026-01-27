@@ -1,7 +1,7 @@
-package com.petra.final_exam_work.Entity.junktionTables.userPhotoAlbum;
+package com.petra.final_exam_work.entity.junktionTables.userPhotoAlbum;
 
-import com.petra.final_exam_work.Entity.photo.PhotoAlbum;
-import com.petra.final_exam_work.Entity.user.User;
+import com.petra.final_exam_work.entity.photo.PhotoAlbum;
+import com.petra.final_exam_work.entity.user.User;
 import com.petra.final_exam_work.config.AlbumRoleStatusConverter;
 import jakarta.persistence.*;
 

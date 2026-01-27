@@ -1,4 +1,4 @@
-package com.petra.final_exam_work.Entity.junktionTables.userConcentform;
+package com.petra.final_exam_work.entity.junktionTables.userConcentform;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
