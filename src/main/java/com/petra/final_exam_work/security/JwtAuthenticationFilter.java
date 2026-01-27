@@ -2,6 +2,7 @@ package com.petra.final_exam_work.security;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -32,20 +33,26 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             FilterChain filterChain
     )throws ServletException, IOException{
 
-        final String authHeader = request.getHeader("Authorization");
-        final String jwt;
-        final String username;
+        String jwt = null;
+        String username;
 
-        //In no authorization header -> continue
-        if(authHeader == null || !authHeader.startsWith("Bearer ")){
+        // get JWT from HttpOnly cookie
+        if(request.getCookies() != null){
+            for (Cookie cookie : request.getCookies()){
+                if(cookie.getName().equals("jwt")){
+                    jwt = cookie.getValue();
+                    break;
+                }
+            }
+        }
+
+        // no token -> continues filter chain
+        if (jwt == null){
             filterChain.doFilter(request, response);
             return;
         }
 
-        // extract token
-        jwt = authHeader.substring(7);
-
-        //extract username from token
+        //extract username
         try{
             username = jwtService.extractUsername(jwt);
         } catch (Exception e) {
@@ -53,8 +60,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
 
-
-        // authenticate user if not already auticented
+        // authenticate user if not already authenticated
         if (username != null &&
                 SecurityContextHolder.getContext().getAuthentication() == null){
 

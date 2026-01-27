@@ -24,6 +24,7 @@ export default function LogInPage() {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({username, password}),
+                credentials: 'include',
             });
 
             if(!res.ok){
@@ -31,9 +32,6 @@ export default function LogInPage() {
             }
 
             const data = await res.json();
-
-            //store token (temperary, just for checking)
-            localStorage.setItem("token", data.token);
 
             //role-based redirection
             if(data.roles.includes("ROLE_ADMIN")){

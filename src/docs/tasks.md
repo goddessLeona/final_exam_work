@@ -50,7 +50,7 @@
   * added a become a contributor page
 
 ## task 5. Log in
-( (22/1 - 24/1) + (25/1 - ) )
+( (22/1 - 24/1) + (26/1 -27/1 ) )
 
   * added simple GlobalExceptionHandler
   * added spring boots security dependency
@@ -72,6 +72,8 @@
   * added a member controller for testing login
   * made a simple Member-page for testing login
   * 
-  * added PasswordMigrationRunner (to hash password on dummy user added manually in db )
+  * added PasswordMigrationRunner (to hash password on dummy user that was added manually in db )
+  * added HttpOnlyCookies in JwtAuthenticationFilter
+  * updated AuthController, LoginResponse, login page, member page
 
 

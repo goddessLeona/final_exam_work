@@ -3,6 +3,8 @@ package com.petra.final_exam_work.controller;
 import com.petra.final_exam_work.dto.requestDto.LoginRequest;
 import com.petra.final_exam_work.dto.responseDto.LoginResponse;
 import com.petra.final_exam_work.security.JwtService;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -31,7 +33,8 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(
-            @Valid @RequestBody LoginRequest request){
+            @Valid @RequestBody LoginRequest request,
+            HttpServletResponse response){
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -41,7 +44,19 @@ public class AuthController {
         );
 
         UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+        // Generate JWT
         String token = jwtService.generateToken(userDetails);
+
+        // Create HttpOnly cookie
+        Cookie cookie = new Cookie("jwt", token);
+        cookie.setHttpOnly(true);
+        cookie.setSecure(false); // true if using https
+        cookie.setPath("/");
+        cookie.setMaxAge(60 * 60); // 1 h expire time
+        //cookie.setSameSite("strict"); for production only
+
+        response.addCookie(cookie);
 
         //extract roles
         List<String> roles = userDetails.getAuthorities()
@@ -50,7 +65,7 @@ public class AuthController {
                 .toList();
 
         return ResponseEntity.ok(
-                new LoginResponse(token, roles)
+                new LoginResponse(roles)
         );
     }
 }
