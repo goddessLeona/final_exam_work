@@ -15,9 +15,7 @@ export default function MemberPage(){
         }
 
         fetch("http://localhost:8080/member/test", {
-            headers: {
-                Authorization: `Bearer ${token}`,
-            },
+            credentials: "include"
         })
 
         .then((res) => {
