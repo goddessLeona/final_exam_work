@@ -1,8 +1,8 @@
-package com.petra.final_exam_work.Entity.junktionTables.userConcentform;
+package com.petra.final_exam_work.entity.junktionTables.userConcentform;
 
-import com.petra.final_exam_work.Entity.consentForm.ConsentForm;
-import com.petra.final_exam_work.Entity.consentForm.ConsentStatus;
-import com.petra.final_exam_work.Entity.user.User;
+import com.petra.final_exam_work.entity.consentForm.ConsentForm;
+import com.petra.final_exam_work.entity.consentForm.ConsentStatus;
+import com.petra.final_exam_work.entity.user.User;
 import com.petra.final_exam_work.config.ConsentStatusConverter;
 import jakarta.persistence.*;
 

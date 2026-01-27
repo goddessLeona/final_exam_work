@@ -1,4 +1,4 @@
-package com.petra.final_exam_work.Entity.consentForm;
+package com.petra.final_exam_work.entity.consentForm;
 
 public enum ConsentStatus {
     PENDING,

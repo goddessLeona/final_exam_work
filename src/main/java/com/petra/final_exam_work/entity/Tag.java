@@ -1,6 +1,6 @@
-package com.petra.final_exam_work.Entity;
+package com.petra.final_exam_work.entity;
 
-import com.petra.final_exam_work.Entity.photo.PhotoAlbum;
+import com.petra.final_exam_work.entity.photo.PhotoAlbum;
 import jakarta.persistence.*;
 
 import java.util.HashSet;

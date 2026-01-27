@@ -1,4 +1,4 @@
-package com.petra.final_exam_work.Entity.user;
+package com.petra.final_exam_work.entity.user;
 
 import jakarta.persistence.*;
 

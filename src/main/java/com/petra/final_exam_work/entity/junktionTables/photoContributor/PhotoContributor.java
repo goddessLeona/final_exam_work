@@ -1,7 +1,7 @@
-package com.petra.final_exam_work.Entity.junktionTables.photoContributor;
+package com.petra.final_exam_work.entity.junktionTables.photoContributor;
 
-import com.petra.final_exam_work.Entity.photo.Photo;
-import com.petra.final_exam_work.Entity.user.User;
+import com.petra.final_exam_work.entity.photo.Photo;
+import com.petra.final_exam_work.entity.user.User;
 import jakarta.persistence.*;
 
 import java.time.Instant;

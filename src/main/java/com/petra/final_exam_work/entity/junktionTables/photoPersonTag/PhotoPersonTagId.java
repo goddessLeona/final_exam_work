@@ -1,4 +1,4 @@
-package com.petra.final_exam_work.Entity.junktionTables.photoPersonTag;
+package com.petra.final_exam_work.entity.junktionTables.photoPersonTag;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
