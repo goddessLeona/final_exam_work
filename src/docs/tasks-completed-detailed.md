@@ -76,4 +76,6 @@
   * added HttpOnlyCookies in JwtAuthenticationFilter
   * updated AuthController, LoginResponse, login page, member page
 
+## task 5. Log out
+
 
