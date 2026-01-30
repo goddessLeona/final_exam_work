@@ -50,38 +50,39 @@ export default function LogInPage() {
 
   return (
     <main className={styles.container}>
-        <p>this is the login page</p>
+        <p>Happy to see you back !</p>
 
         <form onSubmit={handleSubmit}>
-            <div className={styles.field}>
-                <label htmlFor="username">Username</label>
-                <input
-                    id="username"
-                    name="username"
-                    type="text"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    //placeholder="Enter your username"
-                    required
-                />
+            <div className={styles.formBox}>
+                <div className={styles.field}>
+                    <label htmlFor="username">Username</label>
+                    <input
+                        id="username"
+                        name="username"
+                        type="text"
+                        value={username}
+                        onChange={(e) => setUsername(e.target.value)}
+                        //placeholder="Enter your username"
+                        required
+                    />
+                </div>
+                <div className={styles.field}>
+                    <label htmlFor="password">Password</label>
+                    <input
+                        id="password"
+                        name="password"
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        //placeholder="Enter your pasword"
+                        required
+                    />
+                </div>
+
+                {error && <p className={styles.error}>{error}</p>}
+
+                <button type="submit" className={styles.btn}>Log in</button>
             </div>
-            <div className={styles.field}>
-                <label htmlFor="password">Password</label>
-                <input
-                    id="password"
-                    name="password"
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    //placeholder="Enter your pasword"
-                    required
-                />
-            </div>
-
-            {error && <p className={styles.error}>{error}</p>}
-
-            <button type="submit" className={styles.btn}>Log in</button>
-
         </form>
         
     </main>
