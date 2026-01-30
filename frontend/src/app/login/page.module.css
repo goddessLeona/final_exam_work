@@ -4,6 +4,14 @@
     background-color: #545454;
     align-items: center;
     color: beige;
+    padding-bottom: 20px;
+}
+
+.formBox{
+    border: 2px solid black;
+    padding: 20px;
+    background-color: #292626;
+    border-radius: 10px;
 }
 
 .field{

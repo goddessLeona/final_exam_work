@@ -126,10 +126,10 @@
   }
 
   .page {
-    --background: #000;
+    --background: #545454;
     --foreground: #000;
 
-    --text-primary: #ededed;
-    --text-secondary: #999;
+    --text-primary: #231e2e;
+    --text-secondary: #171717;
   }
 }

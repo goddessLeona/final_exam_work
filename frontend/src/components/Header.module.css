@@ -1,16 +1,69 @@
 
 .header {
+  position: relative; 
+  padding-top: 40px;
+  padding-bottom: 10px;
+  background: #4c4949;
   display: flex;
-  gap: 1rem;
-  padding: 1rem;
-  background-color: #545454;
-  color: white;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  overflow: visable; 
 }
 
-.headerImage {
+/* center content (face + text) */
+.centerContent {
   display: flex;
-  justify-content: center; /* centers horizontally */
-  margin: 0 auto;          /* optional: center block element */
-  max-width: 100%;         /* responsive max width */
-  padding: 10px 0;         /* spacing */
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  z-index: 2; /* above branches */
+}
+
+/* circular face */
+.image {
+  border-radius: 50%;
+  border: 1px solid black;
+  object-fit: cover;
+}
+
+.headerText h1 {
+  margin: 0;
+  padding: 0;
+  line-height: 1.2;
+}
+
+.headerText h1 + h1 {
+  margin-top: 5px; /* small space between the two h1 */
+}
+
+.headerText p {
+  margin-top: 8px;
+  margin-bottom: 0;
+}
+
+
+.branchLeft img,
+.branchRight img {
+  width: 27vw;
+  max-width: 500px;
+  height: auto;
+  opacity: 0.8;
+}
+
+
+/* branch left corner */
+.branchRight {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: scaleX(-1); 
+}
+
+/* branch right corner mirrored */
+.branchLeft {
+  position: absolute;
+  top: 0;
+  right: 0;
+  
 }
