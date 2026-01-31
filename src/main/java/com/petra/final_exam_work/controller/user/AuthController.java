@@ -1,4 +1,4 @@
-package com.petra.final_exam_work.controller;
+package com.petra.final_exam_work.controller.user;
 
 import com.petra.final_exam_work.dto.requestDto.LoginRequest;
 import com.petra.final_exam_work.dto.responseDto.LoginResponse;
@@ -67,5 +67,20 @@ public class AuthController {
         return ResponseEntity.ok(
                 new LoginResponse(roles)
         );
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(HttpServletResponse response){
+
+        Cookie cookie = new Cookie("jwt", null);
+        cookie.setHttpOnly(true);
+        cookie.setSecure(false); //true in production https
+        cookie.setPath("/");
+        cookie.setMaxAge(0); // delete cookie immediately
+
+        response.addCookie(cookie);
+
+        return ResponseEntity.ok().body("Logged out successfully");
+
     }
 }

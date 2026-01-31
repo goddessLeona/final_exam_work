@@ -1,5 +1,6 @@
 import Link from "next/link";
 import styles from "./navbar-member.module.css";
+import LogoutButton from "./logout-buton";
 
 export default function NavbarMember() {
   return (
@@ -10,7 +11,7 @@ export default function NavbarMember() {
       </div>
 
       <div className={styles.right}>
-        <Link className={styles.link} href="/logout">Logout</Link>
+        <LogoutButton />
       </div>
     </nav>
   );

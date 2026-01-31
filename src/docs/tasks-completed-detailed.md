@@ -80,4 +80,7 @@
 (31/1)
 
   * added a new navbar for member pages with a logout
+  * added a logout in AuthController
+  * added logout-button component
 
+## task 6. Me / basic user info
