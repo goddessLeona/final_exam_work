@@ -77,5 +77,7 @@
   * updated AuthController, LoginResponse, login page, member page
 
 ## task 5. Log out
+(31/1)
 
+  * added a new navbar for member pages with a logout
 

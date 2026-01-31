@@ -1,0 +1,29 @@
+.nav {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  background-color: #222;
+  color: white;
+}
+
+.left {
+  display: flex;
+  gap: 1rem;
+}
+
+.right {
+  display: flex;
+  gap: 1rem;
+  margin-left: auto; /* pushes this group to the right */
+}
+
+.link {
+  text-decoration: none;
+  color: white;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
