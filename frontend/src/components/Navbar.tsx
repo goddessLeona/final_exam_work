@@ -1,16 +1,17 @@
-import styles from "./Navbar.module.css";
+import Link from "next/link";
+import styles from "./navbar.module.css";
 
 export default function Navbar() {
   return (
     <nav className={styles.nav}>
       <div className={styles.left}>
-        <a className={styles.link} href="/">Home</a>
-        <a className={styles.link} href="/subscribe.contributor">Become a contributor</a>
+        <Link className={styles.link} href="/">Home</Link>
+        <Link className={styles.link} href="/subscribe-contributor">Become a contributor</Link>
       </div>
 
       <div className={styles.right}>
-        <a className={styles.link} href="/signup">Sign up</a>
-        <a className={styles.link} href="/login">Login</a>
+        <Link className={styles.link} href="/signup">Sign up</Link>
+        <Link className={styles.link} href="/login">Login</Link>
       </div>
     </nav>
   );
