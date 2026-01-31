@@ -1,4 +1,4 @@
-package com.petra.final_exam_work.controller;
+package com.petra.final_exam_work.controller.member;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
