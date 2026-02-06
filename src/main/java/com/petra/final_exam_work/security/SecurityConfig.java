@@ -45,13 +45,16 @@ public class SecurityConfig {
                         //public
                         .requestMatchers("/auth/**").permitAll()
 
+                        //user
+                        .requestMatchers("/user/me").authenticated()
+
                         //role-based
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/contributor/**").hasRole("CONTRIBUTOR")
                         .requestMatchers("/member/**").hasRole("MEMBER")
 
                         //everything else
-                        .anyRequest().authenticated()
+                        .anyRequest().denyAll()
                 )
 
                 .authenticationProvider(authenticationProvider())
