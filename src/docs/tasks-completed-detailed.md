@@ -83,4 +83,10 @@
   * added a logout in AuthController
   * added logout-button component
 
-## task 6. Me / basic user info
+## task 6. Me / logged in user
+(06/2 -)
+
+  * added a new ApiException
+  * added a new ErrorResponse
+  * added customUserDetails
+  * added MeResponseDto + MeMapperDto + MeService + controller + added in security config
