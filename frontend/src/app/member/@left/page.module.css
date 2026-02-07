@@ -1,0 +1,17 @@
+.wbox{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    background-color: blanchedalmond;
+}
+
+.welcome{
+    font-size: 20px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    margin: 0px;
+}
+
+.username{
+    margin: 0px;
+}

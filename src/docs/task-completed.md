@@ -9,3 +9,4 @@
 * Installed Next.js and made a simple landing page, header, nav, footer, contributor page
 * LogIn using JWT-token & HttpOnly Cookies
 * Logout
+* endpoint (/user/username) - username on logged in user
