@@ -11,6 +11,7 @@ export default function Header(){
                     alt="branch"
                     width={200}
                     height={200}
+                    priority
                 />
             </div>
 
@@ -20,6 +21,7 @@ export default function Header(){
                     alt="branch left"
                     width={200}
                     height={200}
+                    priority
                 />
             </div>
             
