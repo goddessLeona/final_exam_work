@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import styles from "./page.module.css"
 
 export default function MemberLeftSidebar() {
 
@@ -21,7 +22,10 @@ export default function MemberLeftSidebar() {
 
   return (
   <div>{username ? (
-    <p> Welcome, {username}</p>
+    <div className={styles.wbox}>
+        <p className={styles.welcome}> Welcome</p>
+        <p className={styles.username}>{username}</p>
+    </div>
   ) : error ? (
     <p>{error}</p>
   ) : (
