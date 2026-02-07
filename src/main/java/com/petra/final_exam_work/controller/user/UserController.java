@@ -24,7 +24,9 @@ public class UserController {
         this.userService = userService;
     }
 
-// ################################## GET USER NAME #################################################
+
+// ################################## GET username/Me logged in ####################################
+
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/username")
     public ResponseEntity<MeResponse> getUsername(

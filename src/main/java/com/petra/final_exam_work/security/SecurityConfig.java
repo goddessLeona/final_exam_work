@@ -46,7 +46,7 @@ public class SecurityConfig {
                         .requestMatchers("/auth/**").permitAll()
 
                         //user
-                        .requestMatchers("/user/me").authenticated()
+                        .requestMatchers("/user/username").authenticated()
 
                         //role-based
                         .requestMatchers("/admin/**").hasRole("ADMIN")

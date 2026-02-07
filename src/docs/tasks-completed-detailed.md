@@ -84,9 +84,12 @@
   * added logout-button component
 
 ## task 6. Me / logged in user
-(06/2 -)
+(06/2 - 07/2)
 
   * added a new ApiException
   * added a new ErrorResponse
   * added customUserDetails
-  * added MeResponseDto + MeMapperDto + MeService + controller + added in security config
+  * added MeResponseDto + MeMapperDto + MeService + controller (/user/username ) + added in security config
+  * 
+  * added simple css to member/page
+  * added fetch Api frontend
