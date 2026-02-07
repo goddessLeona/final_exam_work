@@ -1,0 +1,21 @@
+.memberLayout {
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  gap: 16px;
+  padding: 16px;
+}
+
+.leftSidebar {
+  border: 1px solid #d32828;
+  padding: 8px;
+}
+
+.centerContent {
+  border: 1px solid #502670;
+  padding: 8px;
+}
+
+.rightSidebar {
+  border: 1px solid #7d0f0f;
+  padding: 8px;
+}
