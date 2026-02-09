@@ -89,7 +89,12 @@
   * added a new ApiException
   * added a new ErrorResponse
   * added customUserDetails
-  * added MeResponseDto + MeMapperDto + MeService + controller (/user/username ) + added in security config
+  * added ResponseDto + MapperDto + Service + controller (/user/username ) + added in security config
   * 
   * added simple css to member/page
   * added fetch Api frontend
+
+## task 6. Sign up contributor
+(08/2)
+
+  * added RequestDto
