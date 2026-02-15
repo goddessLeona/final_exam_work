@@ -1,4 +1,4 @@
-package com.petra.final_exam_work.service;
+package com.petra.final_exam_work.service.user;
 
 import com.petra.final_exam_work.dto.mapperDto.MeMapper;
 import com.petra.final_exam_work.dto.responseDto.MeResponse;
@@ -31,5 +31,5 @@ public class UserService {
         return meMapper.toDto(user);
     }
 
-
+// #################################Contributor sign up #########################
 }

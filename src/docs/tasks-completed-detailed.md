@@ -94,7 +94,14 @@
   * added simple css to member/page
   * added fetch Api frontend
 
-## task 6. Sign up contributor
-(08/2)
+## task 7. Sign up contributor
+(08/2) (14/2-)
 
-  * added RequestDto
+  * added RequestDto 
+  * 
+  * added dependency - Mapstruct 
+  * added ContributorSignUpMapper
+  * added  a custom validate - confirm password, used in RequestDto
+  * moved logic from AuthController to AuthService (missed that before)
+  * 
+  * added a ContributorSignUp in UserService

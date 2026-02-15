@@ -1,7 +1,11 @@
 package com.petra.final_exam_work.dto.requestDto;
 
+import com.petra.final_exam_work.customValidate.PasswordMatches;
 import jakarta.validation.constraints.*;
 
+import java.time.Year;
+
+@PasswordMatches
 public class ContributorSignUpRequest {
 
     @NotBlank(message = "Username is required")
@@ -33,19 +37,20 @@ public class ContributorSignUpRequest {
             message = "Last name can only contain letters ")
     private String lastName;
 
-    @NotNull
+    @NotNull(message = "You have to add the month you where born")
     @Min(1) @Max(12)
     private Integer birthMonth;
 
-    @NotNull( message = "You have to add the year and month you where born")
-    @Min(4) @Max(4)
-    private Integer born;
+    @NotNull( message = "You have to add the year your where born")
+    @Min(1900)
+    @Max(2100)
+    private Integer birthYear;
 
     public ContributorSignUpRequest() {
     }
 
     public ContributorSignUpRequest(String username, String password, String confirmPassword, String email,
-                                    String firstName, String lastName, Integer birthMonth, Integer born) {
+                                    String firstName, String lastName, Integer birthMonth, Integer birthYear) {
         this.username = username;
         this.password = password;
         this.confirmPassword = confirmPassword;
@@ -53,7 +58,7 @@ public class ContributorSignUpRequest {
         this.firstName = firstName;
         this.lastName = lastName;
         this.birthMonth = birthMonth;
-        this.born = born;
+        this.birthYear = birthYear;
     }
 
     public String getUsername() {
@@ -112,11 +117,11 @@ public class ContributorSignUpRequest {
         this.birthMonth = birthMonth;
     }
 
-    public Integer getBorn() {
-        return born;
+    public Integer getBirthYear() {
+        return birthYear;
     }
 
-    public void setBorn(Integer born) {
-        this.born = born;
+    public void setBorn(Integer birthYear) {
+        this.birthYear = birthYear;
     }
 }

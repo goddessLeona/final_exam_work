@@ -1,11 +1,9 @@
 package com.petra.final_exam_work.controller.user;
 
 import com.petra.final_exam_work.dto.responseDto.MeResponse;
-import com.petra.final_exam_work.entity.user.User;
 import com.petra.final_exam_work.exception.ApiException;
 import com.petra.final_exam_work.security.CustomUserDetails;
-import com.petra.final_exam_work.security.CustomUserDetailsService;
-import com.petra.final_exam_work.service.UserService;
+import com.petra.final_exam_work.service.user.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;

@@ -1,40 +1,31 @@
-package com.petra.final_exam_work.controller.user;
+package com.petra.final_exam_work.service.auth;
 
 import com.petra.final_exam_work.dto.requestDto.LoginRequest;
 import com.petra.final_exam_work.dto.responseDto.LoginResponse;
 import com.petra.final_exam_work.security.JwtService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.validation.Valid;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/auth")
-public class AuthController {
+@Service
+public class AuthService {
 
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
 
-    public AuthController(AuthenticationManager authenticationManager, JwtService jwtService) {
+    public AuthService(AuthenticationManager authenticationManager, JwtService jwtService) {
         this.authenticationManager = authenticationManager;
         this.jwtService = jwtService;
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(
-            @Valid @RequestBody LoginRequest request,
-            HttpServletResponse response){
+    public LoginResponse login(LoginRequest request, HttpServletResponse response){
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -64,13 +55,10 @@ public class AuthController {
                 .map(GrantedAuthority::getAuthority)
                 .toList();
 
-        return ResponseEntity.ok(
-                new LoginResponse(roles)
-        );
+        return new LoginResponse(roles);
     }
 
-    @PostMapping("/logout")
-    public ResponseEntity<?> logout(HttpServletResponse response){
+    public void logout(HttpServletResponse response){
 
         Cookie cookie = new Cookie("jwt", null);
         cookie.setHttpOnly(true);
@@ -79,8 +67,5 @@ public class AuthController {
         cookie.setMaxAge(0); // delete cookie immediately
 
         response.addCookie(cookie);
-
-        return ResponseEntity.ok().body("Logged out successfully");
-
     }
 }

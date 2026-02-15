@@ -1,4 +1,4 @@
-import Header from "@/components/header";
+import Header from "@/components/Header";
 import NavbarMember from "@/components/navbar-member";
 import Footer from "@/components/footer";
 
