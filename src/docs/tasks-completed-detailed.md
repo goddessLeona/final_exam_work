@@ -89,13 +89,13 @@
   * added a new ApiException
   * added a new ErrorResponse
   * added customUserDetails
-  * added ResponseDto + MapperDto + Service + controller (/user/username ) + added in security config
+  * added ResponseDto + MapperDto + Service + controller ( @Get /user/username ) + added in security config
   * 
   * added simple css to member/page
   * added fetch Api frontend
 
 ## task 7. Sign up contributor
-(08/2) (14/2-)
+(08/2, 14/2, 16/2)
 
   * added RequestDto 
   * 
@@ -105,3 +105,7 @@
   * moved logic from AuthController to AuthService (missed that before)
   * 
   * added a ContributorSignUp in UserService
+  * added a RoleRepository
+  * added a contributorResponse 
+  * added endpoint in controller (@Post user/signUp-contributor)
+  * added in security config

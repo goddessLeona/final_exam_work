@@ -12,7 +12,7 @@ public interface ContributorSignUpMapper {
     @Mapping(target = "publicUuid", ignore = true)
     @Mapping(target = "username")
     @Mapping(target = "password", ignore = true)
-    @Mapping(target = "email", expression = "java(request.getEmail().toLowerCase())")
+    @Mapping(target = "email", expression = "java(request.getEmail() != null ? request.getEmail().toLowerCase() : null)")
     @Mapping(target = "firstName")
     @Mapping(target = "lastName")
     @Mapping(target = "createdAt", ignore = true)

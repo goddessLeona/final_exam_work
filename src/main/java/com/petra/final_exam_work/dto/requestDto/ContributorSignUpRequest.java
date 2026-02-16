@@ -37,28 +37,34 @@ public class ContributorSignUpRequest {
             message = "Last name can only contain letters ")
     private String lastName;
 
-    @NotNull(message = "You have to add the month you where born")
-    @Min(1) @Max(12)
-    private Integer birthMonth;
-
     @NotNull( message = "You have to add the year your where born")
     @Min(1900)
     @Max(2100)
     private Integer birthYear;
 
+    @NotNull(message = "You have to add the month you where born")
+    @Min(1) @Max(12)
+    private Integer birthMonth;
+
+    @NotNull(message = "You have to add the date you where born")
+    @Min(1) @Max(31)
+    private Integer birthDay;
+
     public ContributorSignUpRequest() {
     }
 
     public ContributorSignUpRequest(String username, String password, String confirmPassword, String email,
-                                    String firstName, String lastName, Integer birthMonth, Integer birthYear) {
+                                    String firstName, String lastName, Integer birthYear, Integer birthMonth,
+                                    Integer birthDay) {
         this.username = username;
         this.password = password;
         this.confirmPassword = confirmPassword;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.birthMonth = birthMonth;
         this.birthYear = birthYear;
+        this.birthMonth = birthMonth;
+        this.birthDay = birthDay;
     }
 
     public String getUsername() {
@@ -109,6 +115,14 @@ public class ContributorSignUpRequest {
         this.lastName = lastName;
     }
 
+    public Integer getBirthYear() {
+        return birthYear;
+    }
+
+    public void setBirthYear(Integer birthYear) {
+        this.birthYear = birthYear;
+    }
+
     public Integer getBirthMonth() {
         return birthMonth;
     }
@@ -117,11 +131,11 @@ public class ContributorSignUpRequest {
         this.birthMonth = birthMonth;
     }
 
-    public Integer getBirthYear() {
-        return birthYear;
+    public Integer getBirthDay() {
+        return birthDay;
     }
 
-    public void setBorn(Integer birthYear) {
-        this.birthYear = birthYear;
+    public void setBirthDay(Integer birthDay) {
+        this.birthDay = birthDay;
     }
 }
