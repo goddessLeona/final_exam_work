@@ -55,6 +55,7 @@ public class AuthService {
                 .map(GrantedAuthority::getAuthority)
                 .toList();
 
+        System.out.println("Authorities at login: " + roles);
         return new LoginResponse(roles);
     }
 

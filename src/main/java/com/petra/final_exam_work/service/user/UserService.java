@@ -59,7 +59,7 @@ public class UserService {
         }
 
         //check if email already exist
-        if(userRepository.existByEmail(request.getEmail())){
+        if(userRepository.existsByEmail(request.getEmail())){
             throw new IllegalArgumentException("Email already exist");
         }
 
@@ -84,7 +84,7 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(request.getPassword()));
 
         //Get role Contributor
-        Role contributorRole = roleRepository.findByName("ROLE_CONTRIBUTOR")
+        Role contributorRole = roleRepository.findByRole("ROLE_CONTRIBUTOR")
                 .orElseThrow(() -> new ApiException("Role not found", HttpStatus.NOT_FOUND));
 
         user.setRoles(Set.of(contributorRole));

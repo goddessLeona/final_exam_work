@@ -53,4 +53,14 @@ public class UserController {
                 .body(response);
     }
 
+
+    //##########test#######3
+
+
+
+    @GetMapping("/test")
+    public String contributorTest(){
+            return "Hello MEMBER, you are now authenticated !";
+        }
+
 }

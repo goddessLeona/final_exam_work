@@ -53,6 +53,7 @@ public class SecurityConfig {
                         //role-based
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .requestMatchers("/contributor/**").hasRole("CONTRIBUTOR")
+                        .requestMatchers("/user/test").hasRole("CONTRIBUTOR")
                         .requestMatchers("/member/**").hasRole("MEMBER")
 
                         //everything else
