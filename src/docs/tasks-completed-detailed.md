@@ -95,7 +95,7 @@
   * added fetch Api frontend
 
 ## task 7. Sign up contributor
-(08/2, 14/2, 16/2)
+(08/2, 14/2, 16/2-17/2)
 
   * added RequestDto 
   * 
@@ -109,3 +109,6 @@
   * added a contributorResponse 
   * added endpoint in controller (@Post user/signUp-contributor)
   * added in security config
+  * 
+  * added a components/forms/subscribeContributorForm
+  * added a lib/api/user Where I added the fetch

@@ -36,7 +36,6 @@ export default function SubscribeContributorForm() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log("submitting form...", formData);
         setLoading(true);
         setSucces("");
         setError({});
@@ -79,8 +78,12 @@ export default function SubscribeContributorForm() {
     };
 
     return (
+
+        <main className={styles.container}>
         <form onSubmit ={handleSubmit}>
             <div className={styles.formBox}>
+
+                <h1> SignUp Contributor</h1>
 
                 <div className={styles.field}>
                     <label htmlFor="username">Username</label>
@@ -199,13 +202,15 @@ export default function SubscribeContributorForm() {
                     {error.birthDay && (<p className={styles.error}>{error.birthDay}</p>)}
                 </div>
 
-            </div>
+            
 
-            <button type= "submit" disabled = {loading}> {loading ? "Signing up..." : "Sign up" }</button>
+            <button className = {styles.btn} type= "submit" disabled = {loading}> {loading ? "Signing up..." : "Sign up" }</button>
             {success && <p className={styles.success}>{success}</p>}
             {error.general && <p className={styles.error}>{error.general}</p>}
 
+            </div>
 
         </form>
+        </main>
     )
 }
