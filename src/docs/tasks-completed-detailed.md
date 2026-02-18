@@ -95,7 +95,7 @@
   * added fetch Api frontend
 
 ## task 7. Sign up contributor
-(08/2, 14/2, 16/2-17/2)
+(08/2, 14/2, 16/2-18/2)
 
   * added RequestDto 
   * 
@@ -112,7 +112,7 @@
   * 
   * added a components/forms/subscribeContributorForm
   * added a lib/api/user Where I added the fetch
-
-**Still not working: error messages: email already exist, user is under 18, username already exist**
+  * 
+  * added error messages in fields
 
 ## task 7. contributor dashboard

@@ -10,3 +10,4 @@
 * LogIn using JWT-token & HttpOnly Cookies
 * Logout
 * endpoint (/user/username) - username on logged in user
+* SignUp -contributor  endpoint (@Post user/signUp-contributor)
