@@ -112,3 +112,7 @@
   * 
   * added a components/forms/subscribeContributorForm
   * added a lib/api/user Where I added the fetch
+
+**Still not working: error messages: email already exist, user is under 18, username already exist**
+
+## task 7. contributor dashboard
