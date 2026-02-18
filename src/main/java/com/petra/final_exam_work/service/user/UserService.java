@@ -74,7 +74,7 @@ public class UserService {
         int age = Period.between(birthDay,today).getYears();
 
         if(age < 18){
-            throw new IllegalArgumentException("You must be at least 18 years old to upload content");
+            throw new ApiException("You must be at least 18 years old to upload content", HttpStatus.BAD_REQUEST);
         }
 
         // Map DTO to Entity
