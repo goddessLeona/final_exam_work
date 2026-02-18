@@ -7,9 +7,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class MeMapper {
 
-    public MeResponse toDto(User user){
+    public MeResponse toDto(User user) {
 
-        if(user == null){
+        if (user == null) {
             return null;
         }
 

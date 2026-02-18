@@ -30,9 +30,9 @@ public class UserController {
     @GetMapping("/username")
     public ResponseEntity<MeResponse> getUsername(
             @AuthenticationPrincipal CustomUserDetails userDetails
-    ){
+    ) {
 
-        if(userDetails == null){
+        if (userDetails == null) {
             throw new ApiException("User not authenticated", HttpStatus.UNAUTHORIZED);
         }
 
@@ -44,7 +44,7 @@ public class UserController {
     @PostMapping("/signup-contributor")
     public ResponseEntity<ContributorSignUpResponse> signUpContributor (
             @Valid @RequestBody ContributorSignUpRequest request
-    ){
+    ) {
 
         ContributorSignUpResponse response = userService.signUpContributor(request);
 
@@ -59,8 +59,8 @@ public class UserController {
 
 
     @GetMapping("/test")
-    public String contributorTest(){
-            return "Hello MEMBER, you are now authenticated !";
+    public String contributorTest() {
+        return "Hello MEMBER, you are now authenticated !";
         }
 
 }

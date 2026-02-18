@@ -12,29 +12,30 @@ public class CustomUserDetails implements UserDetails {
     private String password;
     private Collection<? extends GrantedAuthority> authorities;
 
-    public CustomUserDetails(UUID publicUuid, String username, String password, Collection<? extends GrantedAuthority> authorities){
+    public CustomUserDetails(UUID publicUuid, String username, String password,
+                             Collection<? extends GrantedAuthority> authorities) {
         this.publicUuid = publicUuid;
         this.username = username;
         this.password = password;
         this.authorities = authorities;
     }
 
-    public UUID getPublicUuid(){
+    public UUID getPublicUuid() {
         return publicUuid;
     }
 
     @Override
-    public Collection<? extends GrantedAuthority> getAuthorities(){
+    public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;
     }
 
     @Override
-    public String getPassword(){
+    public String getPassword() {
         return password;
     }
 
     @Override
-    public String getUsername(){
+    public String getUsername() {
         return username;
     }
 

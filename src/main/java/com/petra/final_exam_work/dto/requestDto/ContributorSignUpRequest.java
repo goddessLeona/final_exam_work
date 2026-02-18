@@ -9,7 +9,7 @@ import java.time.Year;
 public class ContributorSignUpRequest {
 
     @NotBlank(message = "Username is required")
-    @Size(min = 5, max = 64, message= "username must be between 5 and 64 characters")
+    @Size(min = 5, max = 64, message = "username must be between 5 and 64 characters")
     private String username;
 
     @NotBlank(message = "password is required")

@@ -41,7 +41,7 @@ public class UserService {
 
 //#################################### GET USERNAME ############################
 
-    public MeResponse getusername(UUID publicid){
+    public MeResponse getusername(UUID publicid) {
 
         User user = userRepository.findByPublicUuid(publicid)
                 .orElseThrow(() -> new ApiException("User was not found", HttpStatus.NOT_FOUND));
@@ -51,15 +51,15 @@ public class UserService {
 
 // #################################Contributor sign up #########################
     @Transactional
-    public ContributorSignUpResponse signUpContributor (ContributorSignUpRequest request){
+    public ContributorSignUpResponse signUpContributor (ContributorSignUpRequest request) {
 
         //check if username already exist
-        if(userRepository.existsByUsername(request.getUsername())){
+        if (userRepository.existsByUsername(request.getUsername())) {
             throw new ApiException("Username already exist", HttpStatus.BAD_REQUEST);
         }
 
         //check if email already exist
-        if(userRepository.existsByEmail(request.getEmail())){
+        if (userRepository.existsByEmail(request.getEmail())) {
             throw new ApiException("Email already exist", HttpStatus.BAD_REQUEST);
         }
 
@@ -71,9 +71,9 @@ public class UserService {
                 request.getBirthDay()
         );
 
-        int age = Period.between(birthDay,today).getYears();
+        int age = Period.between(birthDay, today).getYears();
 
-        if(age < 18){
+        if (age < 18) {
             throw new ApiException("You must be at least 18 years old to upload content", HttpStatus.BAD_REQUEST);
         }
 
