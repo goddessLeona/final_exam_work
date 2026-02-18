@@ -28,7 +28,6 @@ export default function SubscribeContributorForm() {
     birthDay: "",
 });
 
-
     const [error, setError] = useState<Record<string, string>>({});
     const [loading, setLoading] = useState(false);
     const [success, setSucces] = useState("");
@@ -59,7 +58,33 @@ export default function SubscribeContributorForm() {
     setError({});
 
     } catch (err: any) {
-        setError(err);
+
+        console.log("cought error: " , err);
+
+        if (err.message === "Username already exist") {
+        setError({ username: err.message });
+        return;
+        }
+
+        if(err.message === "Email already exist"){
+            setError({email: err.message});
+            return;
+        }
+
+        if(err.message === "You must be at least 18 years old to upload content"){
+            setError({birthDay: err.message});
+            return;
+        }
+        
+        if(typeof err === "object" && err !=null){
+            setError(err);
+            return
+        }
+
+
+        setError({general: err.message});
+
+
     } finally {
     setLoading(false);
     }

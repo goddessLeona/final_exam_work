@@ -55,12 +55,12 @@ public class UserService {
 
         //check if username already exist
         if(userRepository.existsByUsername(request.getUsername())){
-            throw new IllegalArgumentException("Username already exist");
+            throw new ApiException("Username already exist", HttpStatus.BAD_REQUEST);
         }
 
         //check if email already exist
         if(userRepository.existsByEmail(request.getEmail())){
-            throw new IllegalArgumentException("Email already exist");
+            throw new ApiException("Email already exist", HttpStatus.BAD_REQUEST);
         }
 
         //simple check if user is over 18 years old
@@ -74,7 +74,7 @@ public class UserService {
         int age = Period.between(birthDay,today).getYears();
 
         if(age < 18){
-            throw new IllegalArgumentException("You must be at least 18 years old to upload content");
+            throw new ApiException("You must be at least 18 years old to upload content", HttpStatus.BAD_REQUEST);
         }
 
         // Map DTO to Entity
@@ -84,7 +84,7 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(request.getPassword()));
 
         //Get role Contributor
-        Role contributorRole = roleRepository.findByRole("ROLE_CONTRIBUTOR")
+        Role contributorRole = roleRepository.findByRole("CONTRIBUTOR")
                 .orElseThrow(() -> new ApiException("Role not found", HttpStatus.NOT_FOUND));
 
         user.setRoles(Set.of(contributorRole));
