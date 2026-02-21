@@ -1,0 +1,52 @@
+package com.petra.final_exam_work.service.contributor;
+
+import com.petra.final_exam_work.dto.mapperDto.ContributorMeMapper;
+import com.petra.final_exam_work.dto.responseDto.ContributorMeResponse;
+import com.petra.final_exam_work.entity.consentForm.ConsentStatus;
+import com.petra.final_exam_work.entity.user.User;
+import com.petra.final_exam_work.exception.ApiException;
+import com.petra.final_exam_work.repository.PhotoAlbumRepository;
+import com.petra.final_exam_work.repository.UserConsentFormRepository;
+import com.petra.final_exam_work.repository.UserRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
+
+@Service
+public class ContributorService {
+
+    private final UserRepository userRepository;
+    private final PhotoAlbumRepository photoAlbumRepository;
+    private final UserConsentFormRepository userConsentFormRepository;
+    private final ContributorMeMapper contributorMeMapper;
+
+    public ContributorService(UserRepository userRepository, PhotoAlbumRepository photoAlbumRepository, UserConsentFormRepository userConsentFormRepository, ContributorMeMapper contributorMeMapper) {
+        this.userRepository = userRepository;
+        this.photoAlbumRepository = photoAlbumRepository;
+        this.userConsentFormRepository = userConsentFormRepository;
+        this.contributorMeMapper = contributorMeMapper;
+    }
+
+    public ContributorMeResponse getMe(Long userId) {
+
+        User user = userRepository.findByUserId(userId)
+                .orElseThrow(() -> new ApiException("User was not found", HttpStatus.NOT_FOUND));
+
+        ConsentStatus consentStatus = null;
+        Integer albumCount = null;
+        String message = null;
+
+        if(Boolean.TRUE.equals(user.getIsContributor())) {
+            albumCount = (int) photoAlbumRepository.countByOwnerId(userId);
+
+        }else{
+            consentStatus = userConsentFormRepository.findStatusByUserId(userId).orElse(null);
+
+            if(consentStatus == null){
+                message = "You have to fill in your consent form to be able to upload content";
+            }
+        }
+
+        return contributorMeMapper.toResponse(user, consentStatus, albumCount, message);
+    }
+
+}

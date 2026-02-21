@@ -129,12 +129,12 @@ public class User {
         this.lastName = lastName;
     }
 
-    public Boolean getContributor() {
+    public Boolean getIsContributor() {
         return isContributor;
     }
 
-    public void setContributor(Boolean contributor) {
-        isContributor = contributor;
+    public void setIsContributor(Boolean isContributor) {
+        this.isContributor = isContributor;
     }
 
     public Instant getCreatedAt() {
