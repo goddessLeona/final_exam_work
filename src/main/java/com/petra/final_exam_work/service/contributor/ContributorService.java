@@ -1,7 +1,9 @@
 package com.petra.final_exam_work.service.contributor;
 
 import com.petra.final_exam_work.dto.mapperDto.ContributorMeMapper;
+import com.petra.final_exam_work.dto.mapperDto.ContributorWelcomeMapper;
 import com.petra.final_exam_work.dto.responseDto.ContributorMeResponse;
+import com.petra.final_exam_work.dto.responseDto.ContributorWelcomeResponse;
 import com.petra.final_exam_work.entity.consentForm.ConsentStatus;
 import com.petra.final_exam_work.entity.user.User;
 import com.petra.final_exam_work.exception.ApiException;
@@ -21,12 +23,14 @@ public class ContributorService {
     private final PhotoAlbumRepository photoAlbumRepository;
     private final UserConsentFormRepository userConsentFormRepository;
     private final ContributorMeMapper contributorMeMapper;
+    private final ContributorWelcomeMapper contributorWelcomeMapper;
 
-    public ContributorService(UserRepository userRepository, PhotoAlbumRepository photoAlbumRepository, UserConsentFormRepository userConsentFormRepository, ContributorMeMapper contributorMeMapper) {
+    public ContributorService(UserRepository userRepository, PhotoAlbumRepository photoAlbumRepository, UserConsentFormRepository userConsentFormRepository, ContributorMeMapper contributorMeMapper, ContributorWelcomeMapper contributorWelcomeMapper) {
         this.userRepository = userRepository;
         this.photoAlbumRepository = photoAlbumRepository;
         this.userConsentFormRepository = userConsentFormRepository;
         this.contributorMeMapper = contributorMeMapper;
+        this.contributorWelcomeMapper = contributorWelcomeMapper;
     }
 
     public ContributorMeResponse getInfoContributor() {
@@ -53,6 +57,24 @@ public class ContributorService {
         }
 
         return contributorMeMapper.toResponse(user, consentStatus, albumCount, message);
+    }
+
+    public ContributorWelcomeResponse getWelcomeMessage(){
+
+        UUID publicUuid = SecurityUtils.getCurrentUserPublicUuid();
+        User user = userRepository.findByPublicUuid(publicUuid)
+                .orElseThrow(() -> new ApiException("User was not found", HttpStatus.NOT_FOUND));
+
+        String message = null;
+
+        if (user.isContributor()){
+            message = "Welcome back contributor!";
+        }else{
+            message = "Welcome new contributor! Hope you will enjoy our smale community. Before you are able to " +
+                    "contribute and post your own photos or enter member pages, you have to fill in the agreement forms.";
+        }
+
+        return contributorWelcomeMapper.toResponse(user, message);
     }
 
 }

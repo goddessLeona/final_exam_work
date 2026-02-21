@@ -116,8 +116,16 @@
   * added error messages in fields
 
 ## task 7. contributor dashboard
+### welcome message to contributor
+### info about contributor
 (21/2)
 
+(info-contributor)
   * added ResponseDto + Mapper + service
   * added SecurityUtils
-  * added controller
+  * added controller (GET contributor/info)
+  * added endpoint in security config
+
+(welcome message)
+  * added ResponseDto + Mapper + service
+  * added controller (Get contributor/welcome)
