@@ -10,6 +10,7 @@ import com.petra.final_exam_work.entity.user.User;
 import com.petra.final_exam_work.exception.ApiException;
 import com.petra.final_exam_work.repository.RoleRepository;
 import com.petra.final_exam_work.repository.UserRepository;
+import com.petra.final_exam_work.security.SecurityUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -41,9 +42,10 @@ public class UserService {
 
 //#################################### GET USERNAME ############################
 
-    public MeResponse getusername(UUID publicid) {
+    public MeResponse getUsername() {
 
-        User user = userRepository.findByPublicUuid(publicid)
+        UUID publicUuid = SecurityUtils.getCurrentUserPublicUuid();
+        User user = userRepository.findByPublicUuid(publicUuid)
                 .orElseThrow(() -> new ApiException("User was not found", HttpStatus.NOT_FOUND));
 
         return meMapper.toDto(user);

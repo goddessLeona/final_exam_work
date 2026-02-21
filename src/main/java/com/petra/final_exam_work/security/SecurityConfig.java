@@ -47,14 +47,12 @@ public class SecurityConfig {
                         .requestMatchers("/auth/logout").permitAll()
                         .requestMatchers("/user/signup-contributor").permitAll()
 
-                        //user
+                        //All loggedIn
                         .requestMatchers("/user/username").authenticated()
 
                         //role-based
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/contributor/**").hasRole("CONTRIBUTOR")
                         .requestMatchers("/user/test").hasRole("CONTRIBUTOR")
-                        .requestMatchers("/member/**").hasRole("MEMBER")
+                        .requestMatchers("/contributor/info").hasRole("CONTRIBUTOR")
 
                         //everything else
                         .anyRequest().denyAll()

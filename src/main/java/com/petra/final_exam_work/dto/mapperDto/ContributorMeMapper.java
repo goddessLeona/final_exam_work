@@ -9,9 +9,9 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface ContributorMeMapper {
 
-    @Mapping(target = "username", source = "user.userName")
-    @Mapping(target = "yearSignedUp", expression = "java(user.getCreatedAt().getYear())")
-    @Mapping(target = "isContributor", source = "user.isContributor")
+    @Mapping(target = "username", source = "user.username")
+    @Mapping(target = "yearSignedUp", expression = "java(user.getCreatedAt().atZone(java.time.ZoneId.systemDefault()).getYear())")
+    @Mapping(target = "contributor", source = "user.contributor")
     @Mapping(
             target = "consentStatus",
             expression = "java(user.isContributor() ? null : consentStatus)")

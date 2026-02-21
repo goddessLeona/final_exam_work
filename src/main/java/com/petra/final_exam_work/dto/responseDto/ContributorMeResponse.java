@@ -7,7 +7,7 @@ public class ContributorMeResponse {
     private String username;
     private Integer yearSignedUp;
 
-    private boolean isContributor;
+    private boolean contributor;
     private ConsentStatus consentStatus;
 
     private Integer countPhotoAlbums;
@@ -17,11 +17,11 @@ public class ContributorMeResponse {
     public ContributorMeResponse() {
     }
 
-    public ContributorMeResponse(String username, Integer yearSignedUp, boolean isContributor,
+    public ContributorMeResponse(String username, Integer yearSignedUp, boolean contributor,
                                  ConsentStatus consentStatus, Integer countPhotoAlbums, String message) {
         this.username = username;
         this.yearSignedUp = yearSignedUp;
-        this.isContributor = isContributor;
+        this.contributor = contributor;
         this.consentStatus = consentStatus;
         this.countPhotoAlbums = countPhotoAlbums;
         this.message = message;
@@ -44,11 +44,11 @@ public class ContributorMeResponse {
     }
 
     public boolean isContributor() {
-        return isContributor;
+        return contributor;
     }
 
     public void setContributor(boolean contributor) {
-        isContributor = contributor;
+        this.contributor = contributor;
     }
 
     public ConsentStatus getConsentStatus() {

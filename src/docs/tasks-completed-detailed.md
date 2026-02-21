@@ -116,5 +116,8 @@
   * added error messages in fields
 
 ## task 7. contributor dashboard
+(21/2)
 
   * added ResponseDto + Mapper + service
+  * added SecurityUtils
+  * added controller

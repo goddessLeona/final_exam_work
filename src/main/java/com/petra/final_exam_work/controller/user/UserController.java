@@ -32,11 +32,7 @@ public class UserController {
             @AuthenticationPrincipal CustomUserDetails userDetails
     ) {
 
-        if (userDetails == null) {
-            throw new ApiException("User not authenticated", HttpStatus.UNAUTHORIZED);
-        }
-
-        return ResponseEntity.ok(userService.getusername(userDetails.getPublicUuid()));
+        return ResponseEntity.ok(userService.getUsername());
     }
 
 // ################################## Sign up contributor ##############################
@@ -54,7 +50,7 @@ public class UserController {
     }
 
 
-    //##########test#######3
+    //##########test####### REMOVE LATER
 
 
 
