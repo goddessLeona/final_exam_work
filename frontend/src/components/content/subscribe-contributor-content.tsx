@@ -1,5 +1,5 @@
 
-import SubscribeContributorForm from "./forms/subscribeContributorForm";
+import SubscribeContributorForm from "../forms/subscribeContributorForm";
 
 export default function SubscribeContributorContent() {
   return (

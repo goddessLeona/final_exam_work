@@ -50,13 +50,4 @@ public class UserController {
     }
 
 
-    //##########test####### REMOVE LATER
-
-
-
-    @GetMapping("/test")
-    public String contributorTest() {
-        return "Hello MEMBER, you are now authenticated !";
-        }
-
 }

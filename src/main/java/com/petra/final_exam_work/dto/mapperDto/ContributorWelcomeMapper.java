@@ -8,8 +8,8 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface ContributorWelcomeMapper {
 
-    @Mapping(target = "contributor")
-    @Mapping(target = "message", source = "user.contributo")
+    @Mapping(target = "contributor", source = "user.contributor")
+    @Mapping(target = "message", source = "message")
     ContributorWelcomeResponse toResponse(
             User user,
             String message

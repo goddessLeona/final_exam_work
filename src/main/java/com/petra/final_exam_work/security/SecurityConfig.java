@@ -51,7 +51,6 @@ public class SecurityConfig {
                         .requestMatchers("/user/username").authenticated()
 
                         //role-based
-                        .requestMatchers("/user/test").hasRole("CONTRIBUTOR")
                         .requestMatchers("/contributor/info").hasRole("CONTRIBUTOR")
                         .requestMatchers("/contributor/welcome").hasRole("CONTRIBUTOR")
 
