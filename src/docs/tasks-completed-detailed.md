@@ -116,9 +116,9 @@
   * added error messages in fields
 
 ## task 8. contributor dashboard
-(21/2- 22/2)
+(21/2 - 22/2)
 
-(info-contributor)
+(info -contributor)
   * added ResponseDto + Mapper + service
   * added SecurityUtils
   * added controller (GET contributor/info)
@@ -130,7 +130,10 @@
   * added contributor nav, and contributor pages
   * added fetch in lib/api/contributor
 
-## task 9. contributor - consent form 
+## task 9. contributor - consent form
+()
+
+
 
 
 
