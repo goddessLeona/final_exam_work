@@ -9,9 +9,9 @@ export default function Home() {
         <h1>Welcome to my examen project</h1> 
         <p>A member-based platform for members and contributors.</p>
         </div>
-        <div className={styles.intro}>
-          <h1>MVP-Requirements</h1>
-          <p className= {styles.textTitles}>Content & Access</p>
+        <div>
+          <h1 className={styles.intro}>MVP-Requirements</h1>
+          <h1 className= {styles.textTitles}>Content & Access</h1>
           <div className= {styles.box}>
             <ul>
               <li>Contributors can upload content from their dashboard pages to the member pages</li>
@@ -27,14 +27,14 @@ export default function Home() {
             </ul>
           </div>
 
-          <p className= {styles.textTitles}>Discovery & Search</p>  
+          <h1 className={styles.textTitles}>Discovery & Search</h1>  
           <div className= {styles.box}>
             <ul>
               <li>Members can search for content by specific contributor</li>
               <li>Members can search for content by tags (e.g. vacation, year, nature)</li>
             </ul>
           </div>
-          <p className= {styles.textTitles}>Technical Stack</p>   
+          <h1 className= {styles.textTitles}>Technical Stack</h1>   
           <div className= {styles.box}>
             <ul>
               <li>Backend: Java Spring Boot</li>

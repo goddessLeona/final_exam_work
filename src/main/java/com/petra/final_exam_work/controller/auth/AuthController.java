@@ -24,13 +24,13 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(
             @Valid @RequestBody LoginRequest request,
-            HttpServletResponse response){
+            HttpServletResponse response) {
 
         return ResponseEntity.ok( authService.login(request, response));
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<?> logout(HttpServletResponse response){
+    public ResponseEntity<?> logout(HttpServletResponse response) {
 
         authService.logout(response);
 

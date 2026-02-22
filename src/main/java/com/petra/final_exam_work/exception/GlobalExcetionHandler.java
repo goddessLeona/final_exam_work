@@ -17,14 +17,14 @@ public class GlobalExcetionHandler {
 
     //401
     @ExceptionHandler(BadCredentialsException.class)
-    public ResponseEntity<?> handleBadCredentials(){
+    public ResponseEntity<?> handleBadCredentials() {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
                 .body(Map.of("error", "invalid credentials"));
     }
 
     //403
     @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<?> handleAccessDenied(){
+    public ResponseEntity<?> handleAccessDenied() {
         return ResponseEntity.status(HttpStatus.FORBIDDEN)
         .body(Map.of("error", "Access denied"));
     }
@@ -33,7 +33,7 @@ public class GlobalExcetionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<Map<String, String>> handleValidation(
             MethodArgumentNotValidException ex
-    ){
+    ) {
         Map<String, String> errors = new HashMap<>();
 
         ex.getBindingResult().getFieldErrors().forEach(error ->
@@ -44,7 +44,7 @@ public class GlobalExcetionHandler {
 
     //Api exceptions and response
     @ExceptionHandler(ApiException.class)
-    public ResponseEntity<ErrorResponse>handleApiException(ApiException ex){
+    public ResponseEntity<ErrorResponse>handleApiException(ApiException ex) {
 
         ErrorResponse error = new ErrorResponse(
                 ex.getMessage(),

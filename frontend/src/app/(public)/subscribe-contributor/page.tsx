@@ -1,4 +1,5 @@
-import SubscribeContributorContent from "@/components/subscribe-contributor-content";
+
+import SubscribeContributorContent from "@/components/content/subscribe-contributor-content";
 
 export default function SubscribeContributorPublicPage() {
   return <SubscribeContributorContent />

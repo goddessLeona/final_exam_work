@@ -1,41 +1,25 @@
+
 "use client";
 
 import { useEffect, useState } from "react";
+import { getWelcomeMessage, WelcomeResponse} from "@/lib/api/contributor";
 
-export default function ContributorPage(){
-    const [message, setMessage] = useState("");
+export default function Welcome() {
+    const [data, setData] = useState<WelcomeResponse | null>(null);
     const [error, setError] = useState("");
 
     useEffect(() => {
-        const token = localStorage.getItem("token");
-
-        if(!token){
-            setError("No token found. Please log in.");
-            return;
-        }
-
-        fetch("http://localhost:8080/user/test", {
-            credentials: "include"
-        })
-
-        .then((res) => {
-            if(!res.ok){
-                throw new Error("Unauthorized");
-            }
-            return res.text();
-        })
-
-        .then((data) => setMessage(data))
-        .catch(() => setError("Access denied"));
+        getWelcomeMessage()
+            .then(setData)
+            .catch(() => setError("Not logged in"));
     }, []);
 
-    return(
-        <main style={{ padding: "2rem" }}>
-            <h1> contributor page</h1>
+    if (error) return <p>{error}</p>;
+    if (!data) return <p>Loading...</p>;
 
-            {message && <p>{message}</p>}
-            {error && <p style = {{ color: "red" }}>{error}</p>}
-        </main>
-    );
-
+    return  <div>
+                <p>{data.message}</p>
+             </div>;
 }
+
+

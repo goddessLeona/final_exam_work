@@ -1,6 +1,18 @@
-import { error } from "console";
 
-export async function signUpContributor(data: any) {
+
+export interface signUpResponse {
+   username: string;
+    password: string;
+    confirmPassword: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+    birthYear: number | "";
+    birthMonth: number | "";
+    birthDay: number | "";
+}
+
+export async function signUpContributor(data: signUpResponse) {
     const response = await fetch(
         "http://localhost:8080/user/signup-contributor",
         {
@@ -13,8 +25,7 @@ export async function signUpContributor(data: any) {
 
     if (!response.ok) {
         const errorData = await response.json();
-        console.log("Backend error response:", errorData); 
-
+         
         throw errorData;
     }
 
