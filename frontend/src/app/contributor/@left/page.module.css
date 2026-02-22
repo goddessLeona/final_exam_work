@@ -1,0 +1,17 @@
+.info{
+    display: flex;
+    flex-direction: column;
+}
+
+.user{
+    padding-bottom: 5px;
+    font-weight: 700;
+}
+
+.year{
+    font-weight: 700;
+}
+
+.message{
+    padding-top: 10px;
+}
