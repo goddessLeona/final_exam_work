@@ -25,7 +25,7 @@ public class AuthService {
         this.jwtService = jwtService;
     }
 
-    public LoginResponse login(LoginRequest request, HttpServletResponse response){
+    public LoginResponse login(LoginRequest request, HttpServletResponse response) {
 
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -59,7 +59,7 @@ public class AuthService {
         return new LoginResponse(roles);
     }
 
-    public void logout(HttpServletResponse response){
+    public void logout(HttpServletResponse response) {
 
         Cookie cookie = new Cookie("jwt", null);
         cookie.setHttpOnly(true);

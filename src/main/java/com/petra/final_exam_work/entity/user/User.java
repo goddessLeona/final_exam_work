@@ -46,7 +46,7 @@ public class User {
     private String lastName;
 
     @Column(name = "is_contributor", nullable = false)
-    private Boolean isContributor = false;
+    private boolean contributor;
 
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false, insertable = false)
@@ -71,6 +71,22 @@ public class User {
     }
 
     public User() {
+    }
+
+    public User(Long id, UUID publicUuid, String username, String password, String email, String firstName,
+                String lastName, boolean contributor, Instant createdAt, Set<Role> roles,
+                Set<UserConsentForm> consentForms) {
+        this.id = id;
+        this.publicUuid = publicUuid;
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.contributor = contributor;
+        this.createdAt = createdAt;
+        this.roles = roles;
+        this.consentForms = consentForms;
     }
 
     public Long getId() {
@@ -129,12 +145,12 @@ public class User {
         this.lastName = lastName;
     }
 
-    public Boolean getContributor() {
-        return isContributor;
+    public boolean isContributor() {
+        return contributor;
     }
 
-    public void setContributor(Boolean contributor) {
-        isContributor = contributor;
+    public void setContributor(boolean contributor) {
+        this.contributor = contributor;
     }
 
     public Instant getCreatedAt() {

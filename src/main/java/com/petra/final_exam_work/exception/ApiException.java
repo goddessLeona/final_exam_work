@@ -2,7 +2,7 @@ package com.petra.final_exam_work.exception;
 
 import org.springframework.http.HttpStatus;
 
-public class ApiException extends RuntimeException{
+public class ApiException extends RuntimeException {
 
     private final HttpStatus status;
 

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class MemberController {
 
     @GetMapping("/test")
-    public String memberTest(){
+    public String memberTest() {
         return "Hello MEMBER, you are now authenticated !";
     }
 }

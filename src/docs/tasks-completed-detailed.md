@@ -116,3 +116,23 @@
   * added error messages in fields
 
 ## task 7. contributor dashboard
+welcome message to contributor
+info about contributor
+(21/2- 22/2)
+
+(info-contributor)
+  * added ResponseDto + Mapper + service
+  * added SecurityUtils
+  * added controller (GET contributor/info)
+  * added endpoint in security config
+
+(welcome message)
+  * added ResponseDto + Mapper + service
+  * added controller (Get contributor/welcome)
+  * added contributor nav, and contributor pages
+  * added fetch in lib/api/contribtor
+
+## task 8. contributor - consent form 
+
+
+

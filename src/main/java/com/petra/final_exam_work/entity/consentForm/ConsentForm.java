@@ -48,8 +48,8 @@ public class ConsentForm {
     private Set<UserConsentForm> users = new HashSet<>();
 
     @PrePersist
-    private void prePersist(){
-        if(publicUuid == null){
+    private void prePersist() {
+        if (publicUuid == null) {
             publicUuid = UUID.randomUUID();
         }
     }

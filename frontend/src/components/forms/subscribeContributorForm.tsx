@@ -4,19 +4,7 @@ import { useState } from "react";
 import { signUpContributor } from "@/lib/api/user";
 import styles from "./subscribeContributorForm.module.css"
 
-export default function SubscribeContributorForm() {
-
-    const [formData, setFormData] = useState<{
-    username: string;
-    password: string;
-    confirmPassword: string;
-    email: string;
-    firstName: string;
-    lastName: string;
-    birthYear: number | "";
-    birthMonth: number | "";
-    birthDay: number | "";
-}>({
+const initialFormState = {
     username: "",
     password: "",
     confirmPassword: "",
@@ -26,8 +14,11 @@ export default function SubscribeContributorForm() {
     birthYear: "",
     birthMonth: "",
     birthDay: "",
-});
+    };
 
+export default function SubscribeContributorForm() {
+
+    const [formData, setFormData] = useState(initialFormState);
     const [error, setError] = useState<Record<string, string>>({});
     const [loading, setLoading] = useState(false);
     const [success, setSucces] = useState("");
@@ -55,11 +46,11 @@ export default function SubscribeContributorForm() {
     });
 
     setSucces("Signup was successful!");
+    setFormData(initialFormState);
     setError({});
+    
 
     } catch (err: any) {
-
-        console.log("cought error: " , err);
 
         if (err.message === "Username already exist") {
         setError({ username: err.message });

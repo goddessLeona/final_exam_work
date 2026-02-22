@@ -36,9 +36,24 @@
   text-align: center;
 }
 
+.textTitles{
+  color: #171717;
+}
+
 .introText h1 {
   max-width: 620px;
   font-size: 40px;
+  font-weight: 600;
+  line-height: 48px;
+  letter-spacing: -2.4px;
+  text-wrap: balance;
+  color: var(--text-primary);
+  margin-top: 40px;
+}
+
+.textTitles h1 {
+  max-width: 620px;
+  font-size: 30px;
   font-weight: 600;
   line-height: 48px;
   letter-spacing: -2.4px;
@@ -52,7 +67,7 @@
   font-size: 25px;
   line-height: 32px;
   text-wrap: balance;
-  color: var(--text-secondary);
+  color: #c1b9cf;
 }
 
 .intro {
@@ -78,19 +93,19 @@
   font-size: 25px;
   line-height: 32px;
   text-wrap: balance;
-  color: var(--text-secondary);
+  color: #c1b9cf;
 }
 
 .box ul {
-  list-style-position: inside; /* Bullets inside the content box */
-  padding-left: 20px;           /* Space for bullets */
-  margin-left: 0;               /* Remove extra margin */
+  list-style-position: inside; 
+  padding-left: 20px;           
+  margin-left: 0;              
 }
 
 .box ul ul {
-  padding-left: 20px;           /* Add padding for nested lists */
+  padding-left: 20px;           
   margin-left: 0;
-  list-style-type: disc;        /* Use disc for nested bullets */
+  list-style-type: disc;        
 }
 
 .box li {
@@ -98,7 +113,7 @@
   padding-left: 0;
   font-size: 20px;
   line-height: 25px;
-  color: var(--text-secondary);
+  color: #c1b9cf;
 }
 
 

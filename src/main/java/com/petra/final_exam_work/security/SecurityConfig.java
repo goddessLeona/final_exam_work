@@ -35,7 +35,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
-                .cors(cors ->{})
+                .cors(cors -> {} )
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session ->
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -47,14 +47,12 @@ public class SecurityConfig {
                         .requestMatchers("/auth/logout").permitAll()
                         .requestMatchers("/user/signup-contributor").permitAll()
 
-                        //user
+                        //All loggedIn
                         .requestMatchers("/user/username").authenticated()
 
                         //role-based
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/contributor/**").hasRole("CONTRIBUTOR")
-                        .requestMatchers("/user/test").hasRole("CONTRIBUTOR")
-                        .requestMatchers("/member/**").hasRole("MEMBER")
+                        .requestMatchers("/contributor/info").hasRole("CONTRIBUTOR")
+                        .requestMatchers("/contributor/welcome").hasRole("CONTRIBUTOR")
 
                         //everything else
                         .anyRequest().denyAll()
@@ -82,18 +80,18 @@ public class SecurityConfig {
     @Bean
     public AuthenticationManager authenticationManager(
             AuthenticationConfiguration config
-    ) throws Exception{
+    ) throws Exception {
         return config.getAuthenticationManager();
-        }
+    }
 
     //hashing the passwords
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public CorsConfigurationSource corsConfigurationSource(){
+    public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
 
         config.setAllowedOrigins(List.of("http://localhost:3000")); //next.js dev

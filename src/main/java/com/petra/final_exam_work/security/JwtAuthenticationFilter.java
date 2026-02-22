@@ -31,15 +31,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             HttpServletRequest request,
             HttpServletResponse response,
             FilterChain filterChain
-    )throws ServletException, IOException{
+    )throws ServletException, IOException {
 
         String jwt = null;
         String username;
 
         // get JWT from HttpOnly cookie
-        if(request.getCookies() != null){
-            for (Cookie cookie : request.getCookies()){
-                if(cookie.getName().equals("jwt")){
+        if (request.getCookies() != null) {
+            for (Cookie cookie : request.getCookies()) {
+                if (cookie.getName().equals("jwt")) {
                     jwt = cookie.getValue();
                     break;
                 }
@@ -47,13 +47,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         // no token -> continues filter chain
-        if (jwt == null){
+        if (jwt == null) {
             filterChain.doFilter(request, response);
             return;
         }
 
         //extract username
-        try{
+        try {
             username = jwtService.extractUsername(jwt);
         } catch (Exception e) {
             filterChain.doFilter(request, response);
@@ -62,12 +62,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         // authenticate user if not already authenticated
         if (username != null &&
-                SecurityContextHolder.getContext().getAuthentication() == null){
+                SecurityContextHolder.getContext().getAuthentication() == null) {
 
             UserDetails userDetails =
                     userDetailsService.loadUserByUsername(username);
 
-            if(jwtService.isTokenValid(jwt, userDetails)){
+            if (jwtService.isTokenValid(jwt, userDetails)) {
                 UsernamePasswordAuthenticationToken authToken =
                         new UsernamePasswordAuthenticationToken(
                                 userDetails,

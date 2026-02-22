@@ -30,13 +30,9 @@ public class UserController {
     @GetMapping("/username")
     public ResponseEntity<MeResponse> getUsername(
             @AuthenticationPrincipal CustomUserDetails userDetails
-    ){
+    ) {
 
-        if(userDetails == null){
-            throw new ApiException("User not authenticated", HttpStatus.UNAUTHORIZED);
-        }
-
-        return ResponseEntity.ok(userService.getusername(userDetails.getPublicUuid()));
+        return ResponseEntity.ok(userService.getUsername());
     }
 
 // ################################## Sign up contributor ##############################
@@ -44,7 +40,7 @@ public class UserController {
     @PostMapping("/signup-contributor")
     public ResponseEntity<ContributorSignUpResponse> signUpContributor (
             @Valid @RequestBody ContributorSignUpRequest request
-    ){
+    ) {
 
         ContributorSignUpResponse response = userService.signUpContributor(request);
 
@@ -53,14 +49,5 @@ public class UserController {
                 .body(response);
     }
 
-
-    //##########test#######3
-
-
-
-    @GetMapping("/test")
-    public String contributorTest(){
-            return "Hello MEMBER, you are now authenticated !";
-        }
 
 }
