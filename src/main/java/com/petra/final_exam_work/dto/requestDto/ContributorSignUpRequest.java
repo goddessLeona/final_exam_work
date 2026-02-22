@@ -22,7 +22,7 @@ public class ContributorSignUpRequest {
 
     @NotBlank( message = "Email is required")
     @Email( message = "have to be a valid email")
-    @Size(max = 128)
+    @Size(max = 64)
     private String email;
 
     @NotBlank( message = "First name have to be filled in")

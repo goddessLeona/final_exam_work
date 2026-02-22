@@ -17,4 +17,6 @@ public interface UserConsentFormRepository extends JpaRepository<UserConsentForm
             "WHERE ucf.user.id = :userId ")
     Optional<ConsentStatus> findStatusByUser(@Param("userId") Long userId);
 
+    Optional<UserConsentForm> findByUser(Long id);
+
 }
