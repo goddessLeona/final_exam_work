@@ -12,6 +12,7 @@ import com.petra.final_exam_work.entity.consentForm.ConsentStatus;
 import com.petra.final_exam_work.entity.junktionTables.userConcentform.UserConsentForm;
 import com.petra.final_exam_work.entity.user.User;
 import com.petra.final_exam_work.exception.ApiException;
+import com.petra.final_exam_work.repository.ConsentFormRepository;
 import com.petra.final_exam_work.repository.PhotoAlbumRepository;
 import com.petra.final_exam_work.repository.UserConsentFormRepository;
 import com.petra.final_exam_work.repository.UserRepository;
@@ -32,14 +33,17 @@ public class ContributorService {
     private final ContributorMeMapper contributorMeMapper;
     private final ContributorWelcomeMapper contributorWelcomeMapper;
     private final ContributorConsentFormMapper contributorConsentFormMapper;
+    private final ConsentFormRepository consentFormRepository;
 
-    public ContributorService(UserRepository userRepository, PhotoAlbumRepository photoAlbumRepository, UserConsentFormRepository userConsentFormRepository, ContributorMeMapper contributorMeMapper, ContributorWelcomeMapper contributorWelcomeMapper, ContributorConsentFormMapper contributorConsentFormMapper) {
+    public ContributorService(UserRepository userRepository, PhotoAlbumRepository photoAlbumRepository,
+                              UserConsentFormRepository userConsentFormRepository, ContributorMeMapper contributorMeMapper, ContributorWelcomeMapper contributorWelcomeMapper, ContributorConsentFormMapper contributorConsentFormMapper, ConsentFormRepository consentFormRepository) {
         this.userRepository = userRepository;
         this.photoAlbumRepository = photoAlbumRepository;
         this.userConsentFormRepository = userConsentFormRepository;
         this.contributorMeMapper = contributorMeMapper;
         this.contributorWelcomeMapper = contributorWelcomeMapper;
         this.contributorConsentFormMapper = contributorConsentFormMapper;
+        this.consentFormRepository = consentFormRepository;
     }
 
     //####################### INFO CONTRIBUTOR ######################
@@ -100,18 +104,18 @@ public class ContributorService {
         User user = userRepository.findByPublicUuid(publicUuid)
                 .orElseThrow(() -> new ApiException("User not found", HttpStatus.NOT_FOUND));
 
-        Optional<UserConsentForm> optional =
-                userConsentFormRepository.findByUser(user);
+        Optional<UserConsentForm> form =
+                userConsentFormRepository.findByUser(user.getId());
 
-        if (optional.isEmpty()) {
-            // No form yet
+        if (form.isEmpty()) {
+
             return ContributorConsentFormResponse.builder()
                     .contributor(user.isContributor())
                     .consentStatus(null)
                     .build();
         }
 
-        UserConsentForm userConsentForm = optional.get();
+        UserConsentForm userConsentForm = form.get();
         ConsentForm consentForm = userConsentForm.getConsentForm();
 
         return contributorConsentFormMapper.toResponse(
@@ -137,17 +141,16 @@ public class ContributorService {
             throw new ApiException("Already approved contributor", HttpStatus.BAD_REQUEST);
         }
 
-        Optional<UserConsentForm> optional =
-                userConsentFormRepository.findByUser(user);
+        Optional<UserConsentForm> form =
+                userConsentFormRepository.findByUser(user.getId());
 
         ConsentForm consentForm;
 
-        if (optional.isEmpty()) {
+        if (form.isEmpty()) {
             // FIRST SUBMISSION
             consentForm = new ConsentForm();
-            consentForm.setPublicUuid(UUID.randomUUID());
         } else {
-            consentForm = optional.get().getConsentForm();
+            consentForm = form.get().getConsentForm();
         }
 
         // Upload and overwrite files if provided
@@ -175,12 +178,12 @@ public class ContributorService {
 
         UserConsentForm userConsentForm;
 
-        if (optional.isEmpty()) {
+        if (form.isEmpty()) {
             userConsentForm = new UserConsentForm();
             userConsentForm.setUser(user);
             userConsentForm.setConsentForm(consentForm);
         } else {
-            userConsentForm = optional.get();
+            userConsentForm = form.get();
         }
 
         userConsentForm.setConsentStatus(ConsentStatus.PENDING);

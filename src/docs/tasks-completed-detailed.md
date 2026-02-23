@@ -124,7 +124,7 @@
   * added controller (GET contributor/info)
   * added endpoint in security config
 
-(welcome message)
+(welcome message, depending on if already approved by admin or not)
   * added ResponseDto + Mapper + service
   * added controller (Get contributor/welcome)
   * added contributor nav, and contributor pages
