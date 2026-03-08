@@ -42,9 +42,9 @@ CREATE TABLE consent_forms(
     face_fff_file_path TEXT NOT NULL,
     approve_rules BOOLEAN NOT NULL,
 
-    id_card_reviewed BOOLEAN NOT NULL DEFAULT false,
-    id_face_reviewed BOOLEAN NOT NULL DEFAULT false,
-    face_fff_reviewed BOOLEAN NOT NULL DEFAULT false
+    id_card_reviewed BOOLEAN NOT NULL,
+    id_face_reviewed BOOLEAN NOT NULL,
+    face_fff_reviewed BOOLEAN NOT NULL
 );
 
 CREATE TABLE tags(

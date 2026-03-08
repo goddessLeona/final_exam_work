@@ -14,7 +14,7 @@ const initialFormState = {
     birthYear: "",
     birthMonth: "",
     birthDay: "",
-    };
+};
 
 export default function SubscribeContributorForm() {
 

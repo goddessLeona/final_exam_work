@@ -131,7 +131,22 @@
   * added fetch in lib/api/contributor
 
 ## task 9. contributor - consent form
-(22/2-)
+(22/2- 24) (8/3-)
+Contributor should be able to fill in a form add 3 different image documentation. Should be able to refill form if
+only one of the documents was approved by admin. (not empty form each try)
+
+  * added request, response, mapper (GET + POST consent form)
+  * added service (GET + POST consent form)
+  * 
+  * added FileStorageService + location where uploaded content get stored
+  * 
+  * added FileStorageService + validation checking if image or not
+  * added controller (GET + POST consent form)
+
+  Frontend
+  * added fetch in contributor.ts (GET + POST agreementForm from backend)
+  * added a new components/form ContributorAgreementForm
+
 
 
 

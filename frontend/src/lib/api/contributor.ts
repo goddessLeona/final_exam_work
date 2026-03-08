@@ -1,3 +1,4 @@
+import { promises } from "dns";
 
 export interface WelcomeResponse {
     contributor: boolean;
@@ -39,4 +40,50 @@ export async function getContributorInfo() : Promise<ContributorMeResponse>{
 
     return res.json();
             
+}
+
+
+export async function postContributorAgreementForm(formData: FormData){
+    const response = await fetch(
+        "http://localhost:8080/contributor/consent",
+        {
+            method: "POST",
+            credentials: "include",
+            body: formData,
+        }
+    );    
+
+        if (!response.ok) {
+        const errorData = await response.json();
+        throw errorData;
+        }
+
+    return response.json(); 
+    
+}
+
+export interface ContributorFormResponse{
+
+    idCardFilePath : string;
+    idCardReviewed : boolean | null;
+    idFaceFilePath : string;
+    idFaceReviewed : boolean | null;
+    facefffFilePath : string;
+    facefffReviewed : boolean | null;
+    approvedRules : boolean;
+    consentStatus: string | null;
+    contributor : boolean;
+}
+
+export async function getContributorAgreementForm() : Promise<ContributorFormResponse>{
+   const res = await fetch("http://localhost:8080/contributor/consent", { 
+            credentials: "include",
+        });
+
+    if(!res.ok){
+        throw new Error("Unauthorized");
+    }    
+
+    return res.json();
+    
 }

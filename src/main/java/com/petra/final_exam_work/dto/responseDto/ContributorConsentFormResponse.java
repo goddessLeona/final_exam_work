@@ -10,7 +10,7 @@ public class ContributorConsentFormResponse {
     private Boolean idFaceReviewed;
     private String facefffFilePath;
     private Boolean facefffReviewed;
-    private boolean approvedRules;
+    private Boolean approvedRules;
     private ConsentStatus consentStatus;
     private boolean contributor;
 
@@ -19,7 +19,7 @@ public class ContributorConsentFormResponse {
 
     public ContributorConsentFormResponse(String idCardFilePath, Boolean idCardReviewed, String idFaceFilePath,
                                           Boolean idFaceReviewed, String facefffFilePath, Boolean facefffReviewed,
-                                          boolean approvedRules, ConsentStatus consentStatus, boolean contributor) {
+                                          Boolean approvedRules, ConsentStatus consentStatus, boolean contributor) {
         this.idCardFilePath = idCardFilePath;
         this.idCardReviewed = idCardReviewed;
         this.idFaceFilePath = idFaceFilePath;
@@ -39,12 +39,28 @@ public class ContributorConsentFormResponse {
         this.idCardFilePath = idCardFilePath;
     }
 
+    public Boolean getIdCardReviewed() {
+        return idCardReviewed;
+    }
+
+    public void setIdCardReviewed(Boolean idCardReviewed) {
+        this.idCardReviewed = idCardReviewed;
+    }
+
     public String getIdFaceFilePath() {
         return idFaceFilePath;
     }
 
     public void setIdFaceFilePath(String idFaceFilePath) {
         this.idFaceFilePath = idFaceFilePath;
+    }
+
+    public Boolean getIdFaceReviewed() {
+        return idFaceReviewed;
+    }
+
+    public void setIdFaceReviewed(Boolean idFaceReviewed) {
+        this.idFaceReviewed = idFaceReviewed;
     }
 
     public String getFacefffFilePath() {
@@ -55,11 +71,19 @@ public class ContributorConsentFormResponse {
         this.facefffFilePath = facefffFilePath;
     }
 
-    public boolean isApprovedRules() {
+    public Boolean getFacefffReviewed() {
+        return facefffReviewed;
+    }
+
+    public void setFacefffReviewed(Boolean facefffReviewed) {
+        this.facefffReviewed = facefffReviewed;
+    }
+
+    public Boolean getApprovedRules() {
         return approvedRules;
     }
 
-    public void setApprovedRules(boolean approvedRules) {
+    public void setApprovedRules(Boolean approvedRules) {
         this.approvedRules = approvedRules;
     }
 

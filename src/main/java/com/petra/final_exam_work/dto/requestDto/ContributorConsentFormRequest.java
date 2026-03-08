@@ -5,13 +5,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class ContributorConsentFormRequest {
 
-    @NotNull(message = "You need to upload a photo from an id-card")
+
     private MultipartFile idCardFile;
-
-    @NotNull(message = "You have to upload a photo from you holding up a id-card ")
     private MultipartFile idFaceFile;
-
-    @NotNull(message = "You have to upload a photo from you holding up a paper saying Contributor")
     private MultipartFile facefffFile;
 
 

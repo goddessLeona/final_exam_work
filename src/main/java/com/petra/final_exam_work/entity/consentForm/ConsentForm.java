@@ -35,14 +35,14 @@ public class ConsentForm {
     @Column(name = "approve_rules", nullable = false)
     private Boolean approvedRules;
 
-    @Column(name = "id_card_reviewed", nullable = false)
-    private Boolean idCardReviewed = false;
+    @Column(name = "id_card_reviewed")
+    private Boolean idCardReviewed;
 
-    @Column(name = "id_face_reviewed", nullable = false)
-    private Boolean idFaceReviewed = false;
+    @Column(name = "id_face_reviewed")
+    private Boolean idFaceReviewed;
 
-    @Column(name = "face_fff_reviewed", nullable = false)
-    private Boolean facefffReviewed = false;
+    @Column(name = "face_fff_reviewed")
+    private Boolean facefffReviewed;
 
     @OneToMany(mappedBy = "consentForm", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<UserConsentForm> users = new HashSet<>();
@@ -55,6 +55,21 @@ public class ConsentForm {
     }
 
     public ConsentForm() {
+    }
+
+    public ConsentForm(Long id, UUID publicUuid, String idCardFilePath, String idFaceFilePath,
+                       String facefffFilePath, Boolean approvedRules, Boolean idCardReviewed, Boolean idFaceReviewed,
+                       Boolean facefffReviewed, Set<UserConsentForm> users) {
+        this.id = id;
+        this.publicUuid = publicUuid;
+        this.idCardFilePath = idCardFilePath;
+        this.idFaceFilePath = idFaceFilePath;
+        this.facefffFilePath = facefffFilePath;
+        this.approvedRules = approvedRules;
+        this.idCardReviewed = idCardReviewed;
+        this.idFaceReviewed = idFaceReviewed;
+        this.facefffReviewed = facefffReviewed;
+        this.users = users;
     }
 
     public Long getId() {
@@ -103,6 +118,30 @@ public class ConsentForm {
 
     public void setApprovedRules(Boolean approvedRules) {
         this.approvedRules = approvedRules;
+    }
+
+    public Boolean getIdCardReviewed() {
+        return idCardReviewed;
+    }
+
+    public void setIdCardReviewed(Boolean idCardReviewed) {
+        this.idCardReviewed = idCardReviewed;
+    }
+
+    public Boolean getIdFaceReviewed() {
+        return idFaceReviewed;
+    }
+
+    public void setIdFaceReviewed(Boolean idFaceReviewed) {
+        this.idFaceReviewed = idFaceReviewed;
+    }
+
+    public Boolean getFacefffReviewed() {
+        return facefffReviewed;
+    }
+
+    public void setFacefffReviewed(Boolean facefffReviewed) {
+        this.facefffReviewed = facefffReviewed;
     }
 
     public Set<UserConsentForm> getUsers() {
