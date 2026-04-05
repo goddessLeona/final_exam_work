@@ -43,7 +43,7 @@ public class ContributorController {
         return ResponseEntity.ok(contributorService.getWelcomeMessage());
     }
 
-    // ############## GET consent form ###############################3
+    // ############## GET consent form ###############################
 
     @PreAuthorize("hasRole('CONTRIBUTOR')")
     @GetMapping("/consent")

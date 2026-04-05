@@ -20,7 +20,7 @@ export default function ContributorAgrementForm() {
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState("");
 
-    type ReviewStatus = "PENDING" | "APPROVED" | "REJECTED";
+    type ReviewStatus = "NOT_SUBMITTED" |"PENDING" | "APPROVED" | "REJECTED";
 
     const isFormPending = serverData?.consentStatus === "PENDING";
     const isIdCardApproved = serverData?.idCardReviewed === true;
@@ -41,6 +41,9 @@ export default function ContributorAgrementForm() {
     }, []);
 
     function getReviewLabel(value: boolean | null): ReviewStatus {
+        if(serverData?.consentStatus === "NOT_SUBMITTED"){
+            return "NOT_SUBMITTED";
+        }
         if (value === null) return "PENDING";
         if (value === true) return "APPROVED";
         return "REJECTED";

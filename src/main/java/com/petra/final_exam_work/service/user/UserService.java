@@ -91,6 +91,8 @@ public class UserService {
 
         user.setRoles(Set.of(contributorRole));
 
+        System.out.println(user);
+
         //Save
         userRepository.save(user);
 

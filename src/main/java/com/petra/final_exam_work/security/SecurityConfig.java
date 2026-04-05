@@ -53,6 +53,7 @@ public class SecurityConfig {
                         //role-based
                         .requestMatchers("/contributor/info").hasRole("CONTRIBUTOR")
                         .requestMatchers("/contributor/welcome").hasRole("CONTRIBUTOR")
+                        .requestMatchers("/contributor/consent").hasRole("CONTRIBUTOR")
 
                         //everything else
                         .anyRequest().denyAll()

@@ -93,14 +93,17 @@ public class ContributorService {
         if (user.isContributor()){
             message = "Welcome back contributor!";
         }else{
-            message = "Welcome new contributor! Hope you will enjoy our smale community. Before you are able to " +
-                    "contribute and post your own photos or enter member pages, you have to fill in the agreement forms.";
+            message = "Welcome new contributor! Hope you will enjoy our smale community. This is your private page from " +
+                    "where you in the future can post all your content. Create a profile and see your statistic and more." +
+                    " Before you are able to contribute and post your own photos or enter member pages, you first have " +
+                    "to fill in the agreement forms. This is to prevent people to upload photos from their ex lovers or " +
+                    "friends. To make sure it is your photos and that you are over 18 years old";
         }
 
         return contributorWelcomeMapper.toResponse(user, message);
     }
 
-    // ################### GET Contributor - form ###################333
+    // ################### GET - user consent form ###################
 
     @Transactional(readOnly = true)
     public ContributorConsentFormResponse getConsentFormStatus() {
@@ -113,12 +116,14 @@ public class ContributorService {
         Optional<UserConsentForm> form =
                 userConsentFormRepository.findByUser(user);
 
+        System.out.println("FORM EXISTS: " + form.isPresent());
+
         if (form.isEmpty()) {
 
            ContributorConsentFormResponse response = new ContributorConsentFormResponse();
 
            response.setContributor(user.isContributor());
-           response.setConsentStatus(null);
+           response.setConsentStatus(ConsentStatus.NOT_SUBMITTED);
 
            return response;
         }
@@ -133,7 +138,7 @@ public class ContributorService {
         );
     }
 
-    //################### CONSENT FORM ######################
+    //################### POST - User consent form ######################
 
     @Transactional
     public ContributorConsentFormResponse postConsentForm(

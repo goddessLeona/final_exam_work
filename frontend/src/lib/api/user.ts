@@ -1,15 +1,14 @@
 
-
 export interface signUpResponse {
-   username: string;
+    username: string;
     password: string;
     confirmPassword: string;
     email: string;
     firstName: string;
     lastName: string;
-    birthYear: number | "";
-    birthMonth: number | "";
-    birthDay: number | "";
+    birthYear: number | null;
+    birthMonth: number | null;
+    birthDay: number | null;
 }
 
 export async function signUpContributor(data: signUpResponse) {
