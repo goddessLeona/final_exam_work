@@ -4,7 +4,7 @@ CREATE EXTENSION IF NOT EXISTS citext;
 
 -- ENUM
 
-CREATE TYPE consent_status AS ENUM ('pending', 'approved', 'rejected');
+CREATE TYPE consent_status AS ENUM ('not_submitted', 'pending', 'approved', 'rejected');
 CREATE TYPE content_status AS ENUM ('published', 'draft');
 CREATE TYPE album_role AS ENUM ('owner', 'editor', 'viewer');
 
