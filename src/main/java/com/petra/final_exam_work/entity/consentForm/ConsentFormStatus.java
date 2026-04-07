@@ -1,6 +1,6 @@
 package com.petra.final_exam_work.entity.consentForm;
 
-public enum ConsentStatus {
+public enum ConsentFormStatus {
     NOT_SUBMITTED,
     PENDING,
     APPROVED,

@@ -4,9 +4,10 @@ CREATE EXTENSION IF NOT EXISTS citext;
 
 -- ENUM
 
-CREATE TYPE consent_status AS ENUM ('not_submitted', 'pending', 'approved', 'rejected');
-CREATE TYPE content_status AS ENUM ('published', 'draft');
+CREATE TYPE consent_form_status AS ENUM ('NOT_SUBMITTED', 'PENDING', 'APPROVED', 'REJECTED');
+CREATE TYPE content_status AS ENUM ('PUBLISHED', 'DRAFT');
 CREATE TYPE album_role AS ENUM ('owner', 'editor', 'viewer');
+CREATE TYPE review_status AS ENUM ('NOT_SUBMITTED', 'PENDING', 'APPROVED', 'REJECTED');
 
 -- TOTAL AMOUNT OF TABLES 13
 
@@ -42,9 +43,9 @@ CREATE TABLE consent_forms(
     face_fff_file_path TEXT NOT NULL,
     approve_rules BOOLEAN NOT NULL,
 
-    id_card_reviewed BOOLEAN NOT NULL,
-    id_face_reviewed BOOLEAN NOT NULL,
-    face_fff_reviewed BOOLEAN NOT NULL
+    id_card_reviewed review_status NOT NULL DEFAULT 'NOT_SUBMITTED',
+    id_face_reviewed review_status NOT NULL DEFAULT 'NOT_SUBMITTED',
+    face_fff_reviewed review_status NOT NULL DEFAULT 'NOT_SUBMITTED'
 );
 
 CREATE TABLE tags(
@@ -84,7 +85,7 @@ CREATE TABLE photo_albums(
     photo_album_name TEXT NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     published_at TIMESTAMPTZ,
-    content_status content_status NOT NULL DEFAULT 'draft',
+    content_status content_status NOT NULL DEFAULT 'DRAFT',
     rules_verified BOOLEAN NOT NULL,
 
     CONSTRAINT fk_photo_album_owner_user
@@ -111,7 +112,7 @@ CREATE TABLE users_roles(
 CREATE TABLE users_consent_forms(
     user_id BIGINT NOT NULL,
     consent_form_id BIGINT NOT NULL,
-    consent_status consent_status NOT NULL,
+    consent_form_status consent_form_status NOT NULL,
     admin_comment TEXT,
     PRIMARY KEY (user_id, consent_form_id),
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
@@ -208,7 +209,7 @@ ON photo_albums_tags(photo_album_id);
 --rejected can be sent back to users to compliment missing info
 CREATE UNIQUE INDEX uq_users_single_active_consent_form
 ON users_consent_forms (user_id)
-WHERE consent_status IN ('pending', 'approved');
+WHERE consent_form_status IN ('PENDING', 'APPROVED');
 
 
 
