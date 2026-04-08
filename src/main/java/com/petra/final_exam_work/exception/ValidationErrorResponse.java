@@ -2,8 +2,8 @@ package com.petra.final_exam_work.exception;
 
 import java.util.Map;
 
-public record ErrorResponse(
+public record ValidationErrorResponse (
         String message,
-        int status
+        int status,
+        Map<String, String> errors
 ) {}
-

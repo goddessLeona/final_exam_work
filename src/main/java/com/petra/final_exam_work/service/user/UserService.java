@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.Year;
+import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
 
@@ -57,12 +58,20 @@ public class UserService {
 
         //check if username already exist
         if (userRepository.existsByUsername(request.getUsername())) {
-            throw new ApiException("Username already exist", HttpStatus.BAD_REQUEST);
+            throw new ApiException(
+                    "Validation failed",
+                    Map.of("username", "Username already exist"),
+                    HttpStatus.BAD_REQUEST
+                    );
         }
 
         //check if email already exist
         if (userRepository.existsByEmail(request.getEmail())) {
-            throw new ApiException("Email already exist", HttpStatus.BAD_REQUEST);
+            throw new ApiException(
+                    "Validation failed",
+                    Map.of("email", "Email already exist"),
+                    HttpStatus.BAD_REQUEST
+            );
         }
 
         //simple check if user is over 18 years old
