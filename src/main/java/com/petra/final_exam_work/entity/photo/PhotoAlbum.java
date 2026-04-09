@@ -2,8 +2,9 @@ package com.petra.final_exam_work.entity.photo;
 
 import com.petra.final_exam_work.entity.Tag;
 import com.petra.final_exam_work.entity.user.User;
-import com.petra.final_exam_work.config.ContentStatusConverter;
 import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 import java.time.Instant;
 import java.util.HashSet;
@@ -35,8 +36,9 @@ public class PhotoAlbum {
     @Column(name = "published_at", updatable = true)
     private Instant publishedDate;
 
-    @Convert(converter = ContentStatusConverter.class)
-    @Column(name = "content_status", nullable = false)
+    @Enumerated(EnumType.STRING)
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
+    @Column(name = "content_status", columnDefinition = "content_status", nullable = false)
     private ContentStatus contentStatus = ContentStatus.DRAFT;
 
     @Column(name = "rules_verified", nullable = false)

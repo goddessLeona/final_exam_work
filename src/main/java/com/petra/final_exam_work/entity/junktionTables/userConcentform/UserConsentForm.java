@@ -1,17 +1,18 @@
 package com.petra.final_exam_work.entity.junktionTables.userConcentform;
 
 import com.petra.final_exam_work.entity.consentForm.ConsentForm;
-import com.petra.final_exam_work.entity.consentForm.ConsentStatus;
+import com.petra.final_exam_work.entity.consentForm.ConsentFormStatus;
 import com.petra.final_exam_work.entity.user.User;
-import com.petra.final_exam_work.config.ConsentStatusConverter;
 import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 @Entity
 @Table(name = "users_consent_forms")
 public class UserConsentForm {
 
     @EmbeddedId
-    private UserConsentFormId id;
+    private UserConsentFormId id = new UserConsentFormId();
 
     @ManyToOne
     @MapsId("userId")
@@ -23,9 +24,10 @@ public class UserConsentForm {
     @JoinColumn(name = "consent_form_id")
     private ConsentForm consentForm;
 
-    @Convert(converter = ConsentStatusConverter.class)
-    @Column(name = "consent_status", nullable = false)
-    private ConsentStatus consentStatus;
+    @Enumerated(EnumType.STRING)
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
+    @Column(name = "consent_form_status",columnDefinition = "consent_form_status", nullable = false)
+    private ConsentFormStatus consentFormStatus;
 
     public UserConsentForm() {
     }
@@ -54,11 +56,11 @@ public class UserConsentForm {
         this.consentForm = consentForm;
     }
 
-    public ConsentStatus getConsentStatus() {
-        return consentStatus;
+    public ConsentFormStatus getConsentFormStatus() {
+        return consentFormStatus;
     }
 
-    public void setConsentStatus(ConsentStatus consentStatus) {
-        this.consentStatus = consentStatus;
+    public void setConsentFormStatus(ConsentFormStatus consentFormStatus) {
+        this.consentFormStatus = consentFormStatus;
     }
 }

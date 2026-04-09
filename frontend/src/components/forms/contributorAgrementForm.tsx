@@ -20,34 +20,39 @@ export default function ContributorAgrementForm() {
     const [loading, setLoading] = useState(false);
     const [success, setSuccess] = useState("");
 
-    type ReviewStatus = "NOT_SUBMITTED" |"PENDING" | "APPROVED" | "REJECTED";
+    
+    const isApproved = (status?: string | null) => status === "APPROVED";
+    const isPending = (status?: string | null) => status === "PENDING";
+    const isLocked = (status?: string | null) =>
+        status === "APPROVED" || status === "PENDING";
 
-    const isFormPending = serverData?.consentStatus === "PENDING";
-    const isIdCardApproved = serverData?.idCardReviewed === true;
-    const isIdFaceApproved = serverData?.idFaceReviewed === true;
-    const isFffApproved = serverData?.facefffReviewed === true;
+    const isFormPending = isPending(serverData?.consentFormStatus);
+
+    const isIdCardApproved = isApproved(serverData?.idCardReviewed);
+    const isIdFaceApproved =isApproved(serverData?.idFaceReviewed);
+    const isFffApproved = isApproved(serverData?.facefffReviewed);
+
+    const isIdCardLocked = isLocked(serverData?.idCardReviewed);
 
     useEffect(() => {
         async function load() {
             try {
                 const data = await getContributorAgreementForm();
                 setServerData(data);
-            }catch (err) {
-                console.error("No existing form");
+                setError({});
+            }catch (err: any) {
+                console.log("ERROR TYPE: ", err);
+
+                if (err.error) {
+                    setError(err.error);
+                }else {
+                    setError({ general: err.message || "Error loading form" });
+                }
             }
         }
 
         load();
     }, []);
-
-    function getReviewLabel(value: boolean | null): ReviewStatus {
-        if(serverData?.consentStatus === "NOT_SUBMITTED"){
-            return "NOT_SUBMITTED";
-        }
-        if (value === null) return "PENDING";
-        if (value === true) return "APPROVED";
-        return "REJECTED";
-    }
 
     const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -57,47 +62,46 @@ export default function ContributorAgrementForm() {
     setSuccess("");
 
     const data = new FormData();
-    const updated = await getContributorAgreementForm();
-
-    if (formData.idCard)
-        data.append("idCardFile", formData.idCard);
-
-    if (formData.idCardFace)
-        data.append("idFaceFile", formData.idCardFace);
-
-    if (formData.fffFace)
-        data.append("facefffFile", formData.fffFace);
-
+    if (formData.idCard) data.append("idCardFile", formData.idCard);
+    if (formData.idCardFace) data.append("idFaceFile", formData.idCardFace);
+    if (formData.fffFace) data.append("facefffFile", formData.fffFace);
     data.append("approvedRules", String(formData.agree));
 
     try {
-        await postContributorAgreementForm(data);
-        setServerData(updated);
+        const response = await postContributorAgreementForm(data);
+        setServerData(response);
         setSuccess("Submitted successfully!");
     } catch (err: any) {
-        setError({ general: err.message || "Error submitting form" });
-    }finally {
+        console.log("Error type: ", err );
+
+        if (err.errors) {
+            setError(err.errors);
+        }else {
+            setError({ general: err.message || "Error submitting form" })
+        }
+    } finally {
         setLoading(false);
     }
-    
-};
+};    
 
-    
+const generalErrorMessage = error.general || (["idCardFile", "idFaceFile", "facefffFile", "approvedRules"].some(key => error[key]) ? "Missing document" : "");
+
     return(
 
         <main className={styles.container}>
             <form onSubmit={handleSubmit}>
 
-                <div className={styles.formBox}>
-                    <h1>Contributor agrement form</h1>
+                <h1>Contributor agrement form</h1>
 
+                <div className={styles.formBox}>
+                    
                     <div className={styles.field}>
-                        <p>You have to upload a photo from your id-card</p>
-                        <p>This way we will be able to see that you are over 18 years old</p>
+                        <p>You have to upload a photo from your id-card
+                            This way we will be able to see that you are over 18 years old</p>
                         <label htmlFor="idCard">Id-card</label>
                         <input
                         id="idCard"
-                        name="idCard"
+                        name="idCardFile"
                         type="file"
                         accept="image/*"
                         disabled={isFormPending || isIdCardApproved}
@@ -105,20 +109,20 @@ export default function ContributorAgrementForm() {
                             setFormData({...formData, idCard: e.target.files?.[0] ?? null})
                         }    
                     />
-                    {serverData && (
-                        <p>Status: {getReviewLabel(serverData.idCardReviewed)}</p>
+                    {serverData && serverData.consentFormStatus !== "NOT_SUBMITTED" && (
+                        <p>Status: {(serverData.idCardReviewed)}</p>
                     )}
-                    {error.idCard && (<p className={styles.error}>{error.idCard}</p>)}
+                    {error.idCardFile && (<p className={styles.error}>{error.idCardFile}</p>)}
                     </div>
 
                     
                     <div className={styles.field}>
-                        <p>You have to upload a photo from you holding up your id-card net to your face</p>
-                        <p>This way we will know it is your id-card</p>
-                        <label htmlFor="idCardFace">Id-card</label>
+                        <p>You have to upload a photo from you holding up your id-card net to your face
+                            This way we will know it is your id-card</p>
+                        <label htmlFor="idCardFace">Id-card + Face</label>
                         <input
                         id="idCardFace"
-                        name="idCardFace"
+                        name="idFaceFile"
                         type="file"
                         accept="image/*"
                         disabled={isFormPending || isIdFaceApproved}
@@ -126,19 +130,19 @@ export default function ContributorAgrementForm() {
                             setFormData({...formData, idCardFace: e.target.files?.[0] ?? null})
                         }  
                     />
-                     {serverData && (
-                        <p>Status: {getReviewLabel(serverData.idFaceReviewed)}</p>
+                     {serverData && serverData.consentFormStatus !== "NOT_SUBMITTED" && (
+                        <p>Status: {(serverData.idFaceReviewed)}</p>
                     )}
-                    {error.idCardFace && (<p className={styles.error}>{error.idCardFace}</p>)}
+                    {error.idFaceFile && (<p className={styles.error}>{error.idFaceFile}</p>)}
                     </div>
 
                     <div className={styles.field}>
-                        <p>You have to upload a photo from you holding up a paper saying FFF</p>
-                        <p>This way we will know you are the person on the id-card and not just a ex of some one</p>
-                        <label htmlFor="fffFace">Id-card</label>
+                        <p>You have to upload a photo from you holding up a paper saying FFF and current date. 
+                            This way we will know you are the person on the id-card and not just a ex of some one</p>
+                        <label htmlFor="fffFace">Identy and FFF</label>
                         <input
                         id="fffFace"
-                        name="fffFace"
+                        name="facefffFile"
                         type="file"
                         accept="image/*"
                         disabled={isFormPending || isFffApproved}
@@ -147,10 +151,11 @@ export default function ContributorAgrementForm() {
                         }  
                         
                     />
-                    {serverData && (
-                        <p>Status: {getReviewLabel(serverData.facefffReviewed)}</p>
+                    {serverData && serverData.consentFormStatus !== "NOT_SUBMITTED" && (
+                        <p>Status: {(serverData.facefffReviewed)}</p>
                     )}
-                    {error.fffFace && (<p className={styles.error}>{error.fffFace}</p>)}
+                    {error.facefffFile && (<p className= {styles.error}> {error.facefffFile} </p>)}
+                    
                     </div>
 
                     <div className={styles.field}>
@@ -165,12 +170,18 @@ export default function ContributorAgrementForm() {
                             setFormData({ ...formData, agree: e.target.checked })
                         }
                     />
-                    {error.agree && (<p className={styles.error}>{error.agree}</p>)}
+                    {error.approvedRules && (<p> {error.approvedRules} </p>)}
                     </div>
 
                 </div>
 
+                {error.general && (
+                    <p className={styles.error}>{error.general}</p>
+                )}
+                {generalErrorMessage && <p className={styles.error}>{generalErrorMessage}</p>}
+
                 <button
+                    className={styles.btn}
                     type = "submit"
                     disabled={isFormPending || loading || !formData.agree}
                 >
@@ -181,7 +192,7 @@ export default function ContributorAgrementForm() {
 
                 {serverData && (
                     <div>
-                        <p>Form status: {serverData.consentStatus}</p>
+                        <p>Form status: {serverData.consentFormStatus}</p>
                     </div>
                 )}  
 
@@ -190,5 +201,5 @@ export default function ContributorAgrementForm() {
         </main>
 
     )
-    
+
 }

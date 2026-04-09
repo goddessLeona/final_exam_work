@@ -42,36 +42,19 @@ export async function getContributorInfo() : Promise<ContributorMeResponse>{
             
 }
 
-
-export async function postContributorAgreementForm(formData: FormData){
-    const response = await fetch(
-        "http://localhost:8080/contributor/consent",
-        {
-            method: "POST",
-            credentials: "include",
-            body: formData,
-        }
-    );    
-
-        if (!response.ok) {
-        const errorData = await response.json();
-        throw errorData;
-        }
-
-    return response.json(); 
-    
-}
+type ReviewStatus = "NOT_SUBMITTED" | "PENDING" | "APPROVED" | "REJECTED";
+type ConsentFormStatus = "NOT_SUBMITTED" | "PENDING" | "APPROVED" | "REJECTED";
 
 export interface ContributorFormResponse{
 
     idCardFilePath : string;
-    idCardReviewed : boolean | null;
+    idCardReviewed : ReviewStatus | null;
     idFaceFilePath : string;
-    idFaceReviewed : boolean | null;
+    idFaceReviewed : ReviewStatus | null;
     facefffFilePath : string;
-    facefffReviewed : boolean | null;
+    facefffReviewed : ReviewStatus | null;
     approvedRules : boolean;
-    consentStatus: string | null;
+    consentFormStatus: ConsentFormStatus | null;
     contributor : boolean;
 }
 
@@ -86,4 +69,23 @@ export async function getContributorAgreementForm() : Promise<ContributorFormRes
 
     return res.json();
     
+}
+
+export async function postContributorAgreementForm(formData: FormData){
+    const response = await fetch(
+        "http://localhost:8080/contributor/consent",
+        {
+            method: "POST",
+            credentials: "include",
+            body: formData,
+        }
+    );    
+
+    const json = await response.json();
+
+    if (!response.ok) {
+        throw json;
+    }
+
+    return json; 
 }

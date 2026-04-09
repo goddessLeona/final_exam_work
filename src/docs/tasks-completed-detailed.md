@@ -131,7 +131,7 @@
   * added fetch in lib/api/contributor
 
 ## task 9. contributor - consent form
-(22/2- 24) (8/3-)
+(22/2- 24) (8/3) (5-7/4)
 Contributor should be able to fill in a form add 3 different image documentation. Should be able to refill form if
 only one of the documents was approved by admin. (not empty form each try)
 
@@ -146,6 +146,10 @@ only one of the documents was approved by admin. (not empty form each try)
   Frontend
   * added fetch in contributor.ts (GET + POST agreementForm from backend)
   * added a new components/form ContributorAgreementForm
+
+  * modified Database (changed Enums in db to Big letters to be able to use POST )
+  * added db flyway version2, so that db always have role CONTRIBUTOR, ADMIN , MEMBER (If I have to restart)
+  * modified ExeptionHandler for better field response in frontend
 
 
 

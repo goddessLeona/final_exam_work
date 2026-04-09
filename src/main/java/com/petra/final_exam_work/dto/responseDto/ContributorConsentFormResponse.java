@@ -1,25 +1,27 @@
 package com.petra.final_exam_work.dto.responseDto;
 
-import com.petra.final_exam_work.entity.consentForm.ConsentStatus;
+import com.petra.final_exam_work.entity.consentForm.ConsentFormStatus;
+import com.petra.final_exam_work.entity.consentForm.ReviewStatus;
 
 public class ContributorConsentFormResponse {
 
     private String idCardFilePath;
-    private Boolean idCardReviewed;
+    private ReviewStatus idCardReviewed;
     private String idFaceFilePath;
-    private Boolean idFaceReviewed;
+    private ReviewStatus idFaceReviewed;
     private String facefffFilePath;
-    private Boolean facefffReviewed;
+    private ReviewStatus facefffReviewed;
     private Boolean approvedRules;
-    private ConsentStatus consentStatus;
+    private ConsentFormStatus consentFormStatus;
     private boolean contributor;
 
     public ContributorConsentFormResponse() {
     }
 
-    public ContributorConsentFormResponse(String idCardFilePath, Boolean idCardReviewed, String idFaceFilePath,
-                                          Boolean idFaceReviewed, String facefffFilePath, Boolean facefffReviewed,
-                                          Boolean approvedRules, ConsentStatus consentStatus, boolean contributor) {
+    public ContributorConsentFormResponse(String idCardFilePath, ReviewStatus idCardReviewed, String idFaceFilePath,
+                                          ReviewStatus idFaceReviewed, String facefffFilePath,
+                                          ReviewStatus facefffReviewed, Boolean approvedRules,
+                                          ConsentFormStatus consentFormStatus, boolean contributor) {
         this.idCardFilePath = idCardFilePath;
         this.idCardReviewed = idCardReviewed;
         this.idFaceFilePath = idFaceFilePath;
@@ -27,7 +29,7 @@ public class ContributorConsentFormResponse {
         this.facefffFilePath = facefffFilePath;
         this.facefffReviewed = facefffReviewed;
         this.approvedRules = approvedRules;
-        this.consentStatus = consentStatus;
+        this.consentFormStatus = consentFormStatus;
         this.contributor = contributor;
     }
 
@@ -39,11 +41,11 @@ public class ContributorConsentFormResponse {
         this.idCardFilePath = idCardFilePath;
     }
 
-    public Boolean getIdCardReviewed() {
+    public ReviewStatus getIdCardReviewed() {
         return idCardReviewed;
     }
 
-    public void setIdCardReviewed(Boolean idCardReviewed) {
+    public void setIdCardReviewed(ReviewStatus idCardReviewed) {
         this.idCardReviewed = idCardReviewed;
     }
 
@@ -55,11 +57,11 @@ public class ContributorConsentFormResponse {
         this.idFaceFilePath = idFaceFilePath;
     }
 
-    public Boolean getIdFaceReviewed() {
+    public ReviewStatus getIdFaceReviewed() {
         return idFaceReviewed;
     }
 
-    public void setIdFaceReviewed(Boolean idFaceReviewed) {
+    public void setIdFaceReviewed(ReviewStatus idFaceReviewed) {
         this.idFaceReviewed = idFaceReviewed;
     }
 
@@ -71,11 +73,11 @@ public class ContributorConsentFormResponse {
         this.facefffFilePath = facefffFilePath;
     }
 
-    public Boolean getFacefffReviewed() {
+    public ReviewStatus getFacefffReviewed() {
         return facefffReviewed;
     }
 
-    public void setFacefffReviewed(Boolean facefffReviewed) {
+    public void setFacefffReviewed(ReviewStatus facefffReviewed) {
         this.facefffReviewed = facefffReviewed;
     }
 
@@ -87,12 +89,12 @@ public class ContributorConsentFormResponse {
         this.approvedRules = approvedRules;
     }
 
-    public ConsentStatus getConsentStatus() {
-        return consentStatus;
+    public ConsentFormStatus getConsentFormStatus() {
+        return consentFormStatus;
     }
 
-    public void setConsentStatus(ConsentStatus consentStatus) {
-        this.consentStatus = consentStatus;
+    public void setConsentFormStatus(ConsentFormStatus consentFormStatus) {
+        this.consentFormStatus = consentFormStatus;
     }
 
     public boolean isContributor() {

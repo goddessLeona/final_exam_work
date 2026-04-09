@@ -23,10 +23,16 @@ export async function signUpContributor(data: signUpResponse) {
 
 
     if (!response.ok) {
-        const errorData = await response.json();
-         
+        let errorData;
+
+        try {
+            errorData = await response.json();
+        } catch {
+            throw { message : "UnKnown error"};
+        }
+
         throw errorData;
     }
 
-    return response; 
+    return response.json; 
 }

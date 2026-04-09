@@ -1,3 +1,5 @@
+
+
 .container{
     display: flex;
     flex-direction: column;
@@ -6,6 +8,7 @@
     color: beige;
     padding-bottom: 20px;
     text-align: center;
+    margin: 10px;
 }
 
 .formBox{
@@ -14,6 +17,8 @@
     background-color: #292626;
     border-radius: 10px;
     width: 500px;;
+    gap: 10px;
+    margin: 15px;
 }
 
 .field{

@@ -61,7 +61,9 @@ public class ContributorController {
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE
     )
     public ResponseEntity<ContributorConsentFormResponse> postConsentForm(
-            @ModelAttribute ContributorConsentFormRequest request
+            @ModelAttribute ContributorConsentFormRequest request,
+            @AuthenticationPrincipal CustomUserDetails userDetails
+
     ){
         return ResponseEntity.ok(contributorService.postConsentForm(request));
     }

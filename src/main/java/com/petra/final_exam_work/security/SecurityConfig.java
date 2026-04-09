@@ -1,7 +1,10 @@
 package com.petra.final_exam_work.security;
 
+import org.apache.catalina.filters.CorsFilter;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -41,6 +44,9 @@ public class SecurityConfig {
                         session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .authorizeHttpRequests(auth -> auth
+
+                        // allow preflight requests
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
                         //public
                         .requestMatchers("/auth/login").permitAll()
@@ -106,4 +112,5 @@ public class SecurityConfig {
 
         return source;
     }
+
 }

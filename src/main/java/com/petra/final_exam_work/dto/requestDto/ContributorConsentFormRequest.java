@@ -16,8 +16,7 @@ public class ContributorConsentFormRequest {
     public ContributorConsentFormRequest() {
     }
 
-    public ContributorConsentFormRequest(MultipartFile idCardFile, MultipartFile idFaceFile, MultipartFile facefffFile,
-                                         Boolean approvedRules) {
+    public ContributorConsentFormRequest(MultipartFile idCardFile, MultipartFile idFaceFile, MultipartFile facefffFile, Boolean approvedRules) {
         this.idCardFile = idCardFile;
         this.idFaceFile = idFaceFile;
         this.facefffFile = facefffFile;
