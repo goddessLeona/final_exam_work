@@ -9,6 +9,10 @@
 * Installed Next.js and made a simple landing page, header, nav, footer, contributor page
 * LogIn using JWT-token & HttpOnly Cookies
 * Logout
-* endpoint (/user/username) - username on logged in user
-* SignUp -contributor  endpoint (@Post user/signUp-contributor)
+* Username on logged in user -  endpoint (@GET /user/username) 
+* SignUp contributor - endpoint (@Post user/signUp-contributor)
 * simple Dashboard page for logged in contributors
+* Welcome message to contributor - endpoint (@GET "/contributor/welcome")
+* Implemented PostgreSQL database schema, V2__init_schema.sql (Roles: CONTRIBUTOR, ADMIN , MEMBER)
+* Contributor Consent form - endpoint (@GET "/contributor/consent")
+* Contributor Consent form - endpoint (POST "/contributor/consent")
