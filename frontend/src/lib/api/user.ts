@@ -1,15 +1,14 @@
 
-
 export interface signUpResponse {
-   username: string;
+    username: string;
     password: string;
     confirmPassword: string;
     email: string;
     firstName: string;
     lastName: string;
-    birthYear: number | "";
-    birthMonth: number | "";
-    birthDay: number | "";
+    birthYear: number | null;
+    birthMonth: number | null;
+    birthDay: number | null;
 }
 
 export async function signUpContributor(data: signUpResponse) {
@@ -24,10 +23,16 @@ export async function signUpContributor(data: signUpResponse) {
 
 
     if (!response.ok) {
-        const errorData = await response.json();
-         
+        let errorData;
+
+        try {
+            errorData = await response.json();
+        } catch {
+            throw { message : "UnKnown error"};
+        }
+
         throw errorData;
     }
 
-    return response; 
+    return response.json; 
 }

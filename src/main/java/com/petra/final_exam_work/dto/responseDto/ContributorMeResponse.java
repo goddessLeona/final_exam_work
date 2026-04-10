@@ -1,6 +1,6 @@
 package com.petra.final_exam_work.dto.responseDto;
 
-import com.petra.final_exam_work.entity.consentForm.ConsentStatus;
+import com.petra.final_exam_work.entity.consentForm.ConsentFormStatus;
 
 public class ContributorMeResponse {
 
@@ -8,7 +8,7 @@ public class ContributorMeResponse {
     private Integer yearSignedUp;
 
     private boolean contributor;
-    private ConsentStatus consentStatus;
+    private ConsentFormStatus consentFormStatus;
 
     private Integer countPhotoAlbums;
 
@@ -18,11 +18,11 @@ public class ContributorMeResponse {
     }
 
     public ContributorMeResponse(String username, Integer yearSignedUp, boolean contributor,
-                                 ConsentStatus consentStatus, Integer countPhotoAlbums, String message) {
+                                 ConsentFormStatus consentFormStatus, Integer countPhotoAlbums, String message) {
         this.username = username;
         this.yearSignedUp = yearSignedUp;
         this.contributor = contributor;
-        this.consentStatus = consentStatus;
+        this.consentFormStatus = consentFormStatus;
         this.countPhotoAlbums = countPhotoAlbums;
         this.message = message;
     }
@@ -51,12 +51,12 @@ public class ContributorMeResponse {
         this.contributor = contributor;
     }
 
-    public ConsentStatus getConsentStatus() {
-        return consentStatus;
+    public ConsentFormStatus getConsentFormStatus() {
+        return consentFormStatus;
     }
 
-    public void setConsentStatus(ConsentStatus consentStatus) {
-        this.consentStatus = consentStatus;
+    public void setConsentFormStatus(ConsentFormStatus consentFormStatus) {
+        this.consentFormStatus = consentFormStatus;
     }
 
     public Integer getCountPhotoAlbums() {

@@ -116,21 +116,47 @@
   * added error messages in fields
 
 ## task 8. contributor dashboard
-(21/2- 22/2)
+(21/2 - 22/2)
 
-(info-contributor)
+(info -contributor)
   * added ResponseDto + Mapper + service
   * added SecurityUtils
   * added controller (GET contributor/info)
   * added endpoint in security config
 
-(welcome message)
+(welcome message, depending on if already approved by admin or not)
   * added ResponseDto + Mapper + service
   * added controller (Get contributor/welcome)
   * added contributor nav, and contributor pages
   * added fetch in lib/api/contributor
 
-## task 9. contributor - consent form 
+## task 9. contributor - consent form
+(22/2- 24) (8/3) (5-9/4)
+Contributor should be able to fill in a form add 3 different image documentation. Should be able to refill form if
+only one of the documents was approved by admin. (not empty form each try)
+
+  * added request, response, mapper (GET + POST consent form)
+  * added service (GET + POST consent form)
+  * 
+  * added FileStorageService + location where uploaded content get stored
+  * 
+  * added FileStorageService + validation checking if image or not
+  * added controller (GET + POST consent form)
+
+  * added fetch in contributor.ts (GET + POST agreementForm from backend)
+  * added a new components/form ContributorAgreementForm
+
+  * modified Database (changed Enums in db to Big letters to be able to use POST )
+  * added db flyway version2, so that db always have role CONTRIBUTOR, ADMIN , MEMBER (If I have to restart)
+  * modified ExeptionHandler for better field response in frontend
+  * css - field messages and general messages showing in form if not filled in right
+
+## task 10. Admin Dashboard + Reply to fom submision 
+(10/4-)
+Admin should have a list of all new contributors consent form
+Admin should be able to approve or reject the form and send back to contributor.
+
+
 
 
 

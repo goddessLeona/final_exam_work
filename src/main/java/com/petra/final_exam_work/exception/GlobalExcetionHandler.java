@@ -1,6 +1,7 @@
 package com.petra.final_exam_work.exception;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -17,41 +18,58 @@ public class GlobalExcetionHandler {
 
     //401
     @ExceptionHandler(BadCredentialsException.class)
-    public ResponseEntity<?> handleBadCredentials() {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-                .body(Map.of("error", "invalid credentials"));
+    public ResponseEntity<ErrorResponse> handleBadCredentials() {
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(new ErrorResponse("Invalid credentials", 401));
     }
 
     //403
     @ExceptionHandler(AccessDeniedException.class)
-    public ResponseEntity<?> handleAccessDenied() {
-        return ResponseEntity.status(HttpStatus.FORBIDDEN)
-        .body(Map.of("error", "Access denied"));
+    public ResponseEntity<ErrorResponse> handleAccessDenied() {
+        return ResponseEntity
+                .status(HttpStatus.FORBIDDEN)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(new ErrorResponse("Access denied", 403));
     }
 
     //validation error messages
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, String>> handleValidation(
+    public ResponseEntity<ApiError> handleValiladationException (
             MethodArgumentNotValidException ex
     ) {
         Map<String, String> errors = new HashMap<>();
-
         ex.getBindingResult().getFieldErrors().forEach(error ->
                 errors.put(error.getField(), error.getDefaultMessage())
         );
-        return ResponseEntity.badRequest().body(errors);
+
+        ApiError apiError = new ApiError("Validation failed", errors);
+
+        return ResponseEntity.badRequest().body(apiError);
     }
 
     //Api exceptions and response
     @ExceptionHandler(ApiException.class)
-    public ResponseEntity<ErrorResponse>handleApiException(ApiException ex) {
+    public ResponseEntity<ApiError>handleApiException(ApiException ex) {
 
-        ErrorResponse error = new ErrorResponse(
+        ApiError error = new ApiError(
                 ex.getMessage(),
-                ex.getStatus().value()
+                ex.getErrors()
         );
 
           return new ResponseEntity<>(error, ex.getStatus());
-
     }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ApiError> handleGenericException(Exception ex) {
+
+        ApiError error = new ApiError(
+                "Somthing went wrong",
+                null
+        );
+
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(error);
+    };
+
 }

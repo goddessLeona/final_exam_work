@@ -14,7 +14,7 @@ const initialFormState = {
     birthYear: "",
     birthMonth: "",
     birthDay: "",
-    };
+};
 
 export default function SubscribeContributorForm() {
 
@@ -52,32 +52,25 @@ export default function SubscribeContributorForm() {
 
     } catch (err: any) {
 
-        if (err.message === "Username already exist") {
-        setError({ username: err.message });
-        return;
-        }
+        console.log ("ERROR: ", err);
 
-        if(err.message === "Email already exist"){
-            setError({email: err.message});
+        // field validaion errors
+        if (err.errors) {
+            setError(err.errors);
             return;
         }
 
-        if(err.message === "You must be at least 18 years old to upload content"){
-            setError({birthDay: err.message});
+
+        if (err.message === "You must be at least 18 years old to upload content") {
+            setError({ birthDay: err.message });
             return;
         }
         
-        if(typeof err === "object" && err !=null){
-            setError(err);
-            return
-        }
-
-
-        setError({general: err.message});
-
+        
+        setError({ general: err.message || "Somthing went wrong" });
 
     } finally {
-    setLoading(false);
+        setLoading(false);
     }
 };
 
@@ -90,6 +83,13 @@ export default function SubscribeContributorForm() {
         ...prev,
             [name] : value,
         }));
+
+        setError((prev) => {
+            const newError = { ...prev };
+            delete newError[name];
+            delete newError.general;
+            return newError;
+        });
 
     };
 

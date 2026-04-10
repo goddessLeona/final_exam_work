@@ -2,6 +2,9 @@ package com.petra.final_exam_work.entity.consentForm;
 
 import com.petra.final_exam_work.entity.junktionTables.userConcentform.UserConsentForm;
 import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
+
 
 import java.util.HashSet;
 import java.util.Set;
@@ -35,14 +38,22 @@ public class ConsentForm {
     @Column(name = "approve_rules", nullable = false)
     private Boolean approvedRules;
 
-    @Column(name = "id_card_reviewed", nullable = false)
-    private Boolean idCardReviewed = false;
 
-    @Column(name = "id_face_reviewed", nullable = false)
-    private Boolean idFaceReviewed = false;
+    @Enumerated(EnumType.STRING)
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
+    @Column(name = "id_card_reviewed", columnDefinition = "review_status", nullable = false)
+    private ReviewStatus idCardReviewed;
 
-    @Column(name = "face_fff_reviewed", nullable = false)
-    private Boolean facefffReviewed = false;
+    @Enumerated(EnumType.STRING)
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
+    @Column(name = "id_face_reviewed", columnDefinition = "review_status", nullable = false)
+    private ReviewStatus idFaceReviewed;
+
+    @Enumerated(EnumType.STRING)
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
+    @Column(name = "face_fff_reviewed", columnDefinition = "review_status", nullable = false)
+    private ReviewStatus facefffReviewed;
+
 
     @OneToMany(mappedBy = "consentForm", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<UserConsentForm> users = new HashSet<>();
@@ -55,6 +66,21 @@ public class ConsentForm {
     }
 
     public ConsentForm() {
+    }
+
+    public ConsentForm(Long id, UUID publicUuid, String idCardFilePath, String idFaceFilePath, String facefffFilePath,
+                       Boolean approvedRules, ReviewStatus idCardReviewed, ReviewStatus idFaceReviewed,
+                       ReviewStatus facefffReviewed, Set<UserConsentForm> users) {
+        this.id = id;
+        this.publicUuid = publicUuid;
+        this.idCardFilePath = idCardFilePath;
+        this.idFaceFilePath = idFaceFilePath;
+        this.facefffFilePath = facefffFilePath;
+        this.approvedRules = approvedRules;
+        this.idCardReviewed = idCardReviewed;
+        this.idFaceReviewed = idFaceReviewed;
+        this.facefffReviewed = facefffReviewed;
+        this.users = users;
     }
 
     public Long getId() {
@@ -103,6 +129,30 @@ public class ConsentForm {
 
     public void setApprovedRules(Boolean approvedRules) {
         this.approvedRules = approvedRules;
+    }
+
+    public ReviewStatus getIdCardReviewed() {
+        return idCardReviewed;
+    }
+
+    public void setIdCardReviewed(ReviewStatus idCardReviewed) {
+        this.idCardReviewed = idCardReviewed;
+    }
+
+    public ReviewStatus getIdFaceReviewed() {
+        return idFaceReviewed;
+    }
+
+    public void setIdFaceReviewed(ReviewStatus idFaceReviewed) {
+        this.idFaceReviewed = idFaceReviewed;
+    }
+
+    public ReviewStatus getFacefffReviewed() {
+        return facefffReviewed;
+    }
+
+    public void setFacefffReviewed(ReviewStatus facefffReviewed) {
+        this.facefffReviewed = facefffReviewed;
     }
 
     public Set<UserConsentForm> getUsers() {

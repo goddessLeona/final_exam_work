@@ -2,6 +2,7 @@ package com.petra.final_exam_work.service.auth;
 
 import com.petra.final_exam_work.dto.requestDto.LoginRequest;
 import com.petra.final_exam_work.dto.responseDto.LoginResponse;
+import org.springframework.http.ResponseCookie;
 import com.petra.final_exam_work.security.JwtService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
@@ -40,14 +41,17 @@ public class AuthService {
         String token = jwtService.generateToken(userDetails);
 
         // Create HttpOnly cookie
-        Cookie cookie = new Cookie("jwt", token);
-        cookie.setHttpOnly(true);
-        cookie.setSecure(false); // true if using https
-        cookie.setPath("/");
-        cookie.setMaxAge(60 * 60); // 1 h expire time
-        //cookie.setSameSite("strict"); for production only
+        ResponseCookie cookie = ResponseCookie.from("jwt", token)
+                .httpOnly(true)
+                .secure(false) // true if using https
+                .path("/")
+                .maxAge(60 * 60)
+                .sameSite("Lax") //explicitly set SameSite
+                .build();
 
-        response.addCookie(cookie);
+        //SameSite("strict"); for production only
+        response.addHeader("Set-Cookie", cookie.toString());
+
 
         //extract roles
         List<String> roles = userDetails.getAuthorities()
@@ -61,12 +65,15 @@ public class AuthService {
 
     public void logout(HttpServletResponse response) {
 
-        Cookie cookie = new Cookie("jwt", null);
-        cookie.setHttpOnly(true);
-        cookie.setSecure(false); //true in production https
-        cookie.setPath("/");
-        cookie.setMaxAge(0); // delete cookie immediately
+        ResponseCookie cookie = ResponseCookie.from("jwt", "")
+                .httpOnly(true)
+                .secure(false)
+                .path("/")
+                .maxAge(0) // delete cookie immediately
+                .sameSite("Lax")
+                .build();
 
-        response.addCookie(cookie);
+        response.addHeader("Set-Cookie", cookie.toString());
+
     }
 }

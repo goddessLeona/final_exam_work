@@ -1,8 +1,9 @@
 package com.petra.final_exam_work.repository;
 
-import com.petra.final_exam_work.entity.consentForm.ConsentStatus;
+import com.petra.final_exam_work.entity.consentForm.ConsentFormStatus;
 import com.petra.final_exam_work.entity.junktionTables.userConcentform.UserConsentForm;
 import com.petra.final_exam_work.entity.junktionTables.userConcentform.UserConsentFormId;
+import com.petra.final_exam_work.entity.user.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -13,8 +14,10 @@ import java.util.Optional;
 @Repository
 public interface UserConsentFormRepository extends JpaRepository<UserConsentForm, UserConsentFormId> {
 
-    @Query("SELECT ucf.consentStatus FROM UserConsentForm ucf " +
+    @Query("SELECT ucf.consentFormStatus FROM UserConsentForm ucf " +
             "WHERE ucf.user.id = :userId ")
-    Optional<ConsentStatus> findStatusByUser(@Param("userId") Long userId);
+    Optional<ConsentFormStatus> findStatusByUser(@Param("userId") Long userId);
+
+    Optional<UserConsentForm> findByUser(User user);
 
 }

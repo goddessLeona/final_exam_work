@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { ContributorMeResponse, getContributorInfo } from "@/lib/api/contributor";
+import styles from "./page.module.css"
 
 export default function ContributorPage() {
     const [data, setData] = useState<ContributorMeResponse | null > (null);
@@ -18,16 +19,18 @@ export default function ContributorPage() {
 
     return(
 
-     <div>
-            <div>Username: {data.username}</div>
-            <div>Signed up: {data.yearSignedUp}</div>
+     <div className={styles.info}>
+            <div>
+                <div className={styles.user}>{data.username}</div>
+            </div>    
+            <div className = {styles.year}>Signed up: {data.yearSignedUp}</div>
 
             {data.countPhotoAlbums !== null && (
                 <div>Albums: {data.countPhotoAlbums}</div>
             )}
 
             {data.message && (
-                <div>{data.message}</div>
+                <div className = {styles.message}>{data.message}</div>
             )}
         </div>
     )    

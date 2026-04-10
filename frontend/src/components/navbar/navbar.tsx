@@ -10,7 +10,6 @@ export default function Navbar() {
       </div>
 
       <div className={styles.right}>
-        <Link className={styles.link} href="/signup">Sign up</Link>
         <Link className={styles.link} href="/login">Login</Link>
       </div>
     </nav>

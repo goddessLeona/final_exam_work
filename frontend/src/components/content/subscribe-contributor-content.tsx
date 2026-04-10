@@ -1,13 +1,17 @@
 
 import SubscribeContributorForm from "../forms/subscribeContributorForm";
+import styles from "./subscribe-contributor-content.module.css"
 
 export default function SubscribeContributorContent() {
   return (
-    <div>
+    <div className={styles.container}>
       <h1>Subscribe Contributor</h1>
-      <p>Welcom new contributor </p>
-      <p>We are happy to have you part of our pages</p>
-      <p>Before you can be part of the comunity and contribute with content, you have to fill in this form</p>
+      <h2 className={styles.subtitle}>
+        Welcom new contributor.<br></br>
+        We are happy to have you part of our pages.<br></br> 
+        Before you can be part of the comunity and contribute with content, 
+        you have to fill in this form
+      </h2>
       <SubscribeContributorForm />
     </div>
   );

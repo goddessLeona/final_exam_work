@@ -1,7 +1,10 @@
 package com.petra.final_exam_work.security;
 
+import org.apache.catalina.filters.CorsFilter;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -42,6 +45,9 @@ public class SecurityConfig {
                 )
                 .authorizeHttpRequests(auth -> auth
 
+                        // allow preflight requests
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+
                         //public
                         .requestMatchers("/auth/login").permitAll()
                         .requestMatchers("/auth/logout").permitAll()
@@ -53,6 +59,7 @@ public class SecurityConfig {
                         //role-based
                         .requestMatchers("/contributor/info").hasRole("CONTRIBUTOR")
                         .requestMatchers("/contributor/welcome").hasRole("CONTRIBUTOR")
+                        .requestMatchers("/contributor/consent").hasRole("CONTRIBUTOR")
 
                         //everything else
                         .anyRequest().denyAll()
@@ -105,4 +112,5 @@ public class SecurityConfig {
 
         return source;
     }
+
 }
