@@ -7,10 +7,7 @@ export default function NavbarAdmin() {
   return (
     <nav className={styles.nav}>
       <div className={styles.left}>
-        <Link className={styles.link} href="/contributor">Home</Link>
-        <Link className={styles.link} href="">User info</Link>
-        <Link className={styles.link} href="">Stats</Link>
-        <Link className={styles.link} href="">more?</Link>
+        <Link className={styles.link} href="/admin">Home</Link>
       </div>
       <div className={styles.right}>
         <Link className={styles.link} href="">Settings</Link>

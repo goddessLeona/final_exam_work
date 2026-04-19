@@ -5,7 +5,7 @@ import styles from "./subscribe-contributor-content.module.css"
 export default function SubscribeContributorContent() {
   return (
     <div className={styles.container}>
-      <h1>Subscribe Contributor</h1>
+      <h1>Become a contributor</h1>
       <h2 className={styles.subtitle}>
         Welcom new contributor.<br></br>
         We are happy to have you part of our pages.<br></br> 

@@ -1,17 +1,18 @@
 package com.petra.final_exam_work.service.admin;
 
-import com.petra.final_exam_work.dto.mapperDto.AdminConsentFormItemMapper;
+import com.petra.final_exam_work.dto.mapperDto.AdminDashboardCFMapper;
 import com.petra.final_exam_work.dto.responseDto.AdminDashboardConsentFormresponse.AdminConsentFormItem;
 import com.petra.final_exam_work.dto.responseDto.AdminDashboardConsentFormresponse.AdminDashboardConsentFormResponse;
 import com.petra.final_exam_work.dto.responseDto.AdminDashboardConsentFormresponse.DashboardSection;
+import com.petra.final_exam_work.entity.consentForm.ConsentForm;
 import com.petra.final_exam_work.entity.consentForm.ConsentFormStatus;
+import com.petra.final_exam_work.entity.consentForm.ReviewStatus;
 import com.petra.final_exam_work.entity.junktionTables.userConcentform.UserConsentForm;
 import com.petra.final_exam_work.entity.user.User;
 import com.petra.final_exam_work.exception.ApiException;
 import com.petra.final_exam_work.repository.UserConsentFormRepository;
 import com.petra.final_exam_work.repository.UserRepository;
 import com.petra.final_exam_work.security.CustomUserDetails;
-import com.petra.final_exam_work.security.SecurityUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -20,16 +21,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class AdminService {
 
-    private final AdminConsentFormItemMapper adminConsentFormItemMapper;
+    private final AdminDashboardCFMapper adminDashboardCFMapper;
     private final UserRepository userRepository;
     private final UserConsentFormRepository userConsentFormRepository;
 
-    public AdminService(AdminConsentFormItemMapper adminConsentFormItemMapper, UserRepository userRepository, UserConsentFormRepository userConsentFormRepository) {
-        this.adminConsentFormItemMapper = adminConsentFormItemMapper;
+    public AdminService(AdminDashboardCFMapper adminDashboardCFMapper, UserRepository userRepository, UserConsentFormRepository userConsentFormRepository) {
+        this.adminDashboardCFMapper = adminDashboardCFMapper;
         this.userRepository = userRepository;
         this.userConsentFormRepository = userConsentFormRepository;
     }
@@ -51,24 +53,37 @@ public class AdminService {
         AdminDashboardConsentFormResponse response = new AdminDashboardConsentFormResponse();
         response.setTotal(allUserConsentForms.size());
 
-        response.setPending(buildSection(grouped.get(ConsentFormStatus.PENDING)));
-        response.setApproved(buildSection(grouped.get(ConsentFormStatus.APPROVED)));
-        response.setRejected(buildSection(grouped.get(ConsentFormStatus.REJECTED)));
-        response.setNotSubmitted(buildSection(grouped.get(ConsentFormStatus.NOT_SUBMITTED)));
+        response.setPending(buildSection(grouped.getOrDefault(ConsentFormStatus.PENDING, List.of())));
+        response.setApproved(buildSection(grouped.getOrDefault(ConsentFormStatus.APPROVED, List.of( ))));
+        response.setRejected(buildSection(grouped.getOrDefault(ConsentFormStatus.REJECTED, List.of())));
+        response.setNotSubmitted(buildSection(grouped.getOrDefault(ConsentFormStatus.NOT_SUBMITTED, List.of())));
 
         return response;
     }
 
-    private DashboardSection buildSection(List<UserConsentForm> list) {
+    private long countByStatus(ConsentForm cf, ReviewStatus status) {
+        return Stream.of(
+                cf.getIdCardReviewed(),
+                cf.getIdFaceReviewed(),
+                cf.getFacefffReviewed()
+        ).filter(s -> s == status).count();
+    }
 
-        if (list == null) {
-            return new DashboardSection(0, List.of());
-        }
+    private DashboardSection buildSection(List<UserConsentForm> list) {
 
         List<AdminConsentFormItem> latest = list.stream()
                 .sorted(Comparator.comparing(UserConsentForm::getCreatedAt).reversed())
                 .limit(5)
-                .map(ucf -> adminConsentFormItemMapper.toItem(ucf.getConsentForm(), ucf))
+                .map(ucf -> {
+
+                    ConsentForm cf = ucf.getConsentForm();
+
+                    long pending = countByStatus(cf, ReviewStatus.PENDING);
+                    long approved = countByStatus(cf,ReviewStatus.APPROVED);
+                    long rejected = countByStatus(cf, ReviewStatus.REJECTED);
+
+                    return adminDashboardCFMapper.toItem(ucf, pending, approved, rejected);
+                })
                 .toList();
 
         DashboardSection section = new DashboardSection();

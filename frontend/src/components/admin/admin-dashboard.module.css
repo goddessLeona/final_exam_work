@@ -1,0 +1,20 @@
+.container {
+    padding: 20px;
+}
+
+.section {
+    margin-bottom: 20px;
+    border: 2px solid black;
+}
+
+.item {
+    margin-bottom: 10px;
+}
+
+.username {
+    font-weight: bold;
+}
+
+.stats {
+    font-size: 14px;
+}
