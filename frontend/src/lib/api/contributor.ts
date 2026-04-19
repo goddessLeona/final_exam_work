@@ -1,4 +1,3 @@
-import { promises } from "dns";
 
 export interface WelcomeResponse {
     contributor: boolean;
