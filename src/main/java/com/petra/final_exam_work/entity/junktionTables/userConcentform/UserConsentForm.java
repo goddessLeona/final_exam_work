@@ -7,6 +7,8 @@ import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
+import java.time.Instant;
+
 @Entity
 @Table(name = "users_consent_forms")
 public class UserConsentForm {
@@ -28,6 +30,21 @@ public class UserConsentForm {
     @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     @Column(name = "consent_form_status",columnDefinition = "consent_form_status", nullable = false)
     private ConsentFormStatus consentFormStatus;
+
+    @Column(name = "admin_comment")
+    private String adminComment;
+
+    @Column(name = "created_at", updatable = false, insertable = false)
+    private Instant createdAt;
+
+    @Column(name = "updated_at", updatable = false, insertable = false)
+    private Instant updatedAt;
+
+    @Column(name = "submitted_at", updatable = true)
+    private Instant submittedAt;
+
+    @Column(name = "reviewed_at", updatable = true)
+    private Instant reviewedAt;
 
     public UserConsentForm() {
     }
@@ -62,5 +79,45 @@ public class UserConsentForm {
 
     public void setConsentFormStatus(ConsentFormStatus consentFormStatus) {
         this.consentFormStatus = consentFormStatus;
+    }
+
+    public String getAdminComment() {
+        return adminComment;
+    }
+
+    public void setAdminComment(String adminComment) {
+        this.adminComment = adminComment;
+    }
+
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(Instant createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public Instant getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(Instant updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public Instant getSubmittedAt() {
+        return submittedAt;
+    }
+
+    public void setSubmittedAt(Instant submittedAt) {
+        this.submittedAt = submittedAt;
+    }
+
+    public Instant getReviewedAt() {
+        return reviewedAt;
+    }
+
+    public void setReviewedAt(Instant reviewedAt) {
+        this.reviewedAt = reviewedAt;
     }
 }

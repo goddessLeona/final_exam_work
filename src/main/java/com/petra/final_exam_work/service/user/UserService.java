@@ -52,7 +52,7 @@ public class UserService {
         return meMapper.toDto(user);
     }
 
-// #################################Contributor sign up #########################
+// ################################# POST Contributor sign up #########################
     @Transactional
     public ContributorSignUpResponse signUpContributor (ContributorSignUpRequest request) {
 

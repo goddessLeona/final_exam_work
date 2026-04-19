@@ -114,6 +114,10 @@ CREATE TABLE users_consent_forms(
     consent_form_id BIGINT NOT NULL,
     consent_form_status consent_form_status NOT NULL,
     admin_comment TEXT,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    submitted_at TIMESTAMPTZ,
+    reviewed_at TIMESTAMPTZ,
     PRIMARY KEY (user_id, consent_form_id),
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
     FOREIGN KEY (consent_form_id) REFERENCES consent_forms(id) ON DELETE CASCADE

@@ -138,7 +138,7 @@ only one of the documents was approved by admin. (not empty form each try)
   * added request, response, mapper (GET + POST consent form)
   * added service (GET + POST consent form)
   * 
-  * added FileStorageService + location where uploaded content get stored
+  * added FileStorageService + location (path) where uploaded content get stored
   * 
   * added FileStorageService + validation checking if image or not
   * added controller (GET + POST consent form)
@@ -148,14 +148,22 @@ only one of the documents was approved by admin. (not empty form each try)
 
   * modified Database (changed Enums in db to Big letters to be able to use POST )
   * added db flyway version2, so that db always have role CONTRIBUTOR, ADMIN , MEMBER (If I have to restart)
-  * modified ExeptionHandler for better field response in frontend
+  * modified ExceptionHandler for better field response in frontend
   * css - field messages and general messages showing in form if not filled in right
 
-## task 10. Admin Dashboard + Reply to fom submision 
-(10/4-)
+## task 10. Admin Dashboard + Reply to fom submission
 Admin should have a list of all new contributors consent form
 Admin should be able to approve or reject the form and send back to contributor.
+(12/4) (18/4,19/4)
 
+  * Added V3__insert_super_admin.sql so there are always a super admin when the program starts up first time.
+  * Added css landing page after login as a super admin
+
+GET - dashboard for contributor agreement form
+
+  * added (controller,responseDto+, mapper, service )
+  * small change in v1 in db to be able to sort forms in order
+  * added endpoint in scurityconfig (/admin/dashboard)
 
 
 
