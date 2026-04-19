@@ -159,11 +159,17 @@ Admin should be able to approve or reject the form and send back to contributor.
   * Added V3__insert_super_admin.sql so there are always a super admin when the program starts up first time.
   * Added css landing page after login as a super admin
 
-GET - dashboard for contributor agreement form
+GET - dashboard main 
+see list of total contributor forms 
+see how many are pending, approved,rejected, not submitted and username
 
   * added (controller,responseDto+, mapper, service )
   * small change in v1 in db to be able to sort forms in order
-  * added endpoint in scurityconfig (/admin/dashboard)
+  * added endpoint in security config (/admin/dashboard)
+  * added very simple frontend
+    (missing pagination in backend)
+
+GET - detailed info about every form and images of documents
 
 
 
