@@ -1,9 +1,9 @@
 package com.petra.final_exam_work.service.admin;
 
-import com.petra.final_exam_work.dto.mapperDto.AdminDashboardCFMapper;
-import com.petra.final_exam_work.dto.responseDto.AdminDashboardConsentFormresponse.AdminConsentFormItem;
-import com.petra.final_exam_work.dto.responseDto.AdminDashboardConsentFormresponse.AdminDashboardConsentFormResponse;
-import com.petra.final_exam_work.dto.responseDto.AdminDashboardConsentFormresponse.DashboardSection;
+import com.petra.final_exam_work.dto.mapperDto.admin.AdminDashboardCFMapper;
+import com.petra.final_exam_work.dto.responseDto.admin.AdminDashboardConsentFormresponse.AdminDashboardConsentFormItem;
+import com.petra.final_exam_work.dto.responseDto.admin.AdminDashboardConsentFormresponse.AdminDashboardConsentFormResponse;
+import com.petra.final_exam_work.dto.responseDto.admin.AdminDashboardConsentFormresponse.AdminDashboardConsentFormSection;
 import com.petra.final_exam_work.entity.consentForm.ConsentForm;
 import com.petra.final_exam_work.entity.consentForm.ConsentFormStatus;
 import com.petra.final_exam_work.entity.consentForm.ReviewStatus;
@@ -37,7 +37,7 @@ public class AdminService {
     }
 
 
-    //############################# GET Admin dashboard consent form #######################
+    //############################# GET Admin dashboard consent form summary #######################
 
     public AdminDashboardConsentFormResponse getDashboard (CustomUserDetails userDetails){
 
@@ -69,9 +69,9 @@ public class AdminService {
         ).filter(s -> s == status).count();
     }
 
-    private DashboardSection buildSection(List<UserConsentForm> list) {
+    private AdminDashboardConsentFormSection buildSection(List<UserConsentForm> list) {
 
-        List<AdminConsentFormItem> latest = list.stream()
+        List<AdminDashboardConsentFormItem> latest = list.stream()
                 .sorted(Comparator.comparing(UserConsentForm::getCreatedAt).reversed())
                 .limit(5)
                 .map(ucf -> {
@@ -86,10 +86,12 @@ public class AdminService {
                 })
                 .toList();
 
-        DashboardSection section = new DashboardSection();
+        AdminDashboardConsentFormSection section = new AdminDashboardConsentFormSection();
         section.setTotal(list.size());
         section.setLatest(latest);
 
         return section;
     }
+
+    //########################## GET Admin dashboard consent form data #######################
 }

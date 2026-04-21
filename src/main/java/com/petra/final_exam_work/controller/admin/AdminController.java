@@ -1,6 +1,6 @@
 package com.petra.final_exam_work.controller.admin;
 
-import com.petra.final_exam_work.dto.responseDto.AdminDashboardConsentFormresponse.AdminDashboardConsentFormResponse;
+import com.petra.final_exam_work.dto.responseDto.admin.AdminDashboardConsentFormresponse.AdminDashboardConsentFormResponse;
 import com.petra.final_exam_work.security.CustomUserDetails;
 import com.petra.final_exam_work.service.admin.AdminService;
 import org.springframework.http.ResponseEntity;

@@ -40,17 +40,34 @@ export default function AdminDashboard () {
 
     return (
         <div className={styles.container}>
-            <h2>Total: {data.total}</h2>
+            <h2>Dashboard for Consent Forms</h2>
+            <h3>Total amount of registerd forms: ({data.total})</h3>
 
             <div className={styles.section}>
                 <h3>Pending ({data.pending.total})</h3>
                 <ul>
                     {data.pending.latest.map((item, index) => (
                         <li key={index}>
+                            <div className={styles.list}>
+                                <p>{item.username}</p>
+                                <p>Pending : ({item.documentsPending})</p>
+                                <p>Approved : ({item.documentsApproved})</p>
+                                <p>Rejected : ({item.documentsRejected})</p>
+                            </div>    
+                        </li>
+                    ))}
+                </ul>
+            </div> 
+
+            <div className={styles.section}>        
+                <h3>Rejected ({data.rejected.total})</h3>
+                <ul>
+                    {data.rejected.latest.map((item, index) => (
+                        <li key={index}>
                             <p>{item.username}</p>
-                            Pending : {item.documentsPending}
-                            Approved : {item.documentsApproved}
-                            Rejected : {item.documentsRejected}
+                            Pending : ({item.documentsPending})
+                            Approved : ({item.documentsApproved})
+                            Rejected : ({item.documentsRejected})
                         </li>
                     ))}
                 </ul>
@@ -62,25 +79,15 @@ export default function AdminDashboard () {
                     {data.approved.latest.map((item, index) => (
                         <li key={index}>
                             <p>{item.username}</p>
+                            Approved : ({item.documentsApproved})
                         </li>
                     ))}
                 </ul>
             </div>    
 
-            <div className={styles.section}>        
-                <h3>Rejected ({data.rejected.total})</h3>
-                <ul>
-                    {data.rejected.latest.map((item, index) => (
-                        <li key={index}>
-                            <p>{item.username}</p>
-                            Pending : {item.documentsPending}
-                            Approved : {item.documentsApproved}
-                            Rejected : {item.documentsRejected}
-                        </li>
-                    ))}
-                </ul>
-            </div>    
+               
 
+            {/*        
             <div className={styles.section}>
                 <h3>Not submitted ({data.notSubmitted.total})</h3>
                 <ul>
@@ -93,7 +100,8 @@ export default function AdminDashboard () {
                         </li>
                     ))}
                 </ul>
-            </div>
+            </div> 
+            */}
 
         </div>
     );   

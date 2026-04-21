@@ -1,11 +1,10 @@
-package com.petra.final_exam_work.dto.responseDto.AdminDashboardConsentFormresponse;
+package com.petra.final_exam_work.dto.responseDto.admin.AdminDashboardConsentFormresponse;
 
 import com.petra.final_exam_work.entity.consentForm.ConsentFormStatus;
-import com.petra.final_exam_work.entity.consentForm.ReviewStatus;
 
 import java.util.UUID;
 
-public class AdminConsentFormItem {
+public class AdminDashboardConsentFormItem {
 
     private String username;
 
@@ -17,11 +16,11 @@ public class AdminConsentFormItem {
 
     private UUID consentFormId;
 
-    public AdminConsentFormItem() {
+    public AdminDashboardConsentFormItem() {
     }
 
-    public AdminConsentFormItem(String username, long documentsPending, long documentsApproved, long documentsRejected,
-                                ConsentFormStatus consentFormStatus, UUID consentFormId) {
+    public AdminDashboardConsentFormItem(String username, long documentsPending, long documentsApproved, long documentsRejected,
+                                         ConsentFormStatus consentFormStatus, UUID consentFormId) {
         this.username = username;
         this.documentsPending = documentsPending;
         this.documentsApproved = documentsApproved;

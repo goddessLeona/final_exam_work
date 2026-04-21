@@ -1,19 +1,19 @@
-package com.petra.final_exam_work.dto.mapperDto;
+package com.petra.final_exam_work.dto.mapperDto.admin;
 
-import com.petra.final_exam_work.dto.responseDto.AdminDashboardConsentFormresponse.AdminConsentFormItem;
+import com.petra.final_exam_work.dto.responseDto.admin.AdminDashboardConsentFormresponse.AdminDashboardConsentFormItem;
 import com.petra.final_exam_work.entity.junktionTables.userConcentform.UserConsentForm;
 import org.springframework.stereotype.Component;
 
 @Component
 public class AdminDashboardCFMapper {
 
-    public AdminConsentFormItem toItem(
+    public AdminDashboardConsentFormItem toItem(
             UserConsentForm ucf,
             long pending,
             long approved,
             long rejected
     ) {
-        AdminConsentFormItem item = new AdminConsentFormItem();
+        AdminDashboardConsentFormItem item = new AdminDashboardConsentFormItem();
 
         item.setUsername(ucf.getUser().getUsername());
         item.setDocumentsPending(pending);
