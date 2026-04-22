@@ -169,6 +169,7 @@ see how many are pending, approved,rejected, not submitted and username
   * added very simple frontend
     (missing pagination in backend)
 
-GET - detailed info about every form and images of documents
+GET - detailed info about every form and images of documents and their status
 
   * added (responseDTO+, mapper)
+  * added WebConfig to be able to get the images

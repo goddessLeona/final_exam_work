@@ -1,5 +1,6 @@
 package com.petra.final_exam_work.service.admin;
 
+import com.petra.final_exam_work.dto.mapperDto.admin.AdminConsentFormDataMapper;
 import com.petra.final_exam_work.dto.mapperDto.admin.AdminDashboardCFMapper;
 import com.petra.final_exam_work.dto.responseDto.admin.AdminDashboardConsentFormresponse.AdminDashboardConsentFormItem;
 import com.petra.final_exam_work.dto.responseDto.admin.AdminDashboardConsentFormresponse.AdminDashboardConsentFormResponse;
@@ -13,9 +14,18 @@ import com.petra.final_exam_work.exception.ApiException;
 import com.petra.final_exam_work.repository.UserConsentFormRepository;
 import com.petra.final_exam_work.repository.UserRepository;
 import com.petra.final_exam_work.security.CustomUserDetails;
+import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.core.io.Resource;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -29,11 +39,13 @@ public class AdminService {
     private final AdminDashboardCFMapper adminDashboardCFMapper;
     private final UserRepository userRepository;
     private final UserConsentFormRepository userConsentFormRepository;
+    private final AdminConsentFormDataMapper adminConsentFormDataMapper;
 
-    public AdminService(AdminDashboardCFMapper adminDashboardCFMapper, UserRepository userRepository, UserConsentFormRepository userConsentFormRepository) {
+    public AdminService(AdminDashboardCFMapper adminDashboardCFMapper, UserRepository userRepository, UserConsentFormRepository userConsentFormRepository, AdminConsentFormDataMapper adminConsentFormDataMapper) {
         this.adminDashboardCFMapper = adminDashboardCFMapper;
         this.userRepository = userRepository;
         this.userConsentFormRepository = userConsentFormRepository;
+        this.adminConsentFormDataMapper = adminConsentFormDataMapper;
     }
 
 
@@ -93,5 +105,46 @@ public class AdminService {
         return section;
     }
 
-    //########################## GET Admin dashboard consent form data #######################
+    //########################## GET Admin-ConsentForm Data #######################
+
+    public ResponseEntity<Resource> getDocumentData (UUID publicUuid, String type) {
+
+        UserConsentForm userConsentForm =userConsentFormRepository
+                .findByConsentForm_PublicUuid(publicUuid)
+                .orElseThrow(() -> new ApiException("Document not found", HttpStatus.NOT_FOUND));
+
+        String path = switch (type) {
+            case "id-card" -> userConsentForm.getConsentForm().getIdCardFilePath();
+            case "id-face" -> userConsentForm.getConsentForm().getIdFaceFilePath();
+            case "face-fff" -> userConsentForm.getConsentForm().getFacefffFilePath();
+            default -> throw new IllegalArgumentException("Invalid type");
+        };
+
+        Path file = Paths.get(path);
+
+        if(!Files.exists(file)){
+            throw new ApiException("File not found", HttpStatus.NOT_FOUND);
+        }
+
+        String contentType;
+        try {
+            contentType = Files.probeContentType(file);
+        }catch (IOException e) {
+            contentType = "application/octet-stream";
+        }
+
+        Resource resource;
+
+        try {
+            resource = new UrlResource(file.toUri());
+        } catch (MalformedURLException e) {
+            throw new ApiException("Invalid file path", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_TYPE,
+                        contentType !=null ? contentType : "application/octet-stream")
+                .body(resource);
+    }
+
 }
