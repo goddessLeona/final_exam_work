@@ -62,6 +62,8 @@ public class SecurityConfig {
                         .requestMatchers("/contributor/welcome").hasRole("CONTRIBUTOR")
                         .requestMatchers("/contributor/consent").hasRole("CONTRIBUTOR")
                         .requestMatchers("/admin/dashboard").hasRole("ADMIN")
+                        .requestMatchers("/admin/consent/{id}").hasRole("ADMIN")
+                        .requestMatchers("/admin/consent/{id}/document/{type}").hasRole("ADMIN")
 
                         //everything else
                         .anyRequest().denyAll()

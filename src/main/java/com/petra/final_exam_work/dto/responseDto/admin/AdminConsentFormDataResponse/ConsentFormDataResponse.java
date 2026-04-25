@@ -1,4 +1,4 @@
-package com.petra.final_exam_work.dto.responseDto.admin.AdminConsentFormResponse;
+package com.petra.final_exam_work.dto.responseDto.admin.AdminConsentFormDataResponse;
 
 import com.petra.final_exam_work.entity.consentForm.ConsentFormStatus;
 

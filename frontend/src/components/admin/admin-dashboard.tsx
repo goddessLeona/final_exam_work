@@ -2,6 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { getAdminDashboard, AdminDashboardResponse } from "@/lib/api/admin";
+import ConsentData from "./admin-getFormData";
+import Link from "next/link";
 import styles from "./admin-dashboard.module.css"
 
 export default function AdminDashboard () {
@@ -48,12 +50,14 @@ export default function AdminDashboard () {
                 <ul>
                     {data.pending.latest.map((item, index) => (
                         <li key={index}>
-                            <div className={styles.list}>
-                                <p>{item.username}</p>
-                                <p>Pending : ({item.documentsPending})</p>
-                                <p>Approved : ({item.documentsApproved})</p>
-                                <p>Rejected : ({item.documentsRejected})</p>
-                            </div>    
+                            <Link href={`/admin/consent/${item.consentFormId}`}>
+                                <div className={styles.list}>
+                                    <p>{item.username}</p>
+                                    <p>Pending : ({item.documentsPending})</p>
+                                    <p>Approved : ({item.documentsApproved})</p>
+                                    <p>Rejected : ({item.documentsRejected})</p>
+                                </div>
+                            </Link>        
                         </li>
                     ))}
                 </ul>

@@ -42,3 +42,33 @@ export async function getAdminDashboard () : Promise<AdminDashboardResponse> {
     return res.json();
 
 }
+
+export interface ConsentFormDataResponse {
+
+    username: string;
+    documentIdCard: DocumentDto;
+    documentIdCardFace : DocumentDto;
+    documentFaceFFF : DocumentDto;
+    approvedRules : boolean;
+    consentFormStatus : consentFormStatus;
+    consentFormId : string
+
+}
+
+export interface DocumentDto {
+
+    status : ReviewStatus;
+}
+
+export async function getConsentFormData (id: string) : Promise <ConsentFormDataResponse> {
+
+    const res = await fetch(`http://localhost:8080/admin/consent/${id}`, {
+        credentials: "include",
+    })
+
+    if(!res.ok) {
+        throw new Error("Failed to fetch consent data");
+    }
+
+    return res.json();
+}

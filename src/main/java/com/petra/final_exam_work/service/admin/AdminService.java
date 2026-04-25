@@ -2,6 +2,7 @@ package com.petra.final_exam_work.service.admin;
 
 import com.petra.final_exam_work.dto.mapperDto.admin.AdminConsentFormDataMapper;
 import com.petra.final_exam_work.dto.mapperDto.admin.AdminDashboardCFMapper;
+import com.petra.final_exam_work.dto.responseDto.admin.AdminConsentFormDataResponse.ConsentFormDataResponse;
 import com.petra.final_exam_work.dto.responseDto.admin.AdminDashboardConsentFormresponse.AdminDashboardConsentFormItem;
 import com.petra.final_exam_work.dto.responseDto.admin.AdminDashboardConsentFormresponse.AdminDashboardConsentFormResponse;
 import com.petra.final_exam_work.dto.responseDto.admin.AdminDashboardConsentFormresponse.AdminDashboardConsentFormSection;
@@ -145,6 +146,17 @@ public class AdminService {
                 .header(HttpHeaders.CONTENT_TYPE,
                         contentType !=null ? contentType : "application/octet-stream")
                 .body(resource);
+    }
+
+    //####################### GET consentFormData id #############
+
+    public ConsentFormDataResponse getConsentFormDataId(UUID id) {
+
+        UserConsentForm ucf = userConsentFormRepository
+                .findByConsentForm_PublicUuid(id)
+                .orElseThrow(() -> new ApiException("Not found", HttpStatus.NOT_FOUND));
+
+        return adminConsentFormDataMapper.toDto(ucf);
     }
 
 }
