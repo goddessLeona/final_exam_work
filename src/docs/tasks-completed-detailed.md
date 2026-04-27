@@ -154,7 +154,7 @@ only one of the documents was approved by admin. (not empty form each try)
 ## task 10. Admin Dashboard + Reply to fom submission
 Admin should have a list of all new contributors consent form
 Admin should be able to approve or reject the form and send back to contributor.
-(12/4) (18/4,19/4, 21/4)
+(12/4, 18/4, 19/4, 21/4, 25/4)
 
   * Added V3__insert_super_admin.sql so there are always a super admin when the program starts up first time.
   * Added css landing page after login as a super admin
@@ -167,9 +167,19 @@ see how many are pending, approved,rejected, not submitted and username
   * small change in v1 in db to be able to sort forms in order
   * added endpoint in security config (/admin/dashboard)
   * added very simple frontend
-    (missing pagination in backend)
+    (missing pagination in backend, should be max 5 and if you want to see all using link)
 
 GET - detailed info about every form and images of documents and their status
 
+(GET "/admin/consent/{id}")
+(GET "/admin/consent/{id}/document/{type}")
+
   * added (responseDTO+, mapper)
   * added WebConfig to be able to get the images
+  * added controller for Get consentFormData
+  * added a controller for Get id connected to the consentForm data
+  * added an extra service for getting the id from form
+  * added a fetch to get the images connected to the consent form id
+  * added some simple css
+
+UPDATE admin should be able to response to the form, approve or  reject
