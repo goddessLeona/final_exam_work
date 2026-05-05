@@ -2,6 +2,7 @@ package com.petra.final_exam_work.service.admin;
 
 import com.petra.final_exam_work.dto.mapperDto.admin.AdminConsentFormDataMapper;
 import com.petra.final_exam_work.dto.mapperDto.admin.AdminDashboardCFMapper;
+import com.petra.final_exam_work.dto.requestDto.admin.AdminConsentReviewRequest;
 import com.petra.final_exam_work.dto.responseDto.admin.AdminConsentFormDataResponse.ConsentFormDataResponse;
 import com.petra.final_exam_work.dto.responseDto.admin.AdminDashboardConsentFormresponse.AdminDashboardConsentFormItem;
 import com.petra.final_exam_work.dto.responseDto.admin.AdminDashboardConsentFormresponse.AdminDashboardConsentFormResponse;
@@ -9,9 +10,11 @@ import com.petra.final_exam_work.dto.responseDto.admin.AdminDashboardConsentForm
 import com.petra.final_exam_work.entity.consentForm.ConsentForm;
 import com.petra.final_exam_work.entity.consentForm.ConsentFormStatus;
 import com.petra.final_exam_work.entity.consentForm.ReviewStatus;
+import com.petra.final_exam_work.entity.enums.ContributorStatus;
 import com.petra.final_exam_work.entity.junktionTables.userConcentform.UserConsentForm;
 import com.petra.final_exam_work.entity.user.User;
 import com.petra.final_exam_work.exception.ApiException;
+import com.petra.final_exam_work.repository.ConsentFormRepository;
 import com.petra.final_exam_work.repository.UserConsentFormRepository;
 import com.petra.final_exam_work.repository.UserRepository;
 import com.petra.final_exam_work.security.CustomUserDetails;
@@ -21,6 +24,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.core.io.Resource;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -41,16 +45,18 @@ public class AdminService {
     private final UserRepository userRepository;
     private final UserConsentFormRepository userConsentFormRepository;
     private final AdminConsentFormDataMapper adminConsentFormDataMapper;
+    private final ConsentFormRepository consentFormRepository;
 
-    public AdminService(AdminDashboardCFMapper adminDashboardCFMapper, UserRepository userRepository, UserConsentFormRepository userConsentFormRepository, AdminConsentFormDataMapper adminConsentFormDataMapper) {
+    public AdminService(AdminDashboardCFMapper adminDashboardCFMapper, UserRepository userRepository, UserConsentFormRepository userConsentFormRepository, AdminConsentFormDataMapper adminConsentFormDataMapper, ConsentFormRepository consentFormRepository) {
         this.adminDashboardCFMapper = adminDashboardCFMapper;
         this.userRepository = userRepository;
         this.userConsentFormRepository = userConsentFormRepository;
         this.adminConsentFormDataMapper = adminConsentFormDataMapper;
+        this.consentFormRepository = consentFormRepository;
     }
 
 
-    //############################# GET Admin dashboard consent form summary #######################
+    //##### GET Admin dashboard consent form summary ######
 
     public AdminDashboardConsentFormResponse getDashboard (CustomUserDetails userDetails){
 
@@ -106,7 +112,7 @@ public class AdminService {
         return section;
     }
 
-    //########################## GET Admin-ConsentForm Data #######################
+    //##### GET Admin-ConsentForm Data #####
 
     public ResponseEntity<Resource> getDocumentData (UUID publicUuid, String type) {
 
@@ -148,7 +154,7 @@ public class AdminService {
                 .body(resource);
     }
 
-    //####################### GET consentFormData id #############
+    //##### GET consentFormData id #####
 
     public ConsentFormDataResponse getConsentFormDataId(UUID id) {
 
@@ -157,6 +163,63 @@ public class AdminService {
                 .orElseThrow(() -> new ApiException("Not found", HttpStatus.NOT_FOUND));
 
         return adminConsentFormDataMapper.toDto(ucf);
+    }
+
+    //##### admin Review the consent form status #####
+
+    @Transactional
+    public void reviewConsentForm (UUID id, AdminConsentReviewRequest request) {
+
+        UserConsentForm ucf = userConsentFormRepository
+                .findByConsentForm_PublicUuid(id)
+                .orElseThrow(() -> new ApiException("Consent form not found",
+                        HttpStatus.NOT_FOUND));
+
+        ConsentForm cf = ucf.getConsentForm();
+        System.out.println(request);
+
+        if (request.getIdCardStatus() != null) {
+            cf.setIdCardReviewed(request.getIdCardStatus());
+            cf.setIdCardMessage(request.getIdCardMessage());
+        }
+
+        if (request.getIdFaceStatus() != null) {
+            cf.setIdFaceReviewed(request.getIdFaceStatus());
+            cf.setIdFaceMessage(request.getIdFaceMessage());
+        }
+
+        if (request.getFacefffStatus() != null) {
+            cf.setFacefffReviewed(request.getFacefffStatus());
+            cf.setFacefffMessage(request.getFacefffMessage());
+        }
+
+        boolean allApproved =
+                cf.getIdCardReviewed() == ReviewStatus.APPROVED &&
+                cf.getIdFaceReviewed() == ReviewStatus.APPROVED &&
+                cf.getFacefffReviewed() == ReviewStatus.APPROVED;
+
+        boolean anyRejected =
+                cf.getIdCardReviewed() == ReviewStatus.REJECTED ||
+                cf.getIdFaceReviewed() == ReviewStatus.REJECTED ||
+                cf.getFacefffReviewed() == ReviewStatus.REJECTED;
+
+        if (allApproved) {
+            ucf.setConsentFormStatus(ConsentFormStatus.APPROVED);
+
+            User user = ucf.getUser();
+            user.setContributorStatus(ContributorStatus.APPROVED);
+            userRepository.save(user);
+
+        } else if (anyRejected){
+            ucf.setConsentFormStatus(ConsentFormStatus.REJECTED);
+
+        } else {
+            ucf.setConsentFormStatus(ConsentFormStatus.PENDING);
+        }
+
+        System.out.println(request);
+        consentFormRepository.save(cf);
+        userConsentFormRepository.save(ucf);
     }
 
 }

@@ -136,7 +136,7 @@ Contributor should be able to fill in a form add 3 different image documentation
 only one of the documents was approved by admin. (not empty form each try)
 
   * added request, response, mapper (GET + POST consent form)
-  * added service (GET + POST consent form)
+  * added service (GET + POST consent form)("/contributor/consent")
   * 
   * added FileStorageService + location (path) where uploaded content get stored
   * 
@@ -151,10 +151,10 @@ only one of the documents was approved by admin. (not empty form each try)
   * modified ExceptionHandler for better field response in frontend
   * css - field messages and general messages showing in form if not filled in right
 
-## task 10. Admin Dashboard + Reply to fom submission
+## task 10. Admin Dashboard + Reply form submission
 Admin should have a list of all new contributors consent form
 Admin should be able to approve or reject the form and send back to contributor.
-(12/4, 18/4, 19/4, 21/4, 25/4)
+(12/4, 18/4, 19/4, 21/4, 25/4, 4/5, 5/5)
 
   * Added V3__insert_super_admin.sql so there are always a super admin when the program starts up first time.
   * Added css landing page after login as a super admin
@@ -182,4 +182,25 @@ GET - detailed info about every form and images of documents and their status
   * added a fetch to get the images connected to the consent form id
   * added some simple css
 
-UPDATE admin should be able to response to the form, approve or  reject
+Admin should be able to response to the Consent form, approve or reject
+PATCH "/admin/consent/{id}/review"
+
+  * added requestDTO, service, controller, security config
+  * added fetch in frontend
+  * added new status enum for user for more flexibility 
+  * added some styling
+
+## task 11 look over all consent endpoints (new enum status)
+* update all consent-related endpoints to use new ContributorStatus enum
+* remove old isContributor boolean logic
+* add so that messages from admin get shown in form 
+* when consent form is approved it should disrepair and new things should show
+
+## task future a cleanup service that clean up all uploads not in use
+
+Planned background cleanup system for:
+* rejected uploads
+* replaced files
+* deleted contributor content
+* banned/deleted users
+* orphaned files no longer connected to database records

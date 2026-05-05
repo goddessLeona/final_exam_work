@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { getAdminDashboard, AdminDashboardResponse } from "@/lib/api/admin";
-import ConsentData from "./admin-getFormData";
 import Link from "next/link";
 import styles from "./admin-dashboard.module.css"
 
@@ -48,16 +47,17 @@ export default function AdminDashboard () {
             <div className={styles.section}>
                 <h3>Pending ({data.pending.total})</h3>
                 <ul>
-                    {data.pending.latest.map((item, index) => (
-                        <li key={index}>
-                            <Link href={`/admin/consent/${item.consentFormId}`}>
-                                <div className={styles.list}>
-                                    <p>{item.username}</p>
-                                    <p>Pending : ({item.documentsPending})</p>
-                                    <p>Approved : ({item.documentsApproved})</p>
-                                    <p>Rejected : ({item.documentsRejected})</p>
-                                </div>
-                            </Link>        
+                    {data.pending.latest.map((item) => (
+                        <li key={item.consentFormId}>
+                            <div className={styles.list}>
+                                <Link href={`/admin/consent/${item.consentFormId}`}>
+                                    <p className={styles.username}>{item.username}</p>
+                                </Link>        
+                            
+                                <p>Pending : ({item.documentsPending})</p>
+                                <p>Approved : ({item.documentsApproved})</p>
+                                <p>Rejected : ({item.documentsRejected})</p>
+                            </div>  
                         </li>
                     ))}
                 </ul>
@@ -66,12 +66,17 @@ export default function AdminDashboard () {
             <div className={styles.section}>        
                 <h3>Rejected ({data.rejected.total})</h3>
                 <ul>
-                    {data.rejected.latest.map((item, index) => (
-                        <li key={index}>
-                            <p>{item.username}</p>
-                            Pending : ({item.documentsPending})
-                            Approved : ({item.documentsApproved})
-                            Rejected : ({item.documentsRejected})
+                    {data.rejected.latest.map((item) => (
+                        <li key={item.consentFormId}>
+                            <div className={styles.list}>
+                                <Link href={`/admin/consent/${item.consentFormId}`}>
+                                    <p className={styles.username}>{item.username}</p>
+                                </Link>    
+                            
+                                <p>Pending : ({item.documentsPending})</p>
+                                <p>Approved : ({item.documentsApproved})</p>
+                                <p>Rejected : ({item.documentsRejected})</p>
+                            </div>     
                         </li>
                     ))}
                 </ul>
@@ -80,10 +85,15 @@ export default function AdminDashboard () {
             <div className={styles.section}>  
                 <h3>Approved ({data.approved.total})</h3>
                 <ul>
-                    {data.approved.latest.map((item, index) => (
-                        <li key={index}>
-                            <p>{item.username}</p>
-                            Approved : ({item.documentsApproved})
+                    {data.approved.latest.map((item) => (
+                        <li key={item.consentFormId}>
+                            <div className={styles.list}>
+                                <Link href={`/admin/consent/${item.consentFormId}`}>
+                                    <p className={styles.username}>{item.username}</p>
+                                </Link>    
+                            
+                                <p>Approved : ({item.documentsApproved})</p>
+                            </div>    
                         </li>
                     ))}
                 </ul>

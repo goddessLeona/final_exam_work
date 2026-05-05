@@ -64,6 +64,7 @@ public class SecurityConfig {
                         .requestMatchers("/admin/dashboard").hasRole("ADMIN")
                         .requestMatchers("/admin/consent/{id}").hasRole("ADMIN")
                         .requestMatchers("/admin/consent/{id}/document/{type}").hasRole("ADMIN")
+                        .requestMatchers("/admin/consent/{id}/review").hasRole("ADMIN")
 
                         //everything else
                         .anyRequest().denyAll()
@@ -106,7 +107,7 @@ public class SecurityConfig {
         CorsConfiguration config = new CorsConfiguration();
 
         config.setAllowedOrigins(List.of("http://localhost:3000")); //next.js dev
-        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        config.setAllowedMethods(List.of("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(List.of("*"));
         config.setAllowCredentials(true);
 

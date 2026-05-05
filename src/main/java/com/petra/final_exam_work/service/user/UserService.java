@@ -5,6 +5,7 @@ import com.petra.final_exam_work.dto.mapperDto.MeMapper;
 import com.petra.final_exam_work.dto.requestDto.ContributorSignUpRequest;
 import com.petra.final_exam_work.dto.responseDto.ContributorSignUpResponse;
 import com.petra.final_exam_work.dto.responseDto.MeResponse;
+import com.petra.final_exam_work.entity.enums.ContributorStatus;
 import com.petra.final_exam_work.entity.user.Role;
 import com.petra.final_exam_work.entity.user.User;
 import com.petra.final_exam_work.exception.ApiException;
@@ -99,7 +100,6 @@ public class UserService {
                 .orElseThrow(() -> new ApiException("Role not found", HttpStatus.NOT_FOUND));
 
         user.setRoles(Set.of(contributorRole));
-
         System.out.println(user);
 
         //Save

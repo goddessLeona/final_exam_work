@@ -25,10 +25,16 @@
     margin-bottom: 10px;
 }
 
-.username {
-    font-weight: bold;
-}
-
 .stats {
     font-size: 14px;
+}
+
+.username {
+    color: #501581;
+    font-weight: 550;
+    cursor: pointer;
+}
+
+.username:hover {
+    text-decoration: underline;
 }

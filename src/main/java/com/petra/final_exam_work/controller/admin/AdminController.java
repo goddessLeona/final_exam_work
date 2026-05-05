@@ -1,17 +1,16 @@
 package com.petra.final_exam_work.controller.admin;
 
+import com.petra.final_exam_work.dto.requestDto.admin.AdminConsentReviewRequest;
 import com.petra.final_exam_work.dto.responseDto.admin.AdminConsentFormDataResponse.ConsentFormDataResponse;
 import com.petra.final_exam_work.dto.responseDto.admin.AdminDashboardConsentFormresponse.AdminDashboardConsentFormResponse;
 import com.petra.final_exam_work.security.CustomUserDetails;
 import com.petra.final_exam_work.service.admin.AdminService;
+import jakarta.validation.Valid;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
@@ -54,5 +53,20 @@ public class AdminController {
             ) {
 
         return adminService.getDocumentData(publicUuid, type);
+    }
+
+    //##### UPDATE admin Consent form #####
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PatchMapping("/consent/{id}/review")
+    public ResponseEntity<Void> reviewConsentForm (
+            @PathVariable UUID id,
+            @Valid
+            @RequestBody AdminConsentReviewRequest request
+            ) {
+
+        adminService.reviewConsentForm(id,request);
+
+        return ResponseEntity.ok().build();
     }
 }

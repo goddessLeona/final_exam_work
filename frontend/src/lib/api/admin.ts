@@ -72,3 +72,37 @@ export async function getConsentFormData (id: string) : Promise <ConsentFormData
 
     return res.json();
 }
+
+
+export interface AdminConsentReviewRequest {
+
+    idCardStatus? : ReviewStatus;
+    idFaceStatus? : ReviewStatus;
+    facefffStatus? : ReviewStatus;
+    idCardMessage? : string;
+    idFaceMessage? : string;
+    facefffMessage? : string;
+}
+
+
+export async function adminConsentFormResponse (
+    id: string,
+    request : AdminConsentReviewRequest
+) : Promise <void> {
+
+   
+    const res = await fetch(`http://localhost:8080/admin/consent/${id}/review`, 
+        {
+        method: "PATCH",
+        credentials: "include",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(request),
+    });
+
+    if(!res.ok) {
+        throw new Error("Failed to update consent form")
+    }
+
+}

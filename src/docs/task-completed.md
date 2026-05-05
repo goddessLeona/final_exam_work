@@ -57,6 +57,11 @@ DASHBOARD ADMIN - HANDLING CONTRIBUTOR CONSENT FORM
   Images are stored as file paths in DB
   Served securely via backend endpoint
   
+* Admin review ConsentForm (PATCH "/admin/consent/{id}/review")
+  approve or reject individual consent documents
+  send rejection feedback/messages to contributors
+  automatically update overall consent form status
+  automatically update contributor status
 
 
 

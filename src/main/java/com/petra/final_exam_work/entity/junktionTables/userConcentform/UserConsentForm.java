@@ -31,9 +31,6 @@ public class UserConsentForm {
     @Column(name = "consent_form_status",columnDefinition = "consent_form_status", nullable = false)
     private ConsentFormStatus consentFormStatus;
 
-    @Column(name = "admin_comment")
-    private String adminComment;
-
     @Column(name = "created_at", updatable = false, insertable = false)
     private Instant createdAt;
 
@@ -47,6 +44,19 @@ public class UserConsentForm {
     private Instant reviewedAt;
 
     public UserConsentForm() {
+    }
+
+    public UserConsentForm(UserConsentFormId id, User user, ConsentForm consentForm,
+                           ConsentFormStatus consentFormStatus, Instant createdAt, Instant updatedAt, Instant submittedAt,
+                           Instant reviewedAt) {
+        this.id = id;
+        this.user = user;
+        this.consentForm = consentForm;
+        this.consentFormStatus = consentFormStatus;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.submittedAt = submittedAt;
+        this.reviewedAt = reviewedAt;
     }
 
     public UserConsentFormId getId() {
@@ -79,14 +89,6 @@ public class UserConsentForm {
 
     public void setConsentFormStatus(ConsentFormStatus consentFormStatus) {
         this.consentFormStatus = consentFormStatus;
-    }
-
-    public String getAdminComment() {
-        return adminComment;
-    }
-
-    public void setAdminComment(String adminComment) {
-        this.adminComment = adminComment;
     }
 
     public Instant getCreatedAt() {
