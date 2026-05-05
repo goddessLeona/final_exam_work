@@ -8,6 +8,7 @@ CREATE TYPE consent_form_status AS ENUM ('NOT_SUBMITTED', 'PENDING', 'APPROVED',
 CREATE TYPE content_status AS ENUM ('PUBLISHED', 'DRAFT');
 CREATE TYPE album_role AS ENUM ('owner', 'editor', 'viewer');
 CREATE TYPE review_status AS ENUM ('NOT_SUBMITTED', 'PENDING', 'APPROVED', 'REJECTED');
+CREATE TYPE contributor_status AS ENUM ('NOT_APPLIED', 'PENDING', 'APPROVED', 'REJECTED', 'TEMP_BANNED', 'BANNED');
 
 -- TOTAL AMOUNT OF TABLES 13
 
@@ -24,6 +25,7 @@ CREATE TABLE users(
     first_name TEXT NOT NULL,
     last_name TEXT NOT NULL,
     is_contributor BOOLEAN NOT NULL DEFAULT false,
+    contributor_status contributor_status NOT NULL DEFAULT 'NOT_APPLIED',
     created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
 
@@ -45,7 +47,11 @@ CREATE TABLE consent_forms(
 
     id_card_reviewed review_status NOT NULL DEFAULT 'NOT_SUBMITTED',
     id_face_reviewed review_status NOT NULL DEFAULT 'NOT_SUBMITTED',
-    face_fff_reviewed review_status NOT NULL DEFAULT 'NOT_SUBMITTED'
+    face_fff_reviewed review_status NOT NULL DEFAULT 'NOT_SUBMITTED',
+
+    id_card_message TEXT,
+    id_face_message TEXT,
+    face_fff_message TEXT
 );
 
 CREATE TABLE tags(
@@ -113,7 +119,6 @@ CREATE TABLE users_consent_forms(
     user_id BIGINT NOT NULL,
     consent_form_id BIGINT NOT NULL,
     consent_form_status consent_form_status NOT NULL,
-    admin_comment TEXT,
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     submitted_at TIMESTAMPTZ,

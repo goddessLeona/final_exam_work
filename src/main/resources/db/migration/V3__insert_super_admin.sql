@@ -9,7 +9,8 @@ INSERT INTO users (
     email,
     first_name,
     last_name,
-    is_contributor
+    is_contributor,
+    contributor_status
 )
 VALUES (
     'super_admin',
@@ -17,7 +18,8 @@ VALUES (
     'admin@example.com',
     'Super',
     'Admin',
-    false
+    false,
+    'APPROVED'
 )
 ON CONFLICT (user_name) DO NOTHING;
 

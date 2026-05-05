@@ -54,6 +54,14 @@ public class ConsentForm {
     @Column(name = "face_fff_reviewed", columnDefinition = "review_status", nullable = false)
     private ReviewStatus facefffReviewed;
 
+    @Column(name = "id_card_message")
+    private String idCardMessage;
+
+    @Column(name = "id_face_message")
+    private String idFaceMessage;
+
+    @Column(name = "face_fff_message")
+    private String facefffMessage;
 
     @OneToMany(mappedBy = "consentForm", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<UserConsentForm> users = new HashSet<>();
@@ -70,7 +78,8 @@ public class ConsentForm {
 
     public ConsentForm(Long id, UUID publicUuid, String idCardFilePath, String idFaceFilePath, String facefffFilePath,
                        Boolean approvedRules, ReviewStatus idCardReviewed, ReviewStatus idFaceReviewed,
-                       ReviewStatus facefffReviewed, Set<UserConsentForm> users) {
+                       ReviewStatus facefffReviewed, String idCardMessage, String idFaceMessage, String facefffMessage,
+                       Set<UserConsentForm> users) {
         this.id = id;
         this.publicUuid = publicUuid;
         this.idCardFilePath = idCardFilePath;
@@ -80,6 +89,9 @@ public class ConsentForm {
         this.idCardReviewed = idCardReviewed;
         this.idFaceReviewed = idFaceReviewed;
         this.facefffReviewed = facefffReviewed;
+        this.idCardMessage = idCardMessage;
+        this.idFaceMessage = idFaceMessage;
+        this.facefffMessage = facefffMessage;
         this.users = users;
     }
 
@@ -153,6 +165,30 @@ public class ConsentForm {
 
     public void setFacefffReviewed(ReviewStatus facefffReviewed) {
         this.facefffReviewed = facefffReviewed;
+    }
+
+    public String getIdCardMessage() {
+        return idCardMessage;
+    }
+
+    public void setIdCardMessage(String idCardMessage) {
+        this.idCardMessage = idCardMessage;
+    }
+
+    public String getIdFaceMessage() {
+        return idFaceMessage;
+    }
+
+    public void setIdFaceMessage(String idFaceMessage) {
+        this.idFaceMessage = idFaceMessage;
+    }
+
+    public String getFacefffMessage() {
+        return facefffMessage;
+    }
+
+    public void setFacefffMessage(String facefffMessage) {
+        this.facefffMessage = facefffMessage;
     }
 
     public Set<UserConsentForm> getUsers() {
