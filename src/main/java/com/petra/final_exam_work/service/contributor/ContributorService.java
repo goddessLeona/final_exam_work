@@ -64,24 +64,10 @@ public class ContributorService {
         User user = userRepository.findByPublicUuid(publicUuid)
                 .orElseThrow(() -> new ApiException("User was not found", HttpStatus.NOT_FOUND));
 
-        ConsentFormStatus consentFormStatus = null;
         Integer albumCount = null;
-        String message = null;
+        albumCount = (int) photoAlbumRepository.countByOwnedByUser_id(user.getId());
 
-        if (user.isContributor()) {
-            // count albums by numeric user ID
-            albumCount = (int) photoAlbumRepository.countByOwnedByUser_id(user.getId());
-        } else {
-            // get consent status by numeric user ID
-            consentFormStatus = userConsentFormRepository.findStatusByUser(user.getId())
-                    .orElse(null);
-
-            if (consentFormStatus == null) {
-                message = "You have to fill in your consent form to be able to upload content";
-            }
-        }
-
-        return contributorMeMapper.toResponse(user, consentFormStatus, albumCount, message);
+        return contributorMeMapper.toResponse(user, albumCount);
     }
 
     //##################### WELCOME MESSAGE ##########################
