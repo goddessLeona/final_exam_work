@@ -10,6 +10,7 @@ import com.petra.final_exam_work.dto.responseDto.ContributorWelcomeResponse;
 import com.petra.final_exam_work.entity.consentForm.ConsentForm;
 import com.petra.final_exam_work.entity.consentForm.ConsentFormStatus;
 import com.petra.final_exam_work.entity.consentForm.ReviewStatus;
+import com.petra.final_exam_work.entity.enums.ContributorStatus;
 import com.petra.final_exam_work.entity.junktionTables.userConcentform.UserConsentForm;
 import com.petra.final_exam_work.entity.user.User;
 import com.petra.final_exam_work.exception.ApiException;
@@ -93,14 +94,36 @@ public class ContributorService {
 
         String message = null;
 
-        if (user.isContributor()){
-            message = "Welcome back contributor!";
-        }else{
-            message = "Welcome new contributor! Hope you will enjoy our smale community. This is your private page from " +
-                    "where you in the future can post all your content. Create a profile and see your statistic and more." +
-                    " Before you are able to contribute and post your own photos or enter member pages, you first have " +
-                    "to fill in the agreement forms. This is to prevent people to upload photos from their ex lovers or " +
-                    "friends. To make sure it is your photos and that you are over 18 years old";
+        switch (user.getContributorStatus()) {
+
+            case APPROVED:
+                message = "Welcome back contributor!";
+                break;
+
+            case PENDING:
+                message = "Your contributor application is under review";
+                break;
+
+            case REJECTED:
+                message = "Your consent form application was rejected. Please review the feedback and try again.";
+                break;
+
+            case TEMP_BANNED:
+                message = "Your acount is temporaily restricted. Please contact support if needed";
+                break;
+
+            case BANNED:
+                message = "Your account is taken down and banned";
+                break;
+
+            case NOT_APPLIED:
+            default:
+                message = "Welcome new contributor! Hope you will enjoy our smale community. This is your private page from " +
+                        "where you in the future can post all your content. Create a profile and see your statistic and more." +
+                        " Before you are able to contribute and post your own photos or enter member pages, you first have " +
+                        "to fill in the agreement forms. This is to prevent people to upload photos from their ex lovers or " +
+                        "friends. To make sure it is your photos and that you are over 18 years old";
+                break;
         }
 
         return contributorWelcomeMapper.toResponse(user, message);
@@ -120,6 +143,7 @@ public class ContributorService {
                 userConsentFormRepository.findByUser(user);
 
         System.out.println("FORM EXISTS: " + form.isPresent());
+        System.out.println("user status:" + user.getContributorStatus() );
 
         if (form.isEmpty()) {
 
@@ -283,7 +307,10 @@ public class ContributorService {
 
         if (update) {
             userConsentForm.setConsentFormStatus(ConsentFormStatus.PENDING);
+            user.setContributorStatus(ContributorStatus.PENDING);
+
             userConsentFormRepository.save(userConsentForm);
+            userRepository.save(user);
         }
 
         ContributorConsentFormResponse response = contributorConsentFormMapper.toResponse(
@@ -291,6 +318,7 @@ public class ContributorService {
                 userConsentForm.getConsentFormStatus(),
                 user
         );
+
         return response;
 
     }

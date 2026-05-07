@@ -95,7 +95,7 @@ export default function ConsentData () {
                         ) :
                         (
                             <div className={styles.btnSeection}>
-                                <button className={styles.button} onClick={() => handleReview ("idCardStatus", "idCardMessage", "APPROVED", "")} disabled={isFinal}>Approve</button>
+                                <button className={styles.button} onClick={() => handleReview ("idCardStatus", "idCardMessage", "APPROVED", "")} disabled={isIdCardFinal}>Approve</button>
                                 <button className={styles.button}
                                  onClick={() => {
                                     setRejectTarget ({ 

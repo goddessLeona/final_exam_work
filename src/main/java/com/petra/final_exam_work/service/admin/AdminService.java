@@ -203,21 +203,24 @@ public class AdminService {
                 cf.getIdFaceReviewed() == ReviewStatus.REJECTED ||
                 cf.getFacefffReviewed() == ReviewStatus.REJECTED;
 
+        User user = ucf.getUser();
+
         if (allApproved) {
             ucf.setConsentFormStatus(ConsentFormStatus.APPROVED);
-
-            User user = ucf.getUser();
             user.setContributorStatus(ContributorStatus.APPROVED);
             userRepository.save(user);
 
         } else if (anyRejected){
             ucf.setConsentFormStatus(ConsentFormStatus.REJECTED);
+            user.setContributorStatus(ContributorStatus.REJECTED);
+            userRepository.save(user);
 
         } else {
             ucf.setConsentFormStatus(ConsentFormStatus.PENDING);
+            user.setContributorStatus(ContributorStatus.PENDING);
+            userRepository.save(user);
         }
 
-        System.out.println(request);
         consentFormRepository.save(cf);
         userConsentFormRepository.save(ucf);
     }

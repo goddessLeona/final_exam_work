@@ -1,6 +1,9 @@
 
+
+type ContributorStatus = "NOT_APPLIED" | "PENDING" | "APPROVED" | "REJECTED" | "TEMP_BANNED" | "BANNED";
+
 export interface WelcomeResponse {
-    contributor: boolean;
+    status: ContributorStatus
     message: string;
 }
 
