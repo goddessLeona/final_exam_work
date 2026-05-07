@@ -136,9 +136,9 @@ Contributor should be able to fill in a form add 3 different image documentation
 only one of the documents was approved by admin. (not empty form each try)
 
   * added request, response, mapper (GET + POST consent form)
-  * added service (GET + POST consent form)
+  * added service (GET + POST consent form)("/contributor/consent")
   * 
-  * added FileStorageService + location where uploaded content get stored
+  * added FileStorageService + location (path) where uploaded content get stored
   * 
   * added FileStorageService + validation checking if image or not
   * added controller (GET + POST consent form)
@@ -148,17 +148,59 @@ only one of the documents was approved by admin. (not empty form each try)
 
   * modified Database (changed Enums in db to Big letters to be able to use POST )
   * added db flyway version2, so that db always have role CONTRIBUTOR, ADMIN , MEMBER (If I have to restart)
-  * modified ExeptionHandler for better field response in frontend
+  * modified ExceptionHandler for better field response in frontend
   * css - field messages and general messages showing in form if not filled in right
 
-## task 10. Admin Dashboard + Reply to fom submision 
-(10/4-)
+## task 10. Admin Dashboard + Reply form submission
 Admin should have a list of all new contributors consent form
 Admin should be able to approve or reject the form and send back to contributor.
+(12/4, 18/4, 19/4, 21/4, 25/4, 4/5, 5/5)
 
+  * Added V3__insert_super_admin.sql so there are always a super admin when the program starts up first time.
+  * Added css landing page after login as a super admin
 
+GET - dashboard main 
+see list of total contributor forms 
+see how many are pending, approved,rejected, not submitted and username
 
+  * added (controller,responseDto+, mapper, service )
+  * small change in v1 in db to be able to sort forms in order
+  * added endpoint in security config (/admin/dashboard)
+  * added very simple frontend
+    (missing pagination in backend, should be max 5 and if you want to see all using link)
 
+GET - detailed info about every form and images of documents and their status
 
+(GET "/admin/consent/{id}")
+(GET "/admin/consent/{id}/document/{type}")
 
+  * added (responseDTO+, mapper)
+  * added WebConfig to be able to get the images
+  * added controller for Get consentFormData
+  * added a controller for Get id connected to the consentForm data
+  * added an extra service for getting the id from form
+  * added a fetch to get the images connected to the consent form id
+  * added some simple css
 
+Admin should be able to response to the Consent form, approve or reject
+PATCH "/admin/consent/{id}/review"
+
+  * added requestDTO, service, controller, security config
+  * added fetch in frontend
+  * added new status enum for user for more flexibility 
+  * added some styling
+
+## task 11 look over all consent endpoints (new enum status)
+* update all consent-related endpoints to use new ContributorStatus enum
+* remove old isContributor boolean logic
+* add so that messages from admin get shown in form 
+* when consent form is approved it should disrepair and new things should show
+
+## task future a cleanup service that clean up all uploads not in use
+
+Planned background cleanup system for:
+* rejected uploads
+* replaced files
+* deleted contributor content
+* banned/deleted users
+* orphaned files no longer connected to database records

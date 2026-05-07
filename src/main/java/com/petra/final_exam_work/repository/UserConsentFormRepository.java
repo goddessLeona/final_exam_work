@@ -9,7 +9,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Repository
 public interface UserConsentFormRepository extends JpaRepository<UserConsentForm, UserConsentFormId> {
@@ -20,4 +22,7 @@ public interface UserConsentFormRepository extends JpaRepository<UserConsentForm
 
     Optional<UserConsentForm> findByUser(User user);
 
+    List<UserConsentForm> findAllByUser(User user);
+
+    Optional <UserConsentForm> findByConsentForm_PublicUuid(UUID publicUuid);
 }

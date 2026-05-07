@@ -26,18 +26,12 @@ export default function Header(){
             </div>
             
             <div className={styles.centerContent}>
-                <div className={styles.headerImage}> 
-                <Image className={styles.image}
-                    src="/me.jpg"
-                    alt="me"
-                    width={150}
-                    height={150}
-                />
-                </div>
+                
 
                 <div className={styles.headerText}>
-                    <h1>Examen work</h1>
-                    <h1> Fullstack</h1>
+                    <h1>Examen work 2026 - Content platform</h1>
+                    <h1> Fullstack-developer</h1>
+                    <h1>Petra Johansson</h1>
                     <p>version 0.01 no styling just function</p>
                 </div>
             </div>

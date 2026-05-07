@@ -1,7 +1,5 @@
 "use client";
 
-import ContributorAgrementForm from "@/components/forms/contributorAgrementForm";
-
 import { useEffect, useState } from "react";
 import { getWelcomeMessage, WelcomeResponse} from "@/lib/api/contributor";
 import styles from "./welcome-message.module.css"
