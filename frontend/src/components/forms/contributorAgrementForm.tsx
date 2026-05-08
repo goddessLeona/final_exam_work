@@ -32,6 +32,8 @@ export default function ContributorAgrementForm() {
     const isIdFaceApproved =isApproved(serverData?.idFaceReviewed);
     const isFffApproved = isApproved(serverData?.facefffReviewed);
 
+    const isContributorApproved = serverData?.consentFormStatus === "APPROVED";
+
 
     useEffect(() => {
         async function load() {
@@ -84,6 +86,18 @@ export default function ContributorAgrementForm() {
 };    
 
 const generalErrorMessage = error.general || (["idCardFile", "idFaceFile", "facefffFile", "approvedRules"].some(key => error[key]) ? "Missing document" : "");
+
+    if (isContributorApproved) {
+        return (
+            <main className={styles.container}>
+                <h1>Welcome contributor!</h1>
+
+                <p>Your agreement form has been approved.</p>
+
+                <p>You can now upload content.</p>
+            </main>
+        );
+    }
 
     return(
 
@@ -200,7 +214,7 @@ const generalErrorMessage = error.general || (["idCardFile", "idFaceFile", "face
                 <button
                     className={styles.btn}
                     type = "submit"
-                    disabled={isFormPending || loading || !formData.agree}
+                    disabled={isFormPending || loading || (!formData.agree && !serverData?.approvedRules)}
                 >
                     Submit    
                 </button>  
