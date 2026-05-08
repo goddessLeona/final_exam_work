@@ -32,7 +32,6 @@ export default function ContributorAgrementForm() {
     const isIdFaceApproved =isApproved(serverData?.idFaceReviewed);
     const isFffApproved = isApproved(serverData?.facefffReviewed);
 
-    const isIdCardLocked = isLocked(serverData?.idCardReviewed);
 
     useEffect(() => {
         async function load() {
@@ -113,6 +112,12 @@ const generalErrorMessage = error.general || (["idCardFile", "idFaceFile", "face
                         <p>Status: {(serverData.idCardReviewed)}</p>
                     )}
                     {error.idCardFile && (<p className={styles.error}>{error.idCardFile}</p>)}
+
+                        <div className={styles.rejectMessage}>
+                            <p className={styles.rejectTitle}>Why document was rejected:</p>
+                            <p className={styles.rejectText}>{serverData?.idCardMessage}</p>
+                        </div>
+
                     </div>
 
                     
@@ -134,6 +139,12 @@ const generalErrorMessage = error.general || (["idCardFile", "idFaceFile", "face
                         <p>Status: {(serverData.idFaceReviewed)}</p>
                     )}
                     {error.idFaceFile && (<p className={styles.error}>{error.idFaceFile}</p>)}
+
+                        <div className={styles.rejectMessage}>
+                            <p className={styles.rejectTitle}>Why document was rejected:</p>
+                            <p className={styles.rejectText}>{serverData?.idFaceMessage}</p>
+                        </div>
+
                     </div>
 
                     <div className={styles.field}>
@@ -155,7 +166,12 @@ const generalErrorMessage = error.general || (["idCardFile", "idFaceFile", "face
                         <p>Status: {(serverData.facefffReviewed)}</p>
                     )}
                     {error.facefffFile && (<p className= {styles.error}> {error.facefffFile} </p>)}
-                    
+
+                        <div className={styles.rejectMessage}>
+                            <p className={styles.rejectTitle}>Why document was rejected:</p>
+                            <p className={styles.rejectText}>{serverData?.facefffMessage}</p>
+                        </div>
+
                     </div>
 
                     <div className={styles.field}>
@@ -165,6 +181,7 @@ const generalErrorMessage = error.general || (["idCardFile", "idFaceFile", "face
                         id="agree"
                         name="agree"
                         type="checkbox"
+                        disabled= {serverData?.approvedRules === true}
                         checked={formData.agree}
                         onChange={(e) =>
                             setFormData({ ...formData, agree: e.target.checked })

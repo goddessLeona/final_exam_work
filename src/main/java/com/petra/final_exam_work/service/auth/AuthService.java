@@ -4,7 +4,6 @@ import com.petra.final_exam_work.dto.requestDto.LoginRequest;
 import com.petra.final_exam_work.dto.responseDto.LoginResponse;
 import org.springframework.http.ResponseCookie;
 import com.petra.final_exam_work.security.JwtService;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

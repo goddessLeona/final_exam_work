@@ -135,7 +135,7 @@ public class ContributorService {
 
            ContributorConsentFormResponse response = new ContributorConsentFormResponse();
 
-           response.setContributor(user.isContributor());
+           response.setStatus(user.getContributorStatus());
            response.setConsentFormStatus(ConsentFormStatus.NOT_SUBMITTED);
 
            return response;
@@ -143,10 +143,12 @@ public class ContributorService {
 
         UserConsentForm userConsentForm = form.get();
         ConsentForm consentForm = userConsentForm.getConsentForm();
+        ContributorStatus contributorStatus = user.getContributorStatus();
 
         return contributorConsentFormMapper.toResponse(
                 consentForm,
                 userConsentForm.getConsentFormStatus(),
+                contributorStatus,
                 user
         );
     }
@@ -163,7 +165,9 @@ public class ContributorService {
         User user = userRepository.findByPublicUuid(publicUuid)
                 .orElseThrow(() -> new ApiException("User not found", HttpStatus.NOT_FOUND));
 
-        if (user.isContributor()) {
+        ContributorStatus contributorStatus = user.getContributorStatus();
+
+        if (contributorStatus == ContributorStatus.APPROVED) {
             throw new ApiException(
                     "Already approved contributor",
                     HttpStatus.CONFLICT);
@@ -177,6 +181,15 @@ public class ContributorService {
 
         if (form.isEmpty()) {
             //FIRST SUBMISSION
+
+            if (!request.getApprovedRules()) {
+                throw new ApiException(
+                        "Validation failed",
+                        Map.of("approvedRules", "You must approve the rules"),
+                        HttpStatus.BAD_REQUEST
+                );
+            }
+
             Map<String, String> errors = new HashMap<>();
 
             if (request.getIdCardFile() == null) {
@@ -192,13 +205,13 @@ public class ContributorService {
             if (!errors.isEmpty()) {
                 throw new ApiException("Validation failed", errors, HttpStatus.BAD_REQUEST);
             }
+        }
 
+         if (form.isEmpty()) {
             consentForm = new ConsentForm();
             userConsentForm = new UserConsentForm();
             userConsentForm.setUser(user);
             userConsentForm.setConsentForm(consentForm);
-            update = true;
-
         } else {
             userConsentForm = form.get();
             consentForm = userConsentForm.getConsentForm();
@@ -277,16 +290,8 @@ public class ContributorService {
             update = true;
         }
 
-        // Approve rules
-        if (!request.getApprovedRules()) {
-            throw new ApiException(
-                    "Validation failed",
-                    Map.of( "approvedRules", "You must approve the rules"),
-                    HttpStatus.BAD_REQUEST
-            );
+        if (consentForm.getApprovedRules() == Boolean.TRUE) {
         }
-
-        consentForm.setApprovedRules(request.getApprovedRules());
 
         // Save consent form
         consentFormRepository.save(consentForm);
@@ -302,6 +307,7 @@ public class ContributorService {
         ContributorConsentFormResponse response = contributorConsentFormMapper.toResponse(
                 consentForm,
                 userConsentForm.getConsentFormStatus(),
+                contributorStatus,
                 user
         );
 

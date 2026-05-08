@@ -48,13 +48,16 @@ export interface ContributorFormResponse{
 
     idCardFilePath : string;
     idCardReviewed : ReviewStatus | null;
+    idCardMessage : string;
     idFaceFilePath : string;
     idFaceReviewed : ReviewStatus | null;
+    idFaceMessage : string;
     facefffFilePath : string;
     facefffReviewed : ReviewStatus | null;
+    facefffMessage : string;
     approvedRules : boolean;
     consentFormStatus: ConsentFormStatus | null;
-    contributor : boolean;
+    status : ContributorStatus;
 }
 
 export async function getContributorAgreementForm() : Promise<ContributorFormResponse>{

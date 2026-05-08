@@ -2,35 +2,42 @@ package com.petra.final_exam_work.dto.responseDto;
 
 import com.petra.final_exam_work.entity.consentForm.ConsentFormStatus;
 import com.petra.final_exam_work.entity.consentForm.ReviewStatus;
+import com.petra.final_exam_work.entity.enums.ContributorStatus;
 
 public class ContributorConsentFormResponse {
 
     private String idCardFilePath;
     private ReviewStatus idCardReviewed;
+    private String idCardMessage;
     private String idFaceFilePath;
     private ReviewStatus idFaceReviewed;
+    private String idFaceMessage;
     private String facefffFilePath;
     private ReviewStatus facefffReviewed;
+    private String facefffMessage;
     private Boolean approvedRules;
     private ConsentFormStatus consentFormStatus;
-    private boolean contributor;
+    private ContributorStatus status;
 
     public ContributorConsentFormResponse() {
     }
 
-    public ContributorConsentFormResponse(String idCardFilePath, ReviewStatus idCardReviewed, String idFaceFilePath,
-                                          ReviewStatus idFaceReviewed, String facefffFilePath,
-                                          ReviewStatus facefffReviewed, Boolean approvedRules,
-                                          ConsentFormStatus consentFormStatus, boolean contributor) {
+    public ContributorConsentFormResponse(String idCardFilePath, ReviewStatus idCardReviewed, String idCardMessage,
+                                          String idFaceFilePath, ReviewStatus idFaceReviewed, String idFaceMessage,
+                                          String facefffFilePath, ReviewStatus facefffReviewed, String facefffMessage,
+                                          Boolean approvedRules, ConsentFormStatus consentFormStatus, ContributorStatus status) {
         this.idCardFilePath = idCardFilePath;
         this.idCardReviewed = idCardReviewed;
+        this.idCardMessage = idCardMessage;
         this.idFaceFilePath = idFaceFilePath;
         this.idFaceReviewed = idFaceReviewed;
+        this.idFaceMessage = idFaceMessage;
         this.facefffFilePath = facefffFilePath;
         this.facefffReviewed = facefffReviewed;
+        this.facefffMessage = facefffMessage;
         this.approvedRules = approvedRules;
         this.consentFormStatus = consentFormStatus;
-        this.contributor = contributor;
+        this.status = status;
     }
 
     public String getIdCardFilePath() {
@@ -49,6 +56,14 @@ public class ContributorConsentFormResponse {
         this.idCardReviewed = idCardReviewed;
     }
 
+    public String getIdCardMessage() {
+        return idCardMessage;
+    }
+
+    public void setIdCardMessage(String idCardMessage) {
+        this.idCardMessage = idCardMessage;
+    }
+
     public String getIdFaceFilePath() {
         return idFaceFilePath;
     }
@@ -63,6 +78,14 @@ public class ContributorConsentFormResponse {
 
     public void setIdFaceReviewed(ReviewStatus idFaceReviewed) {
         this.idFaceReviewed = idFaceReviewed;
+    }
+
+    public String getIdFaceMessage() {
+        return idFaceMessage;
+    }
+
+    public void setIdFaceMessage(String idFaceMessage) {
+        this.idFaceMessage = idFaceMessage;
     }
 
     public String getFacefffFilePath() {
@@ -81,6 +104,14 @@ public class ContributorConsentFormResponse {
         this.facefffReviewed = facefffReviewed;
     }
 
+    public String getFacefffMessage() {
+        return facefffMessage;
+    }
+
+    public void setFacefffMessage(String facefffMessage) {
+        this.facefffMessage = facefffMessage;
+    }
+
     public Boolean getApprovedRules() {
         return approvedRules;
     }
@@ -97,11 +128,11 @@ public class ContributorConsentFormResponse {
         this.consentFormStatus = consentFormStatus;
     }
 
-    public boolean isContributor() {
-        return contributor;
+    public ContributorStatus getStatus() {
+        return status;
     }
 
-    public void setContributor(boolean contributor) {
-        this.contributor = contributor;
+    public void setStatus(ContributorStatus status) {
+        this.status = status;
     }
 }
