@@ -154,7 +154,7 @@ only one of the documents was approved by admin. (not empty form each try)
 ## task 10. Admin Dashboard + Reply form submission
 Admin should have a list of all new contributors consent form
 Admin should be able to approve or reject the form and send back to contributor.
-(12/4, 18/4, 19/4, 21/4, 25/4, 4/5, 5/5)
+(12/4, 18/4, 19/4, 21/4, 25/4, 4/5, 5/5, 7/5)
 
   * Added V3__insert_super_admin.sql so there are always a super admin when the program starts up first time.
   * Added css landing page after login as a super admin
@@ -190,11 +190,18 @@ PATCH "/admin/consent/{id}/review"
   * added new status enum for user for more flexibility 
   * added some styling
 
-## task 11 look over all consent endpoints (new enum status)
-* update all consent-related endpoints from old boolean isContributor to use new ContributorStatus enum
-* remove old isContributor boolean logic
-* add so that messages from admin get shown in form 
-* when consent form is approved it should disappear and give rome for new component/dashboard.
+## task 11 look over and change all old boolean contributor to enum status 
+(8/5)
+  * update all consent-related endpoints from old boolean isContributor to use new ContributorStatus enum
+  * remove old isContributor boolean from db and entities
+  * add so that messages from admin get shown in form 
+  * when consent form is approved it should disappear and give rome for new component/dashboard.
+
+## task 12 dashboard for uploading content
+(contributor should have a dashboard from where they easily can upload content from)
+
+
+
 
 ## task future a cleanup service that clean up all uploads not in use
 
