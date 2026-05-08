@@ -127,10 +127,12 @@ const generalErrorMessage = error.general || (["idCardFile", "idFaceFile", "face
                     )}
                     {error.idCardFile && (<p className={styles.error}>{error.idCardFile}</p>)}
 
+                        {serverData?.idCardReviewed === "REJECTED" && (
                         <div className={styles.rejectMessage}>
                             <p className={styles.rejectTitle}>Why document was rejected:</p>
                             <p className={styles.rejectText}>{serverData?.idCardMessage}</p>
                         </div>
+                        )}
 
                     </div>
 
@@ -154,10 +156,12 @@ const generalErrorMessage = error.general || (["idCardFile", "idFaceFile", "face
                     )}
                     {error.idFaceFile && (<p className={styles.error}>{error.idFaceFile}</p>)}
 
+                        {serverData?.idFaceReviewed === "REJECTED" && (
                         <div className={styles.rejectMessage}>
                             <p className={styles.rejectTitle}>Why document was rejected:</p>
                             <p className={styles.rejectText}>{serverData?.idFaceMessage}</p>
                         </div>
+                        )}
 
                     </div>
 
@@ -181,10 +185,12 @@ const generalErrorMessage = error.general || (["idCardFile", "idFaceFile", "face
                     )}
                     {error.facefffFile && (<p className= {styles.error}> {error.facefffFile} </p>)}
 
+                        {serverData?.facefffReviewed === "REJECTED" && (
                         <div className={styles.rejectMessage}>
                             <p className={styles.rejectTitle}>Why document was rejected:</p>
                             <p className={styles.rejectText}>{serverData?.facefffMessage}</p>
                         </div>
+                        )}
 
                     </div>
 

@@ -191,10 +191,10 @@ PATCH "/admin/consent/{id}/review"
   * added some styling
 
 ## task 11 look over all consent endpoints (new enum status)
-* update all consent-related endpoints to use new ContributorStatus enum
+* update all consent-related endpoints from old boolean isContributor to use new ContributorStatus enum
 * remove old isContributor boolean logic
 * add so that messages from admin get shown in form 
-* when consent form is approved it should disrepair and new things should show
+* when consent form is approved it should disappear and give rome for new component/dashboard.
 
 ## task future a cleanup service that clean up all uploads not in use
 

@@ -210,6 +210,7 @@ public class ContributorService {
          if (form.isEmpty()) {
             consentForm = new ConsentForm();
             userConsentForm = new UserConsentForm();
+             consentForm.setApprovedRules(true);
             userConsentForm.setUser(user);
             userConsentForm.setConsentForm(consentForm);
         } else {
