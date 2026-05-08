@@ -32,7 +32,8 @@ export default function ContributorAgrementForm() {
     const isIdFaceApproved =isApproved(serverData?.idFaceReviewed);
     const isFffApproved = isApproved(serverData?.facefffReviewed);
 
-    const isIdCardLocked = isLocked(serverData?.idCardReviewed);
+    const isContributorApproved = serverData?.consentFormStatus === "APPROVED";
+
 
     useEffect(() => {
         async function load() {
@@ -86,6 +87,18 @@ export default function ContributorAgrementForm() {
 
 const generalErrorMessage = error.general || (["idCardFile", "idFaceFile", "facefffFile", "approvedRules"].some(key => error[key]) ? "Missing document" : "");
 
+    if (isContributorApproved) {
+        return (
+            <main className={styles.container}>
+                <h1>Welcome contributor!</h1>
+
+                <p>Your agreement form has been approved.</p>
+
+                <p>You can now upload content.</p>
+            </main>
+        );
+    }
+
     return(
 
         <main className={styles.container}>
@@ -113,6 +126,14 @@ const generalErrorMessage = error.general || (["idCardFile", "idFaceFile", "face
                         <p>Status: {(serverData.idCardReviewed)}</p>
                     )}
                     {error.idCardFile && (<p className={styles.error}>{error.idCardFile}</p>)}
+
+                        {serverData?.idCardReviewed === "REJECTED" && (
+                        <div className={styles.rejectMessage}>
+                            <p className={styles.rejectTitle}>Why document was rejected:</p>
+                            <p className={styles.rejectText}>{serverData?.idCardMessage}</p>
+                        </div>
+                        )}
+
                     </div>
 
                     
@@ -134,6 +155,14 @@ const generalErrorMessage = error.general || (["idCardFile", "idFaceFile", "face
                         <p>Status: {(serverData.idFaceReviewed)}</p>
                     )}
                     {error.idFaceFile && (<p className={styles.error}>{error.idFaceFile}</p>)}
+
+                        {serverData?.idFaceReviewed === "REJECTED" && (
+                        <div className={styles.rejectMessage}>
+                            <p className={styles.rejectTitle}>Why document was rejected:</p>
+                            <p className={styles.rejectText}>{serverData?.idFaceMessage}</p>
+                        </div>
+                        )}
+
                     </div>
 
                     <div className={styles.field}>
@@ -155,7 +184,14 @@ const generalErrorMessage = error.general || (["idCardFile", "idFaceFile", "face
                         <p>Status: {(serverData.facefffReviewed)}</p>
                     )}
                     {error.facefffFile && (<p className= {styles.error}> {error.facefffFile} </p>)}
-                    
+
+                        {serverData?.facefffReviewed === "REJECTED" && (
+                        <div className={styles.rejectMessage}>
+                            <p className={styles.rejectTitle}>Why document was rejected:</p>
+                            <p className={styles.rejectText}>{serverData?.facefffMessage}</p>
+                        </div>
+                        )}
+
                     </div>
 
                     <div className={styles.field}>
@@ -165,6 +201,7 @@ const generalErrorMessage = error.general || (["idCardFile", "idFaceFile", "face
                         id="agree"
                         name="agree"
                         type="checkbox"
+                        disabled= {serverData?.approvedRules === true}
                         checked={formData.agree}
                         onChange={(e) =>
                             setFormData({ ...formData, agree: e.target.checked })
@@ -183,7 +220,7 @@ const generalErrorMessage = error.general || (["idCardFile", "idFaceFile", "face
                 <button
                     className={styles.btn}
                     type = "submit"
-                    disabled={isFormPending || loading || !formData.agree}
+                    disabled={isFormPending || loading || (!formData.agree && !serverData?.approvedRules)}
                 >
                     Submit    
                 </button>  

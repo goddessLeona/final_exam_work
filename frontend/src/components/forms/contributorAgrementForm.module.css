@@ -58,3 +58,17 @@
   color: red;
   font-weight: bold;
 }
+
+.rejectMessage {
+    margin-top: 0.5rem;
+}
+
+.rejectTitle {
+    margin-bottom: 0.2rem;
+    font-weight: 600;
+}
+
+.rejectText {
+    margin-top: 0;
+    color: red;
+}

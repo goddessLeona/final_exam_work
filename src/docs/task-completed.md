@@ -63,6 +63,9 @@ DASHBOARD ADMIN - HANDLING CONTRIBUTOR CONSENT FORM
   automatically update overall consent form status
   automatically update contributor status
 
+REFACTOR DB IN TABLE USER FROM BOOLEAN CONTRIBUTOR TO ENUM
 
+* looked over project and removed all old boolean and replaced with new enums status.
+* removed from db and entities
 
 

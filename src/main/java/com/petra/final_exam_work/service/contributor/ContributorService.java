@@ -10,6 +10,7 @@ import com.petra.final_exam_work.dto.responseDto.ContributorWelcomeResponse;
 import com.petra.final_exam_work.entity.consentForm.ConsentForm;
 import com.petra.final_exam_work.entity.consentForm.ConsentFormStatus;
 import com.petra.final_exam_work.entity.consentForm.ReviewStatus;
+import com.petra.final_exam_work.entity.enums.ContributorStatus;
 import com.petra.final_exam_work.entity.junktionTables.userConcentform.UserConsentForm;
 import com.petra.final_exam_work.entity.user.User;
 import com.petra.final_exam_work.exception.ApiException;
@@ -63,24 +64,10 @@ public class ContributorService {
         User user = userRepository.findByPublicUuid(publicUuid)
                 .orElseThrow(() -> new ApiException("User was not found", HttpStatus.NOT_FOUND));
 
-        ConsentFormStatus consentFormStatus = null;
         Integer albumCount = null;
-        String message = null;
+        albumCount = (int) photoAlbumRepository.countByOwnedByUser_id(user.getId());
 
-        if (user.isContributor()) {
-            // count albums by numeric user ID
-            albumCount = (int) photoAlbumRepository.countByOwnedByUser_id(user.getId());
-        } else {
-            // get consent status by numeric user ID
-            consentFormStatus = userConsentFormRepository.findStatusByUser(user.getId())
-                    .orElse(null);
-
-            if (consentFormStatus == null) {
-                message = "You have to fill in your consent form to be able to upload content";
-            }
-        }
-
-        return contributorMeMapper.toResponse(user, consentFormStatus, albumCount, message);
+        return contributorMeMapper.toResponse(user, albumCount);
     }
 
     //##################### WELCOME MESSAGE ##########################
@@ -93,14 +80,36 @@ public class ContributorService {
 
         String message = null;
 
-        if (user.isContributor()){
-            message = "Welcome back contributor!";
-        }else{
-            message = "Welcome new contributor! Hope you will enjoy our smale community. This is your private page from " +
-                    "where you in the future can post all your content. Create a profile and see your statistic and more." +
-                    " Before you are able to contribute and post your own photos or enter member pages, you first have " +
-                    "to fill in the agreement forms. This is to prevent people to upload photos from their ex lovers or " +
-                    "friends. To make sure it is your photos and that you are over 18 years old";
+        switch (user.getContributorStatus()) {
+
+            case APPROVED:
+                message = "Welcome back contributor!";
+                break;
+
+            case PENDING:
+                message = "Your contributor application is under review";
+                break;
+
+            case REJECTED:
+                message = "Your consent form application was rejected. Please review the feedback and try again.";
+                break;
+
+            case TEMP_BANNED:
+                message = "Your acount is temporaily restricted. Please contact support if needed";
+                break;
+
+            case BANNED:
+                message = "Your account is taken down and banned";
+                break;
+
+            case NOT_APPLIED:
+            default:
+                message = "Welcome new contributor! Hope you will enjoy our smale community. This is your private page from " +
+                        "where you in the future can post all your content. Create a profile and see your statistic and more." +
+                        " Before you are able to contribute and post your own photos or enter member pages, you first have " +
+                        "to fill in the agreement forms. This is to prevent people to upload photos from their ex lovers or " +
+                        "friends. To make sure it is your photos and that you are over 18 years old";
+                break;
         }
 
         return contributorWelcomeMapper.toResponse(user, message);
@@ -120,12 +129,13 @@ public class ContributorService {
                 userConsentFormRepository.findByUser(user);
 
         System.out.println("FORM EXISTS: " + form.isPresent());
+        System.out.println("user status:" + user.getContributorStatus() );
 
         if (form.isEmpty()) {
 
            ContributorConsentFormResponse response = new ContributorConsentFormResponse();
 
-           response.setContributor(user.isContributor());
+           response.setStatus(user.getContributorStatus());
            response.setConsentFormStatus(ConsentFormStatus.NOT_SUBMITTED);
 
            return response;
@@ -133,10 +143,12 @@ public class ContributorService {
 
         UserConsentForm userConsentForm = form.get();
         ConsentForm consentForm = userConsentForm.getConsentForm();
+        ContributorStatus contributorStatus = user.getContributorStatus();
 
         return contributorConsentFormMapper.toResponse(
                 consentForm,
                 userConsentForm.getConsentFormStatus(),
+                contributorStatus,
                 user
         );
     }
@@ -153,7 +165,9 @@ public class ContributorService {
         User user = userRepository.findByPublicUuid(publicUuid)
                 .orElseThrow(() -> new ApiException("User not found", HttpStatus.NOT_FOUND));
 
-        if (user.isContributor()) {
+        ContributorStatus contributorStatus = user.getContributorStatus();
+
+        if (contributorStatus == ContributorStatus.APPROVED) {
             throw new ApiException(
                     "Already approved contributor",
                     HttpStatus.CONFLICT);
@@ -167,6 +181,15 @@ public class ContributorService {
 
         if (form.isEmpty()) {
             //FIRST SUBMISSION
+
+            if (!request.getApprovedRules()) {
+                throw new ApiException(
+                        "Validation failed",
+                        Map.of("approvedRules", "You must approve the rules"),
+                        HttpStatus.BAD_REQUEST
+                );
+            }
+
             Map<String, String> errors = new HashMap<>();
 
             if (request.getIdCardFile() == null) {
@@ -182,13 +205,14 @@ public class ContributorService {
             if (!errors.isEmpty()) {
                 throw new ApiException("Validation failed", errors, HttpStatus.BAD_REQUEST);
             }
+        }
 
+         if (form.isEmpty()) {
             consentForm = new ConsentForm();
             userConsentForm = new UserConsentForm();
+             consentForm.setApprovedRules(true);
             userConsentForm.setUser(user);
             userConsentForm.setConsentForm(consentForm);
-            update = true;
-
         } else {
             userConsentForm = form.get();
             consentForm = userConsentForm.getConsentForm();
@@ -267,30 +291,27 @@ public class ContributorService {
             update = true;
         }
 
-        // Approve rules
-        if (!request.getApprovedRules()) {
-            throw new ApiException(
-                    "Validation failed",
-                    Map.of( "approvedRules", "You must approve the rules"),
-                    HttpStatus.BAD_REQUEST
-            );
+        if (consentForm.getApprovedRules() == Boolean.TRUE) {
         }
-
-        consentForm.setApprovedRules(request.getApprovedRules());
 
         // Save consent form
         consentFormRepository.save(consentForm);
 
         if (update) {
             userConsentForm.setConsentFormStatus(ConsentFormStatus.PENDING);
+            user.setContributorStatus(ContributorStatus.PENDING);
+
             userConsentFormRepository.save(userConsentForm);
+            userRepository.save(user);
         }
 
         ContributorConsentFormResponse response = contributorConsentFormMapper.toResponse(
                 consentForm,
                 userConsentForm.getConsentFormStatus(),
+                contributorStatus,
                 user
         );
+
         return response;
 
     }

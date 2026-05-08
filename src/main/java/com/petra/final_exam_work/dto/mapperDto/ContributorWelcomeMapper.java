@@ -8,7 +8,7 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface ContributorWelcomeMapper {
 
-    @Mapping(target = "contributor", source = "user.contributor")
+    @Mapping(target = "status", source = "user.contributorStatus")
     @Mapping(target = "message", source = "message")
     ContributorWelcomeResponse toResponse(
             User user,

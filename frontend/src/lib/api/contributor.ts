@@ -1,6 +1,9 @@
 
+
+type ContributorStatus = "NOT_APPLIED" | "PENDING" | "APPROVED" | "REJECTED" | "TEMP_BANNED" | "BANNED";
+
 export interface WelcomeResponse {
-    contributor: boolean;
+    status: ContributorStatus
     message: string;
 }
 
@@ -21,10 +24,7 @@ export async function getWelcomeMessage() : Promise<WelcomeResponse>{
 export interface ContributorMeResponse {
     username: string;
     yearSignedUp: number;
-    contributor: boolean;
-    consentStatus: string | null;
     countPhotoAlbums: number | null;
-    message: string | null;
 }
 
 export async function getContributorInfo() : Promise<ContributorMeResponse>{
@@ -48,13 +48,16 @@ export interface ContributorFormResponse{
 
     idCardFilePath : string;
     idCardReviewed : ReviewStatus | null;
+    idCardMessage : string;
     idFaceFilePath : string;
     idFaceReviewed : ReviewStatus | null;
+    idFaceMessage : string;
     facefffFilePath : string;
     facefffReviewed : ReviewStatus | null;
+    facefffMessage : string;
     approvedRules : boolean;
     consentFormStatus: ConsentFormStatus | null;
-    contributor : boolean;
+    status : ContributorStatus;
 }
 
 export async function getContributorAgreementForm() : Promise<ContributorFormResponse>{

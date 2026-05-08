@@ -11,16 +11,9 @@ public interface ContributorMeMapper {
 
     @Mapping(target = "username", source = "user.username")
     @Mapping(target = "yearSignedUp", expression = "java(user.getCreatedAt().atZone(java.time.ZoneId.systemDefault()).getYear())")
-    @Mapping(target = "contributor", source = "user.contributor")
-    @Mapping(
-            target = "consentFormStatus",
-            expression = "java(user.isContributor() ? null : consentFormStatus)")
     @Mapping(target = "countPhotoAlbums", source = "countPhotoAlbums")
-    @Mapping(target = "message", source = "message")
     ContributorMeResponse toResponse(
             User user,
-            ConsentFormStatus consentFormStatus,
-            Integer countPhotoAlbums,
-            String message
+            Integer countPhotoAlbums
     );
 }

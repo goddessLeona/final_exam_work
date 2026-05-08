@@ -10,8 +10,10 @@
 
 .year{
     font-weight: 700;
+    padding-bottom: 5px;
 }
 
-.message{
-    padding-top: 10px;
+.album {
+    font-weight: 700;
+    padding-bottom: 5px;
 }

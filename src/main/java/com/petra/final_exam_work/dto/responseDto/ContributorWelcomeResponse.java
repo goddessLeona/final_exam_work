@@ -1,24 +1,26 @@
 package com.petra.final_exam_work.dto.responseDto;
 
+import com.petra.final_exam_work.entity.enums.ContributorStatus;
+
 public class ContributorWelcomeResponse {
 
-    private boolean contributor;
+    private ContributorStatus status;
     private String message;
 
     public ContributorWelcomeResponse() {
     }
 
-    public ContributorWelcomeResponse(boolean contributor, String message) {
-        this.contributor = contributor;
+    public ContributorWelcomeResponse(ContributorStatus status, String message) {
+        this.status = status;
         this.message = message;
     }
 
-    public boolean isContributor() {
-        return contributor;
+    public ContributorStatus getStatus() {
+        return status;
     }
 
-    public void setContributor(boolean contributor) {
-        this.contributor = contributor;
+    public void setStatus(ContributorStatus status) {
+        this.status = status;
     }
 
     public String getMessage() {

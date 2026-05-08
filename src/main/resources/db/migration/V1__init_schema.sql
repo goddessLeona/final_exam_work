@@ -24,7 +24,6 @@ CREATE TABLE users(
     email CITEXT NOT NULL UNIQUE,
     first_name TEXT NOT NULL,
     last_name TEXT NOT NULL,
-    is_contributor BOOLEAN NOT NULL DEFAULT false,
     contributor_status contributor_status NOT NULL DEFAULT 'NOT_APPLIED',
     created_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );

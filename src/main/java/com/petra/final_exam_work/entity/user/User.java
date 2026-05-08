@@ -48,9 +48,6 @@ public class User {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @Column(name = "is_contributor", nullable = false)
-    private boolean contributor;
-
     @Enumerated(EnumType.STRING)
     @JdbcTypeCode(SqlTypes.NAMED_ENUM)
     @Column(name="contributor_status", nullable = false, columnDefinition = "contributor_status")
@@ -82,8 +79,8 @@ public class User {
     }
 
     public User(Long id, UUID publicUuid, String username, String password, String email, String firstName,
-                String lastName, boolean contributor, ContributorStatus contributorStatus, Instant createdAt,
-                Set<Role> roles, Set<UserConsentForm> consentForms) {
+                String lastName, ContributorStatus contributorStatus, Instant createdAt, Set<Role> roles,
+                Set<UserConsentForm> consentForms) {
         this.id = id;
         this.publicUuid = publicUuid;
         this.username = username;
@@ -91,7 +88,6 @@ public class User {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.contributor = contributor;
         this.contributorStatus = contributorStatus;
         this.createdAt = createdAt;
         this.roles = roles;
@@ -152,14 +148,6 @@ public class User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public boolean isContributor() {
-        return contributor;
-    }
-
-    public void setContributor(boolean contributor) {
-        this.contributor = contributor;
     }
 
     public ContributorStatus getContributorStatus() {

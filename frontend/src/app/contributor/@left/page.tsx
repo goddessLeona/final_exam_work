@@ -26,11 +26,7 @@ export default function ContributorPage() {
             <div className = {styles.year}>Signed up: {data.yearSignedUp}</div>
 
             {data.countPhotoAlbums !== null && (
-                <div>Albums: {data.countPhotoAlbums}</div>
-            )}
-
-            {data.message && (
-                <div className = {styles.message}>{data.message}</div>
+                <div className={styles.album}> Photo-albums: {data.countPhotoAlbums}</div>
             )}
         </div>
     )    
