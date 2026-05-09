@@ -39,7 +39,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Service
-public class AdminService {
+public class AdminConsentFormService {
 
     private final AdminDashboardCFMapper adminDashboardCFMapper;
     private final UserRepository userRepository;
@@ -47,7 +47,7 @@ public class AdminService {
     private final AdminConsentFormDataMapper adminConsentFormDataMapper;
     private final ConsentFormRepository consentFormRepository;
 
-    public AdminService(AdminDashboardCFMapper adminDashboardCFMapper, UserRepository userRepository, UserConsentFormRepository userConsentFormRepository, AdminConsentFormDataMapper adminConsentFormDataMapper, ConsentFormRepository consentFormRepository) {
+    public AdminConsentFormService(AdminDashboardCFMapper adminDashboardCFMapper, UserRepository userRepository, UserConsentFormRepository userConsentFormRepository, AdminConsentFormDataMapper adminConsentFormDataMapper, ConsentFormRepository consentFormRepository) {
         this.adminDashboardCFMapper = adminDashboardCFMapper;
         this.userRepository = userRepository;
         this.userConsentFormRepository = userConsentFormRepository;

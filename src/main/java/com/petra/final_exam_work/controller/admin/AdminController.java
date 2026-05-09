@@ -4,7 +4,7 @@ import com.petra.final_exam_work.dto.requestDto.admin.AdminConsentReviewRequest;
 import com.petra.final_exam_work.dto.responseDto.admin.AdminConsentFormDataResponse.ConsentFormDataResponse;
 import com.petra.final_exam_work.dto.responseDto.admin.AdminDashboardConsentFormresponse.AdminDashboardConsentFormResponse;
 import com.petra.final_exam_work.security.CustomUserDetails;
-import com.petra.final_exam_work.service.admin.AdminService;
+import com.petra.final_exam_work.service.admin.AdminConsentFormService;
 import jakarta.validation.Valid;
 import org.springframework.core.io.Resource;
 import org.springframework.http.ResponseEntity;
@@ -18,10 +18,10 @@ import java.util.UUID;
 @RequestMapping("/admin")
 public class AdminController {
 
-    private final AdminService adminService;
+    private final AdminConsentFormService adminConsentFormService;
 
-    public AdminController(AdminService adminService) {
-        this.adminService = adminService;
+    public AdminController(AdminConsentFormService adminConsentFormService) {
+        this.adminConsentFormService = adminConsentFormService;
     }
 
     //###################### GET Admin dashboard consent form #####################
@@ -31,7 +31,7 @@ public class AdminController {
     public ResponseEntity<AdminDashboardConsentFormResponse> getDashboard (
             @AuthenticationPrincipal CustomUserDetails userDetails
     ){
-        return ResponseEntity.ok(adminService.getDashboard(userDetails));
+        return ResponseEntity.ok(adminConsentFormService.getDashboard(userDetails));
     }
 
     //###################### GET Consent id ################################
@@ -40,7 +40,7 @@ public class AdminController {
     public ResponseEntity<ConsentFormDataResponse> getConsentForm(
             @PathVariable ("id") UUID publicUuid
     ){
-        return ResponseEntity.ok(adminService.getConsentFormDataId(publicUuid));
+        return ResponseEntity.ok(adminConsentFormService.getConsentFormDataId(publicUuid));
     }
 
     //###################### GET Admin-ConsentForm Data #####################
@@ -52,7 +52,7 @@ public class AdminController {
             @PathVariable String type
             ) {
 
-        return adminService.getDocumentData(publicUuid, type);
+        return adminConsentFormService.getDocumentData(publicUuid, type);
     }
 
     //##### UPDATE admin Consent form #####
@@ -65,7 +65,7 @@ public class AdminController {
             @RequestBody AdminConsentReviewRequest request
             ) {
 
-        adminService.reviewConsentForm(id,request);
+        adminConsentFormService.reviewConsentForm(id,request);
 
         return ResponseEntity.ok().build();
     }
