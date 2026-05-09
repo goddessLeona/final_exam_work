@@ -201,9 +201,9 @@ PATCH "/admin/consent/{id}/review"
 (contributor should have a dashboard from where they easily can upload content from)
 (9/5)
 
-  step 1. create a minimum version. Just simple upload photos.  (no tags, no other contributor and more...)
+  step 1. create a minimum version. Just simple upload photos.  (no tags, no other contributor, schedules and more...)
   * added description in db, table photo_albums (so that user can add a text to the photos)
-  * created request, response, mapper
+  * created request, response, mapper, service, controller, 
 
 
 

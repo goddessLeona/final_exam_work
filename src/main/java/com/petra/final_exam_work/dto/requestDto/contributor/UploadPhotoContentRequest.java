@@ -20,19 +20,16 @@ public class UploadPhotoContentRequest {
 
     private Instant publishedAt;
 
-    private ContentStatus contentStatus;
-
     private List<MultipartFile> photos;
 
     public UploadPhotoContentRequest() {
     }
 
     public UploadPhotoContentRequest(String photoAlbumName, String description, Instant publishedAt,
-                                     ContentStatus contentStatus, List<MultipartFile> photos) {
+                                     List<MultipartFile> photos) {
         this.photoAlbumName = photoAlbumName;
         this.description = description;
         this.publishedAt = publishedAt;
-        this.contentStatus = contentStatus;
         this.photos = photos;
     }
 
@@ -58,14 +55,6 @@ public class UploadPhotoContentRequest {
 
     public void setPublishedAt(Instant publishedAt) {
         this.publishedAt = publishedAt;
-    }
-
-    public ContentStatus getContentStatus() {
-        return contentStatus;
-    }
-
-    public void setContentStatus(ContentStatus contentStatus) {
-        this.contentStatus = contentStatus;
     }
 
     public List<MultipartFile> getPhotos() {
