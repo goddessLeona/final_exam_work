@@ -203,10 +203,10 @@ PATCH "/admin/consent/{id}/review"
 
   step 1. create a minimum version. Just simple upload photos.  (no tags, no other contributor, schedules and more...)
   * added description in db, table photo_albums (so that user can add a text to the photos)
-  * created request, response, mapper, service, controller, 
+  * created request, response, mapper, service, controller, security config
 
 
-
+(make photos smaller if needed)
 ## task future a cleanup service that clean up all uploads not in use
 
 Planned background cleanup system for:
