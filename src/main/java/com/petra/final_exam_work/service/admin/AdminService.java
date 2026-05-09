@@ -9,7 +9,7 @@ import com.petra.final_exam_work.dto.responseDto.admin.AdminDashboardConsentForm
 import com.petra.final_exam_work.dto.responseDto.admin.AdminDashboardConsentFormresponse.AdminDashboardConsentFormSection;
 import com.petra.final_exam_work.entity.consentForm.ConsentForm;
 import com.petra.final_exam_work.entity.consentForm.ConsentFormStatus;
-import com.petra.final_exam_work.entity.consentForm.ReviewStatus;
+import com.petra.final_exam_work.entity.enums.ReviewStatus;
 import com.petra.final_exam_work.entity.enums.ContributorStatus;
 import com.petra.final_exam_work.entity.junktionTables.userConcentform.UserConsentForm;
 import com.petra.final_exam_work.entity.user.User;
@@ -176,7 +176,6 @@ public class AdminService {
                         HttpStatus.NOT_FOUND));
 
         ConsentForm cf = ucf.getConsentForm();
-        System.out.println(request);
 
         if (request.getIdCardStatus() != null) {
             cf.setIdCardReviewed(request.getIdCardStatus());

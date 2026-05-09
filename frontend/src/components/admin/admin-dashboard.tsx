@@ -91,8 +91,6 @@ export default function AdminDashboard () {
                                 <Link href={`/admin/consent/${item.consentFormId}`}>
                                     <p className={styles.username}>{item.username}</p>
                                 </Link>    
-                            
-                                <p>Approved : ({item.documentsApproved})</p>
                             </div>    
                         </li>
                     ))}

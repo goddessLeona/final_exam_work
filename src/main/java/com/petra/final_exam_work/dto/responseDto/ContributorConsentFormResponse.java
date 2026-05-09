@@ -1,7 +1,7 @@
 package com.petra.final_exam_work.dto.responseDto;
 
 import com.petra.final_exam_work.entity.consentForm.ConsentFormStatus;
-import com.petra.final_exam_work.entity.consentForm.ReviewStatus;
+import com.petra.final_exam_work.entity.enums.ReviewStatus;
 import com.petra.final_exam_work.entity.enums.ContributorStatus;
 
 public class ContributorConsentFormResponse {

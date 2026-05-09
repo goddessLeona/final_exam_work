@@ -200,6 +200,8 @@ PATCH "/admin/consent/{id}/review"
 ## task 12 dashboard for uploading content
 (contributor should have a dashboard from where they easily can upload content from)
 
+  * added description in db, table photo_albums (so that user can add a text to the photos)
+  * created (min version) request, response, mapper
 
 
 

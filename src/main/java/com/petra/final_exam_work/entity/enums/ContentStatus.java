@@ -1,4 +1,4 @@
-package com.petra.final_exam_work.entity.photo;
+package com.petra.final_exam_work.entity.enums;
 
 public enum ContentStatus {
     PUBLISHED,

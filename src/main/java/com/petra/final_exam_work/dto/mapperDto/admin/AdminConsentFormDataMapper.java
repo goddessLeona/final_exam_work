@@ -3,7 +3,7 @@ package com.petra.final_exam_work.dto.mapperDto.admin;
 import com.petra.final_exam_work.dto.responseDto.admin.AdminConsentFormDataResponse.ConsentFormDataResponse;
 import com.petra.final_exam_work.dto.responseDto.admin.AdminConsentFormDataResponse.DocumentDto;
 import com.petra.final_exam_work.entity.consentForm.ConsentForm;
-import com.petra.final_exam_work.entity.consentForm.ReviewStatus;
+import com.petra.final_exam_work.entity.enums.ReviewStatus;
 import com.petra.final_exam_work.entity.junktionTables.userConcentform.UserConsentForm;
 import org.springframework.stereotype.Component;
 
