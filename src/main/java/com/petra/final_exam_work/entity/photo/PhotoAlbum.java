@@ -1,6 +1,7 @@
 package com.petra.final_exam_work.entity.photo;
 
 import com.petra.final_exam_work.entity.Tag;
+import com.petra.final_exam_work.entity.enums.ContentStatus;
 import com.petra.final_exam_work.entity.user.User;
 import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcTypeCode;
@@ -29,6 +30,9 @@ public class PhotoAlbum {
 
     @Column(name = "photo_album_name", nullable = false)
     private String photoAlbumName;
+
+    @Column(name= "description", nullable = false)
+    private String description;
 
     @Column(name = "created_at", updatable = false, insertable = false)
     private Instant createdAt;
@@ -61,6 +65,20 @@ public class PhotoAlbum {
     public PhotoAlbum() {
     }
 
+    public PhotoAlbum(Long id, UUID publicUuid, String photoAlbumName, String description, Instant createdAt,
+                      Instant publishedDate, ContentStatus contentStatus, Boolean rulesVerified, User ownedByUser, Set<Tag> tags) {
+        this.id = id;
+        this.publicUuid = publicUuid;
+        this.photoAlbumName = photoAlbumName;
+        this.description = description;
+        this.createdAt = createdAt;
+        this.publishedDate = publishedDate;
+        this.contentStatus = contentStatus;
+        this.rulesVerified = rulesVerified;
+        this.ownedByUser = ownedByUser;
+        this.tags = tags;
+    }
+
     public Long getId() {
         return id;
     }
@@ -83,6 +101,14 @@ public class PhotoAlbum {
 
     public void setPhotoAlbumName(String photoAlbumName) {
         this.photoAlbumName = photoAlbumName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Instant getCreatedAt() {

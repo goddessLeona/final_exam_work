@@ -6,7 +6,7 @@ CREATE EXTENSION IF NOT EXISTS citext;
 
 CREATE TYPE consent_form_status AS ENUM ('NOT_SUBMITTED', 'PENDING', 'APPROVED', 'REJECTED');
 CREATE TYPE content_status AS ENUM ('PUBLISHED', 'DRAFT');
-CREATE TYPE album_role AS ENUM ('owner', 'editor', 'viewer');
+CREATE TYPE album_role AS ENUM ('OWNER', 'EDITOR', 'VIEWER');
 CREATE TYPE review_status AS ENUM ('NOT_SUBMITTED', 'PENDING', 'APPROVED', 'REJECTED');
 CREATE TYPE contributor_status AS ENUM ('NOT_APPLIED', 'PENDING', 'APPROVED', 'REJECTED', 'TEMP_BANNED', 'BANNED');
 
@@ -88,6 +88,7 @@ CREATE TABLE photo_albums(
 
     owner_user_id BIGINT NOT NULL,
     photo_album_name TEXT NOT NULL,
+    description TEXT NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     published_at TIMESTAMPTZ,
     content_status content_status NOT NULL DEFAULT 'DRAFT',
