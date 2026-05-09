@@ -1,43 +1,39 @@
-package com.petra.final_exam_work.dto.responseDto.contributor;
+package com.petra.final_exam_work.dto.requestDto.contributor;
 
 import com.petra.final_exam_work.entity.enums.ContentStatus;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.Instant;
 import java.util.List;
-import java.util.UUID;
 
-public class UploadContentResponse {
+public class UploadPhotoContentRequest {
 
-    private UUID albumUuid;
-
+    @NotBlank
+    @Size(min = 1, max = 20, message = "Can only be 20 characters long")
     private String photoAlbumName;
+
+    @NotBlank
+    @Size(min = 1, max = 50, message = "Can only be 50 characters long")
     private String description;
+
     private Instant publishedAt;
+
     private ContentStatus contentStatus;
 
-    private String username;
-    private List<String> photoUrls;
+    private List<MultipartFile> photos;
 
-    public UploadContentResponse() {
+    public UploadPhotoContentRequest() {
     }
 
-    public UploadContentResponse(UUID albumUuid, String photoAlbumName, String description, Instant publishedAt,
-                                 ContentStatus contentStatus, String username, List<String> photoUrls) {
-        this.albumUuid = albumUuid;
+    public UploadPhotoContentRequest(String photoAlbumName, String description, Instant publishedAt,
+                                     ContentStatus contentStatus, List<MultipartFile> photos) {
         this.photoAlbumName = photoAlbumName;
         this.description = description;
         this.publishedAt = publishedAt;
         this.contentStatus = contentStatus;
-        this.username = username;
-        this.photoUrls = photoUrls;
-    }
-
-    public UUID getAlbumUuid() {
-        return albumUuid;
-    }
-
-    public void setAlbumUuid(UUID albumUuid) {
-        this.albumUuid = albumUuid;
+        this.photos = photos;
     }
 
     public String getPhotoAlbumName() {
@@ -72,19 +68,11 @@ public class UploadContentResponse {
         this.contentStatus = contentStatus;
     }
 
-    public String getUsername() {
-        return username;
+    public List<MultipartFile> getPhotos() {
+        return photos;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public List<String> getPhotoUrls() {
-        return photoUrls;
-    }
-
-    public void setPhotoUrls(List<String> photoUrls) {
-        this.photoUrls = photoUrls;
+    public void setPhotos(List<MultipartFile> photos) {
+        this.photos = photos;
     }
 }
