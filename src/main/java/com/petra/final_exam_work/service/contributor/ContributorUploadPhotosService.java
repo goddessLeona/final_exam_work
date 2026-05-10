@@ -4,6 +4,7 @@ import com.petra.final_exam_work.dto.mapperDto.contributor.UploadPhotoContentMap
 import com.petra.final_exam_work.dto.requestDto.contributor.UploadPhotoContentRequest;
 import com.petra.final_exam_work.dto.responseDto.contributor.UploadPhotoContentResponse;
 import com.petra.final_exam_work.entity.enums.ContentStatus;
+import com.petra.final_exam_work.entity.enums.ContentType;
 import com.petra.final_exam_work.entity.enums.ContributorStatus;
 import com.petra.final_exam_work.entity.junktionTables.photoAlbumPhoto.PhotoAlbumPhoto;
 import com.petra.final_exam_work.entity.photo.Photo;
@@ -61,18 +62,35 @@ public class ContributorUploadPhotosService {
             );
         }
 
-        if(request.getPhotos() == null || request.getPhotos().isEmpty() || request.getPhotos().size() < 7) {
-            throw new ApiException(
-                    "You have to have minimum 7 photo to create a photo album",
-                    HttpStatus.BAD_REQUEST
-            );
+        ContentType type = request.getContentType() != null
+                ? request.getContentType()
+                : ContentType.PHOTO;
+
+        if (type == ContentType.PHOTO) {
+            if(request.getPhotos() == null || request.getPhotos().isEmpty() || request.getPhotos().size() < 7) {
+                throw new ApiException(
+                        "You have to have minimum 7 photo to create a photo album",
+                        HttpStatus.BAD_REQUEST
+                );
+            }
+
+            if (request.getPhotos().size() > 30) {
+                throw new ApiException(
+                        "Can max be 30 photos in a photo album",
+                        HttpStatus.BAD_REQUEST
+                );
+            }
         }
 
-        if (request.getPhotos().size() > 30) {
-            throw new ApiException(
-                    "Can max be 30 photos in a photo album",
-                    HttpStatus.BAD_REQUEST
-            );
+        if (type == ContentType.VIDEO) {
+
+            if (request.getPhotos() == null || request.getPhotos().isEmpty()) {
+                throw new ApiException("Video file is required", HttpStatus.BAD_REQUEST);
+            }
+
+            if (request.getPhotos() != null && request.getPhotos().size()>1) {
+                throw new ApiException("Only one video allowed per upload", HttpStatus.BAD_REQUEST);
+            }
         }
 
         PhotoAlbum photoAlbum = new PhotoAlbum();
@@ -85,6 +103,7 @@ public class ContributorUploadPhotosService {
                     ? ContentStatus.PUBLISHED
                     : ContentStatus.DRAFT
         );
+        photoAlbum.setContentType(type);
         photoAlbum.setOwnedByUser(user);
         photoAlbum.setRulesVerified(false);
 

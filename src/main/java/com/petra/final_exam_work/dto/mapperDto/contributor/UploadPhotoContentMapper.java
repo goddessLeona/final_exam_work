@@ -15,7 +15,7 @@ public interface UploadPhotoContentMapper {
     @Mapping(target = "photoAlbumName", source = "photoAlbum.photoAlbumName")
     @Mapping(target = "description", source = "photoAlbum.description" )
     @Mapping(target = "publishedAt", source = "photoAlbum.publishedDate")
-    @Mapping(target = "username", source = "photoAlbum.ownedByUser")
+    @Mapping(target = "username", source = "photoAlbum.ownedByUser.username")
     @Mapping(target = "photoUrls", source = "photos" )
     UploadPhotoContentResponse toResponse (
         PhotoAlbum photoAlbum,

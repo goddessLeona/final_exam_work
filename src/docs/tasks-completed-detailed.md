@@ -197,16 +197,28 @@ PATCH "/admin/consent/{id}/review"
   * add so that messages from admin get shown in form 
   * when consent form is approved it should disappear and give rome for new component/dashboard.
 
-## task 12 dashboard for uploading content
-(contributor should have a dashboard from where they easily can upload content from)
-(9/5)
+## task 12 dashboard for uploading PHOTOS
+contributor should have a dashboard from where they easily can upload photos from.
+  * should be able to publish directly, scheduled and save as draft and remove
+  * add tags
+  * add other contributors 
+(9/5 10/5)
 
-  step 1. create a minimum version. Just simple upload photos.  (no tags, no other contributor, schedules and more...)
+  POST "/contributor/upload/photo"
+  ### step 1. create a minimum version. Just simple upload photos DRAFT.
   * added description in db, table photo_albums (so that user can add a text to the photos)
   * created request, response, mapper, service, controller, security config
+  * created a fetch, component/form
+  * added V4_insert_enum_contentType.sql (so that same form can be used for video upload in future)
+  * added minimal styling for preview images and dashboard
+
+  ### step 2. contributor should be able to publish, save as draft, scheduale content and remove.
 
 
 (make photos smaller if needed)
+
+## task 13 clean up folders and re orgonize 
+
 ## task future a cleanup service that clean up all uploads not in use
 
 Planned background cleanup system for:

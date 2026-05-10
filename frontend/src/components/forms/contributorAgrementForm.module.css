@@ -6,6 +6,14 @@
     color: beige;
     padding-bottom: 20px;
     text-align: center;
+    border-top: 2px solid black;
+}
+
+.containerDashboard{
+    display: flex;
+    justify-content: center;
+    background-color: #545454;
+    border-top: 2px solid black;
 }
 
 .formBox{

@@ -173,13 +173,14 @@ CREATE TABLE photo_albums_tags(
 );
 
 CREATE TABLE photo_albums_photos (
+    id BIGSERIAL PRIMARY KEY,
+
     photo_album_id BIGINT NOT NULL,
     photo_id BIGINT NOT NULL,
 
     position INTEGER NOT NULL,
     added_at TIMESTAMPTZ NOT NULL DEFAULT now(),
 
-    PRIMARY KEY (photo_album_id, photo_id),
     FOREIGN KEY (photo_album_id) REFERENCES photo_albums(id) ON DELETE CASCADE,
     FOREIGN KEY (photo_id) REFERENCES photos(id) ON DELETE CASCADE
 );

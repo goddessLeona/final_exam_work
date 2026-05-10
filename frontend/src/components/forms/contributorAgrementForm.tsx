@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import styles from "./contributorAgrementForm.module.css"
 import { ContributorFormResponse, getContributorAgreementForm } from "@/lib/api/contributor";
 import { postContributorAgreementForm } from "@/lib/api/contributor";
+import UploadPhotosForm from "@/components/contributor/uploadAlbumForm/uploadPhotosForm";
 
 const initialFormState = {
     idCard: null as File | null,
@@ -23,9 +24,7 @@ export default function ContributorAgrementForm() {
     
     const isApproved = (status?: string | null) => status === "APPROVED";
     const isPending = (status?: string | null) => status === "PENDING";
-    const isLocked = (status?: string | null) =>
-        status === "APPROVED" || status === "PENDING";
-
+    
     const isFormPending = isPending(serverData?.consentFormStatus);
 
     const isIdCardApproved = isApproved(serverData?.idCardReviewed);
@@ -42,8 +41,7 @@ export default function ContributorAgrementForm() {
                 setServerData(data);
                 setError({});
             }catch (err: any) {
-                console.log("ERROR TYPE: ", err);
-
+                
                 if (err.error) {
                     setError(err.error);
                 }else {
@@ -73,8 +71,7 @@ export default function ContributorAgrementForm() {
         setServerData(response);
         setSuccess("Submitted successfully!");
     } catch (err: any) {
-        console.log("Error type: ", err );
-
+        
         if (err.errors) {
             setError(err.errors);
         }else {
@@ -89,12 +86,8 @@ const generalErrorMessage = error.general || (["idCardFile", "idFaceFile", "face
 
     if (isContributorApproved) {
         return (
-            <main className={styles.container}>
-                <h1>Welcome contributor!</h1>
-
-                <p>Your agreement form has been approved.</p>
-
-                <p>You can now upload content.</p>
+            <main className={styles.containerDashboard}>
+                <UploadPhotosForm/>
             </main>
         );
     }

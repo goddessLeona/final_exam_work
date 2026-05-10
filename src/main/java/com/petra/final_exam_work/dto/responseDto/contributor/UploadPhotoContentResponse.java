@@ -1,6 +1,7 @@
 package com.petra.final_exam_work.dto.responseDto.contributor;
 
 import com.petra.final_exam_work.entity.enums.ContentStatus;
+import com.petra.final_exam_work.entity.enums.ContentType;
 
 import java.time.Instant;
 import java.util.List;
@@ -13,6 +14,7 @@ public class UploadPhotoContentResponse {
     private String description;
     private Instant publishedAt;
     private ContentStatus contentStatus;
+    private ContentType contentType;
     private String username;
 
     private List<String> photoUrls;
@@ -21,12 +23,14 @@ public class UploadPhotoContentResponse {
     }
 
     public UploadPhotoContentResponse(UUID albumUuid, String photoAlbumName, String description, Instant publishedAt,
-                                      ContentStatus contentStatus, String username, List<String> photoUrls) {
+                                      ContentStatus contentStatus, ContentType contentType, String username,
+                                      List<String> photoUrls) {
         this.albumUuid = albumUuid;
         this.photoAlbumName = photoAlbumName;
         this.description = description;
         this.publishedAt = publishedAt;
         this.contentStatus = contentStatus;
+        this.contentType = contentType;
         this.username = username;
         this.photoUrls = photoUrls;
     }
@@ -69,6 +73,14 @@ public class UploadPhotoContentResponse {
 
     public void setContentStatus(ContentStatus contentStatus) {
         this.contentStatus = contentStatus;
+    }
+
+    public ContentType getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(ContentType contentType) {
+        this.contentType = contentType;
     }
 
     public String getUsername() {

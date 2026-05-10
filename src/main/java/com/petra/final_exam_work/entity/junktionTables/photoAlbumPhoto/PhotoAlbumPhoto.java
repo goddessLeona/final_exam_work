@@ -10,17 +10,16 @@ import java.time.Instant;
 @Table(name = "photo_albums_photos")
 public class PhotoAlbumPhoto {
 
-    @EmbeddedId
-    private PhotoAlbumPhotoId id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @ManyToOne
-    @MapsId("photoAlbumId")
-    @JoinColumn(name = "photo_album_id")
+    @JoinColumn(name = "photo_album_id", nullable = false)
     private PhotoAlbum photoAlbum;
 
     @ManyToOne
-    @MapsId("photoId")
-    @JoinColumn(name = "photo_id")
+    @JoinColumn(name = "photo_id", nullable = false)
     private Photo photo;
 
     @Column(name = "position", nullable = false)
@@ -32,11 +31,19 @@ public class PhotoAlbumPhoto {
     public PhotoAlbumPhoto() {
     }
 
-    public PhotoAlbumPhotoId getId() {
+    public PhotoAlbumPhoto(Long id, PhotoAlbum photoAlbum, Photo photo, Integer position, Instant addedAt) {
+        this.id = id;
+        this.photoAlbum = photoAlbum;
+        this.photo = photo;
+        this.position = position;
+        this.addedAt = addedAt;
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(PhotoAlbumPhotoId id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

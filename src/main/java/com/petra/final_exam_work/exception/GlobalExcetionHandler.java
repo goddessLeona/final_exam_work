@@ -65,7 +65,7 @@ public class GlobalExcetionHandler {
     public ResponseEntity<ApiError> handleGenericException(Exception ex) {
 
         ApiError error = new ApiError(
-                "Somthing went wrong",
+                "Something went wrong",
                 null
         );
 

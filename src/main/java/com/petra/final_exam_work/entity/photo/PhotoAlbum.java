@@ -2,6 +2,7 @@ package com.petra.final_exam_work.entity.photo;
 
 import com.petra.final_exam_work.entity.Tag;
 import com.petra.final_exam_work.entity.enums.ContentStatus;
+import com.petra.final_exam_work.entity.enums.ContentType;
 import com.petra.final_exam_work.entity.user.User;
 import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcTypeCode;
@@ -52,6 +53,11 @@ public class PhotoAlbum {
     @JoinColumn(name = "owner_user_id", nullable = false)
     private User ownedByUser;
 
+    @Enumerated(EnumType.STRING)
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
+    @Column(name= "content_type", columnDefinition = "content_type", nullable = false)
+    private ContentType contentType = ContentType.PHOTO;
+
     @ManyToMany(mappedBy = "photoAlbums")
     private Set<Tag> tags = new HashSet<>();
 
@@ -66,7 +72,8 @@ public class PhotoAlbum {
     }
 
     public PhotoAlbum(Long id, UUID publicUuid, String photoAlbumName, String description, Instant createdAt,
-                      Instant publishedDate, ContentStatus contentStatus, Boolean rulesVerified, User ownedByUser, Set<Tag> tags) {
+                      Instant publishedDate, ContentStatus contentStatus, Boolean rulesVerified, User ownedByUser,
+                      ContentType contentType, Set<Tag> tags) {
         this.id = id;
         this.publicUuid = publicUuid;
         this.photoAlbumName = photoAlbumName;
@@ -76,6 +83,7 @@ public class PhotoAlbum {
         this.contentStatus = contentStatus;
         this.rulesVerified = rulesVerified;
         this.ownedByUser = ownedByUser;
+        this.contentType = contentType;
         this.tags = tags;
     }
 
@@ -149,6 +157,14 @@ public class PhotoAlbum {
 
     public void setOwnedByUser(User ownedByUser) {
         this.ownedByUser = ownedByUser;
+    }
+
+    public ContentType getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(ContentType contentType) {
+        this.contentType = contentType;
     }
 
     public Set<Tag> getTags() {

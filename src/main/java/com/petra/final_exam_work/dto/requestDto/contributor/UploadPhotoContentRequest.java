@@ -1,6 +1,7 @@
 package com.petra.final_exam_work.dto.requestDto.contributor;
 
 import com.petra.final_exam_work.entity.enums.ContentStatus;
+import com.petra.final_exam_work.entity.enums.ContentType;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,6 +20,7 @@ public class UploadPhotoContentRequest {
     private String description;
 
     private Instant publishedAt;
+    private ContentType contentType;
 
     private List<MultipartFile> photos;
 
@@ -26,10 +28,11 @@ public class UploadPhotoContentRequest {
     }
 
     public UploadPhotoContentRequest(String photoAlbumName, String description, Instant publishedAt,
-                                     List<MultipartFile> photos) {
+                                     ContentType contentType, List<MultipartFile> photos) {
         this.photoAlbumName = photoAlbumName;
         this.description = description;
         this.publishedAt = publishedAt;
+        this.contentType = contentType;
         this.photos = photos;
     }
 
@@ -55,6 +58,14 @@ public class UploadPhotoContentRequest {
 
     public void setPublishedAt(Instant publishedAt) {
         this.publishedAt = publishedAt;
+    }
+
+    public ContentType getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(ContentType contentType) {
+        this.contentType = contentType;
     }
 
     public List<MultipartFile> getPhotos() {
