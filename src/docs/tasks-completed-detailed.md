@@ -214,7 +214,7 @@ contributor should have a dashboard from where they easily can upload photos fro
   * made it more user-friendly, you can add more photos and remove before you post the album
   * made more user-friendly, you can move images in preview grid right and left.
 
-  ### step 2. contributor should be able to publish, save as draft, scheduale content.
+  ### step 2. contributor should be able to publish, save as draft, schedule content, cover image.
 
   ### step 3. remove album
 

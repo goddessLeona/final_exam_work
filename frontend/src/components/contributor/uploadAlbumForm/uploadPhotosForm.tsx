@@ -183,7 +183,7 @@ function UploadPhotosForm() {
                                 
                             
                         </div>
-                        
+
                             <div className={styles.uploadOptions}>
                                     <button
                                         type="button"
@@ -203,16 +203,18 @@ function UploadPhotosForm() {
                             <p>You have to minimum upload 7 photos to be able to post</p>
                     </div>
 
-                    <button
-                        className={styles.btn}
-                        type="submit"
-                        disabled={
-                            loading ||
-                            !formData.photoAlbumName ||
-                            !formData.description ||
-                            formData.photos.length < 7
-                        }
-                    >Post</button>   
+                    <div>
+                        <button
+                            className={styles.btn}
+                            type="submit"
+                            disabled={
+                                loading ||
+                                !formData.photoAlbumName ||
+                                !formData.description ||
+                                formData.photos.length < 7
+                            }
+                        >Post</button>   
+                    </div>
 
                     {success && <p>{success}</p>} 
                     {error.general && (<p className={styles.error}>{error.general}</p>
