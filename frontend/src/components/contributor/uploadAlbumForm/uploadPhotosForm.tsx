@@ -20,6 +20,26 @@ function UploadPhotosForm() {
     const [success, setSuccess] = useState("");
     const fileInputRef = useRef<HTMLInputElement | null>(null);
 
+    const [selectedPhotos, setSelectedPhotos] = useState<number[] >([]);
+
+    const togglePhotoSelection = (index: number) => {
+        setSelectedPhotos((prev) =>
+            prev.includes(index)
+                ? prev.filter((i) => i !== index)
+                :[...prev, index]
+        );
+    };
+
+    const removeSelectedPhotos = () => {
+        setFormData({
+            ...formData,
+            photos: formData.photos.filter(
+                (_,index) => !selectedPhotos.includes(index)
+            )
+        });
+        setSelectedPhotos([]);
+    }
+
     const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -98,37 +118,60 @@ function UploadPhotosForm() {
                         />    
                     </div>
 
+                {/**previewGrid */}
                     <div className={styles.field}>
+                        <label htmlFor="photos">Photos</label>
+
                         <div className={styles.previewGrid}>
                             {formData.photos.map((photo,index) => (
                                 <img
                                     key={index}
                                     src={URL.createObjectURL(photo)}
                                     alt={`Preview ${index}`}
-                                    className={styles.previewImage}
+                                    className={
+                                        selectedPhotos.includes(index)
+                                            ? styles.selctedImage
+                                            : styles.previewImage
+                                    }
+                                    onClick={() => togglePhotoSelection(index)}
                                 />
                             ))}
                         </div>
-                    </div>
-
-                    <div className={styles.field}>
-                        <label htmlFor="photos">Photos</label>
 
                         <input
                             ref={fileInputRef}
-                            id="photos"
                             type="file"
                             multiple
                             accept="image/*"
+                            hidden
                             onChange={(e) => setFormData ({
                                 ...formData,
-                                photos: Array.from(e.target.files || [])
+                                photos: [
+                                    ...formData.photos,
+                                    ...Array.from(e.target.files || [])
+                                ] 
                                 })
                             }
                         />  
-                        <p>{formData.photos.length} photos selected</p>
-                        <p>You have to minimum upload 7 photos to be able to post</p>
-                    </div>        
+
+                        <div>
+                        <button
+                            type="button"
+                            className={styles.btn}
+                            onClick={() => fileInputRef.current?.click()}
+                        > Upload Photos</button>  
+
+                        <button
+                            type="button"
+                            className={styles.btn}
+                            onClick={removeSelectedPhotos}
+                        > Remove selected </button>  
+
+                        </div>
+
+                        <p>{formData.photos.length} photos</p>
+                        <p>You have to minimum upload 7 photos to be able to post</p>  
+                    </div>
 
                     <button
                         className={styles.btn}
