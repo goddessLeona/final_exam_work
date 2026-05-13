@@ -40,6 +40,21 @@ function UploadPhotosForm() {
         setSelectedPhotos([]);
     }
 
+    const movePhoto = (from: number, to: number) => {
+
+        if (to < 0 || to >= formData.photos.length) return;
+
+        const updatedPhotos = [...formData.photos];
+        const [movedPhoto] = updatedPhotos.splice(from, 1);
+
+        updatedPhotos.splice(to, 0, movedPhoto);
+
+        setFormData({
+            ...formData,
+            photos: updatedPhotos
+        });
+    };
+
     const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -118,59 +133,74 @@ function UploadPhotosForm() {
                         />    
                     </div>
 
-                {/**previewGrid */}
+                    {/**previewGrid + add and remove photos */}
                     <div className={styles.field}>
                         <label htmlFor="photos">Photos</label>
 
                         <div className={styles.previewGrid}>
                             {formData.photos.map((photo,index) => (
-                                <img
-                                    key={index}
-                                    src={URL.createObjectURL(photo)}
-                                    alt={`Preview ${index}`}
-                                    className={
-                                        selectedPhotos.includes(index)
-                                            ? styles.selctedImage
-                                            : styles.previewImage
-                                    }
-                                    onClick={() => togglePhotoSelection(index)}
-                                />
+                                <div key={index} className={styles.previewCard}>
+                                    <img
+                                        src={URL.createObjectURL(photo)}
+                                        alt={`Preview ${index}`}
+                                        className={
+                                            selectedPhotos.includes(index)
+                                                ? styles.selectedImage
+                                                : styles.previewImage
+                                        }
+                                        onClick={() => togglePhotoSelection(index)}
+                                    />
+
+                                    <div className={styles.moveButtons}>
+                                        <button
+                                            type="button"
+                                            onClick={() => movePhoto(index, index -1)}
+                                        >left</button>
+
+                                        <button
+                                            type="button"
+                                            onClick={() => movePhoto(index, index +1)}
+                                        >right</button>
+                                    </div>
+                                </div>    
                             ))}
+                                <input
+                                    ref={fileInputRef}
+                                    type="file"
+                                    multiple
+                                    accept="image/*"
+                                    hidden
+                                    onChange={(e) => setFormData ({
+                                        ...formData,
+                                        photos: [
+                                            ...formData.photos,
+                                            ...Array.from(e.target.files || [])
+                                        ] 
+                                        })
+                                    }
+                                />  
+
+                                
+                            
                         </div>
+                        
+                            <div className={styles.uploadOptions}>
+                                    <button
+                                        type="button"
+                                        className={styles.btn}
+                                        onClick={() => fileInputRef.current?.click()}
+                                    > Upload Photos</button>  
 
-                        <input
-                            ref={fileInputRef}
-                            type="file"
-                            multiple
-                            accept="image/*"
-                            hidden
-                            onChange={(e) => setFormData ({
-                                ...formData,
-                                photos: [
-                                    ...formData.photos,
-                                    ...Array.from(e.target.files || [])
-                                ] 
-                                })
-                            }
-                        />  
+                                    <button
+                                        type="button"
+                                        className={styles.btn}
+                                        onClick={removeSelectedPhotos}
+                                    > Remove selected </button>  
 
-                        <div>
-                        <button
-                            type="button"
-                            className={styles.btn}
-                            onClick={() => fileInputRef.current?.click()}
-                        > Upload Photos</button>  
+                                </div>
 
-                        <button
-                            type="button"
-                            className={styles.btn}
-                            onClick={removeSelectedPhotos}
-                        > Remove selected </button>  
-
-                        </div>
-
-                        <p>{formData.photos.length} photos</p>
-                        <p>You have to minimum upload 7 photos to be able to post</p>  
+                            <p>{formData.photos.length} photos</p>
+                            <p>You have to minimum upload 7 photos to be able to post</p>
                     </div>
 
                     <button

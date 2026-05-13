@@ -59,6 +59,22 @@
     margin-top: 10px;
 }
 
+.previewCard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding-bottom: 10px;
+}
+
+.uploadOptions {
+    padding-top: 20px;
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    justify-content: center;
+}
+
 .previewImage {
     width: 100%;
     height: 120px;
@@ -66,7 +82,7 @@
     border-radius: 8px;
 }
 
-.selctedImage {
+.selectedImage {
     width: 100%;
     height: 120px;
     border-radius: 8px;

@@ -212,6 +212,7 @@ contributor should have a dashboard from where they easily can upload photos fro
   * added V4_insert_enum_contentType.sql (so that same form can be used for video upload in future)
   * added minimal styling for preview images and dashboard
   * made it more user-friendly, you can add more photos and remove before you post the album
+  * made more user-friendly, you can move images in preview grid right and left.
 
   ### step 2. contributor should be able to publish, save as draft, scheduale content.
 
