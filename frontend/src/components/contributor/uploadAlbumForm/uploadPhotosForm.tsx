@@ -285,6 +285,7 @@ function UploadPhotosForm() {
                             onClick={(e) => handleSubmit(e as any, "DRAFT")}
                         >Save Draft</button> 
 
+
                         <button
                             className={styles.btn}
                             type="button"
@@ -296,6 +297,20 @@ function UploadPhotosForm() {
                             }
                             onClick={(e) => handleSubmit(e as any,"PUBLISH")}
                             > Publish Now
+                        </button>
+
+                        <button
+                            type="button"
+                            className={styles.btn}
+                            disabled={
+                                loading ||
+                                !formData.photoAlbumName ||
+                                !formData.description ||
+                                formData.photos.length < 7
+                            }
+                            onClick={() => setSubmitAction("SCHEDULE")}
+                        >
+                            Schedule
                         </button>
  
                         {submitAction === "SCHEDULE" && (
@@ -321,7 +336,7 @@ function UploadPhotosForm() {
                                     !formData.description ||
                                     formData.photos.length < 7
                                 }   
-                                onClick={(e) => handleSubmit (e as any, "SCHEDULE")}
+                                onClick={(e) => handleSubmit (e as any,"SCHEDULE")}
                                 > Confirm Scedule
                                 </button>
                             </div>
