@@ -1,4 +1,4 @@
-package com.petra.final_exam_work.dto.responseDto.contributor;
+package com.petra.final_exam_work.dto.responseDto.contributor.ContributorUploadPhotos;
 
 import com.petra.final_exam_work.entity.enums.ContentStatus;
 import com.petra.final_exam_work.entity.enums.ContentType;
@@ -16,15 +16,15 @@ public class UploadPhotoContentResponse {
     private ContentStatus contentStatus;
     private ContentType contentType;
     private String username;
-
     private List<String> photoUrls;
+    private CoverPhotoResponse coverPhoto;
 
     public UploadPhotoContentResponse() {
     }
 
     public UploadPhotoContentResponse(UUID albumUuid, String photoAlbumName, String description, Instant publishedAt,
                                       ContentStatus contentStatus, ContentType contentType, String username,
-                                      List<String> photoUrls) {
+                                      List<String> photoUrls, CoverPhotoResponse coverPhoto) {
         this.albumUuid = albumUuid;
         this.photoAlbumName = photoAlbumName;
         this.description = description;
@@ -33,6 +33,7 @@ public class UploadPhotoContentResponse {
         this.contentType = contentType;
         this.username = username;
         this.photoUrls = photoUrls;
+        this.coverPhoto = coverPhoto;
     }
 
     public UUID getAlbumUuid() {
@@ -97,5 +98,13 @@ public class UploadPhotoContentResponse {
 
     public void setPhotoUrls(List<String> photoUrls) {
         this.photoUrls = photoUrls;
+    }
+
+    public CoverPhotoResponse getCoverPhoto() {
+        return coverPhoto;
+    }
+
+    public void setCoverPhoto(CoverPhotoResponse coverPhoto) {
+        this.coverPhoto = coverPhoto;
     }
 }

@@ -1,7 +1,7 @@
 package com.petra.final_exam_work.controller.contributor;
 
 import com.petra.final_exam_work.dto.requestDto.contributor.UploadPhotoContentRequest;
-import com.petra.final_exam_work.dto.responseDto.contributor.UploadPhotoContentResponse;
+import com.petra.final_exam_work.dto.responseDto.contributor.ContributorUploadPhotos.UploadPhotoContentResponse;
 import com.petra.final_exam_work.security.CustomUserDetails;
 import com.petra.final_exam_work.service.contributor.ContributorUploadPhotosService;
 import jakarta.validation.Valid;

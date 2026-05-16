@@ -4,6 +4,7 @@ import {useRef, useState} from "react"
 import { postUploadPhotos } from "@/lib/api/uploadPhoto"
 import {UploadPhotoContentResponse} from "@/lib/api/uploadPhoto"
 import styles from "./uploadPhotosForm.module.css"
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 const initialFormState = {
     photoAlbumName: "",
@@ -21,6 +22,15 @@ function UploadPhotosForm() {
     const fileInputRef = useRef<HTMLInputElement | null>(null);
 
     const [selectedPhotos, setSelectedPhotos] = useState<number[] >([]);
+    const [scheduledDate, setScheduledDate] = useState("");
+    const [coverPhotoIndex, setCoverPhotoIndex] = useState<number | null> (0);
+
+    const [submitAction, setSubmitAction] = useState<
+        "DRAFT" |
+        "PUBLISH" |
+        "SCHEDULE"
+    >("DRAFT");
+    
 
     const togglePhotoSelection = (index: number) => {
         setSelectedPhotos((prev) =>
@@ -55,7 +65,13 @@ function UploadPhotosForm() {
         });
     };
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const selectedCoverPhoto = (index: number) => {
+        setCoverPhotoIndex(index);
+    }
+
+    const handleSubmit = async (e: React.FormEvent <HTMLFormElement>, 
+        action: "DRAFT" | "PUBLISH" | "SCHEDULE"
+    ) => {
     e.preventDefault();
 
     setLoading(true);
@@ -69,6 +85,32 @@ function UploadPhotosForm() {
 
     for (const photo of formData.photos) {
         data.append("photos", photo);
+    }
+
+    if (action === "DRAFT") {
+        data.append("contentStatus", "DRAFT")
+    }
+
+    if (action === "PUBLISH") {
+        data.append(
+            "publishedAt",
+            new Date().toISOString()
+        );
+    }
+
+    if (action === "SCHEDULE") {
+       
+        data.append(
+            "publishedAt",
+            new Date(scheduledDate).toISOString()
+        );
+    }
+
+    if (coverPhotoIndex !== null) {
+        data.append(
+            "coverphotoIndex",
+            coverPhotoIndex.toString()
+        );
     }
 
     try {
@@ -100,7 +142,7 @@ function UploadPhotosForm() {
 
     return (
         <main className={styles.container}>
-            <form onSubmit={handleSubmit}>
+            <form>
                 <div className={styles.formBox}>
 
                     <h3>Upload photos</h3>
@@ -133,35 +175,64 @@ function UploadPhotosForm() {
                         />    
                     </div>
 
-                    {/**previewGrid + add and remove photos */}
+                    {/**previewGrid + add photos */}
                     <div className={styles.field}>
                         <label htmlFor="photos">Photos</label>
 
                         <div className={styles.previewGrid}>
                             {formData.photos.map((photo,index) => (
                                 <div key={index} className={styles.previewCard}>
+
+                                    {coverPhotoIndex === index && (
+                                        <div className={styles.coverBadge}>
+                                            Cover Photo
+                                        </div>
+                                    )}
+
                                     <img
                                         src={URL.createObjectURL(photo)}
                                         alt={`Preview ${index}`}
-                                        className={
-                                            selectedPhotos.includes(index)
+                                        className={ `
+                                            ${styles.previewImage}
+                                            ${selectedPhotos.includes(index)
                                                 ? styles.selectedImage
-                                                : styles.previewImage
-                                        }
+                                                : ""
+                                            }
+
+                                            ${coverPhotoIndex === index 
+                                                ? styles.coverImage
+                                                : ""                                            }
+                                            }
+
+                                        `}
                                         onClick={() => togglePhotoSelection(index)}
                                     />
 
                                     <div className={styles.moveButtons}>
-                                        <button
-                                            type="button"
-                                            onClick={() => movePhoto(index, index -1)}
-                                        >left</button>
 
                                         <button
                                             type="button"
-                                            onClick={() => movePhoto(index, index +1)}
-                                        >right</button>
+                                            className={styles.cover}
+                                            onClick={() => selectedCoverPhoto(index)}
+                                        >
+                                            Set Cover
+                                        </button> 
+
+                                        <div>
+                                            <button
+                                                type="button"
+                                                onClick={() => movePhoto(index, index -1)}
+                                                className={styles.arrowBtn}
+                                            ><ChevronLeft size={18}/></button>
+
+                                            <button
+                                                type="button"
+                                                onClick={() => movePhoto(index, index +1)}
+                                                className={styles.arrowBtn}
+                                            ><ChevronRight size={18}/></button>
+                                        </div>
                                     </div>
+
                                 </div>    
                             ))}
                                 <input
@@ -180,8 +251,6 @@ function UploadPhotosForm() {
                                     }
                                 />  
 
-                                
-                            
                         </div>
 
                             <div className={styles.uploadOptions}>
@@ -195,25 +264,69 @@ function UploadPhotosForm() {
                                         type="button"
                                         className={styles.btn}
                                         onClick={removeSelectedPhotos}
-                                    > Remove selected </button>  
+                                    > Remove selected </button> 
 
                                 </div>
 
                             <p>{formData.photos.length} photos</p>
-                            <p>You have to minimum upload 7 photos to be able to post</p>
+                            <p>You have to upload between 7 - 30 photos to be able to post</p>
                     </div>
 
-                    <div>
+                    <div className={styles.actionButtons}>
                         <button
                             className={styles.btn}
-                            type="submit"
+                            type="button"
                             disabled={
                                 loading ||
                                 !formData.photoAlbumName ||
                                 !formData.description ||
                                 formData.photos.length < 7
                             }
-                        >Post</button>   
+                            onClick={(e) => handleSubmit(e as any, "DRAFT")}
+                        >Save Draft</button> 
+
+                        <button
+                            className={styles.btn}
+                            type="button"
+                            disabled={
+                                loading ||
+                                !formData.photoAlbumName ||
+                                !formData.description ||
+                                formData.photos.length < 7
+                            }
+                            onClick={(e) => handleSubmit(e as any,"PUBLISH")}
+                            > Publish Now
+                        </button>
+ 
+                        {submitAction === "SCHEDULE" && (
+                            <div className={styles.field}>
+                                <label htmlFor="scheduledDate">
+                                    Schedule publish date
+                                </label>
+
+                                <input
+                                    id="scheduledDate"
+                                    type="datetime-local"
+                                    value={scheduledDate}
+                                    onChange={(e) =>
+                                        setScheduledDate(e.target.value)
+                                    }
+                                />
+                                <button
+                                type="button"
+                                className={styles.btn}
+                                disabled={
+                                    loading ||
+                                    !formData.photoAlbumName ||
+                                    !formData.description ||
+                                    formData.photos.length < 7
+                                }   
+                                onClick={(e) => handleSubmit (e as any, "SCHEDULE")}
+                                > Confirm Scedule
+                                </button>
+                            </div>
+                        )}
+  
                     </div>
 
                     {success && <p>{success}</p>} 

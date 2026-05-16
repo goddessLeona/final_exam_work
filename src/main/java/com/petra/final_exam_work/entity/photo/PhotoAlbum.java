@@ -58,6 +58,10 @@ public class PhotoAlbum {
     @Column(name= "content_type", columnDefinition = "content_type", nullable = false)
     private ContentType contentType = ContentType.PHOTO;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="cover_photo_id")
+    private Photo coverPhoto;
+
     @ManyToMany(mappedBy = "photoAlbums")
     private Set<Tag> tags = new HashSet<>();
 
@@ -73,7 +77,7 @@ public class PhotoAlbum {
 
     public PhotoAlbum(Long id, UUID publicUuid, String photoAlbumName, String description, Instant createdAt,
                       Instant publishedDate, ContentStatus contentStatus, Boolean rulesVerified, User ownedByUser,
-                      ContentType contentType, Set<Tag> tags) {
+                      ContentType contentType, Photo coverPhoto, Set<Tag> tags) {
         this.id = id;
         this.publicUuid = publicUuid;
         this.photoAlbumName = photoAlbumName;
@@ -84,6 +88,7 @@ public class PhotoAlbum {
         this.rulesVerified = rulesVerified;
         this.ownedByUser = ownedByUser;
         this.contentType = contentType;
+        this.coverPhoto = coverPhoto;
         this.tags = tags;
     }
 
@@ -165,6 +170,14 @@ public class PhotoAlbum {
 
     public void setContentType(ContentType contentType) {
         this.contentType = contentType;
+    }
+
+    public Photo getCoverPhoto() {
+        return coverPhoto;
+    }
+
+    public void setCoverPhoto(Photo coverPhoto) {
+        this.coverPhoto = coverPhoto;
     }
 
     public Set<Tag> getTags() {

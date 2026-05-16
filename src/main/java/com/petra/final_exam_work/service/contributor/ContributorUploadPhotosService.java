@@ -2,7 +2,7 @@ package com.petra.final_exam_work.service.contributor;
 
 import com.petra.final_exam_work.dto.mapperDto.contributor.UploadPhotoContentMapper;
 import com.petra.final_exam_work.dto.requestDto.contributor.UploadPhotoContentRequest;
-import com.petra.final_exam_work.dto.responseDto.contributor.UploadPhotoContentResponse;
+import com.petra.final_exam_work.dto.responseDto.contributor.ContributorUploadPhotos.UploadPhotoContentResponse;
 import com.petra.final_exam_work.entity.enums.ContentStatus;
 import com.petra.final_exam_work.entity.enums.ContentType;
 import com.petra.final_exam_work.entity.enums.ContributorStatus;
@@ -22,6 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -94,18 +95,34 @@ public class ContributorUploadPhotosService {
         }
 
         PhotoAlbum photoAlbum = new PhotoAlbum();
+        Instant now = Instant.now();
+        Instant publishedAt = request.getPublishedAt();
+
+        if (
+           publishedAt != null &&
+           publishedAt.isBefore(now.minusSeconds(60))
+        ){
+            throw new ApiException(
+                "Published date can not be in the past",
+                HttpStatus.BAD_REQUEST
+            );
+        }
 
         photoAlbum.setPhotoAlbumName(request.getPhotoAlbumName());
         photoAlbum.setDescription(request.getDescription());
-        photoAlbum.setPublishedDate(request.getPublishedAt());
-        photoAlbum.setContentStatus(
-                photoAlbum.getPublishedDate() != null
-                    ? ContentStatus.PUBLISHED
-                    : ContentStatus.DRAFT
-        );
         photoAlbum.setContentType(type);
         photoAlbum.setOwnedByUser(user);
         photoAlbum.setRulesVerified(false);
+
+        photoAlbum.setPublishedDate(publishedAt);
+
+        if (publishedAt == null) {
+            photoAlbum.setContentStatus(ContentStatus.DRAFT);
+        } else if (publishedAt.isAfter(now)) {
+            photoAlbum.setContentStatus(ContentStatus.SCHEDULED);
+        } else {
+            photoAlbum.setContentStatus(ContentStatus.PUBLISHED);
+        }
 
         photoAlbumRepository.save(photoAlbum);
 
@@ -116,7 +133,7 @@ public class ContributorUploadPhotosService {
             String path = handleImageUpload(
                     file,
                     user.getPublicUuid(),
-                    "albums/" + photoAlbum.getPublicUuid(),
+                    "albums/photo/" + photoAlbum.getPublicUuid(),
                     "photo"
             );
 
@@ -130,6 +147,11 @@ public class ContributorUploadPhotosService {
 
             photoRepository.save(photo);
             savedPhotos.add(photo);
+        }
+
+        if (!savedPhotos.isEmpty()) {
+            photoAlbum.setCoverPhoto(savedPhotos.get(0));
+            photoAlbumRepository.save(photoAlbum);
         }
 
         int position = 0;

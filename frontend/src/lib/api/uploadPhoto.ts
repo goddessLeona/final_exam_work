@@ -19,8 +19,13 @@ export async function postUploadPhotos(formData : FormData): Promise<UploadPhoto
     return json
 }
 
-type ContentStatus = "DRAFT" | "PUBLISHED";
-type ContentType = "PHOTO" | "VIDEO"
+type ContentStatus = "PUBLISHED" | "DRAFT" | "SCHEDULED" | "ARCHIVED";
+type ContentType = "PHOTO" | "VIDEO";
+
+export interface CoverPhotoResponse {
+    publicUuid: string;
+    coverPhotoUrl: string;
+}
 
 export interface UploadPhotoContentResponse {
     albumUuid: string;
@@ -31,4 +36,6 @@ export interface UploadPhotoContentResponse {
     contentType: ContentType;
     username: string;
     photoUrls: string[];
+
+    coverPhoto: CoverPhotoResponse | null;
 }

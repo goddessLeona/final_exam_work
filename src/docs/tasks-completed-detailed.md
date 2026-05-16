@@ -202,7 +202,7 @@ contributor should have a dashboard from where they easily can upload photos fro
   * should be able to publish directly, scheduled and save as draft and remove
   * add tags
   * add other contributors 
-(9/5, 10/5, 13/5)
+(9/5, 10/5, 13/5, 15/5)
 
   POST "/contributor/upload/photo"
   ### step 1. create a minimum version. Just simple upload photos DRAFT.
@@ -212,11 +212,18 @@ contributor should have a dashboard from where they easily can upload photos fro
   * added V4_insert_enum_contentType.sql (so that same form can be used for video upload in future)
   * added minimal styling for preview images and dashboard
   * made it more user-friendly, you can add more photos and remove before you post the album
-  * made more user-friendly, you can move images in preview grid right and left.
+  * made more user-friendly, you can move images around in the preview grid using right and left.
 
   ### step 2. contributor should be able to publish, save as draft, schedule content, cover image.
+  * added cover photo to the db & entity
+  * remade service 
+  * added missing frontend logic
 
-  ### step 3. remove album
+  ### step 3. tag album
+
+  ### step 4. tag more contributors to a photo
+
+  ### step 5. remove album
 
 
 (make photos smaller if needed)
