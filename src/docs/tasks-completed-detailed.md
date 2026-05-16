@@ -154,7 +154,7 @@ only one of the documents was approved by admin. (not empty form each try)
 ## task 10. Admin Dashboard + Reply form submission
 Admin should have a list of all new contributors consent form
 Admin should be able to approve or reject the form and send back to contributor.
-(12/4, 18/4, 19/4, 21/4, 25/4, 4/5, 5/5)
+(12/4, 18/4, 19/4, 21/4, 25/4, 4/5, 5/5, 7/5)
 
   * Added V3__insert_super_admin.sql so there are always a super admin when the program starts up first time.
   * Added css landing page after login as a super admin
@@ -190,17 +190,64 @@ PATCH "/admin/consent/{id}/review"
   * added new status enum for user for more flexibility 
   * added some styling
 
-## task 11 look over all consent endpoints (new enum status)
-* update all consent-related endpoints from old boolean isContributor to use new ContributorStatus enum
-* remove old isContributor boolean logic
-* add so that messages from admin get shown in form 
-* when consent form is approved it should disappear and give rome for new component/dashboard.
+## task 11 look over and change all old boolean contributor to enum status 
+(8/5)
+  * update all consent-related endpoints from old boolean isContributor to use new ContributorStatus enum
+  * remove old isContributor boolean from db and entities
+  * add so that messages from admin get shown in form 
+  * when consent form is approved it should disappear and give rome for new component/dashboard.
 
-## task future a cleanup service that clean up all uploads not in use
+## task 12 dashboard for uploading PHOTOS
+contributor should have a dashboard from where they easily can upload photos from.
+  * should be able to publish directly, scheduled or save as draft
+  * should be able to add a cover photo
+(9/5, 10/5, 13/5, 15/5, 16/5)
 
-Planned background cleanup system for:
+  POST "/contributor/upload/photo"
+  ### step 1. create a minimum version. Just simple upload photos DRAFT.
+  * added description in db, table photo_albums (so that user can add a text to the photos)
+  * created request, response, mapper, service, controller, security config
+  * created a fetch, component/form
+  * added minimal styling for preview images and dashboard
+  * made it more user-friendly, you can add more photos and remove before you post the album
+  * made more user-friendly, you can move images around in the preview grid using right and left.
+
+  ### step 2. contributor should be able to publish, save as draft, schedule content, cover image.
+  * added cover photo to the db & entity
+  * remade service 
+  * added missing frontend logic
+
+## Task 12 - display photo album for contributor
+* draft/published/scheduled sections
+* cover photo visible
+* date created/published
+
+## Task 13 - display photo album members
+
+## Task 14 - edit saved albums
+* change cover photo
+* reorder after upload
+* add/remove photos later
+* change status
+
+## Task 15 -  Scheduled publisher job
+* every minute check if anything need to change form scheduled to published
+
+## Task 16 - Make possible to tag photos
+  * add tags -general album
+  * add tags other contributors
+
+## Task 17 - Archive photos/delete
+
+## task 18 Look over project and clean up folders 
+
+## task 19 - cleanup service
+
+Planned background cleanup system for remove unused files:
 * rejected uploads
 * replaced files
 * deleted contributor content
 * banned/deleted users
 * orphaned files no longer connected to database records
+
+## task 20 - add a converter, if photos are to big resize before saving

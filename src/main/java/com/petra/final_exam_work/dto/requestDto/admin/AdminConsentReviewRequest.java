@@ -1,6 +1,6 @@
 package com.petra.final_exam_work.dto.requestDto.admin;
 
-import com.petra.final_exam_work.entity.consentForm.ReviewStatus;
+import com.petra.final_exam_work.entity.enums.ReviewStatus;
 import jakarta.validation.constraints.Size;
 
 public class AdminConsentReviewRequest {

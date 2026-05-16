@@ -1,9 +1,11 @@
 package com.petra.final_exam_work.entity.junktionTables.userPhotoAlbum;
 
+import com.petra.final_exam_work.entity.enums.AlbumRoleStatus;
 import com.petra.final_exam_work.entity.photo.PhotoAlbum;
 import com.petra.final_exam_work.entity.user.User;
-import com.petra.final_exam_work.config.AlbumRoleStatusConverter;
 import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 @Entity
 @Table(name = "users_photo_albums")
@@ -22,8 +24,9 @@ public class UserPhotoAlbum {
     @JoinColumn(name = "photo_album_id")
     private PhotoAlbum photoAlbum;
 
-    @Convert(converter = AlbumRoleStatusConverter.class)
-    @Column(name = "album_role", nullable = false)
+    @Enumerated(EnumType.STRING)
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
+    @Column(name = "album_role", columnDefinition = "album_role", nullable = false)
     private AlbumRoleStatus albumRole;
 
     public UserPhotoAlbum() {

@@ -1,13 +1,14 @@
 
-import Welcome from "@/components/contributor/welcome-message";
+import Welcome from "@/components/contributor/wellcomeMessage/welcome-message";
 import ContributorAgrementForm from "@/components/forms/contributorAgrementForm";
+import styles from "@/app/contributor/page.module.css"
 
 export default function ContributorPage() {
     return (
-        <div>
+        <main className= {styles.page}>
             <Welcome />
             <ContributorAgrementForm />
-        </div>
+        </main>
     )
     
 }

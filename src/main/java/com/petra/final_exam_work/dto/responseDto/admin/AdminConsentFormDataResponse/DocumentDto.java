@@ -1,6 +1,6 @@
 package com.petra.final_exam_work.dto.responseDto.admin.AdminConsentFormDataResponse;
 
-import com.petra.final_exam_work.entity.consentForm.ReviewStatus;
+import com.petra.final_exam_work.entity.enums.ReviewStatus;
 
 public class DocumentDto {
 

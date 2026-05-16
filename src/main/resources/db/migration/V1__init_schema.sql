@@ -5,10 +5,12 @@ CREATE EXTENSION IF NOT EXISTS citext;
 -- ENUM
 
 CREATE TYPE consent_form_status AS ENUM ('NOT_SUBMITTED', 'PENDING', 'APPROVED', 'REJECTED');
-CREATE TYPE content_status AS ENUM ('PUBLISHED', 'DRAFT');
-CREATE TYPE album_role AS ENUM ('owner', 'editor', 'viewer');
 CREATE TYPE review_status AS ENUM ('NOT_SUBMITTED', 'PENDING', 'APPROVED', 'REJECTED');
 CREATE TYPE contributor_status AS ENUM ('NOT_APPLIED', 'PENDING', 'APPROVED', 'REJECTED', 'TEMP_BANNED', 'BANNED');
+
+CREATE TYPE content_status AS ENUM ('PUBLISHED', 'DRAFT', 'SCHEDULED', 'ARCHIVED');
+CREATE TYPE album_role AS ENUM ('OWNER', 'EDITOR', 'VIEWER');
+CREATE TYPE content_type AS ENUM ('PHOTO', 'VIDEO');
 
 -- TOTAL AMOUNT OF TABLES 13
 
@@ -88,15 +90,23 @@ CREATE TABLE photo_albums(
 
     owner_user_id BIGINT NOT NULL,
     photo_album_name TEXT NOT NULL,
+    description TEXT NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     published_at TIMESTAMPTZ,
     content_status content_status NOT NULL DEFAULT 'DRAFT',
     rules_verified BOOLEAN NOT NULL,
+    content_type content_type NOT NULL DEFAULT 'PHOTO',
+    cover_photo_id BIGINT,
 
     CONSTRAINT fk_photo_album_owner_user
     FOREIGN KEY (owner_user_id)
     REFERENCES users(id)
     ON DELETE CASCADE,
+
+    CONSTRAINT fk_photo_album_cover_photo
+    FOREIGN KEY (cover_photo_id)
+    REFERENCES photos(id)
+    ON DELETE SET NULL,
 
     CONSTRAINT uq_album_owner_name
     UNIQUE (owner_user_id, photo_album_name)
@@ -172,13 +182,14 @@ CREATE TABLE photo_albums_tags(
 );
 
 CREATE TABLE photo_albums_photos (
+    id BIGSERIAL PRIMARY KEY,
+
     photo_album_id BIGINT NOT NULL,
     photo_id BIGINT NOT NULL,
 
     position INTEGER NOT NULL,
     added_at TIMESTAMPTZ NOT NULL DEFAULT now(),
 
-    PRIMARY KEY (photo_album_id, photo_id),
     FOREIGN KEY (photo_album_id) REFERENCES photo_albums(id) ON DELETE CASCADE,
     FOREIGN KEY (photo_id) REFERENCES photos(id) ON DELETE CASCADE
 );

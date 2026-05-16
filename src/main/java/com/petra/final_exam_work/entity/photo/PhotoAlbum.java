@@ -1,6 +1,8 @@
 package com.petra.final_exam_work.entity.photo;
 
 import com.petra.final_exam_work.entity.Tag;
+import com.petra.final_exam_work.entity.enums.ContentStatus;
+import com.petra.final_exam_work.entity.enums.ContentType;
 import com.petra.final_exam_work.entity.user.User;
 import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcTypeCode;
@@ -30,6 +32,9 @@ public class PhotoAlbum {
     @Column(name = "photo_album_name", nullable = false)
     private String photoAlbumName;
 
+    @Column(name= "description", nullable = false)
+    private String description;
+
     @Column(name = "created_at", updatable = false, insertable = false)
     private Instant createdAt;
 
@@ -48,6 +53,15 @@ public class PhotoAlbum {
     @JoinColumn(name = "owner_user_id", nullable = false)
     private User ownedByUser;
 
+    @Enumerated(EnumType.STRING)
+    @JdbcTypeCode(SqlTypes.NAMED_ENUM)
+    @Column(name= "content_type", columnDefinition = "content_type", nullable = false)
+    private ContentType contentType = ContentType.PHOTO;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="cover_photo_id")
+    private Photo coverPhoto;
+
     @ManyToMany(mappedBy = "photoAlbums")
     private Set<Tag> tags = new HashSet<>();
 
@@ -59,6 +73,23 @@ public class PhotoAlbum {
     }
 
     public PhotoAlbum() {
+    }
+
+    public PhotoAlbum(Long id, UUID publicUuid, String photoAlbumName, String description, Instant createdAt,
+                      Instant publishedDate, ContentStatus contentStatus, Boolean rulesVerified, User ownedByUser,
+                      ContentType contentType, Photo coverPhoto, Set<Tag> tags) {
+        this.id = id;
+        this.publicUuid = publicUuid;
+        this.photoAlbumName = photoAlbumName;
+        this.description = description;
+        this.createdAt = createdAt;
+        this.publishedDate = publishedDate;
+        this.contentStatus = contentStatus;
+        this.rulesVerified = rulesVerified;
+        this.ownedByUser = ownedByUser;
+        this.contentType = contentType;
+        this.coverPhoto = coverPhoto;
+        this.tags = tags;
     }
 
     public Long getId() {
@@ -83,6 +114,14 @@ public class PhotoAlbum {
 
     public void setPhotoAlbumName(String photoAlbumName) {
         this.photoAlbumName = photoAlbumName;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Instant getCreatedAt() {
@@ -123,6 +162,22 @@ public class PhotoAlbum {
 
     public void setOwnedByUser(User ownedByUser) {
         this.ownedByUser = ownedByUser;
+    }
+
+    public ContentType getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(ContentType contentType) {
+        this.contentType = contentType;
+    }
+
+    public Photo getCoverPhoto() {
+        return coverPhoto;
+    }
+
+    public void setCoverPhoto(Photo coverPhoto) {
+        this.coverPhoto = coverPhoto;
     }
 
     public Set<Tag> getTags() {

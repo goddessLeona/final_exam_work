@@ -1,5 +1,6 @@
 package com.petra.final_exam_work.entity.consentForm;
 
+import com.petra.final_exam_work.entity.enums.ReviewStatus;
 import com.petra.final_exam_work.entity.junktionTables.userConcentform.UserConsentForm;
 import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcTypeCode;
