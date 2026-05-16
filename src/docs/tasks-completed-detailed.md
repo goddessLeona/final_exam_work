@@ -199,17 +199,15 @@ PATCH "/admin/consent/{id}/review"
 
 ## task 12 dashboard for uploading PHOTOS
 contributor should have a dashboard from where they easily can upload photos from.
-  * should be able to publish directly, scheduled and save as draft and remove
-  * add tags
-  * add other contributors 
-(9/5, 10/5, 13/5, 15/5)
+  * should be able to publish directly, scheduled or save as draft
+  * should be able to add a cover photo
+(9/5, 10/5, 13/5, 15/5, 16/5)
 
   POST "/contributor/upload/photo"
   ### step 1. create a minimum version. Just simple upload photos DRAFT.
   * added description in db, table photo_albums (so that user can add a text to the photos)
   * created request, response, mapper, service, controller, security config
   * created a fetch, component/form
-  * added V4_insert_enum_contentType.sql (so that same form can be used for video upload in future)
   * added minimal styling for preview images and dashboard
   * made it more user-friendly, you can add more photos and remove before you post the album
   * made more user-friendly, you can move images around in the preview grid using right and left.
@@ -219,22 +217,37 @@ contributor should have a dashboard from where they easily can upload photos fro
   * remade service 
   * added missing frontend logic
 
-  ### step 3. tag album
+## Task 12 - display photo album for contributor
+* draft/published/scheduled sections
+* cover photo visible
+* date created/published
 
-  ### step 4. tag more contributors to a photo
+## Task 13 - display photo album members
 
-  ### step 5. remove album
+## Task 14 - edit saved albums
+* change cover photo
+* reorder after upload
+* add/remove photos later
+* change status
 
+## Task 15 -  Scheduled publisher job
+* every minute check if anything need to change form scheduled to published
 
-(make photos smaller if needed)
+## Task 16 - Make possible to tag photos
+  * add tags -general album
+  * add tags other contributors
 
-## task 13 clean up folders and re orgonize 
+## Task 17 - Archive photos/delete
 
-## task future a cleanup service that clean up all uploads not in use
+## task 18 Look over project and clean up folders 
 
-Planned background cleanup system for:
+## task 19 - cleanup service
+
+Planned background cleanup system for remove unused files:
 * rejected uploads
 * replaced files
 * deleted contributor content
 * banned/deleted users
 * orphaned files no longer connected to database records
+
+## task 20 - add a converter, if photos are to big resize before saving
