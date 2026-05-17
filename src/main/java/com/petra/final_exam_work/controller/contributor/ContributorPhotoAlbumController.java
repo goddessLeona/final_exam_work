@@ -4,6 +4,8 @@ import com.petra.final_exam_work.dto.responseDto.contributor.PhotoContent.Contri
 import com.petra.final_exam_work.entity.enums.ContentStatus;
 import com.petra.final_exam_work.security.CustomUserDetails;
 import com.petra.final_exam_work.service.contributor.ContributorPhotoAlbumService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -12,29 +14,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/contributor/albums")
-public class DisplayOfContentController {
+public class ContributorPhotoAlbumController {
 
     private final ContributorPhotoAlbumService contributorPhotoAlbumService;
 
-    public DisplayOfContentController(ContributorPhotoAlbumService contributorPhotoAlbumService) {
+    public ContributorPhotoAlbumController(ContributorPhotoAlbumService contributorPhotoAlbumService) {
         this.contributorPhotoAlbumService = contributorPhotoAlbumService;
     }
 
     @PreAuthorize("hasRole('CONTRIBUTOR')")
-    @GetMapping
-    public ResponseEntity<List<ContributorPhotoAlbumResponse>> getPhotoAlbums(
+    @GetMapping("/list")
+    public ResponseEntity<Page<ContributorPhotoAlbumResponse>> getPhotoAlbums(
             @AuthenticationPrincipal CustomUserDetails userDetails,
-            @RequestParam ContentStatus status
+            @RequestParam ContentStatus status,
+            Pageable pageable
             ) {
 
-        List<ContributorPhotoAlbumResponse> response =
+        Page<ContributorPhotoAlbumResponse> response =
                 contributorPhotoAlbumService.getPhotoAlbumInfo(
                         userDetails,
-                        status
+                        status,
+                        pageable
                 );
 
         return ResponseEntity.ok(response);

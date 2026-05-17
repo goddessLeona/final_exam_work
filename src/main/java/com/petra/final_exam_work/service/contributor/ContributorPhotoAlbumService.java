@@ -10,13 +10,11 @@ import com.petra.final_exam_work.exception.ApiException;
 import com.petra.final_exam_work.repository.PhotoAlbumRepository;
 import com.petra.final_exam_work.repository.UserRepository;
 import com.petra.final_exam_work.security.CustomUserDetails;
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -33,7 +31,7 @@ public class ContributorPhotoAlbumService {
     }
 
     //################## Get list PhotoAlbums ############################
-    private Page<ContributorPhotoAlbumResponse> getPhotoAlbumInfo(CustomUserDetails userDetails, ContentStatus status, Pageable pageable) {
+    public Page<ContributorPhotoAlbumResponse> getPhotoAlbumInfo(CustomUserDetails userDetails, ContentStatus status, Pageable pageable) {
 
         UUID publicUuid = userDetails.getPublicUuid();
         User user = userRepository.findByPublicUuid(publicUuid)
