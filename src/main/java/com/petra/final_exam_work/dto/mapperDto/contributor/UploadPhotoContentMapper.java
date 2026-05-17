@@ -15,7 +15,7 @@ public interface UploadPhotoContentMapper {
     @Mapping(target = "albumUuid", source = "photoAlbum.publicUuid")
     @Mapping(target = "photoAlbumName", source = "photoAlbum.photoAlbumName")
     @Mapping(target = "description", source = "photoAlbum.description" )
-    @Mapping(target = "publishedAt", source = "photoAlbum.publishedDate")
+    @Mapping(target = "publishedAt", source = "photoAlbum.publishedAt")
     @Mapping(target = "username", source = "photoAlbum.ownedByUser.username")
     @Mapping(target = "photoUrls", source = "photos" )
     @Mapping(target = "coverPhoto", source = "photoAlbum.coverPhoto")

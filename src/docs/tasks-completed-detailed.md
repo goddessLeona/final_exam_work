@@ -218,9 +218,9 @@ contributor should have a dashboard from where they easily can upload photos fro
   * added missing frontend logic
 
 ## Task 12 - display photo album for contributor
-* draft/published/scheduled sections
-* cover photo visible
-* date created/published
+Pick between draft/published/scheduled sections , show cover photo visible, date and type.
+
+  * add responseDTO, Mapper, Service, controller
 
 ## Task 13 - display photo album members
 

@@ -30,6 +30,7 @@ public class PhotoAlbum {
     private UUID publicUuid;
 
     @Column(name = "photo_album_name", nullable = false)
+
     private String photoAlbumName;
 
     @Column(name= "description", nullable = false)
@@ -39,7 +40,7 @@ public class PhotoAlbum {
     private Instant createdAt;
 
     @Column(name = "published_at", updatable = true)
-    private Instant publishedDate;
+    private Instant publishedAt;
 
     @Enumerated(EnumType.STRING)
     @JdbcTypeCode(SqlTypes.NAMED_ENUM)
@@ -83,7 +84,7 @@ public class PhotoAlbum {
         this.photoAlbumName = photoAlbumName;
         this.description = description;
         this.createdAt = createdAt;
-        this.publishedDate = publishedDate;
+        this.publishedAt = publishedDate;
         this.contentStatus = contentStatus;
         this.rulesVerified = rulesVerified;
         this.ownedByUser = ownedByUser;
@@ -133,11 +134,11 @@ public class PhotoAlbum {
     }
 
     public Instant getPublishedDate() {
-        return publishedDate;
+        return publishedAt;
     }
 
     public void setPublishedDate(Instant publishedDate) {
-        this.publishedDate = publishedDate;
+        this.publishedAt = publishedDate;
     }
 
     public ContentStatus getContentStatus() {
