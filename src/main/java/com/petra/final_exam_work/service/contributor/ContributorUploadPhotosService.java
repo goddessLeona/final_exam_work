@@ -114,7 +114,7 @@ public class ContributorUploadPhotosService {
         photoAlbum.setOwnedByUser(user);
         photoAlbum.setRulesVerified(false);
 
-        photoAlbum.setPublishedDate(publishedAt);
+        photoAlbum.setPublishedAt(publishedAt);
 
         if (publishedAt == null) {
             photoAlbum.setContentStatus(ContentStatus.DRAFT);
@@ -150,8 +150,17 @@ public class ContributorUploadPhotosService {
         }
 
         if (!savedPhotos.isEmpty()) {
-            photoAlbum.setCoverPhoto(savedPhotos.get(0));
-            photoAlbumRepository.save(photoAlbum);
+            Integer coverPhotoIndex = request.getCoverPhotoIndex();
+
+            if(
+                    coverPhotoIndex != null &&
+                    coverPhotoIndex >= 0 &&
+                    coverPhotoIndex < savedPhotos.size()
+            ) {
+                photoAlbum.setCoverPhoto(savedPhotos.get(coverPhotoIndex));
+            } else {
+                photoAlbum.setCoverPhoto(savedPhotos.get(0));
+            }
         }
 
         int position = 0;

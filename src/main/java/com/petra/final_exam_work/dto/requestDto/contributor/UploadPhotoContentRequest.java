@@ -21,6 +21,7 @@ public class UploadPhotoContentRequest {
 
     private Instant publishedAt;
     private ContentType contentType;
+    private Integer coverPhotoIndex;
 
     private List<MultipartFile> photos;
 
@@ -28,11 +29,12 @@ public class UploadPhotoContentRequest {
     }
 
     public UploadPhotoContentRequest(String photoAlbumName, String description, Instant publishedAt,
-                                     ContentType contentType, List<MultipartFile> photos) {
+                                     ContentType contentType, Integer coverPhotoIndex, List<MultipartFile> photos) {
         this.photoAlbumName = photoAlbumName;
         this.description = description;
         this.publishedAt = publishedAt;
         this.contentType = contentType;
+        this.coverPhotoIndex = coverPhotoIndex;
         this.photos = photos;
     }
 
@@ -66,6 +68,14 @@ public class UploadPhotoContentRequest {
 
     public void setContentType(ContentType contentType) {
         this.contentType = contentType;
+    }
+
+    public Integer getCoverPhotoIndex() {
+        return coverPhotoIndex;
+    }
+
+    public void setCoverPhotoIndex(Integer coverPhotoIndex) {
+        this.coverPhotoIndex = coverPhotoIndex;
     }
 
     public List<MultipartFile> getPhotos() {

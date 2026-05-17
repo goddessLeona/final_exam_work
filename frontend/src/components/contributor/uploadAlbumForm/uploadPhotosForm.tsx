@@ -108,7 +108,7 @@ function UploadPhotosForm() {
 
     if (coverPhotoIndex !== null) {
         data.append(
-            "coverphotoIndex",
+            "coverPhotoIndex",
             coverPhotoIndex.toString()
         );
     }

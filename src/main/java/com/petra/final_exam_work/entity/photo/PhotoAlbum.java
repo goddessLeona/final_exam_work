@@ -77,14 +77,14 @@ public class PhotoAlbum {
     }
 
     public PhotoAlbum(Long id, UUID publicUuid, String photoAlbumName, String description, Instant createdAt,
-                      Instant publishedDate, ContentStatus contentStatus, Boolean rulesVerified, User ownedByUser,
+                      Instant publishedAt, ContentStatus contentStatus, Boolean rulesVerified, User ownedByUser,
                       ContentType contentType, Photo coverPhoto, Set<Tag> tags) {
         this.id = id;
         this.publicUuid = publicUuid;
         this.photoAlbumName = photoAlbumName;
         this.description = description;
         this.createdAt = createdAt;
-        this.publishedAt = publishedDate;
+        this.publishedAt = publishedAt;
         this.contentStatus = contentStatus;
         this.rulesVerified = rulesVerified;
         this.ownedByUser = ownedByUser;
@@ -133,12 +133,12 @@ public class PhotoAlbum {
         this.createdAt = createdAt;
     }
 
-    public Instant getPublishedDate() {
+    public Instant getPublishedAt() {
         return publishedAt;
     }
 
-    public void setPublishedDate(Instant publishedDate) {
-        this.publishedAt = publishedDate;
+    public void setPublishedAt(Instant publishedAt) {
+        this.publishedAt = publishedAt;
     }
 
     public ContentStatus getContentStatus() {

@@ -45,7 +45,7 @@ public class ContributorPhotoAlbumService {
             );
         }
 
-        Page<PhotoAlbum> albums = photoAlbumRepository.findByOwnerUserAndContentStatus(
+        Page<PhotoAlbum> albums = photoAlbumRepository.findByOwnedByUserAndContentStatus(
                 user,
                 status,
                 pageable

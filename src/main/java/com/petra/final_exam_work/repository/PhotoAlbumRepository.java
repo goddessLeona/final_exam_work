@@ -25,7 +25,6 @@ public interface PhotoAlbumRepository extends JpaRepository<PhotoAlbum, UserCons
             "AND ucf.consentFormStatus IN ('PENDING', 'APPROVED')")
     Optional<ConsentFormStatus> findStatusByUserId(@Param("userId") Long userId);
 
-
-    Page<PhotoAlbum> findByOwnerUserAndContentStatus(User user, ContentStatus status, Pageable pageable);
+    Page<PhotoAlbum> findByOwnedByUserAndContentStatus(User user, ContentStatus status, Pageable pageable);
 
 }
