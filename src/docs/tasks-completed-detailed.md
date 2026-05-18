@@ -232,6 +232,8 @@ GET ("contributor/albums/list")
 Member should be able to see cover photos from all album Photo/video
 click cover photo to get to the album
 
+  * added a dummy member V4__insert_member_user-sql
+
 ## Task 14 - edit saved albums
 * change cover photo
 * reorder after upload
