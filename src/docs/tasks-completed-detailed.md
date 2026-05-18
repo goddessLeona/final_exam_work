@@ -227,8 +227,10 @@ GET ("contributor/albums/list")
   * added fetch frontend
   * added minimal styling
 
+-----------------NOW---------------
 ## Task 13 - display photo album members
 Member should be able to see cover photos from all album Photo/video
+click cover photo to get to the album
 
 ## Task 14 - edit saved albums
 * change cover photo
