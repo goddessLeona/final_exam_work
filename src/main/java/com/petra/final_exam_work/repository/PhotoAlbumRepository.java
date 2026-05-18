@@ -27,4 +27,6 @@ public interface PhotoAlbumRepository extends JpaRepository<PhotoAlbum, UserCons
 
     Page<PhotoAlbum> findByOwnedByUserAndContentStatus(User user, ContentStatus status, Pageable pageable);
 
+    Object countByOwnedByUserAndContentStatus(User user, ContentStatus status);
+
 }

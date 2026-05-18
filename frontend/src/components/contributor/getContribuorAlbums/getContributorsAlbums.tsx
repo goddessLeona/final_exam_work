@@ -15,17 +15,22 @@ function ContributorAlbums() {
 
     const [data, setData] = useState<PageResponse<ContributorPhotoAlbumResponse> | null> (null);
     const [error, setError] = useState("");
-    const [status, setStatus] =useState<ContentStatus>("PUBLISHED");
+    const [status, setStatus] = useState<ContentStatus |null>(null);
 
     useEffect(() => {
+
+        if (!status) return;
+
+        const currentStatus = status;
+
         async function loadAlbums() {
 
             try {
-                const response = await getPhotoAlbums(status);
+                const response = await getPhotoAlbums(currentStatus);
                 setData(response);
 
             }catch (err) {
-                console.error(err);
+                
                 setError("Failed to load albums");
             }
             
@@ -35,6 +40,7 @@ function ContributorAlbums() {
 
     return (
     <div className={styles.container}>
+        
         <div className={styles.tabs}>
 
             <button
@@ -82,15 +88,14 @@ function ContributorAlbums() {
                     {album.coverPhoto && (
                         <img
                             src={`http://localhost:8080/${album.coverPhoto.coverPhotoUrl}`}
-                            width={100}
                             alt={album.photoAlbumName}
                             className={styles.coverPhoto}
                         />
                     )}
                     
-                    <p>{album.contentType}</p>
+                    <h3>{album.contentType}</h3>
                     {album.publishedAt && (
-                        <p>{new Date(album.publishedAt).toLocaleDateString()}</p>
+                        <h3>{new Date(album.publishedAt).toLocaleDateString()}</h3>
                     )}
                 </div>    
             ))}

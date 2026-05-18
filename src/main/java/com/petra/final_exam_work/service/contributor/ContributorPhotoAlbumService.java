@@ -30,6 +30,7 @@ public class ContributorPhotoAlbumService {
         this.photoAlbumRepository = photoAlbumRepository;
     }
 
+
     //################## Get list PhotoAlbums ############################
     public Page<ContributorPhotoAlbumResponse> getPhotoAlbumInfo(CustomUserDetails userDetails, ContentStatus status, Pageable pageable) {
 
