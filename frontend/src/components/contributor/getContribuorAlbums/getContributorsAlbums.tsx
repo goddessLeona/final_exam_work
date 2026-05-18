@@ -87,7 +87,7 @@ function ContributorAlbums() {
                     <h3>{album.photoAlbumName}</h3>
                     {album.coverPhoto && (
                         <img
-                            src={`http://localhost:8080/${album.coverPhoto.coverPhotoUrl}`}
+                            src={`${process.env.NEXT_PUBLIC_API_URL}/${album.coverPhoto.coverPhotoUrl}`}
                             alt={album.photoAlbumName}
                             className={styles.coverPhoto}
                         />

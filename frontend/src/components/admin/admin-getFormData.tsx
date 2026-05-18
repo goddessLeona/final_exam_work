@@ -84,7 +84,7 @@ export default function ConsentData () {
                 <div>
                     <div className={styles.documents}>
                         <div>
-                            <img src={`http://localhost:8080/admin/consent/${id}/document/id-card`} width={200} />
+                            <img src={`${process.env.NEXT_PUBLIC_API_URL}/admin/consent/${id}/document/id-card`} width={200} />
                             <p>ID-Card status: </p>
                         </div> 
 
