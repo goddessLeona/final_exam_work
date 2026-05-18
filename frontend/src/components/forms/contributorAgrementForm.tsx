@@ -5,6 +5,7 @@ import styles from "./contributorAgrementForm.module.css"
 import { ContributorFormResponse, getContributorAgreementForm } from "@/lib/api/contributor";
 import { postContributorAgreementForm } from "@/lib/api/contributor";
 import UploadPhotosForm from "@/components/contributor/uploadAlbumForm/uploadPhotosForm";
+import ContributorAlbums from "../contributor/getContribuorAlbums/getContributorsAlbums";
 
 const initialFormState = {
     idCard: null as File | null,
@@ -87,7 +88,8 @@ const generalErrorMessage = error.general || (["idCardFile", "idFaceFile", "face
     if (isContributorApproved) {
         return (
             <main className={styles.containerDashboard}>
-                <UploadPhotosForm/>
+                <div><ContributorAlbums/></div>
+                <div><UploadPhotosForm/></div>
             </main>
         );
     }

@@ -216,13 +216,19 @@ contributor should have a dashboard from where they easily can upload photos fro
   * added cover photo to the db & entity
   * remade service 
   * added missing frontend logic
+  * npm install lucide-react (for nicer css-styling on buttons right & left)
 
-## Task 12 - display photo album for contributor
-* draft/published/scheduled sections
-* cover photo visible
-* date created/published
+## Task 12 - display photo albums represented by a CoverPhoto
+Pick between draft/published/scheduled sections , show cover photo visible, date and type.
+(17/5)
+GET ("contributor/albums/list")
+
+  * add responseDTO, Mapper, Service, controller
+  * added fetch frontend
+  * added minimal styling
 
 ## Task 13 - display photo album members
+Member should be able to see cover photos from all album Photo/video
 
 ## Task 14 - edit saved albums
 * change cover photo

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { getWelcomeMessage, WelcomeResponse} from "@/lib/api/contributor";
 import styles from "./welcome-message.module.css"
 
-export default function Welcome() {
+function Welcome() {
     const [data, setData] = useState<WelcomeResponse | null>(null);
     const [error, setError] = useState("");
 
@@ -21,3 +21,5 @@ export default function Welcome() {
                 <p>{data.message}</p>
             </div>;
 }
+
+export default Welcome;

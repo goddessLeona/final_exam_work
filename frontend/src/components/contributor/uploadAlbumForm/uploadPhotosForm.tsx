@@ -1,6 +1,6 @@
 "use client"
 
-import {useRef, useState} from "react"
+import {useEffect, useRef, useState} from "react"
 import { postUploadPhotos } from "@/lib/api/uploadPhoto"
 import {UploadPhotoContentResponse} from "@/lib/api/uploadPhoto"
 import styles from "./uploadPhotosForm.module.css"
@@ -30,6 +30,14 @@ function UploadPhotosForm() {
         "PUBLISH" |
         "SCHEDULE"
     >("DRAFT");
+
+    const [previewUrls, setPreviewUrls] = useState<string[]>([]);
+
+    useEffect(() => {
+        const urls = formData.photos.map(file => URL.createObjectURL(file));
+        setPreviewUrls(urls);
+        return () => urls.forEach(url => URL.revokeObjectURL(url));
+    },[formData.photos]);
     
 
     const togglePhotoSelection = (index: number) => {
@@ -69,6 +77,9 @@ function UploadPhotosForm() {
         setCoverPhotoIndex(index);
     }
 
+    const titleTooLong = formData.photoAlbumName.length > 20;
+    const descriptionTooLong = formData.description.length > 50;
+
     const handleSubmit = async (e: React.FormEvent <HTMLFormElement>, 
         action: "DRAFT" | "PUBLISH" | "SCHEDULE"
     ) => {
@@ -82,6 +93,7 @@ function UploadPhotosForm() {
     data.append("photoAlbumName", formData.photoAlbumName);
     data.append("description", formData.description);
     data.append("contentType", "PHOTO")
+
 
     for (const photo of formData.photos) {
         data.append("photos", photo);
@@ -108,7 +120,7 @@ function UploadPhotosForm() {
 
     if (coverPhotoIndex !== null) {
         data.append(
-            "coverphotoIndex",
+            "coverPhotoIndex",
             coverPhotoIndex.toString()
         );
     }
@@ -154,10 +166,16 @@ function UploadPhotosForm() {
                             name="photoAlbumName"
                             type="text"
                             value= {formData.photoAlbumName}
-                            onChange={(e) =>
-                                setFormData({...formData, photoAlbumName: e.target.value})
-                            }
+                            onChange={(e) => {
+                                if (e.target.value.length <= 20) {
+                                    setFormData({...formData, photoAlbumName: e.target.value})
+                                }
+                            }}
+                            className={titleTooLong ? styles.inputError : ""}
                         />
+                        <p className={titleTooLong ? styles.error : ""}>
+                            {formData.photoAlbumName.length}/20
+                        </p>
                     </div>
 
                     <div className={styles.field}>
@@ -167,13 +185,22 @@ function UploadPhotosForm() {
                             id="description"
                             name="description"
                             value={formData.description}
-                            onChange={(e) => setFormData({
+                            onChange={(e) => {
+                                if (e.target.value.length <=50) {
+                                    setFormData({
                                 ...formData,
                                 description: e.target.value
-                                })
+                                });
+                                }
+                            } 
                             }
-                        />    
+                            className={descriptionTooLong ? styles.inputError : ""}
+                        />  
+                        <p className={descriptionTooLong ? styles.error : ""}>
+                            {formData.description.length}/50
+                        </p>  
                     </div>
+
 
                     {/**previewGrid + add photos */}
                     <div className={styles.field}>
@@ -190,7 +217,7 @@ function UploadPhotosForm() {
                                     )}
 
                                     <img
-                                        src={URL.createObjectURL(photo)}
+                                        src={previewUrls[index]}
                                         alt={`Preview ${index}`}
                                         className={ `
                                             ${styles.previewImage}
@@ -285,6 +312,7 @@ function UploadPhotosForm() {
                             onClick={(e) => handleSubmit(e as any, "DRAFT")}
                         >Save Draft</button> 
 
+
                         <button
                             className={styles.btn}
                             type="button"
@@ -296,6 +324,20 @@ function UploadPhotosForm() {
                             }
                             onClick={(e) => handleSubmit(e as any,"PUBLISH")}
                             > Publish Now
+                        </button>
+
+                        <button
+                            type="button"
+                            className={styles.btn}
+                            disabled={
+                                loading ||
+                                !formData.photoAlbumName ||
+                                !formData.description ||
+                                formData.photos.length < 7
+                            }
+                            onClick={() => setSubmitAction("SCHEDULE")}
+                        >
+                            Schedule
                         </button>
  
                         {submitAction === "SCHEDULE" && (
@@ -321,7 +363,7 @@ function UploadPhotosForm() {
                                     !formData.description ||
                                     formData.photos.length < 7
                                 }   
-                                onClick={(e) => handleSubmit (e as any, "SCHEDULE")}
+                                onClick={(e) => handleSubmit (e as any,"SCHEDULE")}
                                 > Confirm Scedule
                                 </button>
                             </div>

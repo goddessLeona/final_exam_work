@@ -1,13 +1,18 @@
 package com.petra.final_exam_work.repository;
 
 import com.petra.final_exam_work.entity.consentForm.ConsentFormStatus;
+import com.petra.final_exam_work.entity.enums.ContentStatus;
 import com.petra.final_exam_work.entity.junktionTables.userConcentform.UserConsentFormId;
 import com.petra.final_exam_work.entity.photo.PhotoAlbum;
+import com.petra.final_exam_work.entity.user.User;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -20,6 +25,8 @@ public interface PhotoAlbumRepository extends JpaRepository<PhotoAlbum, UserCons
             "AND ucf.consentFormStatus IN ('PENDING', 'APPROVED')")
     Optional<ConsentFormStatus> findStatusByUserId(@Param("userId") Long userId);
 
+    Page<PhotoAlbum> findByOwnedByUserAndContentStatus(User user, ContentStatus status, Pageable pageable);
 
+    Object countByOwnedByUserAndContentStatus(User user, ContentStatus status);
 
 }
