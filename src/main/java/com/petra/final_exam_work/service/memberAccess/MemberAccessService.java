@@ -33,15 +33,15 @@ public class MemberAccessService {
             return;
         }
 
-        boolean isApporovedContributor =
+        boolean isApprovedContributor =
                 user.getContributorStatus() == ContributorStatus.APPROVED;
 
-        boolean hasPubliehedAlbums = photoAlbumRepository.existsByOwnedByUserAndContentStatus(
+        boolean hasPublishedAlbums = photoAlbumRepository.existsByOwnedByUserAndContentStatus(
                 user,
                 ContentStatus.PUBLISHED
         );
 
-        if (isApporovedContributor && hasPubliehedAlbums) {
+        if (isApprovedContributor && hasPublishedAlbums) {
             return;
         }
 
