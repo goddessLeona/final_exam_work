@@ -47,7 +47,6 @@ public class MemberPhotoAlbumsService {
         User user = userRepository.findByPublicUuid(publicUuid)
                 .orElseThrow(() -> new ApiException("User was not found", HttpStatus.NOT_FOUND));
 
-
         memberAccessService.validateMemberAccess(user);
 
         Page<PhotoAlbum> albums =
@@ -61,5 +60,5 @@ public class MemberPhotoAlbumsService {
     }
 
 
-    //############ GET photo album #################
+    //######## GET photo/video album from cover photo ############
 }

@@ -40,6 +40,5 @@ public class MemberGetAlbumsController {
                         pageable
                 )
         );
-
     }
 }
