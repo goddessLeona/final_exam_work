@@ -229,11 +229,14 @@ GET ("contributor/albums/list")
 
 -----------------NOW---------------
 ## Task 13 - display photo album members
+(18/5)
 Member should be able to see cover photos from all album Photo/video
 click cover photo to get to the album
 
   * added a dummy member V4__insert_member_user-sql
-  * added a .env.local for avoiding to in future having to change localhost path later
+  * added a .env.local in next.js for avoiding in future having to change localhost path
+  * added simple css styling
+  * added responseDto + mapper
 
 ## Task 14 - edit saved albums
 * change cover photo
