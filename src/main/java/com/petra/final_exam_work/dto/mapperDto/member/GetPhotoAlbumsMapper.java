@@ -4,14 +4,14 @@ import com.petra.final_exam_work.dto.responseDto.members.AlbumTagResponse;
 import com.petra.final_exam_work.dto.responseDto.members.GetPhotoAlbumsResponse;
 import com.petra.final_exam_work.dto.responseDto.members.PhotoResponse;
 import com.petra.final_exam_work.entity.Tag;
-import com.petra.final_exam_work.entity.junktionTables.photoAlbumPhoto.PhotoAlbumPhoto;
 import com.petra.final_exam_work.entity.photo.Photo;
 import com.petra.final_exam_work.entity.photo.PhotoAlbum;
+import org.springframework.stereotype.Component;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
+@Component
 public class GetPhotoAlbumsMapper {
 
     public GetPhotoAlbumsResponse toDto(PhotoAlbum photoAlbum, List<Photo> photos) {

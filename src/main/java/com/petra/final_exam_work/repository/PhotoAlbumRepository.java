@@ -2,6 +2,7 @@ package com.petra.final_exam_work.repository;
 
 import com.petra.final_exam_work.entity.consentForm.ConsentFormStatus;
 import com.petra.final_exam_work.entity.enums.ContentStatus;
+import com.petra.final_exam_work.entity.enums.ContentType;
 import com.petra.final_exam_work.entity.junktionTables.userConcentform.UserConsentFormId;
 import com.petra.final_exam_work.entity.photo.PhotoAlbum;
 import com.petra.final_exam_work.entity.user.User;
@@ -28,5 +29,9 @@ public interface PhotoAlbumRepository extends JpaRepository<PhotoAlbum, UserCons
     Page<PhotoAlbum> findByOwnedByUserAndContentStatus(User user, ContentStatus status, Pageable pageable);
 
     Object countByOwnedByUserAndContentStatus(User user, ContentStatus status);
+
+    Page<PhotoAlbum> findAllByContentStatusAndContentTypeOrderByPublishedAtDesc(ContentStatus contentStatus, ContentType contentType, Pageable pageable);
+
+    boolean existsByOwnedByUserAndContentStatus(User user, ContentStatus contentStatus);
 
 }

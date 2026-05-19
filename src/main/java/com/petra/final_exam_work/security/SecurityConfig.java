@@ -56,6 +56,7 @@ public class SecurityConfig {
                         //All loggedIn
                         .requestMatchers("/user/username").authenticated()
                         .requestMatchers("/uploads/**").authenticated()
+                        .requestMatchers("/member/albums").authenticated()
 
                         //role-based
                         .requestMatchers("/contributor/info").hasRole("CONTRIBUTOR")

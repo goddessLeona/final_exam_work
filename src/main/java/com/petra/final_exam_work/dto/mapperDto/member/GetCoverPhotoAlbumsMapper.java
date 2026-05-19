@@ -4,7 +4,9 @@ import com.petra.final_exam_work.dto.responseDto.contributor.ContributorUploadPh
 import com.petra.final_exam_work.dto.responseDto.members.GetCoverPhotoAlbumsResponse;
 import com.petra.final_exam_work.entity.photo.Photo;
 import com.petra.final_exam_work.entity.photo.PhotoAlbum;
+import org.springframework.stereotype.Component;
 
+@Component
 public class GetCoverPhotoAlbumsMapper {
 
     public GetCoverPhotoAlbumsResponse toDto (PhotoAlbum photoAlbum) {
