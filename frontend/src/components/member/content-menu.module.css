@@ -95,3 +95,8 @@
 .card p {
     margin: 0;
 }
+
+.cardLink {
+    text-decoration: none;
+    color: inherit;
+}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { memberGetCoverPhotos, GetCoverPhotoAlbumsResponse, PageResponse } from "@/lib/api/memberGetPhotoAlbums";
 import type {ContentType} from "@/lib/api/memberGetPhotoAlbums";
 import styles from "./content-menu.module.css"
@@ -79,20 +80,27 @@ function MemberMenuContent(){
 
         <div className={styles.grid}>
             {data?.content.map((album) => (
-                <div
-                key={album.publicUuid}
-                className={styles.card}
+
+                <Link
+                    key={album.publicUuid}
+                    href={`/member/albums/${album.publicUuid}`}
+                    className={styles.cardLink}
                 >
-                    <h3>{album.photoAlbumName}</h3>
-                    {album.coverPhoto && (
-                        <img
-                            src={`${process.env.NEXT_PUBLIC_API_URL}/${album.coverPhoto.coverPhotoUrl}`}
-                            alt={album.photoAlbumName}
-                            className={styles.coverPhoto}
-                        />
-                    )}
-                    
-                </div>    
+
+                    <div className={styles.card}>
+
+                        <h3>{album.photoAlbumName}</h3>
+                        
+                        {album.coverPhoto && (
+                            <img
+                                src={`${process.env.NEXT_PUBLIC_API_URL}/${album.coverPhoto.coverPhotoUrl}`}
+                                alt={album.photoAlbumName}
+                                className={styles.coverPhoto}
+                            />
+                        )}
+                        
+                    </div>  
+                </Link>
             ))}
         </div>
 

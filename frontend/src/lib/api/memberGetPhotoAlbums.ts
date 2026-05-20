@@ -63,7 +63,7 @@ export interface GetPhotoAlbumsResponse {
 export async function memberGetAlbums(publicUuid: string): Promise<GetPhotoAlbumsResponse> {
 
     const response = await fetch(
-        `http://localhost:8080/member/albums/${publicUuid}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/member/albums/${publicUuid}`,
          {
         credentials: "include",
     });
@@ -73,5 +73,4 @@ export async function memberGetAlbums(publicUuid: string): Promise<GetPhotoAlbum
     }
 
     return response.json();
-
 }
