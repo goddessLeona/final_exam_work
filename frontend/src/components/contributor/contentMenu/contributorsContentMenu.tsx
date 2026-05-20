@@ -9,7 +9,7 @@ import {
 
 import type {ContentStatus} from "@/lib/api/contributorsPhotoAlbums"; 
 
-import styles from "./getContributorsAlbums.module.css"
+import styles from "./contributorsContentMenu.module.css"
 
 function ContributorAlbums() {
 

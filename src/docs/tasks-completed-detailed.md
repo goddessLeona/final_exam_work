@@ -203,7 +203,8 @@ contributor should have a dashboard from where they easily can upload photos fro
   * should be able to add a cover photo
 (9/5, 10/5, 13/5, 15/5, 16/5)
 
-  POST "/contributor/upload/photo"
+  POST ("/contributor/upload/photo")
+
       ### step 1. create a minimum version. Just simple upload photos DRAFT.
         * added description in db, table photo_albums (so that user can add a text to the photos)
         * created request, response, mapper, service, controller, security config
@@ -221,6 +222,7 @@ contributor should have a dashboard from where they easily can upload photos fro
 ## Task 12 - display photo albums represented by a CoverPhoto
 Pick between draft/published/scheduled sections , show cover photo visible, date and type.
 (17/5)
+
 GET ("contributor/albums/list")
 
   * add responseDTO, Mapper, Service, controller
@@ -235,6 +237,7 @@ click cover photo to get to the album
 contributor should have access to member pages if they have uploaded content.
 
 GET ("/member/albums")
+GET ("/member/albums/{albumPublicUuid})
 
   * added a dummy member V4__insert_member_user-sql
   * added a .env.local in next.js for avoiding in future having to change localhost path
@@ -243,7 +246,6 @@ GET ("/member/albums")
   * added member access validation
   * added fetch 
   * added minimal styling
-
 
 ## Task 14 - edit saved albums
 * change cover photo

@@ -13,6 +13,8 @@ function MemberContentAlbums (){
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(true);
 
+    const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+
     useEffect(() => {
 
         async function loadAlbum() {
@@ -56,24 +58,68 @@ function MemberContentAlbums (){
                 <p>By: {data.username}</p>
             </div>
 
-            <div className={styles.grid}>
+            {selectedIndex === null && (
+                <div className={styles.grid}>
 
-                {data.photos.map((photo) => (
+                    {data.photos.map((photo, index) => (
 
-                    <div
-                        key={photo.publicUuid}
-                        className={styles.card}
+                        <div
+                            key={photo.publicUuid}
+                            className={styles.card}
+                        >
+                            <img
+                                src={`${process.env.NEXT_PUBLIC_API_URL}/${photo.photoUrl}`}
+                                alt={data.photoAlbumName}
+                                className={styles.photo}
+                                onClick={() => setSelectedIndex(index)}
+                            />
+
+                        
+                        </div>
+
+                    ))}
+
+                </div>
+            )}
+
+            <p>Published: {data.publishedAt}</p>
+
+            {selectedIndex !== null && (
+                <div className={styles.lightbox}>
+                    
+                    
+
+                    <img
+                        src={`${process.env.NEXT_PUBLIC_API_URL}/${data.photos[selectedIndex].photoUrl}`}
+                        alt="full view"
+                    />
+
+                    <button
+                        onClick={() =>
+                            setSelectedIndex((prev) =>
+                                prev !== null && prev > 0 ? prev - 1 : prev
+                            )
+                        }
                     >
-                        <img
-                            src={`${process.env.NEXT_PUBLIC_API_URL}/${photo.photoUrl}`}
-                            alt={data.photoAlbumName}
-                            className={styles.photo}
-                        />
-                    </div>
+                        left
+                    </button>
 
-                ))}
+                    <button onClick={() => setSelectedIndex(null)}>X</button>
 
-            </div>
+                    <button
+                        onClick={() =>
+                            setSelectedIndex((prev) =>
+                                prev !== null && prev < data.photos.length - 1
+                                    ? prev + 1
+                                    : prev
+                            )
+                        }
+                    >
+                        right
+                    </button>
+
+                </div>
+            )}
 
         </div>
     );
