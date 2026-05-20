@@ -241,6 +241,8 @@ GET ("/member/albums")
   * added simple css styling
   * added responseDto + mapper + service + controller
   * added member access validation
+  * added fetch 
+  * added minimal styling
 
 
 ## Task 14 - edit saved albums
@@ -270,3 +272,7 @@ Planned background cleanup system for remove unused files:
 * orphaned files no longer connected to database records
 
 ## task 20 - add a converter, if photos are to big resize before saving
+also add in db (to optimaze and make faster to load tumbernails)
+private string photoThumbernailPath and save 300px 
+privet string photoMediumPath 800px
+private string originalPath but max 900px (or something)
