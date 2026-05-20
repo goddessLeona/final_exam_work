@@ -229,7 +229,7 @@ GET ("contributor/albums/list")
 
 -----------------NOW---------------
 ## Task 13 - display photo album members
-(18/5)
+(18/5, 19/5)
 Member should be able to see cover photos from all album Photo/video
 click cover photo to get to the album
 contributor should have access to member pages if they have uploaded content.
