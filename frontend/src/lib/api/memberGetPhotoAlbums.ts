@@ -25,7 +25,7 @@ export async function memberGetCoverPhotos(
     size: number = 12
 ) : Promise<PageResponse<GetCoverPhotoAlbumsResponse>> {
 
-     const response = await fetch(
+    const response = await fetch(
         `http://localhost:8080/member/albums?contentType=${contentType}&page=${page}&size=${size}`,
          {
         credentials: "include",
@@ -33,6 +33,43 @@ export async function memberGetCoverPhotos(
 
     if(!response.ok) {
         throw new Error("Failed to fetch cover albums");
+    }
+
+    return response.json();
+
+}
+
+export interface AlbumTagResponse {
+    publicUuid: string;
+    nameTag: string;
+}
+
+export interface PhotoResponse  {
+    publicUuid: string;
+    photoUrl: string;
+}
+
+export interface GetPhotoAlbumsResponse {
+    publicUuid: string;
+    photoAlbumName: string;
+    description: string;
+    username: string;
+    publishedAt: string;
+
+    albumTags: AlbumTagResponse [];
+    photos: PhotoResponse [];
+}
+
+export async function memberGetAlbums(publicUuid: string): Promise<GetPhotoAlbumsResponse> {
+
+    const response = await fetch(
+        `http://localhost:8080/member/albums/${publicUuid}`,
+         {
+        credentials: "include",
+    });
+
+    if(!response.ok) {
+        throw new Error("Failed to fetch album");
     }
 
     return response.json();

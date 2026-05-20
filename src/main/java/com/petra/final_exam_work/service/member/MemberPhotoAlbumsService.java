@@ -45,7 +45,6 @@ public class MemberPhotoAlbumsService {
 
 
     //###### GET all cover photos from all albums that are published #######
-
     public Page<GetCoverPhotoAlbumsResponse> getCoverPhotoAlbums(
             CustomUserDetails userDetails,
             ContentType contentType,

@@ -13,20 +13,20 @@ public class GetPhotoAlbumsResponse {
     private Instant publishedAt;
 
     private List<AlbumTagResponse> albumTags;
-    private List<PhotoResponse> photoUrl ;
+    private List<PhotoResponse> photos ;
 
     public GetPhotoAlbumsResponse() {
     }
 
     public GetPhotoAlbumsResponse(UUID publicUuid, String photoAlbumName, String description, String username,
-                                  Instant publishedAt, List<AlbumTagResponse> albumTags, List<PhotoResponse> photoUrl) {
+                                  Instant publishedAt, List<AlbumTagResponse> albumTags, List<PhotoResponse> photos) {
         this.publicUuid = publicUuid;
         this.photoAlbumName = photoAlbumName;
         this.description = description;
         this.username = username;
         this.publishedAt = publishedAt;
         this.albumTags = albumTags;
-        this.photoUrl = photoUrl;
+        this.photos = photos;
     }
 
     public UUID getPublicUuid() {
@@ -77,11 +77,11 @@ public class GetPhotoAlbumsResponse {
         this.albumTags = albumTags;
     }
 
-    public List<PhotoResponse> getPhotoUrl() {
-        return photoUrl;
+    public List<PhotoResponse> getPhotos() {
+        return photos;
     }
 
-    public void setPhotoUrl(List<PhotoResponse> photoUrl) {
-        this.photoUrl = photoUrl;
+    public void setPhotos(List<PhotoResponse> photos) {
+        this.photos = photos;
     }
 }
