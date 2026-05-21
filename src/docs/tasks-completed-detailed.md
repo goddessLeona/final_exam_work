@@ -205,7 +205,7 @@ contributor should have a dashboard from where they easily can upload photos fro
 
   POST ("/contributor/upload/photo")
 
-      ### step 1. create a minimum version. Just simple upload photos DRAFT.
+  ### step 1. create a minimum version. Just simple upload photos DRAFT.
         * added description in db, table photo_albums (so that user can add a text to the photos)
         * created request, response, mapper, service, controller, security config
         * created a fetch, component/form
@@ -213,7 +213,7 @@ contributor should have a dashboard from where they easily can upload photos fro
         * made it more user-friendly, you can add more photos and remove before you post the album
         * made more user-friendly, you can move images around in the preview grid using right and left.
     
-      ### step 2. contributor should be able to publish, save as draft, schedule content, cover image.
+  ### step 2. contributor should be able to publish, save as draft, schedule content, cover image.
         * added cover photo to the db & entity
         * remade service 
         * added missing frontend logic
@@ -229,9 +229,8 @@ GET ("contributor/albums/list")
   * added fetch frontend
   * added minimal styling
 
------------------NOW---------------
 ## Task 13 - display photo album members
-(18/5, 19/5)
+(18/5, 19/5, 20/5)
 Member should be able to see cover photos from all album Photo/video
 click cover photo to get to the album
 contributor should have access to member pages if they have uploaded content.
@@ -247,20 +246,25 @@ GET ("/member/albums/{albumPublicUuid})
   * added fetch 
   * added minimal styling
 
+-----------------NOW---------------
 ## Task 14 - edit saved albums
-* change cover photo
-* reorder after upload
-* add/remove photos later
-* change status
+(21/5)
+change cover photo, reorder after upload, add/remove photos, change status
+
+  GET ("contributor/albums/{albumPublicUuid}")
+
+  * add service/controller for contributor to get to album from clicking cover photo.
+  * add fetch and component
 
 ## Task 15 -  Scheduled publisher job
-* every minute check if anything need to change form scheduled to published
+every minute check if anything need to change form scheduled to published
 
 ## Task 16 - Make possible to tag photos
   * add tags -general album
   * add tags other contributors
 
 ## Task 17 - Archive photos/delete
+contributor photos get archived and if not published again they get deleted after 1 month
 
 ## task 18 Look over project and clean up folders 
 
@@ -275,6 +279,7 @@ Planned background cleanup system for remove unused files:
 
 ## task 20 - add a converter, if photos are to big resize before saving
 also add in db (to optimaze and make faster to load tumbernails)
+
 private string photoThumbernailPath and save 300px 
 privet string photoMediumPath 800px
 private string originalPath but max 900px (or something)

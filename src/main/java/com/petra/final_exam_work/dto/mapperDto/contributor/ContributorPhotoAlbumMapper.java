@@ -10,7 +10,7 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface ContributorPhotoAlbumMapper {
 
-    @Mapping(target = "albumUuid", source = "publicUuid")
+    @Mapping(target = "publicUuid", source = "publicUuid")
     @Mapping(target = "coverPhoto", source = "coverPhoto")
 
     ContributorPhotoAlbumResponse toResponse (

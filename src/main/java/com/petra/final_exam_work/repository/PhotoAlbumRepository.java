@@ -36,4 +36,5 @@ public interface PhotoAlbumRepository extends JpaRepository<PhotoAlbum, UserCons
 
     Optional<PhotoAlbum> findByPublicUuidAndContentStatus(UUID publicUuid, ContentStatus contentStatus);
 
+    Optional<PhotoAlbum> findByPublicUuid(UUID albumPublicUuid);
 }

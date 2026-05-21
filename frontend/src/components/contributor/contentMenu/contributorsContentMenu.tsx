@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { 
             getPhotoAlbums,
             ContributorPhotoAlbumResponse,
@@ -80,24 +81,31 @@ function ContributorAlbums() {
 
         <div className={styles.grid}>
             {data?.content.map((album) => (
-                <div
-                key={album.albumUuid}
-                className={styles.card}
+
+                <Link
+                    key={album.publicUuid}
+                    href={`/contributor/albums/${album.publicUuid}`}
+                    className={styles.cardLink}
                 >
-                    <h3>{album.photoAlbumName}</h3>
-                    {album.coverPhoto && (
-                        <img
-                            src={`${process.env.NEXT_PUBLIC_API_URL}/${album.coverPhoto.coverPhotoUrl}`}
-                            alt={album.photoAlbumName}
-                            className={styles.coverPhoto}
-                        />
-                    )}
-                    
-                    <h3>{album.contentType}</h3>
-                    {album.publishedAt && (
-                        <h3>{new Date(album.publishedAt).toLocaleDateString()}</h3>
-                    )}
-                </div>    
+
+                    <div
+                    className={styles.card}
+                    >
+                        <h3>{album.photoAlbumName}</h3>
+                        {album.coverPhoto && (
+                            <img
+                                src={`${process.env.NEXT_PUBLIC_API_URL}/${album.coverPhoto.coverPhotoUrl}`}
+                                alt={album.photoAlbumName}
+                                className={styles.coverPhoto}
+                            />
+                        )}
+                        
+                        <h3>{album.contentType}</h3>
+                        {album.publishedAt && (
+                            <h3>{new Date(album.publishedAt).toLocaleDateString()}</h3>
+                        )}
+                    </div>  
+                </Link>  
             ))}
         </div>
     </div>

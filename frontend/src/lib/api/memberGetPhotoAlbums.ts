@@ -1,3 +1,6 @@
+
+//####### Get all cover photos from all albums that are published #######
+
 export type ContentType = "PHOTO" | "VIDEO";
 
 export interface CoverPhotoResponse {
@@ -38,6 +41,8 @@ export async function memberGetCoverPhotos(
     return response.json();
 
 }
+
+//######## GET to album from cover photo ############
 
 export interface AlbumTagResponse {
     publicUuid: string;

@@ -1,4 +1,6 @@
 
+//####### Get all cover photos from all albums that are uploaded #######
+
 export type ContentStatus = "PUBLISHED" | "DRAFT" | "SCHEDULED" | "ARCHIVED";
 type ContentType = "PHOTO" | "VIDEO";
 
@@ -8,7 +10,7 @@ export interface CoverPhotoResponse {
 }
 
 export interface ContributorPhotoAlbumResponse {
-    albumUuid: string;
+    publicUuid: string;
     photoAlbumName: string;
     publishedAt: string | null;
     contentType: ContentType;
@@ -31,7 +33,7 @@ export async function getPhotoAlbums(
 ) : Promise<PageResponse<ContributorPhotoAlbumResponse>> {
 
     const response = await fetch(
-        `http://localhost:8080/contributor/albums/list?status=${status}&page=${page}&size=${size}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/contributor/albums/cover-photo?status=${status}&page=${page}&size=${size}`,
          {
         credentials: "include",
     });
@@ -42,4 +44,42 @@ export async function getPhotoAlbums(
 
     return response.json();
 
+}
+
+//######## GET to album from cover photo ############
+
+export interface AlbumTagResponse {
+    publicUuid: string;
+    nameTag: string;
+}
+
+export interface PhotoResponse  {
+    publicUuid: string;
+    photoUrl: string;
+}
+
+export interface GetPhotoAlbumsResponse {
+    publicUuid: string;
+    photoAlbumName: string;
+    description: string;
+    username: string;
+    publishedAt: string;
+
+    albumTags: AlbumTagResponse [];
+    photos: PhotoResponse [];
+}
+
+export async function contributorGetAlbums(publicUuid: string): Promise<GetPhotoAlbumsResponse> {
+
+    const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/contributor/albums/${publicUuid}`,
+         {
+        credentials: "include",
+    });
+
+    if(!response.ok) {
+        throw new Error("Failed to fetch album");
+    }
+
+    return response.json();
 }

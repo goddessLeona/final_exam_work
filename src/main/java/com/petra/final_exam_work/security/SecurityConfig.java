@@ -64,7 +64,8 @@ public class SecurityConfig {
                         .requestMatchers("/contributor/welcome").hasRole("CONTRIBUTOR")
                         .requestMatchers("/contributor/consent").hasRole("CONTRIBUTOR")
                         .requestMatchers("/contributor/upload/photo").hasRole("CONTRIBUTOR")
-                        .requestMatchers("contributor/albums/list").hasRole("CONTRIBUTOR")
+                        .requestMatchers("contributor/albums/cover-photo").hasRole("CONTRIBUTOR")
+                        .requestMatchers("contributor/albums/{albumPublicUuid}").hasRole("CONTRIBUTOR")
 
                         .requestMatchers("/admin/dashboard").hasRole("ADMIN")
                         .requestMatchers("/admin/consent/{id}").hasRole("ADMIN")
