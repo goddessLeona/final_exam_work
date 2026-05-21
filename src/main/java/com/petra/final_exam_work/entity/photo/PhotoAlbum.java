@@ -30,7 +30,6 @@ public class PhotoAlbum {
     private UUID publicUuid;
 
     @Column(name = "photo_album_name", nullable = false)
-
     private String photoAlbumName;
 
     @Column(name= "description", nullable = false)

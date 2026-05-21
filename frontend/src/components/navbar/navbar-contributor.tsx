@@ -13,7 +13,7 @@ export default function NavbarContributor() {
         <Link className={styles.link} href="">Messages</Link>
       </div>
       <div className={styles.right}>
-        <Link className={styles.link} href="">Settings</Link>
+        <Link className={styles.link} href="/member">Member Page</Link>
         <div className={styles.right}>
         <LogoutButton />
       </div>

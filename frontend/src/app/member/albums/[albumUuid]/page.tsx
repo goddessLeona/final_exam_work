@@ -1,12 +1,11 @@
-
-import MemberMenuContent from "@/components/member/content-menu";
+import MemberContentAlbums from "@/components/member/albums";
 import styles from "./page.module.css"
 
-export default function MemberPage() {
+export default function MemberPhotoAlbum() {
     return (
         <main className= {styles.page}>
             <div>
-                <MemberMenuContent/>
+                <MemberContentAlbums/>
             </div>
         </main>
     );

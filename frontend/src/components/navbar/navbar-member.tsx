@@ -11,6 +11,7 @@ export default function NavbarMember() {
       </div>
 
       <div className={styles.right}>
+        <Link className={styles.link} href="/contributor">Contributor Page</Link>
         <LogoutButton />
       </div>
     </nav>

@@ -6,7 +6,6 @@ import com.petra.final_exam_work.dto.responseDto.ContributorMeResponse;
 import com.petra.final_exam_work.dto.responseDto.ContributorWelcomeResponse;
 import com.petra.final_exam_work.security.CustomUserDetails;
 import com.petra.final_exam_work.service.contributor.ContributorService;
-import jakarta.validation.Valid;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
