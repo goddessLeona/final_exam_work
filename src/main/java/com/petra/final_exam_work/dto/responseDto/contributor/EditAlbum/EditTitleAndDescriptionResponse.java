@@ -1,22 +1,14 @@
-package com.petra.final_exam_work.dto.requestDto.contributor.editUploadedPhotos;
+package com.petra.final_exam_work.dto.responseDto.contributor.EditAlbum;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+public class EditTitleAndDescriptionResponse {
 
-public class EditTitleAndDescriptionRequest {
-
-    @NotBlank
-    @Size(min = 1, max = 20, message = "Can only be 20 characters long")
     private String photoAlbumName;
-
-    @NotBlank
-    @Size(min = 1, max = 50, message = "Can only be 50 characters long")
     private String description;
 
-    public EditTitleAndDescriptionRequest() {
+    public EditTitleAndDescriptionResponse() {
     }
 
-    public EditTitleAndDescriptionRequest(String photoAlbumName, String description) {
+    public EditTitleAndDescriptionResponse(String photoAlbumName, String description) {
         this.photoAlbumName = photoAlbumName;
         this.description = description;
     }
