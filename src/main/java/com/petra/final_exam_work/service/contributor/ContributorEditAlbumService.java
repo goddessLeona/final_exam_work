@@ -78,6 +78,20 @@ public class ContributorEditAlbumService {
             );
         }
 
+        boolean exists = photoAlbumRepository
+                .existsByOwnedByUserAndPhotoAlbumNameAndPublicUuidNot(
+                        user,
+                        request.getPhotoAlbumName(),
+                        albumPublicUuid
+                );
+
+        if (exists) {
+            throw new ApiException(
+                    "You already have an album with this name",
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+
         editTitleAndContributorMapper.updatePhotoAlbum(album, request);
 
         photoAlbumRepository.save(album);

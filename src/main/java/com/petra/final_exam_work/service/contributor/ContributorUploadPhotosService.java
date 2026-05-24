@@ -82,6 +82,19 @@ public class ContributorUploadPhotosService {
             }
         }
 
+        boolean exists = photoAlbumRepository
+                .existsByOwnedByUserAndPhotoAlbumName(
+                        user,
+                        request.getPhotoAlbumName()
+                );
+
+        if (exists) {
+            throw new ApiException(
+                    "You already have an album with this name",
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+
         if (type == ContentType.VIDEO) {
 
             if (request.getPhotos() == null || request.getPhotos().isEmpty()) {

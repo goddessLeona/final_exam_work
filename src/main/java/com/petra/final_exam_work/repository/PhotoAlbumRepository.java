@@ -37,4 +37,9 @@ public interface PhotoAlbumRepository extends JpaRepository<PhotoAlbum, UserCons
     Optional<PhotoAlbum> findByPublicUuidAndContentStatus(UUID publicUuid, ContentStatus contentStatus);
 
     Optional<PhotoAlbum> findByPublicUuid(UUID albumPublicUuid);
+
+    boolean existsByOwnedByUserAndPhotoAlbumName(User user, String photoAlbumName);
+
+    boolean existsByOwnedByUserAndPhotoAlbumNameAndPublicUuidNot(User user, String photoAlbumName, UUID albumPublicUuid);
+
 }
