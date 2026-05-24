@@ -1,5 +1,6 @@
 package com.petra.final_exam_work.dto.mapperDto.member;
 
+import com.petra.final_exam_work.dto.responseDto.contributor.ContributorUploadPhotos.CoverPhotoResponse;
 import com.petra.final_exam_work.dto.responseDto.members.AlbumTagResponse;
 import com.petra.final_exam_work.dto.responseDto.members.GetPhotoAlbumsResponse;
 import com.petra.final_exam_work.dto.responseDto.members.PhotoResponse;
@@ -23,7 +24,8 @@ public class GetPhotoAlbumsMapper {
                 photoAlbum.getOwnedByUser().getUsername(),
                 photoAlbum.getPublishedAt(),
                 mapTags(photoAlbum.getTags()),
-                mapPhotos(photos)
+                mapPhotos(photos),
+                map(photoAlbum.getCoverPhoto())
         );
     }
 
@@ -49,6 +51,7 @@ public class GetPhotoAlbumsMapper {
         PhotoResponse response = new PhotoResponse();
         response.setPublicUuid(photo.getPublicUuid());
         response.setPhotoUrl(photo.getPhotoFilePath());
+
         return response;
     }
 
@@ -74,6 +77,21 @@ public class GetPhotoAlbumsMapper {
         AlbumTagResponse response = new AlbumTagResponse();
         response.setPublicUuid(tag.getPublicUuid());
         response.setNameTag(tag.getNameTag());
+
+        return response;
+    }
+
+    //----------- COVER PHOTO ---------
+    private CoverPhotoResponse map(Photo photo) {
+
+        if (photo == null) {
+            return null;
+        }
+
+        CoverPhotoResponse response = new CoverPhotoResponse();
+        response.setPublicUuid(photo.getPublicUuid());
+        response.setCoverPhotoUrl(photo.getPhotoFilePath());
+
         return response;
     }
 }

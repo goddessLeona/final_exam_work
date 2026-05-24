@@ -67,6 +67,7 @@ export interface GetPhotoAlbumsResponse {
 
     albumTags: AlbumTagResponse [];
     photos: PhotoResponse [];
+    coverPhoto: CoverPhotoResponse | null;
 }
 
 export async function contributorGetAlbums(publicUuid: string): Promise<GetPhotoAlbumsResponse> {

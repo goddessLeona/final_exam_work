@@ -21,7 +21,8 @@ function ContributorEditAlbum ({
     formData,
     setFormData,
     onCancel,
-    onSave
+    onSave,
+    onCoverSelect
 }: Props){
 
     const titleTooLong = formData.photoAlbumName.length > 20;
@@ -31,6 +32,8 @@ function ContributorEditAlbum ({
         e.preventDefault();
         onSave();
     }
+    
+    const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
     return (
         <div className={styles.container}>
@@ -51,9 +54,10 @@ function ContributorEditAlbum ({
 
                         className={titleTooLong ? styles.inputError : ""}
                     />
-                        <p className={titleTooLong ? styles.error : ""}>
-                            {formData.photoAlbumName.length}/20
-                        </p>
+
+                    <p className={titleTooLong ? styles.error : ""}>
+                        {formData.photoAlbumName.length}/20
+                    </p>
 
                     <textarea
                             id="description"
@@ -67,25 +71,68 @@ function ContributorEditAlbum ({
                             }
 
                             className={descriptionTooLong ? styles.inputError : ""}
-                        />  
-                        <p className={descriptionTooLong ? styles.error : ""}>
-                            {formData.description.length}/50
-                        </p> 
+                        /> 
 
-                        <button
-                            type="submit"
-                        >
-                            Save
-                        </button>
+                    <p className={descriptionTooLong ? styles.error : ""}>
+                        {formData.description.length}/50
+                    </p> 
 
-                        <button
-                            type="button"
-                            onClick={onCancel}
-                        >
-                            Cancel
-                        </button>
+                    <button
+                        type="submit"
+                    >
+                        Save
+                    </button>
 
+                    <button
+                        type="button"
+                        onClick={onCancel}
+                    >
+                        Cancel
+                    </button>
                 </form>
+
+                {selectedIndex === null && (
+                    <div className={styles.grid}>
+
+                        {data.photos.map((photo, index) => (
+
+                            <div
+                                key={photo.publicUuid}
+                                className={styles.card}
+                                >
+
+                                {data.coverPhoto?.publicUuid === photo.publicUuid && (
+                                    <div className={styles.coverBadge}>
+                                        Cover Photo
+                                    </div>    
+                                )}    
+
+                                <img
+                                    src={`${process.env.NEXT_PUBLIC_API_URL}/${photo.photoUrl}`}
+                                    alt={data.photoAlbumName}
+                                    className={`
+                                        ${styles.photoEdit}
+                                        ${data.coverPhoto?.publicUuid === photo.publicUuid
+                                            ? styles.coverPhoto
+                                            : ""
+                                        }
+                                    `}
+                                    onClick={() => setSelectedIndex(index)}
+                                />
+
+                                <button
+                                    type="button"
+                                    onClick={() => onCoverSelect(photo.publicUuid)}
+                                >
+                                    Set cover
+                                </button>
+
+                            </div>
+
+                        ))}
+
+                    </div>
+                )}
             
             </div>
 
