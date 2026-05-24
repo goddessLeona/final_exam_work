@@ -264,6 +264,7 @@ edit text, change cover photo, reorder photos, add/remove photos, change status
   PATCH /contributor/albums/{albumPublicUuid}/cover-photo
 
   * add request, response, mapper, service, controller, security config
+  * add fetch, 
 
 ## Task 15 -  Scheduled publisher job
 every minute check if anything need to change form scheduled to published
@@ -292,3 +293,10 @@ also add in db (to optimaze and make faster to load tumbernails)
 private string photoThumbernailPath and save 300px 
 privet string photoMediumPath 800px
 private string originalPath but max 900px (or something)
+
+## task 21 - look over upload photos
+ add partial success handling, to show what images failed to upload and skipp them
+
+upload valid images
+skip broken ones
+return list of failed files

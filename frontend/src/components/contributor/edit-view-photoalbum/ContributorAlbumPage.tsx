@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import { GetPhotoAlbumsResponse, contributorGetAlbums } from "@/lib/api/contributorsPhotoAlbums";
 import { EditTitleAndDescriptionRequest } from "@/lib/api/editAlbum";
 import { editTitleAndDescription } from "@/lib/api/editAlbum";
+import { editCoverPhoto } from "@/lib/api/editAlbum";
 import ContributorViewAlbum from "./ContributorViewAlbum";
 import ContributorEditAlbum from "./ContributorEditPhotoAlbum";
 
@@ -70,6 +71,26 @@ function ContributorContentPage (){
         }
     }
 
+    const handleSetCover = async (photoUuid: string) => {
+        try {
+            const updated = await editCoverPhoto(albumUuid, {
+                coverPhotoPublicUuid: photoUuid
+            });
+
+            setData((prev) => {
+                if (!prev) return prev;
+
+                return {
+                    ...prev,
+                    coverPhoto: updated.coverPhoto
+                };
+            });
+
+        } catch (err: any) {
+            setError(err.message || "Failed to update cover photo");
+        }
+    };
+
     if (loading) {
         return <p>Loading...</p>;
     }
@@ -89,6 +110,7 @@ function ContributorContentPage (){
             setFormData={setFormData}
             onCancel={() => setIsEditing(false)}
             onSave={handleSave}
+            onCoverSelect={handleSetCover}
         />
     ) : (
         <ContributorViewAlbum

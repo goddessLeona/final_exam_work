@@ -13,6 +13,7 @@ type Props = {
     >;
     onCancel: () => void;
     onSave: () => void;
+    onCoverSelect: (photoUuid: string) => void;
 }
 
 function ContributorEditAlbum ({

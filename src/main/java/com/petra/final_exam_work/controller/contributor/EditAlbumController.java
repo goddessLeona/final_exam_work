@@ -43,7 +43,7 @@ public class EditAlbumController {
         return ResponseEntity.ok(response);
     }
 
-    //######### Edit cover photo on uploaded content #######
+    //######### Edit cover photo #######
     @PreAuthorize("hasRole('CONTRIBUTOR')")
     @PatchMapping("/{albumPublicUuid}/cover-photo")
     public ResponseEntity<EditCoverPhotoResponse> editCoverPhoto(
