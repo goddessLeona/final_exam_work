@@ -52,20 +52,16 @@ export default function SubscribeContributorForm() {
 
     } catch (err: any) {
 
-        console.log ("ERROR: ", err);
-
         // field validaion errors
         if (err.errors) {
             setError(err.errors);
             return;
         }
 
-
         if (err.message === "You must be at least 18 years old to upload content") {
             setError({ birthDay: err.message });
             return;
         }
-        
         
         setError({ general: err.message || "Somthing went wrong" });
 
