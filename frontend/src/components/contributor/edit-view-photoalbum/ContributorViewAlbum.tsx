@@ -1,54 +1,18 @@
 "use client"
 
-import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
-import { GetPhotoAlbumsResponse, contributorGetAlbums } from "@/lib/api/contributorsPhotoAlbums";
+import { useState } from "react";
+import { GetPhotoAlbumsResponse } from "@/lib/api/contributorsPhotoAlbums";
 import styles from "./editPhotoAlbum.module.css"
 
-function ContributorContentAlbums (){
+type Props = {
+    data: GetPhotoAlbumsResponse;
+    onEdit: () => void;
+};
 
-    const params = useParams();
-    const albumUuid = params.albumUuid as string;
-    const [data, setData] = useState<GetPhotoAlbumsResponse | null>(null);
-    const [error, setError] = useState("");
-    const [loading, setLoading] = useState(true);
-
+function ContributorViewAlbum({ data, onEdit}: Props){
+ 
     const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-
-    useEffect(() => {
-
-        async function loadAlbum() {
-            try {
-                const response =
-                await contributorGetAlbums(albumUuid);
-                setData(response);
-
-            }catch (err) {
-                setError("Failed to load album");
-
-            }finally {
-                setLoading(false);
-            }
-        }
-
-        if (albumUuid) {
-            loadAlbum();
-        }
-
-    }, [albumUuid]);
-
-    if (loading) {
-        return <p>Loading...</p>;
-    }
-
-    if (error) {
-        return <p>{error}</p>
-    }
-
-    if (!data) {
-        return <p>Album not found</p>;
-    }
-
+    
     return (
         <div className={styles.container}>
 
@@ -73,8 +37,6 @@ function ContributorContentAlbums (){
                                 className={styles.photo}
                                 onClick={() => setSelectedIndex(index)}
                             />
-
-                        
                         </div>
 
                     ))}
@@ -87,8 +49,6 @@ function ContributorContentAlbums (){
             {selectedIndex !== null && (
                 <div className={styles.lightbox}>
                     
-                    
-
                     <img
                         src={`${process.env.NEXT_PUBLIC_API_URL}/${data.photos[selectedIndex].photoUrl}`}
                         alt="full view"
@@ -121,8 +81,14 @@ function ContributorContentAlbums (){
                 </div>
             )}
 
+            <button
+                onClick ={onEdit}
+            >
+                Edit
+            </button>
         </div>
     );
 
 }
-export default ContributorContentAlbums;
+
+export default ContributorViewAlbum;

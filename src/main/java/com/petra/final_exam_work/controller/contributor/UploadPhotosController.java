@@ -25,7 +25,6 @@ public class UploadPhotosController {
     }
 
     // ##### POST -UPLOAD PHOTOS TO ALBUM ######
-
     @PreAuthorize("hasRole('CONTRIBUTOR')")
     @PostMapping(
             value = "/photo",
