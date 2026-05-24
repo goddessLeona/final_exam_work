@@ -251,15 +251,19 @@ GET ("/member/albums/{albumPublicUuid})
 (21/5, 23/5, 24/5)
 edit text, change cover photo, reorder photos, add/remove photos, change status
 
-  GET ("contributor/albums/{albumPublicUuid}")
+  GET contributor/albums/{albumPublicUuid}
 
   * add service/controller for contributor to get to album from clicking cover photo.
   * add fetch and component
 
-  PATCH ("contributor/albums/{albumPublicUuid}/title-description")
+  PATCH contributor/albums/{albumPublicUuid}/title-description
 
-  * added request,response,mapper, service, controller
-  * added fetch and component
+  * add request,response,mapper, service, controller, security config
+  * add fetch and component 
+
+  PATCH /contributor/albums/{albumPublicUuid}/cover-photo
+
+  * add request, response, mapper, service, controller, security config
 
 ## Task 15 -  Scheduled publisher job
 every minute check if anything need to change form scheduled to published

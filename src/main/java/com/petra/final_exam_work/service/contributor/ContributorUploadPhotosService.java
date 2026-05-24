@@ -47,7 +47,6 @@ public class ContributorUploadPhotosService {
     }
 
     //######### CONTRIBUTOR POST-PHOTOS ########
-
     @Transactional
     public UploadPhotoContentResponse uploadPhotos (CustomUserDetails userDetails, UploadPhotoContentRequest request) {
 

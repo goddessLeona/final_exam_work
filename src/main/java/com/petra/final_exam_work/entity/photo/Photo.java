@@ -51,6 +51,18 @@ public class Photo {
     public Photo() {
     }
 
+    public Photo(Long id, UUID publicUuid, User uploadedByUser, String photoFilePath, Long sizeBytes, String mimeType,
+                 String fileName, Instant createdAt) {
+        this.id = id;
+        this.publicUuid = publicUuid;
+        this.uploadedByUser = uploadedByUser;
+        this.photoFilePath = photoFilePath;
+        this.sizeBytes = sizeBytes;
+        this.mimeType = mimeType;
+        this.fileName = fileName;
+        this.createdAt = createdAt;
+    }
+
     public Long getId() {
         return id;
     }

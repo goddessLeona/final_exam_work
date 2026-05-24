@@ -1,6 +1,8 @@
 package com.petra.final_exam_work.controller.contributor;
 
+import com.petra.final_exam_work.dto.requestDto.contributor.editUploadedPhotos.EditCoverPhotoRequest;
 import com.petra.final_exam_work.dto.requestDto.contributor.editUploadedPhotos.EditTitleAndDescriptionRequest;
+import com.petra.final_exam_work.dto.responseDto.contributor.EditAlbum.EditCoverPhotoResponse;
 import com.petra.final_exam_work.dto.responseDto.contributor.EditAlbum.EditTitleAndDescriptionResponse;
 import com.petra.final_exam_work.security.CustomUserDetails;
 import com.petra.final_exam_work.service.contributor.ContributorEditAlbumService;
@@ -33,6 +35,26 @@ public class EditAlbumController {
     ) {
         EditTitleAndDescriptionResponse response =
                 contributorEditAlbumService.editTitleAndDescription(
+                        albumPublicUuid,
+                        userDetails,
+                        request
+                );
+
+        return ResponseEntity.ok(response);
+    }
+
+    //######### Edit cover photo on uploaded content #######
+    @PreAuthorize("hasRole('CONTRIBUTOR')")
+    @PatchMapping("/{albumPublicUuid}/cover-photo")
+    public ResponseEntity<EditCoverPhotoResponse> editCoverPhoto(
+            @PathVariable UUID albumPublicUuid,
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @Valid
+            @RequestBody
+            EditCoverPhotoRequest request
+    ){
+        EditCoverPhotoResponse response =
+                contributorEditAlbumService.editCoverPhoto(
                         albumPublicUuid,
                         userDetails,
                         request
