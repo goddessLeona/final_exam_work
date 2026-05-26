@@ -14,6 +14,7 @@ type Props = {
     onCancel: () => void;
     onSave: () => void;
     onCoverSelect: (photoUuid: string) => void;
+    onRemovePhoto: (photoUuid: string) => void;
 }
 
 function ContributorEditAlbum ({
@@ -22,7 +23,8 @@ function ContributorEditAlbum ({
     setFormData,
     onCancel,
     onSave,
-    onCoverSelect
+    onCoverSelect,
+    onRemovePhoto
 }: Props){
 
     const titleTooLong = formData.photoAlbumName.length > 20;
@@ -125,6 +127,13 @@ function ContributorEditAlbum ({
                                     onClick={() => onCoverSelect(photo.publicUuid)}
                                 >
                                     Set cover
+                                </button>
+
+                                <button
+                                    type="button"
+                                    onClick={() => onRemovePhoto (photo.publicUuid)}
+                                >
+                                    Remove photo
                                 </button>
 
                             </div>

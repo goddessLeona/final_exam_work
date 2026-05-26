@@ -33,7 +33,7 @@ export interface EditTitleAndDescriptionResponse {
     description: string;
 }
 
-//######### Edit cover photo #######
+//######### Change cover photo #######
 export async function editCoverPhoto(
     albumPublicUuid: string,
     request: editCoverPhotoRequest
@@ -72,4 +72,39 @@ export interface editCoverPhotoRequest {
 export interface editCoverPhotoResponse {
     
     coverPhoto: CoverPhotoResponse
+}
+
+//######### Delete photo from album #######
+export async function deletePhoto (
+    albumPublicUuid: string,
+    request: DeletePhotoRequest
+): Promise<void> {
+
+    const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/contributor/albums/${albumPublicUuid}/photos`,
+        {
+            method: "DELETE",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(request)
+        }
+    );
+
+    if (!res.ok) {
+
+        const json = await res.json();
+
+        throw {
+            message: json.message,
+            errors: json.errors
+        };
+    }
+
+}
+
+export interface DeletePhotoRequest {
+
+    photoPublicUuid: string
 }

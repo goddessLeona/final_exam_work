@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import { GetPhotoAlbumsResponse, contributorGetAlbums } from "@/lib/api/contributorsPhotoAlbums";
 import { EditTitleAndDescriptionRequest } from "@/lib/api/editAlbum";
 import { editTitleAndDescription } from "@/lib/api/editAlbum";
-import { editCoverPhoto } from "@/lib/api/editAlbum";
+import { editCoverPhoto, deletePhoto } from "@/lib/api/editAlbum";
 import ContributorViewAlbum from "./ContributorViewAlbum";
 import ContributorEditAlbum from "./ContributorEditPhotoAlbum";
 
@@ -54,6 +54,7 @@ function ContributorContentPage (){
         }
     }, [data]);
 
+    // save new title and description 
     async function handleSave() {
         try {
             await editTitleAndDescription(albumUuid, formData);
@@ -71,6 +72,7 @@ function ContributorContentPage (){
         }
     }
 
+    // change cover photo
     const handleSetCover = async (photoUuid: string) => {
         try {
             const updated = await editCoverPhoto(albumUuid, {
@@ -89,6 +91,33 @@ function ContributorContentPage (){
         } catch (err: any) {
             setError(err.message || "Failed to update cover photo");
         }
+    };
+
+    // delete photo from album
+    const handleRemovePhoto = async (photoUuid: string) => {
+
+    try {
+
+        await deletePhoto(albumUuid, {
+            photoPublicUuid: photoUuid
+        });
+
+        setData((prev) => {
+
+            if (!prev) return prev;
+
+            return {
+                ...prev,
+                photos: prev.photos.filter(
+                    (photo) => photo.publicUuid !== photoUuid
+                )
+            };
+        });
+
+    } catch (err: any) {
+
+        setError(err.message || "Failed to delete photo");
+    }
     };
 
     if (loading) {
@@ -111,6 +140,7 @@ function ContributorContentPage (){
             onCancel={() => setIsEditing(false)}
             onSave={handleSave}
             onCoverSelect={handleSetCover}
+            onRemovePhoto={handleRemovePhoto}
         />
     ) : (
         <ContributorViewAlbum
