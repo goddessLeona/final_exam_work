@@ -138,7 +138,7 @@ public class ContributorUploadPhotosService {
 
         photoAlbumRepository.save(photoAlbum);
 
-        List<Photo> savedPhotos = new ArrayList<>();
+        List<Photo> photosToSave = new ArrayList<>();
 
         for (MultipartFile file : request.getPhotos()) {
 
@@ -157,9 +157,10 @@ public class ContributorUploadPhotosService {
             photo.setMimeType(file.getContentType());
             photo.setSizeBytes(file.getSize());
 
-            photoRepository.save(photo);
-            savedPhotos.add(photo);
+            photosToSave.add(photo);
         }
+
+        List<Photo> savedPhotos = photoRepository.saveAll(photosToSave);
 
         if (!savedPhotos.isEmpty()) {
             Integer coverPhotoIndex = request.getCoverPhotoIndex();
@@ -175,18 +176,23 @@ public class ContributorUploadPhotosService {
             }
         }
 
+        List<PhotoAlbumPhoto> links = new ArrayList<>();
+
         int position = 0;
 
         for(Photo photo : savedPhotos) {
+
             PhotoAlbumPhoto link = new PhotoAlbumPhoto();
 
             link.setPhotoAlbum(photoAlbum);
             link.setPhoto(photo);
             link.setPosition(position++);
 
-            photoAlbumPhotoRepository.save(link);
+            links.add(link);
 
         }
+
+        photoAlbumPhotoRepository.saveAll(links);
 
         return uploadPhotoContentMapper.toResponse(
                 photoAlbum,
