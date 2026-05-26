@@ -2,11 +2,13 @@ package com.petra.final_exam_work.service.contributor;
 
 import com.petra.final_exam_work.dto.mapperDto.contributor.editAlbum.EditCoverPhotoMapper;
 import com.petra.final_exam_work.dto.mapperDto.contributor.editAlbum.EditTitleAndContributorMapper;
+import com.petra.final_exam_work.dto.requestDto.contributor.editUploadedPhotos.DeletePhotoRequest;
 import com.petra.final_exam_work.dto.requestDto.contributor.editUploadedPhotos.EditCoverPhotoRequest;
 import com.petra.final_exam_work.dto.requestDto.contributor.editUploadedPhotos.EditTitleAndDescriptionRequest;
 import com.petra.final_exam_work.dto.responseDto.contributor.EditAlbum.EditCoverPhotoResponse;
 import com.petra.final_exam_work.dto.responseDto.contributor.EditAlbum.EditTitleAndDescriptionResponse;
 import com.petra.final_exam_work.entity.enums.ContributorStatus;
+import com.petra.final_exam_work.entity.junktionTables.photoAlbumPhoto.PhotoAlbumPhoto;
 import com.petra.final_exam_work.entity.photo.Photo;
 import com.petra.final_exam_work.entity.photo.PhotoAlbum;
 import com.petra.final_exam_work.entity.user.User;
@@ -21,6 +23,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -150,5 +153,108 @@ public class ContributorEditAlbumService {
         album.setCoverPhoto(photo);
 
         return editCoverPhotoMapper.toDto(album);
+    }
+
+    //######### Delete photo from uploaded content #######
+    public void deletePhoto(
+            UUID albumPublicUuid,
+            CustomUserDetails userDetails,
+            DeletePhotoRequest request
+    ) {
+        UUID publicUuid = userDetails.getPublicUuid();
+        User user = userRepository.findByPublicUuid(publicUuid)
+                .orElseThrow(() -> new ApiException(
+                        "User was not found",
+                        HttpStatus.NOT_FOUND)
+                );
+
+
+        if (user.getContributorStatus() != ContributorStatus.APPROVED) {
+            throw new ApiException(
+                    "You are not approved to have access to this data",
+                    HttpStatus.FORBIDDEN
+            );
+        }
+
+        PhotoAlbum album = photoAlbumRepository
+                .findByPublicUuid(albumPublicUuid)
+                .orElseThrow(() -> new ApiException(
+                        "Album not found",
+                        HttpStatus.NOT_FOUND
+                ));
+
+        if (!album.getOwnedByUser().getId().equals(user.getId())) {
+            throw new ApiException(
+                    "You do not have access to this album",
+                    HttpStatus.FORBIDDEN
+            );
+        }
+
+        Photo photo = photoRepository
+                .findByPublicUuid(request.getPhotoPublicUuid())
+                .orElseThrow(() -> new ApiException(
+                        "Photo not found",
+                        HttpStatus.NOT_FOUND
+                ));
+
+        boolean exists = photoAlbumPhotoRepository.existsByPhotoAndPhotoAlbum(photo, album);
+
+        if (!exists) {
+            throw new ApiException(
+                    "Photo does not belong to this album",
+                    HttpStatus.FORBIDDEN
+            );
+        }
+
+        PhotoAlbumPhoto photoAlbumPhoto = photoAlbumPhotoRepository
+                .findByPhotoAndPhotoAlbum(photo, album)
+                .orElseThrow(() -> new ApiException(
+                "Photo has no position in the album",
+                HttpStatus.NOT_FOUND
+        ));
+
+        //make sure there are still a min of 7 photos in album.
+        long totalPhotos = photoAlbumPhotoRepository.countByPhotoAlbum(album);
+
+        if (totalPhotos <= 7) {
+            throw new ApiException(
+                    "Album must have at least 7 photos",
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+
+       // check if photo getting removed is a cover photo.
+       boolean wasCoverPhoto =
+               album.getCoverPhoto() != null &&
+               album.getCoverPhoto().getPublicUuid().equals(photo.getPublicUuid());
+
+       // remove from db first the link between photo and album , then the actual photo
+       photoAlbumPhotoRepository.delete(photoAlbumPhoto);
+       photoRepository.delete(photo);
+
+       // After delete reset position starting with 0 and up.
+        List<PhotoAlbumPhoto> remaining =
+                photoAlbumPhotoRepository
+                        .findByPhotoAlbumOrderByPositionAsc(album);
+
+        // reindex
+        for (int i = 0; i < remaining.size(); i++) {
+            remaining.get(i).setPosition(i);
+        }
+
+        // If photo removed was a cover-photo,
+        // first remaining photo in album become new cover-photo
+        if (wasCoverPhoto) {
+
+            if (remaining.isEmpty()) {
+                album.setCoverPhoto(null);
+            } else {
+                album.setCoverPhoto(
+                        remaining.get(0).getPhoto()
+                );
+            }
+        }
+
+        photoAlbumRepository.save(album);
     }
 }

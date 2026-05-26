@@ -266,6 +266,16 @@ edit text, change cover photo, reorder photos, add/remove photos, change status
   * add request, response, mapper, service, controller, security config
   * add fetch, 
 
+  DELETE /contributor/albums/{albumPublicUuid}/photos/{photoPublicUuid}
+
+  * added request, service, controller, security config
+
+(Validate user, Validate album, Validate ownership, Validate photo,
+Validate photo belongs to album, Validate minimum photo count,
+Detect if deleted photo is cover, Delete junction row,
+Delete photo, Reindex positions, Repair cover photo if needed,
+Transaction commits automatically)
+
 ## Task 15 -  Scheduled publisher job
 every minute check if anything need to change form scheduled to published
 

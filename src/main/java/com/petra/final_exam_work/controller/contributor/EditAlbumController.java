@@ -1,5 +1,6 @@
 package com.petra.final_exam_work.controller.contributor;
 
+import com.petra.final_exam_work.dto.requestDto.contributor.editUploadedPhotos.DeletePhotoRequest;
 import com.petra.final_exam_work.dto.requestDto.contributor.editUploadedPhotos.EditCoverPhotoRequest;
 import com.petra.final_exam_work.dto.requestDto.contributor.editUploadedPhotos.EditTitleAndDescriptionRequest;
 import com.petra.final_exam_work.dto.responseDto.contributor.EditAlbum.EditCoverPhotoResponse;
@@ -61,5 +62,23 @@ public class EditAlbumController {
                 );
 
         return ResponseEntity.ok(response);
+    }
+
+    //######### Delete photo from uploaded album #######
+    @PreAuthorize("hasRole('CONTRIBUTOR')")
+    @DeleteMapping("/{albumPublicUuid}/photos")
+    public ResponseEntity<Void> deletePhoto(
+            @PathVariable UUID albumPublicUuid,
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @RequestBody DeletePhotoRequest request
+    ) {
+
+        contributorEditAlbumService.deletePhoto(
+                albumPublicUuid,
+                userDetails,
+                request
+        );
+
+        return ResponseEntity.noContent().build();
     }
 }
