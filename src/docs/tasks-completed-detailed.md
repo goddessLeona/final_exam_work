@@ -281,6 +281,7 @@ Transaction commits automatically)
   POST /contributor/albums/{albumPublicUuid}/photos
 
 * added request, service, controller, security config 
+* fetch
 
 ## Task 15 -  Scheduled publisher job
 every minute check if anything need to change form scheduled to published
@@ -316,3 +317,4 @@ private string originalPath but max 900px (or something)
 upload valid images
 skip broken ones
 return list of failed files
+add upload to temp folder to prevent that if upload fail a lot of photos will be left in the upload folder.

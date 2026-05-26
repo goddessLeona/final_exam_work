@@ -1,4 +1,4 @@
-import { CoverPhotoResponse } from "./contributorsPhotoAlbums";
+import { CoverPhotoResponse, GetPhotoAlbumsResponse } from "./contributorsPhotoAlbums";
 
 //######## Edit title and decription on album ############
 export async function editTitleAndDescription (
@@ -105,6 +105,35 @@ export async function deletePhoto (
 }
 
 export interface DeletePhotoRequest {
-
+    
     photoPublicUuid: string
 }
+
+//######### Add photo to album #######
+export async function addPhoto(
+    albumPublicUuid: string,
+    formData: FormData
+): Promise<GetPhotoAlbumsResponse> {
+    const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/contributor/albums/${albumPublicUuid}/photos`,
+        {
+            method: "POST",
+            credentials: "include",
+            body: formData,
+        }
+    );
+
+    const json = await response.json();
+
+    if (!response.ok) {
+
+        throw {
+            message: json.message,
+            errors: json.errors ?? null
+        };
+    }
+
+    return json;
+
+}
+
