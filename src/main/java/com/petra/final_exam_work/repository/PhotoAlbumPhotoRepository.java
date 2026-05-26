@@ -4,6 +4,8 @@ import com.petra.final_exam_work.entity.junktionTables.photoAlbumPhoto.PhotoAlbu
 import com.petra.final_exam_work.entity.photo.Photo;
 import com.petra.final_exam_work.entity.photo.PhotoAlbum;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -21,5 +23,12 @@ public interface PhotoAlbumPhotoRepository extends JpaRepository<PhotoAlbumPhoto
     long countByPhotoAlbum(PhotoAlbum album);
 
     Optional<PhotoAlbumPhoto> findByPhotoAndPhotoAlbum(Photo photo, PhotoAlbum album);
+
+    @Query("""
+        SELECT COALESCE(MAX(p.position), -1)
+        FROM PhotoAlbumPhoto p
+        WHERE p.photoAlbum = :album
+    """)
+    Integer findMaxPositionByPhotoAlbum(@Param("album")PhotoAlbum album);
 
 }

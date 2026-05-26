@@ -2,6 +2,7 @@ package com.petra.final_exam_work.service.contributor;
 
 import com.petra.final_exam_work.dto.mapperDto.contributor.editAlbum.EditCoverPhotoMapper;
 import com.petra.final_exam_work.dto.mapperDto.contributor.editAlbum.EditTitleAndContributorMapper;
+import com.petra.final_exam_work.dto.requestDto.contributor.editUploadedPhotos.AddPhotoRequest;
 import com.petra.final_exam_work.dto.requestDto.contributor.editUploadedPhotos.DeletePhotoRequest;
 import com.petra.final_exam_work.dto.requestDto.contributor.editUploadedPhotos.EditCoverPhotoRequest;
 import com.petra.final_exam_work.dto.requestDto.contributor.editUploadedPhotos.EditTitleAndDescriptionRequest;
@@ -19,11 +20,15 @@ import com.petra.final_exam_work.repository.PhotoRepository;
 import com.petra.final_exam_work.repository.UserRepository;
 import com.petra.final_exam_work.security.CustomUserDetails;
 import com.petra.final_exam_work.service.AlbumSecurityService;
+import com.petra.final_exam_work.service.FileStorageService;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -36,8 +41,9 @@ public class ContributorEditAlbumService {
     private final PhotoRepository photoRepository;
     private final PhotoAlbumPhotoRepository photoAlbumPhotoRepository;
     private final AlbumSecurityService albumSecurityService;
+    private final FileStorageService fileStorageService;
 
-    public ContributorEditAlbumService(EditTitleAndContributorMapper editTitleAndContributorMapper, EditCoverPhotoMapper editCoverPhotoMapper, PhotoAlbumRepository photoAlbumRepository, UserRepository userRepository, PhotoRepository photoRepository, PhotoAlbumPhotoRepository photoAlbumPhotoRepository, AlbumSecurityService albumSecurityService) {
+    public ContributorEditAlbumService(EditTitleAndContributorMapper editTitleAndContributorMapper, EditCoverPhotoMapper editCoverPhotoMapper, PhotoAlbumRepository photoAlbumRepository, UserRepository userRepository, PhotoRepository photoRepository, PhotoAlbumPhotoRepository photoAlbumPhotoRepository, AlbumSecurityService albumSecurityService, FileStorageService fileStorageService) {
         this.editTitleAndContributorMapper = editTitleAndContributorMapper;
         this.editCoverPhotoMapper = editCoverPhotoMapper;
         this.photoAlbumRepository = photoAlbumRepository;
@@ -45,6 +51,7 @@ public class ContributorEditAlbumService {
         this.photoRepository = photoRepository;
         this.photoAlbumPhotoRepository = photoAlbumPhotoRepository;
         this.albumSecurityService = albumSecurityService;
+        this.fileStorageService = fileStorageService;
     }
 
     //######### Edit title and description on uploaded content #######
@@ -249,4 +256,121 @@ public class ContributorEditAlbumService {
 
         photoAlbumRepository.save(album);
     }
+
+    //####### ADD/POST new photo to a album ########
+    @Transactional
+    public void addPhoto(
+            UUID albumPublicUuid,
+            CustomUserDetails userDetails,
+            AddPhotoRequest request
+    ) {
+        UUID publicUuid = userDetails.getPublicUuid();
+        User user = userRepository.findByPublicUuid(publicUuid)
+                .orElseThrow(() -> new ApiException(
+                        "User was not found",
+                        HttpStatus.NOT_FOUND)
+                );
+
+
+        if (user.getContributorStatus() != ContributorStatus.APPROVED) {
+            throw new ApiException(
+                    "You are not approved to have access to this data",
+                    HttpStatus.FORBIDDEN
+            );
+        }
+
+        PhotoAlbum album = photoAlbumRepository
+                .findByPublicUuid(albumPublicUuid)
+                .orElseThrow(() -> new ApiException(
+                        "Album not found",
+                        HttpStatus.NOT_FOUND
+                ));
+
+        if (!album.getOwnedByUser().getId().equals(user.getId())) {
+            throw new ApiException(
+                    "You do not have access to this album",
+                    HttpStatus.FORBIDDEN
+            );
+        }
+
+        //make sure there are less than 30 photos in album.
+        long totalPhotos = photoAlbumPhotoRepository.countByPhotoAlbum(album);
+
+        if (totalPhotos >= 30) {
+            throw new ApiException(
+                    "Album can only contain 30 photos",
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+
+        //upload photo and save in album
+        List<Photo> savedPhotos = new ArrayList<>();
+
+        for (MultipartFile file : request.getPhotos()) {
+
+            String path = handleImageUpload(
+                    file,
+                    user.getPublicUuid(),
+                    "albums/photo/" + album.getPublicUuid(),
+                    "photo"
+            );
+
+            Photo photo = new Photo();
+
+            photo.setUploadedByUser(user);
+            photo.setPhotoFilePath(path);
+            photo.setFileName(file.getOriginalFilename());
+            photo.setMimeType(file.getContentType());
+            photo.setSizeBytes(file.getSize());
+
+            photoRepository.save(photo);
+            savedPhotos.add(photo);
+        }
+
+        // add uploaded new photo after the last photo in album
+        Integer nextPosition =
+                Optional.ofNullable(
+                photoAlbumPhotoRepository
+                        .findMaxPositionByPhotoAlbum(album)
+                ) .orElse(-1) +1;
+
+        //save the link between photo and the photo album
+
+        List<PhotoAlbumPhoto> links = new ArrayList<>();
+
+        for (Photo photo : savedPhotos) {
+
+            PhotoAlbumPhoto link = new PhotoAlbumPhoto();
+
+            link.setPhotoAlbum(album);
+            link.setPhoto(photo);
+            link.setPosition(nextPosition++);
+
+            links.add(link);
+        }
+        photoAlbumPhotoRepository.saveAll(links);
+
+    }
+
+    // ---------------- Private helper ----------------
+    private String handleImageUpload(
+            MultipartFile file,
+            UUID userUuid,
+            String category,
+            String filePrefix
+    ) {
+        if (file.isEmpty()) {
+            throw new ApiException("File is empty", HttpStatus.BAD_REQUEST);
+        }
+
+        if (file.getContentType() == null || !file.getContentType().startsWith("image/")) {
+            throw new ApiException("Only images allowed", HttpStatus.BAD_REQUEST);
+        }
+
+        fileStorageService.validateImage(file);
+
+        return fileStorageService.save(file, userUuid, category, filePrefix);
+    }
 }
+
+
