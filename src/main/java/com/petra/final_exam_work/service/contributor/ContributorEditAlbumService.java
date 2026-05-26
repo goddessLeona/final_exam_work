@@ -197,20 +197,12 @@ public class ContributorEditAlbumService {
                         HttpStatus.NOT_FOUND
                 ));
 
-        boolean exists = photoAlbumPhotoRepository.existsByPhotoAndPhotoAlbum(photo, album);
-
-        if (!exists) {
-            throw new ApiException(
-                    "Photo does not belong to this album",
-                    HttpStatus.FORBIDDEN
-            );
-        }
 
         PhotoAlbumPhoto photoAlbumPhoto = photoAlbumPhotoRepository
                 .findByPhotoAndPhotoAlbum(photo, album)
                 .orElseThrow(() -> new ApiException(
-                "Photo has no position in the album",
-                HttpStatus.NOT_FOUND
+                "Photo does not belong to this album",
+                HttpStatus.FORBIDDEN
         ));
 
         //make sure there are still a min of 7 photos in album.
