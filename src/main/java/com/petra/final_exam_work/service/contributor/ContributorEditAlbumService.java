@@ -2,12 +2,14 @@ package com.petra.final_exam_work.service.contributor;
 
 import com.petra.final_exam_work.dto.mapperDto.contributor.editAlbum.EditCoverPhotoMapper;
 import com.petra.final_exam_work.dto.mapperDto.contributor.editAlbum.EditTitleAndContributorMapper;
+import com.petra.final_exam_work.dto.mapperDto.member.GetPhotoAlbumsMapper;
 import com.petra.final_exam_work.dto.requestDto.contributor.editUploadedPhotos.AddPhotoRequest;
 import com.petra.final_exam_work.dto.requestDto.contributor.editUploadedPhotos.DeletePhotoRequest;
 import com.petra.final_exam_work.dto.requestDto.contributor.editUploadedPhotos.EditCoverPhotoRequest;
 import com.petra.final_exam_work.dto.requestDto.contributor.editUploadedPhotos.EditTitleAndDescriptionRequest;
 import com.petra.final_exam_work.dto.responseDto.contributor.EditAlbum.EditCoverPhotoResponse;
 import com.petra.final_exam_work.dto.responseDto.contributor.EditAlbum.EditTitleAndDescriptionResponse;
+import com.petra.final_exam_work.dto.responseDto.members.GetPhotoAlbumsResponse;
 import com.petra.final_exam_work.entity.enums.ContributorStatus;
 import com.petra.final_exam_work.entity.junktionTables.photoAlbumPhoto.PhotoAlbumPhoto;
 import com.petra.final_exam_work.entity.photo.Photo;
@@ -42,8 +44,9 @@ public class ContributorEditAlbumService {
     private final PhotoAlbumPhotoRepository photoAlbumPhotoRepository;
     private final AlbumSecurityService albumSecurityService;
     private final FileStorageService fileStorageService;
+    private final GetPhotoAlbumsMapper getPhotoAlbumsMapper;
 
-    public ContributorEditAlbumService(EditTitleAndContributorMapper editTitleAndContributorMapper, EditCoverPhotoMapper editCoverPhotoMapper, PhotoAlbumRepository photoAlbumRepository, UserRepository userRepository, PhotoRepository photoRepository, PhotoAlbumPhotoRepository photoAlbumPhotoRepository, AlbumSecurityService albumSecurityService, FileStorageService fileStorageService) {
+    public ContributorEditAlbumService(EditTitleAndContributorMapper editTitleAndContributorMapper, EditCoverPhotoMapper editCoverPhotoMapper, PhotoAlbumRepository photoAlbumRepository, UserRepository userRepository, PhotoRepository photoRepository, PhotoAlbumPhotoRepository photoAlbumPhotoRepository, AlbumSecurityService albumSecurityService, FileStorageService fileStorageService, GetPhotoAlbumsMapper getPhotoAlbumsMapper) {
         this.editTitleAndContributorMapper = editTitleAndContributorMapper;
         this.editCoverPhotoMapper = editCoverPhotoMapper;
         this.photoAlbumRepository = photoAlbumRepository;
@@ -52,6 +55,7 @@ public class ContributorEditAlbumService {
         this.photoAlbumPhotoRepository = photoAlbumPhotoRepository;
         this.albumSecurityService = albumSecurityService;
         this.fileStorageService = fileStorageService;
+        this.getPhotoAlbumsMapper = getPhotoAlbumsMapper;
     }
 
     //######### Edit title and description on uploaded content #######
@@ -259,7 +263,7 @@ public class ContributorEditAlbumService {
 
     //####### ADD/POST new photo to a album ########
     @Transactional
-    public void addPhoto(
+    public GetPhotoAlbumsResponse addPhoto(
             UUID albumPublicUuid,
             CustomUserDetails userDetails,
             AddPhotoRequest request
@@ -349,6 +353,19 @@ public class ContributorEditAlbumService {
             links.add(link);
         }
         photoAlbumPhotoRepository.saveAll(links);
+
+        List<PhotoAlbumPhoto> updatedLinks =
+                photoAlbumPhotoRepository
+                        .findByPhotoAlbumOrderByPositionAsc(album);
+
+        List<Photo> updatedPhotos = updatedLinks.stream()
+                .map(PhotoAlbumPhoto::getPhoto)
+                .toList();
+
+        return getPhotoAlbumsMapper.toDto(
+                album,
+                updatedPhotos
+        );
 
     }
 

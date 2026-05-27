@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import { GetPhotoAlbumsResponse, contributorGetAlbums } from "@/lib/api/contributorsPhotoAlbums";
 import { EditTitleAndDescriptionRequest } from "@/lib/api/editAlbum";
 import { editTitleAndDescription } from "@/lib/api/editAlbum";
-import { editCoverPhoto, deletePhoto } from "@/lib/api/editAlbum";
+import { editCoverPhoto, deletePhoto,addPhoto } from "@/lib/api/editAlbum";
 import ContributorViewAlbum from "./ContributorViewAlbum";
 import ContributorEditAlbum from "./ContributorEditPhotoAlbum";
 
@@ -96,29 +96,52 @@ function ContributorContentPage (){
     // delete photo from album
     const handleRemovePhoto = async (photoUuid: string) => {
 
-    try {
+        try {
 
-        await deletePhoto(albumUuid, {
-            photoPublicUuid: photoUuid
-        });
+            await deletePhoto(albumUuid, {
+                photoPublicUuid: photoUuid
+            });
 
-        setData((prev) => {
+            setData((prev) => {
 
-            if (!prev) return prev;
+                if (!prev) return prev;
 
-            return {
-                ...prev,
-                photos: prev.photos.filter(
-                    (photo) => photo.publicUuid !== photoUuid
-                )
-            };
-        });
+                return {
+                    ...prev,
+                    photos: prev.photos.filter(
+                        (photo) => photo.publicUuid !== photoUuid
+                    )
+                };
+            });
 
-    } catch (err: any) {
+        } catch (err: any) {
 
-        setError(err.message || "Failed to delete photo");
-    }
+            setError(err.message || "Failed to delete photo");
+        }
     };
+
+    //add new photo or photos to album
+    async function handleAddPhoto(files: FileList | null) {
+
+        if (!files) return;
+
+        try {
+            const data = new FormData();
+
+            for (const file of Array.from(files)) {
+                data.append("photos", file);
+            }
+
+            const updatedAlbum = await addPhoto(albumUuid, data);
+
+            setData(updatedAlbum);
+
+        }catch (err: any) {
+            setError(err.message || "Failed to update album")
+        }
+
+    }
+
 
     if (loading) {
         return <p>Loading...</p>;
@@ -141,6 +164,7 @@ function ContributorContentPage (){
             onSave={handleSave}
             onCoverSelect={handleSetCover}
             onRemovePhoto={handleRemovePhoto}
+            onAddPhoto={handleAddPhoto}
         />
     ) : (
         <ContributorViewAlbum

@@ -1,10 +1,12 @@
 package com.petra.final_exam_work.controller.contributor;
 
+import com.petra.final_exam_work.dto.requestDto.contributor.editUploadedPhotos.AddPhotoRequest;
 import com.petra.final_exam_work.dto.requestDto.contributor.editUploadedPhotos.DeletePhotoRequest;
 import com.petra.final_exam_work.dto.requestDto.contributor.editUploadedPhotos.EditCoverPhotoRequest;
 import com.petra.final_exam_work.dto.requestDto.contributor.editUploadedPhotos.EditTitleAndDescriptionRequest;
 import com.petra.final_exam_work.dto.responseDto.contributor.EditAlbum.EditCoverPhotoResponse;
 import com.petra.final_exam_work.dto.responseDto.contributor.EditAlbum.EditTitleAndDescriptionResponse;
+import com.petra.final_exam_work.dto.responseDto.members.GetPhotoAlbumsResponse;
 import com.petra.final_exam_work.security.CustomUserDetails;
 import com.petra.final_exam_work.service.contributor.ContributorEditAlbumService;
 import jakarta.validation.Valid;
@@ -80,5 +82,24 @@ public class EditAlbumController {
         );
 
         return ResponseEntity.noContent().build();
+    }
+
+    //######### Add photo to uploaded album #######
+    @PreAuthorize("hasRole('CONTRIBUTOR')")
+    @PostMapping("/{albumPublicUuid}/photos")
+    public ResponseEntity<GetPhotoAlbumsResponse> addPhoto(
+            @PathVariable UUID albumPublicUuid,
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @ModelAttribute AddPhotoRequest request
+    ) {
+
+        GetPhotoAlbumsResponse response =
+                contributorEditAlbumService.addPhoto(
+                        albumPublicUuid,
+                        userDetails,
+                        request
+                );
+
+        return ResponseEntity.ok(response);
     }
 }

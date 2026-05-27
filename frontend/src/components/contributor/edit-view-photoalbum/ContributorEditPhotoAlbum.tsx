@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useState } from "react";
+import { useEffect,useRef, useState } from "react";
 import { GetPhotoAlbumsResponse } from "@/lib/api/contributorsPhotoAlbums";
 import { EditTitleAndDescriptionRequest } from "@/lib/api/editAlbum";
 import styles from "./editPhotoAlbum.module.css"
@@ -15,6 +15,7 @@ type Props = {
     onSave: () => void;
     onCoverSelect: (photoUuid: string) => void;
     onRemovePhoto: (photoUuid: string) => void;
+    onAddPhoto: (files: FileList | null) => void;
 }
 
 function ContributorEditAlbum ({
@@ -24,11 +25,13 @@ function ContributorEditAlbum ({
     onCancel,
     onSave,
     onCoverSelect,
-    onRemovePhoto
+    onRemovePhoto,
+    onAddPhoto
 }: Props){
 
     const titleTooLong = formData.photoAlbumName.length > 20;
     const descriptionTooLong = formData.description.length > 50;
+    const fileInputRef = useRef<HTMLInputElement | null>(null);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -142,6 +145,23 @@ function ContributorEditAlbum ({
 
                     </div>
                 )}
+
+                <input
+                    type="file"
+                    multiple
+                    accept="image/*"
+                    hidden
+                    ref={fileInputRef}
+                    onChange={(e) => onAddPhoto(e.target.files)}
+                />
+
+                <button
+                    type="button"
+                    className={styles.addphotobtn}
+                    onClick={() => fileInputRef.current?.click()}
+                >
+                    Add more photos
+                </button>
             
             </div>
 

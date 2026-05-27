@@ -248,8 +248,8 @@ GET ("/member/albums/{albumPublicUuid})
 
 -----------------NOW---------------
 ## Task 14 - edit saved albums
-(21/5, 23/5, 24/5)
-edit text, change cover photo, reorder photos, add/remove photos, change status
+(21/5, 23/5 -26/5)
+edit text, change cover photo, add/remove photos, reorder photos, change status
 
   GET contributor/albums/{albumPublicUuid}
 
@@ -282,6 +282,8 @@ Transaction commits automatically)
 
 * added request, service, controller, security config 
 * fetch
+
+## BREAK WRITE MD FILE ON WORKING PART OF PROJECT ##
 
 ## Task 15 -  Scheduled publisher job
 every minute check if anything need to change form scheduled to published
