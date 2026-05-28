@@ -116,4 +116,23 @@ public class EditAlbumController {
 
         return ResponseEntity.ok(response);
     }
+
+    //######### Change status Album #######
+    @PreAuthorize("hasRole('CONTRIBUTOR')")
+    @PatchMapping("/{albumPublicUuid}/status")
+    public ResponseEntity<Void> editStatus(
+            @PathVariable UUID albumPublicUuid,
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @RequestBody EditStatusAlbumRequest request
+            ) {
+
+        contributorEditAlbumService.editStatus(
+                albumPublicUuid,
+                userDetails,
+                request
+        );
+
+        return ResponseEntity.ok().build();
+    }
+
 }
