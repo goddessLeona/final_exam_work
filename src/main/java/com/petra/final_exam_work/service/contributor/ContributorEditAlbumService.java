@@ -438,6 +438,7 @@ public class ContributorEditAlbumService {
                         HttpStatus.FORBIDDEN
                 ));
 
+        // Reorder photos in album
         List<PhotoAlbumPhoto> photos =
                 photoAlbumPhotoRepository.findByPhotoAlbumOrderByPositionAsc(album);
 
@@ -454,9 +455,11 @@ public class ContributorEditAlbumService {
 
         photos.add(targetPosition, photoAlbumPhoto);
 
+        //reindex photos in album
         for (int i = 0; i < photos.size(); i++) {
             photos.get(i).setPosition(i);
         }
+
         photoAlbumPhotoRepository.saveAll(photos);
 
         List<Photo> updatedPhotos = photos.stream()

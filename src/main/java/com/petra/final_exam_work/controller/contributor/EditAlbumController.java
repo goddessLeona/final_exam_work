@@ -1,9 +1,6 @@
 package com.petra.final_exam_work.controller.contributor;
 
-import com.petra.final_exam_work.dto.requestDto.contributor.editUploadedPhotos.AddPhotoRequest;
-import com.petra.final_exam_work.dto.requestDto.contributor.editUploadedPhotos.DeletePhotoRequest;
-import com.petra.final_exam_work.dto.requestDto.contributor.editUploadedPhotos.EditCoverPhotoRequest;
-import com.petra.final_exam_work.dto.requestDto.contributor.editUploadedPhotos.EditTitleAndDescriptionRequest;
+import com.petra.final_exam_work.dto.requestDto.contributor.editUploadedPhotos.*;
 import com.petra.final_exam_work.dto.responseDto.contributor.EditAlbum.EditCoverPhotoResponse;
 import com.petra.final_exam_work.dto.responseDto.contributor.EditAlbum.EditTitleAndDescriptionResponse;
 import com.petra.final_exam_work.dto.responseDto.members.GetPhotoAlbumsResponse;
@@ -34,8 +31,7 @@ public class EditAlbumController {
             @PathVariable UUID albumPublicUuid,
             @AuthenticationPrincipal CustomUserDetails userDetails,
             @Valid
-            @RequestBody
-            EditTitleAndDescriptionRequest request
+            @RequestBody EditTitleAndDescriptionRequest request
     ) {
         EditTitleAndDescriptionResponse response =
                 contributorEditAlbumService.editTitleAndDescription(
@@ -54,8 +50,7 @@ public class EditAlbumController {
             @PathVariable UUID albumPublicUuid,
             @AuthenticationPrincipal CustomUserDetails userDetails,
             @Valid
-            @RequestBody
-            EditCoverPhotoRequest request
+            @RequestBody EditCoverPhotoRequest request
     ){
         EditCoverPhotoResponse response =
                 contributorEditAlbumService.editCoverPhoto(
@@ -105,4 +100,20 @@ public class EditAlbumController {
     }
 
     //######### Reorder photo in album #######
+    @PreAuthorize("hasRole('CONTRIBUTOR')")
+    @PatchMapping("/{albumPublicUuid}/reorder")
+    public ResponseEntity<GetPhotoAlbumsResponse> reorderPhotos(
+            @PathVariable UUID albumPublicUuid,
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @RequestBody ReorderPhotosRequest request
+    ) {
+        GetPhotoAlbumsResponse response =
+                contributorEditAlbumService.reorderPhotos(
+                        albumPublicUuid,
+                        userDetails,
+                        request
+                );
+
+        return ResponseEntity.ok(response);
+    }
 }
