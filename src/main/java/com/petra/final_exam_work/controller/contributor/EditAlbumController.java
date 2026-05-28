@@ -132,7 +132,7 @@ public class EditAlbumController {
                 request
         );
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.noContent().build();
     }
 
 }
