@@ -248,7 +248,7 @@ GET ("/member/albums/{albumPublicUuid})
 
 -----------------NOW---------------
 ## Task 14 - edit saved albums
-(21/5, 23/5 -26/5)
+(21/5, 23/5 -26/5 27/5)
 edit text, change cover photo, add/remove photos, reorder photos, change status
 
   GET contributor/albums/{albumPublicUuid}
@@ -269,6 +269,7 @@ edit text, change cover photo, add/remove photos, reorder photos, change status
   DELETE /contributor/albums/{albumPublicUuid}/photos
 
   * added request, service, controller, security config
+  * added fetch and added inside edit component
 
 (Validate user, Validate album, Validate ownership, Validate photo,
 Validate photo belongs to album, Validate minimum photo count,
@@ -276,14 +277,17 @@ Detect if deleted photo is cover, Delete junction row,
 Delete photo, Reindex positions, Repair cover photo if needed,
 Transaction commits automatically)
 
-  * added fetch and added inside edit component
-
   POST /contributor/albums/{albumPublicUuid}/photos
 
-* added request, service, controller, security config 
-* fetch
+  * added request, service, controller, security config 
+  * added fetch and added inside edit component
 
-## BREAK WRITE MD FILE ON WORKING PART OF PROJECT ##
+  PATCH /contributor/albums/{albumPublicUuid}/relocate
+
+  * added request, service, controller, security config
+
+## BREAK WRITE MD FILE ON WORKING PART OF PROJECT 
+## Add minimal css all over project to look more sync 
 
 ## Task 15 -  Scheduled publisher job
 every minute check if anything need to change form scheduled to published
@@ -313,7 +317,7 @@ private string photoThumbernailPath and save 300px
 privet string photoMediumPath 800px
 private string originalPath but max 900px (or something)
 
-## task 21 - look over upload photos
+## task 21 - Improve upload photos
  add partial success handling, to show what images failed to upload and skipp them
 
 upload valid images

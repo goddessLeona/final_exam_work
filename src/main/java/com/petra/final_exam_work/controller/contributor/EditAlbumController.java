@@ -27,6 +27,7 @@ public class EditAlbumController {
         this.contributorEditAlbumService = contributorEditAlbumService;
     }
 
+    //######### Edit title and description on album #######
     @PreAuthorize("hasRole('CONTRIBUTOR')")
     @PatchMapping("/{albumPublicUuid}/title-description")
     public ResponseEntity<EditTitleAndDescriptionResponse> editTitleAndDescription(
@@ -102,4 +103,6 @@ public class EditAlbumController {
 
         return ResponseEntity.ok(response);
     }
+
+    //######### Reorder photo in album #######
 }

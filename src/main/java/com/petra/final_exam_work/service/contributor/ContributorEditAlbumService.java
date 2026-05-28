@@ -3,10 +3,7 @@ package com.petra.final_exam_work.service.contributor;
 import com.petra.final_exam_work.dto.mapperDto.contributor.editAlbum.EditCoverPhotoMapper;
 import com.petra.final_exam_work.dto.mapperDto.contributor.editAlbum.EditTitleAndContributorMapper;
 import com.petra.final_exam_work.dto.mapperDto.member.GetPhotoAlbumsMapper;
-import com.petra.final_exam_work.dto.requestDto.contributor.editUploadedPhotos.AddPhotoRequest;
-import com.petra.final_exam_work.dto.requestDto.contributor.editUploadedPhotos.DeletePhotoRequest;
-import com.petra.final_exam_work.dto.requestDto.contributor.editUploadedPhotos.EditCoverPhotoRequest;
-import com.petra.final_exam_work.dto.requestDto.contributor.editUploadedPhotos.EditTitleAndDescriptionRequest;
+import com.petra.final_exam_work.dto.requestDto.contributor.editUploadedPhotos.*;
 import com.petra.final_exam_work.dto.responseDto.contributor.EditAlbum.EditCoverPhotoResponse;
 import com.petra.final_exam_work.dto.responseDto.contributor.EditAlbum.EditTitleAndDescriptionResponse;
 import com.petra.final_exam_work.dto.responseDto.members.GetPhotoAlbumsResponse;
@@ -387,6 +384,89 @@ public class ContributorEditAlbumService {
         fileStorageService.validateImage(file);
 
         return fileStorageService.save(file, userUuid, category, filePrefix);
+    }
+
+    //######### Reorder photo in album #######
+    @Transactional
+    public GetPhotoAlbumsResponse reorderPhotos (
+            UUID albumPublicUuid,
+            CustomUserDetails userDetails,
+            ReorderPhotosRequest request
+    ) {
+
+        UUID publicUuid = userDetails.getPublicUuid();
+        User user = userRepository.findByPublicUuid(publicUuid)
+                .orElseThrow(() -> new ApiException(
+                        "User was not found",
+                        HttpStatus.NOT_FOUND)
+                );
+
+
+        if (user.getContributorStatus() != ContributorStatus.APPROVED) {
+            throw new ApiException(
+                    "You are not approved to have access to this data",
+                    HttpStatus.FORBIDDEN
+            );
+        }
+
+        PhotoAlbum album = photoAlbumRepository
+                .findByPublicUuid(albumPublicUuid)
+                .orElseThrow(() -> new ApiException(
+                        "Album not found",
+                        HttpStatus.NOT_FOUND
+                ));
+
+        if (!album.getOwnedByUser().getId().equals(user.getId())) {
+            throw new ApiException(
+                    "You do not have access to this album",
+                    HttpStatus.FORBIDDEN
+            );
+        }
+
+        Photo photo = photoRepository
+                .findByPublicUuid(request.getPhotoPublicUuid())
+                .orElseThrow(() -> new ApiException(
+                        "Photo not found",
+                        HttpStatus.NOT_FOUND
+                ));
+
+
+        PhotoAlbumPhoto photoAlbumPhoto = photoAlbumPhotoRepository
+                .findByPhotoAndPhotoAlbum(photo, album)
+                .orElseThrow(() -> new ApiException(
+                        "Photo does not belong to this album",
+                        HttpStatus.FORBIDDEN
+                ));
+
+        List<PhotoAlbumPhoto> photos =
+                photoAlbumPhotoRepository.findByPhotoAlbumOrderByPositionAsc(album);
+
+        photos.remove(photoAlbumPhoto);
+
+        int targetPosition= request.getTargetPosition();
+
+        if (targetPosition <0 || targetPosition > photos.size()) {
+            throw new ApiException(
+                    "Invalid target position",
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+
+        photos.add(targetPosition, photoAlbumPhoto);
+
+        for (int i = 0; i < photos.size(); i++) {
+            photos.get(i).setPosition(i);
+        }
+        photoAlbumPhotoRepository.saveAll(photos);
+
+        List<Photo> updatedPhotos = photos.stream()
+                .map(PhotoAlbumPhoto::getPhoto)
+                .toList();
+
+        return getPhotoAlbumsMapper.toDto(
+                album,
+                updatedPhotos
+        );
     }
 }
 
