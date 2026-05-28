@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import { GetPhotoAlbumsResponse, contributorGetAlbums } from "@/lib/api/contributorsPhotoAlbums";
 import { EditTitleAndDescriptionRequest } from "@/lib/api/editAlbum";
 import { editTitleAndDescription } from "@/lib/api/editAlbum";
-import { editCoverPhoto, deletePhoto,addPhoto } from "@/lib/api/editAlbum";
+import { editCoverPhoto, deletePhoto,addPhoto, reorderPhotos } from "@/lib/api/editAlbum";
 import ContributorViewAlbum from "./ContributorViewAlbum";
 import ContributorEditAlbum from "./ContributorEditPhotoAlbum";
 
@@ -139,9 +139,27 @@ function ContributorContentPage (){
         }catch (err: any) {
             setError(err.message || "Failed to update album")
         }
-
     }
 
+    //Reorder photos in album
+    async function handleReorderPhoto(
+        photoUuid: string,
+        targetPosition: number
+    ) {
+        try {
+
+            const updatedAlbum = await reorderPhotos(albumUuid, {
+                photoPublicUuid: photoUuid,
+                targetPosition
+            });
+
+            setData(updatedAlbum);
+
+        } catch (err: any) {
+
+            setError(err.message || "Failed to reorder photos");
+        }
+    }
 
     if (loading) {
         return <p>Loading...</p>;
@@ -165,6 +183,7 @@ function ContributorContentPage (){
             onCoverSelect={handleSetCover}
             onRemovePhoto={handleRemovePhoto}
             onAddPhoto={handleAddPhoto}
+            onReorderPhoto={handleReorderPhoto}
         />
     ) : (
         <ContributorViewAlbum

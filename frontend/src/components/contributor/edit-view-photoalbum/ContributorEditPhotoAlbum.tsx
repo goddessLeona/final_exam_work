@@ -16,6 +16,7 @@ type Props = {
     onCoverSelect: (photoUuid: string) => void;
     onRemovePhoto: (photoUuid: string) => void;
     onAddPhoto: (files: FileList | null) => void;
+    onReorderPhoto:(photoUuid: string, targetPosition: number) => void;
 }
 
 function ContributorEditAlbum ({
@@ -26,7 +27,8 @@ function ContributorEditAlbum ({
     onSave,
     onCoverSelect,
     onRemovePhoto,
-    onAddPhoto
+    onAddPhoto,
+    onReorderPhoto
 }: Props){
 
     const titleTooLong = formData.photoAlbumName.length > 20;
@@ -137,6 +139,26 @@ function ContributorEditAlbum ({
                                     onClick={() => onRemovePhoto (photo.publicUuid)}
                                 >
                                     Remove photo
+                                </button>
+
+                                <button
+                                    type="button"
+                                    onClick={() =>
+                                        onReorderPhoto(photo.publicUuid, index - 1)
+                                    }
+                                    disabled={index === 0}
+                                >
+                                    ←
+                                </button>
+
+                                <button
+                                    type="button"
+                                    onClick={() =>
+                                        onReorderPhoto(photo.publicUuid, index + 1)
+                                    }
+                                    disabled={index === data.photos.length - 1}
+                                >
+                                    →
                                 </button>
 
                             </div>

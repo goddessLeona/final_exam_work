@@ -105,7 +105,7 @@ export async function deletePhoto (
 }
 
 export interface DeletePhotoRequest {
-    
+
     photoPublicUuid: string
 }
 
@@ -135,5 +135,42 @@ export async function addPhoto(
 
     return json;
 
+}
+
+//######### Reorder photo in album #######
+export async function reorderPhotos(
+    albumPublicUuid: string,
+    request: ReorderPhotoRequest
+): Promise <GetPhotoAlbumsResponse> {
+
+    const response = await fetch (
+
+         `${process.env.NEXT_PUBLIC_API_URL}/contributor/albums/${albumPublicUuid}/reorder`,
+         {
+             method: "PATCH",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(request)
+         }
+    );
+
+    const json = await response.json();
+
+    if (!response.ok) {
+        throw {
+            message: json.message,
+            errors: json.errors
+        };
+    }
+
+    return json;
+
+}
+
+export interface ReorderPhotoRequest {
+    photoPublicUuid: string;
+    targetPosition: number;
 }
 
