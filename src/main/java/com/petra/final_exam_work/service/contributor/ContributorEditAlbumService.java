@@ -7,6 +7,7 @@ import com.petra.final_exam_work.dto.requestDto.contributor.editUploadedPhotos.*
 import com.petra.final_exam_work.dto.responseDto.contributor.EditAlbum.EditCoverPhotoResponse;
 import com.petra.final_exam_work.dto.responseDto.contributor.EditAlbum.EditTitleAndDescriptionResponse;
 import com.petra.final_exam_work.dto.responseDto.members.GetPhotoAlbumsResponse;
+import com.petra.final_exam_work.entity.enums.ContentStatus;
 import com.petra.final_exam_work.entity.enums.ContributorStatus;
 import com.petra.final_exam_work.entity.junktionTables.photoAlbumPhoto.PhotoAlbumPhoto;
 import com.petra.final_exam_work.entity.photo.Photo;
@@ -25,6 +26,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -471,6 +473,83 @@ public class ContributorEditAlbumService {
                 updatedPhotos
         );
     }
+
+    // Change the status on the album
+    @Transactional
+    public void editStatus(
+            UUID albumPublicUuid,
+            CustomUserDetails userDetails,
+            EditStatusAlbumRequest request
+    ) {
+        UUID publicUuid = userDetails.getPublicUuid();
+        User user = userRepository.findByPublicUuid(publicUuid)
+                .orElseThrow(() -> new ApiException(
+                        "User was not found",
+                        HttpStatus.NOT_FOUND)
+                );
+
+
+        if (user.getContributorStatus() != ContributorStatus.APPROVED) {
+            throw new ApiException(
+                    "You are not approved to have access to this data",
+                    HttpStatus.FORBIDDEN
+            );
+        }
+
+        PhotoAlbum album = photoAlbumRepository
+                .findByPublicUuid(albumPublicUuid)
+                .orElseThrow(() -> new ApiException(
+                        "Album not found",
+                        HttpStatus.NOT_FOUND
+                ));
+
+        if (!album.getOwnedByUser().getId().equals(user.getId())) {
+            throw new ApiException(
+                    "You do not have access to this album",
+                    HttpStatus.FORBIDDEN
+            );
+        }
+
+        // change status
+        ContentStatus newStatus = request.getStatus();
+
+        if (album.getContentStatus() == newStatus) {
+            throw new ApiException(
+                    "Album already has this status",
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+
+        if (newStatus == ContentStatus.ARCHIVED) {
+            album.setContentStatus(ContentStatus.ARCHIVED);
+            album.setPublishedAt(null);
+            return;
+        }
+
+        if (newStatus == ContentStatus.SCHEDULED && album.getPublishedAt() == null) {
+            throw new ApiException(
+                    "Scheduled content must have a published date",
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+
+        if (newStatus == ContentStatus.PUBLISHED) {
+            album.setPublishedAt(Instant.now());
+        }
+
+        if (newStatus == ContentStatus.DRAFT)
+            album.setPublishedAt(null);
+
+        album.setContentStatus(newStatus);
+    }
 }
 
+// need to add extra check for archived later when archived album get timed
+// before getting permanently removed
+        /*
+        if (status == ARCHIVED) {
+            album.setContentStatus(ARCHIVED);
+            album.setArchivedAt(Instant.now());
+        }
+         */
 

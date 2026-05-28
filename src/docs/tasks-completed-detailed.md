@@ -285,6 +285,13 @@ Transaction commits automatically)
   PATCH /contributor/albums/{albumPublicUuid}/relocate
 
   * added request, service, controller, security config
+  * added frontend
+
+  PATCH /contributor/albums/{albumUuid}/status
+
+  * added request, service, controller ,security config
+
+  PATCH /contributor/albums/{albumUuid}/publish-time
 
 ## BREAK WRITE MD FILE ON WORKING PART OF PROJECT 
 ## Add minimal css all over project to look more sync 
