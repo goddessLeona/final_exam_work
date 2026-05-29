@@ -3,13 +3,19 @@
 import { useState } from "react";
 import { GetPhotoAlbumsResponse } from "@/lib/api/contributorsPhotoAlbums";
 import styles from "./editPhotoAlbum.module.css"
+import type { ContentStatus } from "@/lib/api/types/content-status"
 
 type Props = {
     data: GetPhotoAlbumsResponse;
     onEdit: () => void;
+    onEditStatus: (status: ContentStatus) => void;
 };
 
-function ContributorViewAlbum({ data, onEdit}: Props){
+function ContributorViewAlbum({ 
+    data, 
+    onEdit, 
+    onEditStatus 
+}: Props){
  
     const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
     
@@ -80,6 +86,46 @@ function ContributorViewAlbum({ data, onEdit}: Props){
 
                 </div>
             )}
+
+            <div className={styles.statusbar}>
+
+                <button
+                    type="button"
+                    className={styles.statusbtn}
+                    disabled={data.contentStatus === "DRAFT"}
+                    onClick={() => onEditStatus("DRAFT")}
+                >
+                    Draft
+                </button>
+
+                <button
+                    type="button"
+                    className={styles.statusbtn}
+                    disabled={data.contentStatus === "PUBLISHED"}
+                    onClick={() => onEditStatus("PUBLISHED")}
+                >
+                    Publish
+                </button>
+
+                <button
+                    type="button"
+                    className={styles.statusbtn}
+                    disabled={data.contentStatus === "SCHEDULED"}
+                    onClick={() => onEditStatus("SCHEDULED")}
+                >
+                    Sceduale
+                </button>
+
+                <button
+                    type="button"
+                    className={styles.statusbtn}
+                    disabled={data.contentStatus === "ARCHIVED"}
+                    onClick={() => onEditStatus("ARCHIVED")}
+                >
+                    Archive
+                </button>
+
+            </div>
 
             <button
                 onClick ={onEdit}

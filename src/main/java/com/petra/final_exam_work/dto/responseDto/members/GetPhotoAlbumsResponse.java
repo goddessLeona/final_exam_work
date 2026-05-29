@@ -1,6 +1,7 @@
 package com.petra.final_exam_work.dto.responseDto.members;
 
 import com.petra.final_exam_work.dto.responseDto.contributor.ContributorUploadPhotos.CoverPhotoResponse;
+import com.petra.final_exam_work.entity.enums.ContentStatus;
 
 import java.time.Instant;
 import java.util.List;
@@ -17,13 +18,14 @@ public class GetPhotoAlbumsResponse {
     private List<AlbumTagResponse> albumTags;
     private List<PhotoResponse> photos ;
     private CoverPhotoResponse coverPhoto;
+    private ContentStatus contentStatus;
 
     public GetPhotoAlbumsResponse() {
     }
 
     public GetPhotoAlbumsResponse(UUID publicUuid, String photoAlbumName, String description, String username,
                                   Instant publishedAt, List<AlbumTagResponse> albumTags, List<PhotoResponse> photos,
-                                  CoverPhotoResponse coverPhoto) {
+                                  CoverPhotoResponse coverPhoto, ContentStatus contentStatus) {
         this.publicUuid = publicUuid;
         this.photoAlbumName = photoAlbumName;
         this.description = description;
@@ -32,6 +34,7 @@ public class GetPhotoAlbumsResponse {
         this.albumTags = albumTags;
         this.photos = photos;
         this.coverPhoto = coverPhoto;
+        this.contentStatus = contentStatus;
     }
 
     public UUID getPublicUuid() {
@@ -96,5 +99,13 @@ public class GetPhotoAlbumsResponse {
 
     public void setCoverPhoto(CoverPhotoResponse coverPhoto) {
         this.coverPhoto = coverPhoto;
+    }
+
+    public ContentStatus getContentStatus() {
+        return contentStatus;
+    }
+
+    public void setContentStatus(ContentStatus contentStatus) {
+        this.contentStatus = contentStatus;
     }
 }

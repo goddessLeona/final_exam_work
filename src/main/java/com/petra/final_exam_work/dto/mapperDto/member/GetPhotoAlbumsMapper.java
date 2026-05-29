@@ -25,7 +25,8 @@ public class GetPhotoAlbumsMapper {
                 photoAlbum.getPublishedAt(),
                 mapTags(photoAlbum.getTags()),
                 mapPhotos(photos),
-                map(photoAlbum.getCoverPhoto())
+                map(photoAlbum.getCoverPhoto()),
+                photoAlbum.getContentStatus()
         );
     }
 

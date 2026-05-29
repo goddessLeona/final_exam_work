@@ -43,6 +43,7 @@ export async function memberGetCoverPhotos(
 }
 
 //######## GET to album from cover photo ############
+import type { ContentStatus } from "./types/content-status";
 
 export interface AlbumTagResponse {
     publicUuid: string;
@@ -60,9 +61,11 @@ export interface GetPhotoAlbumsResponse {
     description: string;
     username: string;
     publishedAt: string;
-
+    
     albumTags: AlbumTagResponse [];
     photos: PhotoResponse [];
+    coverPhoto: CoverPhotoResponse;
+    contentStatus: ContentStatus;
 }
 
 export async function memberGetAlbums(publicUuid: string): Promise<GetPhotoAlbumsResponse> {

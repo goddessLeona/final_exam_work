@@ -147,7 +147,7 @@ export async function reorderPhotos(
 
          `${process.env.NEXT_PUBLIC_API_URL}/contributor/albums/${albumPublicUuid}/reorder`,
          {
-             method: "PATCH",
+            method: "PATCH",
             credentials: "include",
             headers: {
                 "Content-Type": "application/json"
@@ -172,5 +172,41 @@ export async function reorderPhotos(
 export interface ReorderPhotoRequest {
     photoPublicUuid: string;
     targetPosition: number;
+}
+
+//######### Change status on album #######
+import type { ContentStatus } from "./types/content-status";
+
+export async function changeStatus(
+    albumPublicUuid: string,
+    request: EditStatusRequest
+): Promise<void> {
+
+    const response = await fetch (
+
+        `${process.env.NEXT_PUBLIC_API_URL}/contributor/albums/${albumPublicUuid}/status`,
+        {
+            method: "PATCH",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(request)
+        }
+    );
+
+    if (!response.ok) {
+
+        const json = await response.json();
+
+        throw {
+            message: json.message,
+            errors: json.errors
+        };
+    }
+}
+
+export interface EditStatusRequest {
+    status: ContentStatus
 }
 

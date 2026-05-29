@@ -1,7 +1,7 @@
 
 //####### Get all cover photos from all albums that are uploaded #######
 
-export type ContentStatus = "PUBLISHED" | "DRAFT" | "SCHEDULED" | "ARCHIVED";
+import type { ContentStatus } from "./types/content-status";
 type ContentType = "PHOTO" | "VIDEO";
 
 export interface CoverPhotoResponse {
@@ -68,6 +68,7 @@ export interface GetPhotoAlbumsResponse {
     albumTags: AlbumTagResponse [];
     photos: PhotoResponse [];
     coverPhoto: CoverPhotoResponse | null;
+    contentStatus: ContentStatus;
 }
 
 export async function contributorGetAlbums(publicUuid: string): Promise<GetPhotoAlbumsResponse> {
