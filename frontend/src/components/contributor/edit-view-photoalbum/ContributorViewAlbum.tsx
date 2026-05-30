@@ -9,15 +9,36 @@ type Props = {
     data: GetPhotoAlbumsResponse;
     onEdit: () => void;
     onEditStatus: (status: ContentStatus) => void;
+    onEditScheduled: (publishedAt: string | null) => void;
 };
 
 function ContributorViewAlbum({ 
     data, 
     onEdit, 
-    onEditStatus 
+    onEditStatus,
+    onEditScheduled 
 }: Props){
  
     const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+
+    const getPublishText = () => {
+        switch (data.contentStatus) {
+            case "PUBLISHED":
+                return `Published: ${new Date(data.publishedAt).toLocaleString()}`;
+
+            case "SCHEDULED":
+                return `Scheduled for: ${new Date(data.publishedAt).toLocaleString()}`;
+
+            case "DRAFT":
+                return "Not published";
+
+            case "ARCHIVED":
+                return "Archived";
+
+            default:
+                return "";
+        }
+    };
     
     return (
         <div className={styles.container}>
@@ -50,7 +71,7 @@ function ContributorViewAlbum({
                 </div>
             )}
 
-            <p>Published: {data.publishedAt}</p>
+            <p>{getPublishText()}</p>
 
             {selectedIndex !== null && (
                 <div className={styles.lightbox}>
@@ -93,7 +114,7 @@ function ContributorViewAlbum({
                     type="button"
                     className={styles.statusbtn}
                     disabled={data.contentStatus === "DRAFT"}
-                    onClick={() => onEditStatus("DRAFT")}
+                    onClick={() => onEditScheduled(null)}
                 >
                     Draft
                 </button>
@@ -102,20 +123,31 @@ function ContributorViewAlbum({
                     type="button"
                     className={styles.statusbtn}
                     disabled={data.contentStatus === "PUBLISHED"}
-                    onClick={() => onEditStatus("PUBLISHED")}
+                    onClick={() => {
+                        onEditScheduled(new Date().toISOString());
+                    }}
                 >
-                    Publish
+                    Publish now
                 </button>
 
-                <button
-                    type="button"
+                <label
                     className={styles.statusbtn}
-                    disabled={data.contentStatus === "SCHEDULED"}
-                    onClick={() => onEditStatus("SCHEDULED")}
-                >
-                    Sceduale
-                </button>
-
+                    >
+                    Scedule
+                    <input
+                        type="datetime-local"
+                        className={styles.scedulebtn}
+                        value={data.publishedAt ? data.publishedAt.slice(0, 16) : ""}
+                        disabled={false}
+                        onChange={(e) => onEditScheduled(
+                            e.target.value
+                            ? new Date(e.target.value).toISOString() 
+                            : null)
+                        }
+                    />
+                </label>
+                
+                
                 <button
                     type="button"
                     className={styles.statusbtn}

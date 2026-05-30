@@ -526,20 +526,6 @@ public class ContributorEditAlbumService {
             return;
         }
 
-        if (newStatus == ContentStatus.SCHEDULED && album.getPublishedAt() == null) {
-            throw new ApiException(
-                    "Scheduled content must have a published date",
-                    HttpStatus.BAD_REQUEST
-            );
-        }
-
-        if (newStatus == ContentStatus.PUBLISHED) {
-            album.setPublishedAt(Instant.now());
-        }
-
-        if (newStatus == ContentStatus.DRAFT)
-            album.setPublishedAt(null);
-
         album.setContentStatus(newStatus);
     }
 
@@ -597,10 +583,10 @@ public class ContributorEditAlbumService {
 
         if (publishedAt == null) {
             album.setContentStatus(ContentStatus.DRAFT);
-        } else if (publishedAt.isAfter(now)) {
-            album.setContentStatus(ContentStatus.SCHEDULED);
-        } else {
+        } else if (!publishedAt.isAfter(now)) {
             album.setContentStatus(ContentStatus.PUBLISHED);
+        } else {
+            album.setContentStatus(ContentStatus.SCHEDULED);
         }
 
         List<PhotoAlbumPhoto> photos =

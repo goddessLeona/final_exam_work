@@ -5,7 +5,7 @@ import { useParams } from "next/navigation";
 import { GetPhotoAlbumsResponse, contributorGetAlbums } from "@/lib/api/contributorsPhotoAlbums";
 import { EditTitleAndDescriptionRequest } from "@/lib/api/editAlbum";
 import { editTitleAndDescription } from "@/lib/api/editAlbum";
-import { editCoverPhoto, deletePhoto,addPhoto, reorderPhotos, changeStatus } from "@/lib/api/editAlbum";
+import { editCoverPhoto, deletePhoto,addPhoto, reorderPhotos, changeStatus, editScheduled } from "@/lib/api/editAlbum";
 import type { ContentStatus } from "@/lib/api/types/content-status"
 import ContributorViewAlbum from "./ContributorViewAlbum";
 import ContributorEditAlbum from "./ContributorEditPhotoAlbum";
@@ -186,6 +186,22 @@ function ContributorContentPage (){
         }
     }
 
+    //Edit or add scheduled date on a album
+    async function handleScheduled(publishedAt: string | null){
+
+        try{
+
+            const updatedAlbum = await editScheduled(albumUuid, {
+                publishedAt
+            });
+
+            setData(updatedAlbum);
+
+        }catch (err: any) {
+            setError(err.message || "Failed to change scheduled date on album");
+        }
+    }
+
 
     if (loading) {
         return <p>Loading...</p>;
@@ -216,6 +232,7 @@ function ContributorContentPage (){
             data={data}
             onEdit={() => setIsEditing(true)} 
             onEditStatus={handleStatus}
+            onEditScheduled={handleScheduled}
         />
     )
 

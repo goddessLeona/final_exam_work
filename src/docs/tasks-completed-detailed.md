@@ -294,11 +294,17 @@ Transaction commits automatically)
 
   PATCH /contributor/albums/{albumUuid}/publish-time
 
+  * added request, service, controller ,security config
+  * added frontend
+
+
 ## BREAK WRITE MD FILE ON WORKING PART OF PROJECT 
 ## Add minimal css all over project to look more sync 
 
 ## Task 15 -  Scheduled publisher job
 every minute check if anything need to change form scheduled to published
+
+## Time zon safe
 
 ## Task 16 - Make possible to tag photos
   * add tags -general album

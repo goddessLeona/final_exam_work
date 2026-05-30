@@ -211,4 +211,37 @@ export interface EditStatusRequest {
 }
 
 //######### Change publishing date #######
+export async function editScheduled(
+    albumPublicUuid: string,
+    request: EditPublishedDateRequest
+): Promise<GetPhotoAlbumsResponse>{
+
+    const response = await fetch (
+
+         `${process.env.NEXT_PUBLIC_API_URL}/contributor/albums/${albumPublicUuid}/scheduled`,
+         {
+            method: "PATCH",
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(request)
+         }
+    );
+
+    const json = await response.json();
+
+    if (!response.ok) {
+        throw {
+            message: json.message,
+            errors: json.errors
+        };
+    }
+
+    return json;
+}
+
+export interface EditPublishedDateRequest {
+    publishedAt: string | null;
+}
 
