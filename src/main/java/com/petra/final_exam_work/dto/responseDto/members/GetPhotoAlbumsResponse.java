@@ -1,5 +1,8 @@
 package com.petra.final_exam_work.dto.responseDto.members;
 
+import com.petra.final_exam_work.dto.responseDto.contributor.ContributorUploadPhotos.CoverPhotoResponse;
+import com.petra.final_exam_work.entity.enums.ContentStatus;
+
 import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
@@ -11,22 +14,29 @@ public class GetPhotoAlbumsResponse {
     private String description;
     private String username;
     private Instant publishedAt;
+    private Instant archivedAt;
 
     private List<AlbumTagResponse> albumTags;
     private List<PhotoResponse> photos ;
+    private CoverPhotoResponse coverPhoto;
+    private ContentStatus contentStatus;
 
     public GetPhotoAlbumsResponse() {
     }
 
     public GetPhotoAlbumsResponse(UUID publicUuid, String photoAlbumName, String description, String username,
-                                  Instant publishedAt, List<AlbumTagResponse> albumTags, List<PhotoResponse> photos) {
+                                  Instant publishedAt, Instant archivedAt, List<AlbumTagResponse> albumTags,
+                                  List<PhotoResponse> photos, CoverPhotoResponse coverPhoto, ContentStatus contentStatus) {
         this.publicUuid = publicUuid;
         this.photoAlbumName = photoAlbumName;
         this.description = description;
         this.username = username;
         this.publishedAt = publishedAt;
+        this.archivedAt = archivedAt;
         this.albumTags = albumTags;
         this.photos = photos;
+        this.coverPhoto = coverPhoto;
+        this.contentStatus = contentStatus;
     }
 
     public UUID getPublicUuid() {
@@ -69,6 +79,14 @@ public class GetPhotoAlbumsResponse {
         this.publishedAt = publishedAt;
     }
 
+    public Instant getArchivedAt() {
+        return archivedAt;
+    }
+
+    public void setArchivedAt(Instant archivedAt) {
+        this.archivedAt = archivedAt;
+    }
+
     public List<AlbumTagResponse> getAlbumTags() {
         return albumTags;
     }
@@ -83,5 +101,21 @@ public class GetPhotoAlbumsResponse {
 
     public void setPhotos(List<PhotoResponse> photos) {
         this.photos = photos;
+    }
+
+    public CoverPhotoResponse getCoverPhoto() {
+        return coverPhoto;
+    }
+
+    public void setCoverPhoto(CoverPhotoResponse coverPhoto) {
+        this.coverPhoto = coverPhoto;
+    }
+
+    public ContentStatus getContentStatus() {
+        return contentStatus;
+    }
+
+    public void setContentStatus(ContentStatus contentStatus) {
+        this.contentStatus = contentStatus;
     }
 }

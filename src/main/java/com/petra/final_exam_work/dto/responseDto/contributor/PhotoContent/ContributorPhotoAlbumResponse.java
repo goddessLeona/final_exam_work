@@ -9,7 +9,7 @@ import java.util.UUID;
 
 public class ContributorPhotoAlbumResponse {
 
-    private UUID albumUuid;
+    private UUID publicUuid;
     private String photoAlbumName;
     private Instant publishedAt;
 
@@ -20,9 +20,9 @@ public class ContributorPhotoAlbumResponse {
     public ContributorPhotoAlbumResponse() {
     }
 
-    public ContributorPhotoAlbumResponse(UUID albumUuid, String photoAlbumName, Instant publishedAt,
+    public ContributorPhotoAlbumResponse(UUID publicUuid, String photoAlbumName, Instant publishedAt,
                                          ContentType contentType, ContentStatus contentStatus, CoverPhotoResponse coverPhoto) {
-        this.albumUuid = albumUuid;
+        this.publicUuid = publicUuid;
         this.photoAlbumName = photoAlbumName;
         this.publishedAt = publishedAt;
         this.contentType = contentType;
@@ -30,12 +30,12 @@ public class ContributorPhotoAlbumResponse {
         this.coverPhoto = coverPhoto;
     }
 
-    public UUID getAlbumUuid() {
-        return albumUuid;
+    public UUID getPublicUuid() {
+        return publicUuid;
     }
 
-    public void setAlbumUuid(UUID albumUuid) {
-        this.albumUuid = albumUuid;
+    public void setPublicUuid(UUID publicUuid) {
+        this.publicUuid = publicUuid;
     }
 
     public String getPhotoAlbumName() {

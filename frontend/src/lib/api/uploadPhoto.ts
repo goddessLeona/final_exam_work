@@ -11,12 +11,15 @@ export async function postUploadPhotos(formData : FormData): Promise<UploadPhoto
     );
 
     const json = await response.json();
-   
+
     if (!response.ok) {
-        throw json
+        throw {
+            message: json.message,
+            errors: json.errors ?? null
+        };
     }
 
-    return json
+    return json;
 }
 
 type ContentStatus = "PUBLISHED" | "DRAFT" | "SCHEDULED" | "ARCHIVED";

@@ -13,6 +13,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.Instant;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -35,5 +37,13 @@ public interface PhotoAlbumRepository extends JpaRepository<PhotoAlbum, UserCons
     boolean existsByOwnedByUserAndContentStatus(User user, ContentStatus contentStatus);
 
     Optional<PhotoAlbum> findByPublicUuidAndContentStatus(UUID publicUuid, ContentStatus contentStatus);
+
+    Optional<PhotoAlbum> findByPublicUuid(UUID albumPublicUuid);
+
+    boolean existsByOwnedByUserAndPhotoAlbumName(User user, String photoAlbumName);
+
+    boolean existsByOwnedByUserAndPhotoAlbumNameAndPublicUuidNot(User user, String photoAlbumName, UUID albumPublicUuid);
+
+    List<PhotoAlbum> findByContentStatusAndPublishedAtBefore(ContentStatus contentStatus, Instant now);
 
 }

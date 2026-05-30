@@ -205,7 +205,7 @@ contributor should have a dashboard from where they easily can upload photos fro
 
   POST ("/contributor/upload/photo")
 
-      ### step 1. create a minimum version. Just simple upload photos DRAFT.
+  ### step 1. create a minimum version. Just simple upload photos DRAFT.
         * added description in db, table photo_albums (so that user can add a text to the photos)
         * created request, response, mapper, service, controller, security config
         * created a fetch, component/form
@@ -213,7 +213,7 @@ contributor should have a dashboard from where they easily can upload photos fro
         * made it more user-friendly, you can add more photos and remove before you post the album
         * made more user-friendly, you can move images around in the preview grid using right and left.
     
-      ### step 2. contributor should be able to publish, save as draft, schedule content, cover image.
+  ### step 2. contributor should be able to publish, save as draft, schedule content, cover image.
         * added cover photo to the db & entity
         * remade service 
         * added missing frontend logic
@@ -229,9 +229,8 @@ GET ("contributor/albums/list")
   * added fetch frontend
   * added minimal styling
 
------------------NOW---------------
 ## Task 13 - display photo album members
-(18/5, 19/5)
+(18/5, 19/5, 20/5)
 Member should be able to see cover photos from all album Photo/video
 click cover photo to get to the album
 contributor should have access to member pages if they have uploaded content.
@@ -247,20 +246,73 @@ GET ("/member/albums/{albumPublicUuid})
   * added fetch 
   * added minimal styling
 
+-----------------NOW---------------
 ## Task 14 - edit saved albums
-* change cover photo
-* reorder after upload
-* add/remove photos later
-* change status
+(21/5, 23/5 -26/5 27/5)
+edit text, change cover photo, add/remove photos, reorder photos, change status
+
+  GET contributor/albums/{albumPublicUuid}
+
+  * add service/controller for contributor to get to album from clicking cover photo.
+  * add fetch and component
+
+  PATCH contributor/albums/{albumPublicUuid}/title-description
+
+  * add request,response,mapper, service, controller, security config
+  * add fetch and component 
+
+  PATCH /contributor/albums/{albumPublicUuid}/cover-photo
+
+  * add request, response, mapper, service, controller, security config
+  * add fetch, 
+
+  DELETE /contributor/albums/{albumPublicUuid}/photos
+
+  * added request, service, controller, security config
+  * added fetch and added inside edit component
+
+(Validate user, Validate album, Validate ownership, Validate photo,
+Validate photo belongs to album, Validate minimum photo count,
+Detect if deleted photo is cover, Delete junction row,
+Delete photo, Reindex positions, Repair cover photo if needed,
+Transaction commits automatically)
+
+  POST /contributor/albums/{albumPublicUuid}/photos
+
+  * added request, service, controller, security config 
+  * added fetch and added inside edit component
+
+  PATCH /contributor/albums/{albumPublicUuid}/relocate
+
+  * added request, service, controller, security config
+  * added frontend
+
+  PATCH /contributor/albums/{albumUuid}/status
+
+  * added request, service, controller ,security config
+  * added frontend
+
+  PATCH /contributor/albums/{albumUuid}/publish-time
+
+  * added request, service, controller ,security config
+  * added frontend
+  * updated db archived_At (to be able to remove deleted content after example 10 days)
+
+
+## BREAK WRITE MD FILE ON WORKING PART OF PROJECT 
+## Add minimal css all over project to look more sync 
 
 ## Task 15 -  Scheduled publisher job
-* every minute check if anything need to change form scheduled to published
+every minute check if anything need to change form scheduled to published
+
+## Time zon safe
 
 ## Task 16 - Make possible to tag photos
   * add tags -general album
   * add tags other contributors
 
 ## Task 17 - Archive photos/delete
+contributor photos get archived and if not published again they get deleted after 1 month
 
 ## task 18 Look over project and clean up folders 
 
@@ -275,6 +327,15 @@ Planned background cleanup system for remove unused files:
 
 ## task 20 - add a converter, if photos are to big resize before saving
 also add in db (to optimaze and make faster to load tumbernails)
+
 private string photoThumbernailPath and save 300px 
 privet string photoMediumPath 800px
 private string originalPath but max 900px (or something)
+
+## task 21 - Improve upload photos
+ add partial success handling, to show what images failed to upload and skipp them
+
+upload valid images
+skip broken ones
+return list of failed files
+add upload to temp folder to prevent that if upload fail a lot of photos will be left in the upload folder.

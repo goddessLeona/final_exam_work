@@ -93,3 +93,8 @@
 .card:hover {
     transform: scale(1.02);
 }
+
+.cardLink {
+    text-decoration: none;
+    color: inherit;
+}

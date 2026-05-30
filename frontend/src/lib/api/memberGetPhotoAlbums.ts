@@ -1,3 +1,6 @@
+
+//####### Get all cover photos from all albums that are published #######
+
 export type ContentType = "PHOTO" | "VIDEO";
 
 export interface CoverPhotoResponse {
@@ -39,6 +42,9 @@ export async function memberGetCoverPhotos(
 
 }
 
+//######## GET to album from cover photo ############
+import type { ContentStatus } from "./types/content-status";
+
 export interface AlbumTagResponse {
     publicUuid: string;
     nameTag: string;
@@ -55,9 +61,12 @@ export interface GetPhotoAlbumsResponse {
     description: string;
     username: string;
     publishedAt: string;
-
+    archivedAt: string | null;
+    
     albumTags: AlbumTagResponse [];
     photos: PhotoResponse [];
+    coverPhoto: CoverPhotoResponse;
+    contentStatus: ContentStatus;
 }
 
 export async function memberGetAlbums(publicUuid: string): Promise<GetPhotoAlbumsResponse> {

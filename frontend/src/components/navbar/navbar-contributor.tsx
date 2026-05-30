@@ -8,9 +8,6 @@ export default function NavbarContributor() {
     <nav className={styles.nav}>
       <div className={styles.left}>
         <Link className={styles.link} href="/contributor">Home</Link>
-        <Link className={styles.link} href="">Profile</Link>
-        <Link className={styles.link} href="">Photo</Link>
-        <Link className={styles.link} href="">Messages</Link>
       </div>
       <div className={styles.right}>
         <Link className={styles.link} href="/member">Member Page</Link>
