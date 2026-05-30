@@ -33,7 +33,9 @@ function ContributorViewAlbum({
                 return "Not published";
 
             case "ARCHIVED":
-                return `Archived on the: ${data.archivedAt}`;
+                return data.archivedAt
+                ? `Archived on: ${new Date(data.archivedAt).toLocaleString()}`
+                : "Archived";
 
             default:
                 return "";

@@ -64,7 +64,7 @@ export interface GetPhotoAlbumsResponse {
     description: string;
     username: string;
     publishedAt: string;
-    archivedAt: string | null;
+    archivedAt: string;
 
     albumTags: AlbumTagResponse [];
     photos: PhotoResponse [];

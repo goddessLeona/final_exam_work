@@ -42,7 +42,7 @@ public class PhotoAlbum {
     private Instant publishedAt;
 
     @Column(name = "archived_at", updatable = true)
-    private Instant archived_at;
+    private Instant archivedAt;
 
     @Enumerated(EnumType.STRING)
     @JdbcTypeCode(SqlTypes.NAMED_ENUM)
@@ -79,7 +79,7 @@ public class PhotoAlbum {
     }
 
     public PhotoAlbum(Long id, UUID publicUuid, String photoAlbumName, String description, Instant createdAt,
-                      Instant publishedAt, Instant archived_at, ContentStatus contentStatus, Boolean rulesVerified,
+                      Instant publishedAt, Instant archivedAt, ContentStatus contentStatus, Boolean rulesVerified,
                       User ownedByUser, ContentType contentType, Photo coverPhoto, Set<Tag> tags) {
         this.id = id;
         this.publicUuid = publicUuid;
@@ -87,7 +87,7 @@ public class PhotoAlbum {
         this.description = description;
         this.createdAt = createdAt;
         this.publishedAt = publishedAt;
-        this.archived_at = archived_at;
+        this.archivedAt = archivedAt;
         this.contentStatus = contentStatus;
         this.rulesVerified = rulesVerified;
         this.ownedByUser = ownedByUser;
@@ -144,12 +144,12 @@ public class PhotoAlbum {
         this.publishedAt = publishedAt;
     }
 
-    public Instant getArchived_at() {
-        return archived_at;
+    public Instant getArchivedAt() {
+        return archivedAt;
     }
 
-    public void setArchived_at(Instant archived_at) {
-        this.archived_at = archived_at;
+    public void setArchivedAt(Instant archivedAt) {
+        this.archivedAt = archivedAt;
     }
 
     public ContentStatus getContentStatus() {

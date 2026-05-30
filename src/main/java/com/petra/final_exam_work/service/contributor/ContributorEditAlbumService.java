@@ -522,8 +522,13 @@ public class ContributorEditAlbumService {
 
         if (newStatus == ContentStatus.ARCHIVED) {
             album.setContentStatus(ContentStatus.ARCHIVED);
-            album.setArchived_at(Instant.now());
+            album.setArchivedAt(Instant.now());
+            album.setPublishedAt(null);
             return;
+        }
+
+        if (album.getContentStatus() == ContentStatus.ARCHIVED){
+            album.setArchivedAt(null);
         }
 
         album.setContentStatus(newStatus);
