@@ -46,4 +46,6 @@ public interface PhotoAlbumRepository extends JpaRepository<PhotoAlbum, UserCons
 
     List<PhotoAlbum> findByContentStatusAndPublishedAtBefore(ContentStatus contentStatus, Instant now);
 
+    List<PhotoAlbum> findByContentStatusAndArchivedAtBefore(ContentStatus contentStatus, Instant cutoff);
+
 }

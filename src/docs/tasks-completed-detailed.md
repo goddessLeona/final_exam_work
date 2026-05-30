@@ -246,9 +246,8 @@ GET ("/member/albums/{albumPublicUuid})
   * added fetch 
   * added minimal styling
 
------------------NOW---------------
 ## Task 14 - edit saved albums
-(21/5, 23/5 -26/5 27/5)
+(21/5, 23/5 -26/5 27/5 30/5)
 edit text, change cover photo, add/remove photos, reorder photos, change status
 
   GET contributor/albums/{albumPublicUuid}
@@ -298,25 +297,27 @@ Transaction commits automatically)
   * added frontend
   * updated db archived_At (to be able to remove deleted content after example 10 days)
 
-
-## BREAK WRITE MD FILE ON WORKING PART OF PROJECT 
-## Add minimal css all over project to look more sync 
-
 ## Task 15 -  Scheduled publisher job
 every minute check if anything need to change form scheduled to published
 
-## Time zon safe
+## Task 16
+BREAK WRITE MD FILE ON WORKING PART OF PROJECT 
+Improve user experience
+Add minimal css all over project to look more sync 
 
-## Task 16 - Make possible to tag photos
+
+------------------Future tasks---------------------------------------
+## Task - Time zon safe
+## Task - admin do the final delete of album that are removed
+
+## Task  - Make possible to tag photos
   * add tags -general album
   * add tags other contributors
 
-## Task 17 - Archive photos/delete
-contributor photos get archived and if not published again they get deleted after 1 month
 
-## task 18 Look over project and clean up folders 
+## task -  Look over project and clean up folders 
 
-## task 19 - cleanup service
+## task - cleanup service
 
 Planned background cleanup system for remove unused files:
 * rejected uploads
@@ -325,17 +326,21 @@ Planned background cleanup system for remove unused files:
 * banned/deleted users
 * orphaned files no longer connected to database records
 
-## task 20 - add a converter, if photos are to big resize before saving
+## task  - add a converter, if photos are to big resize before saving
 also add in db (to optimaze and make faster to load tumbernails)
 
 private string photoThumbernailPath and save 300px 
 privet string photoMediumPath 800px
 private string originalPath but max 900px (or something)
 
-## task 21 - Improve upload photos
+## task  - Improve upload photos
  add partial success handling, to show what images failed to upload and skipp them
 
 upload valid images
 skip broken ones
 return list of failed files
 add upload to temp folder to prevent that if upload fail a lot of photos will be left in the upload folder.
+
+## task - frontend browser updates (realtime sync)
+immediate optimistic updates
+periodic background refresh
