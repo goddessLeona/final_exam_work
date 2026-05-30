@@ -21,6 +21,26 @@ function ContributorViewAlbum({
  
     const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
+    const getArchiveCountdown = (archivedAt: string | null) => {
+        if (!archivedAt) return null;
+
+        const archivedDate = new Date(archivedAt);
+        const deleteDate = new Date(archivedDate);
+
+        deleteDate.setDate(deleteDate.getDate() + 7);
+
+        const now = new Date();
+
+        const diff = deleteDate.getTime() - now.getTime();
+
+        if (diff <= 0) return "Will be deleted soon";
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+
+        return `Deletes in ${days}d ${hours}h`;
+    };
+
     const getPublishText = () => {
         switch (data.contentStatus) {
             case "PUBLISHED":
@@ -34,7 +54,7 @@ function ContributorViewAlbum({
 
             case "ARCHIVED":
                 return data.archivedAt
-                ? `Archived on: ${new Date(data.archivedAt).toLocaleString()}`
+                ? `Archived on: ${new Date(data.archivedAt).toLocaleString()} * ${getArchiveCountdown(data.archivedAt)}`
                 : "Archived";
 
             default:

@@ -4,16 +4,18 @@ import com.petra.final_exam_work.entity.enums.ContentStatus;
 import com.petra.final_exam_work.entity.photo.PhotoAlbum;
 import com.petra.final_exam_work.repository.PhotoAlbumRepository;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.List;
 
-public class contentScheduler {
+@Component
+public class ContentScheduler {
 
     private final PhotoAlbumRepository photoAlbumRepository;
 
-    public contentScheduler(PhotoAlbumRepository photoAlbumRepository) {
+    public ContentScheduler(PhotoAlbumRepository photoAlbumRepository) {
         this.photoAlbumRepository = photoAlbumRepository;
     }
 
@@ -31,8 +33,9 @@ public class contentScheduler {
                         );
 
         for (PhotoAlbum album : scheduledAlbums) {
-
             album.setContentStatus(ContentStatus.PUBLISHED);
+            photoAlbumRepository.save(album);
         }
+
     }
 }
