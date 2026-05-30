@@ -135,4 +135,21 @@ public class EditAlbumController {
         return ResponseEntity.noContent().build();
     }
 
+    //######### Change publishing date #######
+    @PreAuthorize("hasRole('CONTRIBUTOR')")
+    @PatchMapping("/{albumPublicUuid}/scheduled")
+    public ResponseEntity<GetPhotoAlbumsResponse> editScheduled(
+            @PathVariable UUID albumPublicUuid,
+            @AuthenticationPrincipal CustomUserDetails userDetails,
+            @RequestBody EditPublishedDateRequest request
+    ) {
+        GetPhotoAlbumsResponse response =
+        contributorEditAlbumService.editPublishingDate(
+                albumPublicUuid,
+                userDetails,
+                request
+        );
+        return ResponseEntity.ok(response);
+    }
+
 }

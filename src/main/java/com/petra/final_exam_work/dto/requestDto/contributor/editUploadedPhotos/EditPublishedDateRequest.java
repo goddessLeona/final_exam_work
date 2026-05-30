@@ -2,14 +2,14 @@ package com.petra.final_exam_work.dto.requestDto.contributor.editUploadedPhotos;
 
 import java.time.Instant;
 
-public class EditPublishedDate {
+public class EditPublishedDateRequest {
 
     private Instant publishedAt;
 
-    public EditPublishedDate() {
+    public EditPublishedDateRequest() {
     }
 
-    public EditPublishedDate(Instant publishedAt) {
+    public EditPublishedDateRequest(Instant publishedAt) {
         this.publishedAt = publishedAt;
     }
 

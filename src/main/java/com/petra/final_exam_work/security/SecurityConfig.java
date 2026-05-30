@@ -71,6 +71,7 @@ public class SecurityConfig {
                         .requestMatchers("contributor/albums/{albumPublicUuid}/photos").hasRole("CONTRIBUTOR")
                         .requestMatchers("contributor/albums/{albumPublicUuid}/reorder").hasRole("CONTRIBUTOR")
                         .requestMatchers("contributor/albums/{albumPublicUuid}/status").hasRole("CONTRIBUTOR")
+                        .requestMatchers("contributor/albums/{albumPublicUuid}/scheduled").hasRole("CONTRIBUTOR")
 
                         .requestMatchers("/admin/dashboard").hasRole("ADMIN")
                         .requestMatchers("/admin/consent/{id}").hasRole("ADMIN")

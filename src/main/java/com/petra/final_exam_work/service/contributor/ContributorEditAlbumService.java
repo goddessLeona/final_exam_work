@@ -542,6 +542,77 @@ public class ContributorEditAlbumService {
 
         album.setContentStatus(newStatus);
     }
+
+    //change or add publishing date
+    @Transactional
+    public GetPhotoAlbumsResponse editPublishingDate(
+            UUID albumPublicUuid,
+            CustomUserDetails userDetails,
+            EditPublishedDateRequest request
+    ) {
+        UUID publicUuid = userDetails.getPublicUuid();
+        User user = userRepository.findByPublicUuid(publicUuid)
+                .orElseThrow(() -> new ApiException(
+                        "User was not found",
+                        HttpStatus.NOT_FOUND)
+                );
+
+
+        if (user.getContributorStatus() != ContributorStatus.APPROVED) {
+            throw new ApiException(
+                    "You are not approved to have access to this data",
+                    HttpStatus.FORBIDDEN
+            );
+        }
+
+        PhotoAlbum album = photoAlbumRepository
+                .findByPublicUuid(albumPublicUuid)
+                .orElseThrow(() -> new ApiException(
+                        "Album not found",
+                        HttpStatus.NOT_FOUND
+                ));
+
+        if (!album.getOwnedByUser().getId().equals(user.getId())) {
+            throw new ApiException(
+                    "You do not have access to this album",
+                    HttpStatus.FORBIDDEN
+            );
+        }
+
+        //update or scheduled content
+        Instant now = Instant.now();
+        Instant publishedAt = request.getPublishedAt();
+
+        if (
+                publishedAt != null &&
+                        publishedAt.isBefore(now.minusSeconds(60))
+        ){
+            throw new ApiException(
+                    "Published date can not be in the past",
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+
+        album.setPublishedAt(publishedAt);
+
+        if (publishedAt == null) {
+            album.setContentStatus(ContentStatus.DRAFT);
+        } else if (publishedAt.isAfter(now)) {
+            album.setContentStatus(ContentStatus.SCHEDULED);
+        } else {
+            album.setContentStatus(ContentStatus.PUBLISHED);
+        }
+
+        List<PhotoAlbumPhoto> photos =
+                photoAlbumPhotoRepository.findByPhotoAlbumOrderByPositionAsc(album);
+
+        return getPhotoAlbumsMapper.toDto(
+                album,
+                photos.stream()
+                        .map(PhotoAlbumPhoto::getPhoto)
+                        .toList()
+        );
+    }
 }
 
 // need to add extra check for archived later when archived album get timed
