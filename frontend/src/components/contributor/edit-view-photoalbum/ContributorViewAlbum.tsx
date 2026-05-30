@@ -33,7 +33,7 @@ function ContributorViewAlbum({
                 return "Not published";
 
             case "ARCHIVED":
-                return "Archived";
+                return `Archived on the: ${data.archivedAt}`;
 
             default:
                 return "";

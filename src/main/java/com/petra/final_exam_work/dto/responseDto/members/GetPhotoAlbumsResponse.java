@@ -14,6 +14,7 @@ public class GetPhotoAlbumsResponse {
     private String description;
     private String username;
     private Instant publishedAt;
+    private Instant archivedAt;
 
     private List<AlbumTagResponse> albumTags;
     private List<PhotoResponse> photos ;
@@ -24,13 +25,14 @@ public class GetPhotoAlbumsResponse {
     }
 
     public GetPhotoAlbumsResponse(UUID publicUuid, String photoAlbumName, String description, String username,
-                                  Instant publishedAt, List<AlbumTagResponse> albumTags, List<PhotoResponse> photos,
-                                  CoverPhotoResponse coverPhoto, ContentStatus contentStatus) {
+                                  Instant publishedAt, Instant archivedAt, List<AlbumTagResponse> albumTags,
+                                  List<PhotoResponse> photos, CoverPhotoResponse coverPhoto, ContentStatus contentStatus) {
         this.publicUuid = publicUuid;
         this.photoAlbumName = photoAlbumName;
         this.description = description;
         this.username = username;
         this.publishedAt = publishedAt;
+        this.archivedAt = archivedAt;
         this.albumTags = albumTags;
         this.photos = photos;
         this.coverPhoto = coverPhoto;
@@ -75,6 +77,14 @@ public class GetPhotoAlbumsResponse {
 
     public void setPublishedAt(Instant publishedAt) {
         this.publishedAt = publishedAt;
+    }
+
+    public Instant getArchivedAt() {
+        return archivedAt;
+    }
+
+    public void setArchivedAt(Instant archivedAt) {
+        this.archivedAt = archivedAt;
     }
 
     public List<AlbumTagResponse> getAlbumTags() {

@@ -23,6 +23,7 @@ public class GetPhotoAlbumsMapper {
                 photoAlbum.getDescription(),
                 photoAlbum.getOwnedByUser().getUsername(),
                 photoAlbum.getPublishedAt(),
+                photoAlbum.getArchived_at(),
                 mapTags(photoAlbum.getTags()),
                 mapPhotos(photos),
                 map(photoAlbum.getCoverPhoto()),
