@@ -296,6 +296,7 @@ Transaction commits automatically)
 
   * added request, service, controller ,security config
   * added frontend
+  * updated db archived_At (to be able to remove deleted content after example 10 days)
 
 
 ## BREAK WRITE MD FILE ON WORKING PART OF PROJECT 
