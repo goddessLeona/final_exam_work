@@ -1,6 +1,6 @@
 Final exam work for my FullStack developer 2 year eduaction.
 
-In 2025, I started a two-year Fullstack Developer education. I began from zero, and although I have learned a lot during these two years, I still have a long way to go before fully understanding everything in the field.
+In 2024, I started a two-year Fullstack Developer education. I began from zero, and although I have learned a lot during these two years, I still have a long way to go before fully understanding everything in the field.
 
 This project is my final project after two years of learning. I chose it because it gives me the opportunity to continue developing and maintaining the knowledge I have gained, while also helping a non-profit organization that I have been involved with for many years modernize their website and systems.
 
