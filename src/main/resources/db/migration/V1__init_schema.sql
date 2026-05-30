@@ -93,6 +93,7 @@ CREATE TABLE photo_albums(
     description TEXT NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
     published_at TIMESTAMPTZ,
+    archived_at TIMESTAMPTZ,
     content_status content_status NOT NULL DEFAULT 'DRAFT',
     rules_verified BOOLEAN NOT NULL,
     content_type content_type NOT NULL DEFAULT 'PHOTO',

@@ -522,7 +522,7 @@ public class ContributorEditAlbumService {
 
         if (newStatus == ContentStatus.ARCHIVED) {
             album.setContentStatus(ContentStatus.ARCHIVED);
-            album.setPublishedAt(null);
+            album.setArchived_at(Instant.now());
             return;
         }
 
@@ -601,12 +601,4 @@ public class ContributorEditAlbumService {
     }
 }
 
-// need to add extra check for archived later when archived album get timed
-// before getting permanently removed
-        /*
-        if (status == ARCHIVED) {
-            album.setContentStatus(ARCHIVED);
-            album.setArchivedAt(Instant.now());
-        }
-         */
 
