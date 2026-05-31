@@ -16,11 +16,11 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/contributor/albums")
-public class EditAlbumController {
+public class ContributorEditAlbumController {
 
     private final ContributorEditAlbumService contributorEditAlbumService;
 
-    public EditAlbumController(ContributorEditAlbumService contributorEditAlbumService) {
+    public ContributorEditAlbumController(ContributorEditAlbumService contributorEditAlbumService) {
         this.contributorEditAlbumService = contributorEditAlbumService;
     }
 

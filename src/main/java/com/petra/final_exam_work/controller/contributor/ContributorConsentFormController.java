@@ -2,10 +2,9 @@ package com.petra.final_exam_work.controller.contributor;
 
 import com.petra.final_exam_work.dto.requestDto.ContributorConsentFormRequest;
 import com.petra.final_exam_work.dto.responseDto.ContributorConsentFormResponse;
-import com.petra.final_exam_work.dto.responseDto.ContributorMeResponse;
 import com.petra.final_exam_work.dto.responseDto.ContributorWelcomeResponse;
 import com.petra.final_exam_work.security.CustomUserDetails;
-import com.petra.final_exam_work.service.contributor.ContributorService;
+import com.petra.final_exam_work.service.contributor.ContributorConsentFormService;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,22 +13,12 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/contributor")
-public class ContributorController {
+public class ContributorConsentFormController {
 
-    private final ContributorService contributorService;
+    private final ContributorConsentFormService contributorConsentFormService;
 
-    public ContributorController(ContributorService contributorService) {
-        this.contributorService = contributorService;
-    }
-
-
-    // #################### GET info about Contributor #########################
-    @PreAuthorize("hasRole('CONTRIBUTOR')")
-    @GetMapping("/info")
-    public ResponseEntity<ContributorMeResponse> getInfo(
-            @AuthenticationPrincipal CustomUserDetails userDetails
-    ){
-        return ResponseEntity.ok(contributorService.getInfoContributor());
+    public ContributorConsentFormController(ContributorConsentFormService contributorConsentFormService) {
+        this.contributorConsentFormService = contributorConsentFormService;
     }
 
     // ################ GET welcome message ##################
@@ -39,7 +28,7 @@ public class ContributorController {
     public ResponseEntity<ContributorWelcomeResponse> getWelcome (
             @AuthenticationPrincipal CustomUserDetails userDetails
     ){
-        return ResponseEntity.ok(contributorService.getWelcomeMessage());
+        return ResponseEntity.ok(contributorConsentFormService.getWelcomeMessage());
     }
 
     // ############## GET consent form ###############################
@@ -49,7 +38,7 @@ public class ContributorController {
     public ResponseEntity<ContributorConsentFormResponse> getConsentForm(
             @AuthenticationPrincipal CustomUserDetails userDetails
     ){
-        return ResponseEntity.ok(contributorService.getConsentFormStatus());
+        return ResponseEntity.ok(contributorConsentFormService.getConsentFormStatus());
     }
 
     // ############# POST consent form ##########################
@@ -64,6 +53,6 @@ public class ContributorController {
             @AuthenticationPrincipal CustomUserDetails userDetails
 
     ){
-        return ResponseEntity.ok(contributorService.postConsentForm(request));
+        return ResponseEntity.ok(contributorConsentFormService.postConsentForm(request));
     }
 }

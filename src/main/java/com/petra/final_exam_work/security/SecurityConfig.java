@@ -60,7 +60,7 @@ public class SecurityConfig {
                         .requestMatchers("/member/albums/{albumPublicUuid}").authenticated()
 
                         //role-based
-                        .requestMatchers("/contributor/info").hasRole("CONTRIBUTOR")
+                        .requestMatchers("/contributor/general/info").hasRole("CONTRIBUTOR")
                         .requestMatchers("/contributor/welcome").hasRole("CONTRIBUTOR")
                         .requestMatchers("/contributor/consent").hasRole("CONTRIBUTOR")
                         .requestMatchers("/contributor/upload/photo").hasRole("CONTRIBUTOR")

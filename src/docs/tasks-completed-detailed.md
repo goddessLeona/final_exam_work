@@ -298,12 +298,14 @@ Transaction commits automatically)
   * updated db archived_At (to be able to remove deleted content after example 10 days)
 
 ## Task 15 -  Scheduled publisher job
-every minute check if anything need to change form scheduled to published
+  * every minute check if anything need to change form scheduled to published
+  * check every 1 hour to remove content from archive to delete
 
-## Task 16
-BREAK WRITE MD FILE ON WORKING PART OF PROJECT 
+## Task 16 - look over project
+BREAK WRITE MD FILE ON WORKING PART OF PROJECT
+Exam paper
 Improve user experience
-Add minimal css all over project to look more sync 
+Add minimal css all over project to look more synchronized 
 
 
 ------------------Future tasks---------------------------------------

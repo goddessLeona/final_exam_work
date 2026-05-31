@@ -1,11 +1,9 @@
 package com.petra.final_exam_work.service.contributor;
 
 import com.petra.final_exam_work.dto.mapperDto.ContributorConsentFormMapper;
-import com.petra.final_exam_work.dto.mapperDto.ContributorMeMapper;
 import com.petra.final_exam_work.dto.mapperDto.ContributorWelcomeMapper;
 import com.petra.final_exam_work.dto.requestDto.ContributorConsentFormRequest;
 import com.petra.final_exam_work.dto.responseDto.ContributorConsentFormResponse;
-import com.petra.final_exam_work.dto.responseDto.ContributorMeResponse;
 import com.petra.final_exam_work.dto.responseDto.ContributorWelcomeResponse;
 import com.petra.final_exam_work.entity.consentForm.ConsentForm;
 import com.petra.final_exam_work.entity.consentForm.ConsentFormStatus;
@@ -15,7 +13,6 @@ import com.petra.final_exam_work.entity.junktionTables.userConcentform.UserConse
 import com.petra.final_exam_work.entity.user.User;
 import com.petra.final_exam_work.exception.ApiException;
 import com.petra.final_exam_work.repository.ConsentFormRepository;
-import com.petra.final_exam_work.repository.PhotoAlbumRepository;
 import com.petra.final_exam_work.repository.UserConsentFormRepository;
 import com.petra.final_exam_work.repository.UserRepository;
 import com.petra.final_exam_work.security.SecurityUtils;
@@ -31,44 +28,24 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class ContributorService {
+public class ContributorConsentFormService {
 
     private final UserRepository userRepository;
-    private final PhotoAlbumRepository photoAlbumRepository;
     private final UserConsentFormRepository userConsentFormRepository;
-    private final ContributorMeMapper contributorMeMapper;
     private final ContributorWelcomeMapper contributorWelcomeMapper;
     private final ContributorConsentFormMapper contributorConsentFormMapper;
     private final ConsentFormRepository consentFormRepository;
     private final FileStorageService fileStorageService;
 
-    public ContributorService(UserRepository userRepository, PhotoAlbumRepository photoAlbumRepository,
-                              UserConsentFormRepository userConsentFormRepository, ContributorMeMapper contributorMeMapper,
-                              ContributorWelcomeMapper contributorWelcomeMapper, ContributorConsentFormMapper contributorConsentFormMapper,
-                              ConsentFormRepository consentFormRepository, FileStorageService fileStorageService) {
+    public ContributorConsentFormService(UserRepository userRepository, UserConsentFormRepository userConsentFormRepository, ContributorWelcomeMapper contributorWelcomeMapper, ContributorConsentFormMapper contributorConsentFormMapper, ConsentFormRepository consentFormRepository, FileStorageService fileStorageService) {
         this.userRepository = userRepository;
-        this.photoAlbumRepository = photoAlbumRepository;
         this.userConsentFormRepository = userConsentFormRepository;
-        this.contributorMeMapper = contributorMeMapper;
         this.contributorWelcomeMapper = contributorWelcomeMapper;
         this.contributorConsentFormMapper = contributorConsentFormMapper;
         this.consentFormRepository = consentFormRepository;
         this.fileStorageService = fileStorageService;
     }
 
-    //####################### INFO CONTRIBUTOR ######################
-
-    public ContributorMeResponse getInfoContributor() {
-
-        UUID publicUuid = SecurityUtils.getCurrentUserPublicUuid();
-        User user = userRepository.findByPublicUuid(publicUuid)
-                .orElseThrow(() -> new ApiException("User was not found", HttpStatus.NOT_FOUND));
-
-        Integer albumCount = null;
-        albumCount = (int) photoAlbumRepository.countByOwnedByUser_id(user.getId());
-
-        return contributorMeMapper.toResponse(user, albumCount);
-    }
 
     //##################### WELCOME MESSAGE ##########################
 

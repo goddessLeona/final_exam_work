@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/contributor/upload")
-public class UploadPhotosController {
+public class ContributorUploadPhotosController {
 
     private final ContributorUploadPhotosService contributorUploadPhotosService;
 
-    public UploadPhotosController(ContributorUploadPhotosService contributorUploadPhotosService) {
+    public ContributorUploadPhotosController(ContributorUploadPhotosService contributorUploadPhotosService) {
         this.contributorUploadPhotosService = contributorUploadPhotosService;
     }
 

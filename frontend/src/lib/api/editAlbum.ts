@@ -6,7 +6,8 @@ export async function editTitleAndDescription (
     request: EditTitleAndDescriptionRequest
 ): Promise <EditTitleAndDescriptionResponse>{
 
-    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/contributor/albums/${albumPublicUuid}/title-description`, 
+    const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/contributor/albums/${albumPublicUuid}/title-description`, 
         {
         method: "PATCH",
         credentials: "include",

@@ -1,5 +1,5 @@
 
-
+import { ContentType } from "./types/content-types";
 type ContributorStatus = "NOT_APPLIED" | "PENDING" | "APPROVED" | "REJECTED" | "TEMP_BANNED" | "BANNED";
 
 export interface WelcomeResponse {
@@ -20,26 +20,6 @@ export async function getWelcomeMessage() : Promise<WelcomeResponse>{
     return res.json();
 }
 
-
-export interface ContributorMeResponse {
-    username: string;
-    yearSignedUp: number;
-    countPhotoAlbums: number | null;
-}
-
-export async function getContributorInfo() : Promise<ContributorMeResponse>{
-
-    const res = await fetch("http://localhost:8080/contributor/info", { 
-            credentials: "include",
-        });
-
-    if(!res.ok){
-        throw new Error("Unauthorized");
-    }    
-
-    return res.json();
-            
-}
 
 type ReviewStatus = "NOT_SUBMITTED" | "PENDING" | "APPROVED" | "REJECTED";
 type ConsentFormStatus = "NOT_SUBMITTED" | "PENDING" | "APPROVED" | "REJECTED";
