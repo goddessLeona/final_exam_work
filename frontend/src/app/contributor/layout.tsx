@@ -1,5 +1,5 @@
 import Header from "@/components/Header";
-import NavbarContributor from "@/components/navbar/navbar-contributor";
+import NavbarContributor from "@/components/navbars/navbar-contributor";
 import Footer from "@/components/footer";
 import styles from "./layout.module.css"
 

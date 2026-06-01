@@ -1,5 +1,5 @@
 import Header from "@/components/Header";
-import NavbarAdmin from "@/components/navbar/navbar-admin";
+import NavbarAdmin from "@/components/navbars/navbar-admin";
 import Footer from "@/components/footer";
 import styles from "./layout.module.css"
 

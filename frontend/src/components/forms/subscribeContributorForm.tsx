@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { signUpContributor } from "@/lib/api/user";
+import { signUpContributor } from "@/lib/api/contributors/contributorSignUp";
 import styles from "./subscribeContributorForm.module.css"
 
 const initialFormState = {

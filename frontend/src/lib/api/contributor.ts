@@ -1,5 +1,5 @@
 
-import { ContentType } from "./types/content-types";
+
 type ContributorStatus = "NOT_APPLIED" | "PENDING" | "APPROVED" | "REJECTED" | "TEMP_BANNED" | "BANNED";
 
 export interface WelcomeResponse {

@@ -1,5 +1,7 @@
 
-export async function postUploadPhotos(formData : FormData): Promise<UploadPhotoContentResponse> {
+export async function postUploadPhotos(
+    formData : FormData
+    ): Promise<UploadPhotoContentResponse> {
 
     const response = await fetch(
         "http://localhost:8080/contributor/upload/photo",

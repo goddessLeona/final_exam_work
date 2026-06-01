@@ -1,5 +1,5 @@
 import Header from "@/components/Header"
-import Navbar from "@/components/navbar/navbar";
+import Navbar from "@/components/navbars/navbar";
 import Footer from "@/components/footer";
 
 export default function PublicLayout({

@@ -1,19 +1,10 @@
 
-export interface signUpResponse {
-    username: string;
-    password: string;
-    confirmPassword: string;
-    email: string;
-    firstName: string;
-    lastName: string;
-    birthYear: number | null;
-    birthMonth: number | null;
-    birthDay: number | null;
-}
+export async function signUpContributor(
+    data: SignUpResponse
+    ) {
 
-export async function signUpContributor(data: signUpResponse) {
     const response = await fetch(
-        "http://localhost:8080/user/signup-contributor",
+        `${process.env.NEXT_PUBLIC_API_URL}/user/signup-contributor`,
         {
             method: "POST",
             headers:{"Content-Type": "application/json"},
@@ -35,4 +26,16 @@ export async function signUpContributor(data: signUpResponse) {
     }
 
     return response.json; 
+}
+
+export interface SignUpResponse {
+    username: string;
+    password: string;
+    confirmPassword: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+    birthYear: number | null;
+    birthMonth: number | null;
+    birthDay: number | null;
 }
