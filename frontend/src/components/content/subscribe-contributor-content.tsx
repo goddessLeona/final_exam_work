@@ -1,5 +1,5 @@
 
-import ContributorSignUpForm from "../contributor/contributorSignUp/contributorSignUpForm";
+import ContributorSignUpForm from "../contributors/contributorSignUp/contributorSignUpForm";
 import styles from "./subscribe-contributor-content.module.css"
 
 export default function SubscribeContributorContent() {

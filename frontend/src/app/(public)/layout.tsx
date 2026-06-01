@@ -1,6 +1,6 @@
-import Header from "@/components/Header"
+import Header from "@/components/headers/mainHeader/Header"
 import Navbar from "@/components/navbars/navbar";
-import Footer from "@/components/footer";
+import Footer from "@/components/footers/footer";
 
 export default function PublicLayout({
   children,

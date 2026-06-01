@@ -1,5 +1,5 @@
 
-import ContributorSignUpForm from "@/components/contributor/contributorSignUp/contributorSignUpForm";
+import ContributorSignUpForm from "@/components/contributors/contributorSignUp/contributorSignUpForm";
 
 export default function SubscribeContributorPublicPage() {
   

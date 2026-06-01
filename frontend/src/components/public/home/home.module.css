@@ -1,0 +1,119 @@
+
+.container{
+    display: flex;
+    flex-direction: column;
+    background-color: #545454;
+    align-items: center;
+    color: beige;
+    padding-bottom: 20px;
+    padding-top: 20px;
+    align-items: center;
+    text-align: center;
+    gap: 15px;
+}
+
+.AboutMe{
+    display: flex;
+    gap: 15px;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+    width: 100%;
+    max-width: 600px;
+    color: #050505;
+    line-height: 1.6;
+    font-weight: 500;
+    background-color: rgba(205, 180, 219, 0.6);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    box-sizing: border-box;
+    margin-top: 10px;;
+}
+
+.frame{
+    display: flex;
+    gap: 15px;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+    width: 100%;
+    max-width: 900px;
+    color: #050505;
+    line-height: 1.6;
+    font-weight: 500;
+    background-color: rgba(205, 180, 219, 0.6);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    box-sizing: border-box;
+    margin-top: 10px;;
+}
+
+.frame1{
+    display: flex;
+    gap: 15px;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+    width: 100%;
+    max-width: 800px;
+    color: #050505;
+    line-height: 1.6;
+    font-weight: 500;
+    background-color: rgba(231, 208, 245, 0.503);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    box-sizing: border-box;
+    margin-top: 10px;;
+}
+
+.title {
+    font-size: 32px;
+}
+
+.personal{
+    text-align: left;
+}
+
+.sideImage {
+    width: 100%;
+    max-width: 150px;
+    height: auto;
+    opacity: 0.9;
+    border: 2px solid rgba(18, 17, 17, 0.549);
+    border-radius: 10px;
+}
+
+.mvp{
+    border: 2px solid black;
+    padding: 20px;
+    background-color: #292626;
+    border-radius: 10px;
+}
+
+.introText{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.introText p {
+  max-width: 740px;
+  font-size: 20px;
+  text-wrap: balance;
+  color: #a3a2a5;
+  margin: 5px;
+}
+
+.intro{
+    font-size: 20px;
+    margin: 20px;
+}
+
+.li{
+    font-size: 15px;
+    padding: 2px;
+    font-weight: 900;
+    text-align: left;
+}
+

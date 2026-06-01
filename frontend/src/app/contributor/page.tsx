@@ -1,5 +1,5 @@
 
-import Welcome from "@/components/contributor/wellcomeMessage/welcome-message";
+import Welcome from "@/components/contributors/wellcomeMessage/welcome-message";
 import ContributorAgrementForm from "@/components/forms/contributorAgrementForm";
 import styles from "@/app/contributor/page.module.css"
 

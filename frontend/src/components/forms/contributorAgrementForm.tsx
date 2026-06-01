@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import styles from "./contributorAgrementForm.module.css"
 import { ContributorFormResponse, getContributorAgreementForm } from "@/lib/api/contributor";
 import { postContributorAgreementForm } from "@/lib/api/contributor";
-import UploadPhotosForm from "@/components/contributor/uploadAlbumForm/uploadPhotosForm";
-import ContributorAlbums from "../contributor/contentMenu/contributorsContentMenu";
+import UploadPhotosForm from "@/components/contributors/uploadAlbumForm/uploadPhotosForm";
+import ContributorAlbums from "../contributors/contentMenu/contributorsContentMenu";
 
 const initialFormState = {
     idCard: null as File | null,
