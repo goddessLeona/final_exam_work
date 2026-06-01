@@ -1,42 +1,5 @@
-.contentWrapper {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 10px;
-    padding-top: 5px;
-
-    max-width: 1200px;
-    width: 100%;
-    margin: 0 auto;
-}
-
-.sideImage {
-    width: 330px;
-    height: auto;
-    opacity: 0.9;
-}
-
-.sideImageRight {
-    width: 330px;
-    height: auto;
-    opacity: 0.9;
-    transform: scaleX(-1);
-}
-
-.formWrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.thanks{
-    padding: 20px;
-    border: solid #292626;
-    border-radius: 10px;
-    width: 600px;
-    color: #050505;
-    font-weight: 900;
-    background-color: rgba(205, 180, 219, 0.6);
+body, html {
+    overflow-x: hidden;
 }
 
 .container{
@@ -50,14 +13,66 @@
     margin: 0px;
 }
 
+.thanks{
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+    width: 100%;
+    max-width: 600px;
+    color: #050505;
+    line-height: 1.6;
+    font-weight: 500;
+    background-color: rgba(205, 180, 219, 0.6);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    box-sizing: border-box;
+}
+
+.contentWrapper {
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+    align-items: flex-start;
+    gap: 10px;
+    padding-top: 5px;
+
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.sideImage {
+    width: 100%;
+    max-width: 330px;
+    height: auto;
+    opacity: 0.9;
+}
+
+.sideImageRight {
+    width: 100%;
+    max-width: 330px;
+    height: auto;
+    opacity: 0.9;
+    transform: scaleX(-1);
+}
+
+.formWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
 .formBox{
     border: 2px solid black;
     padding: 20px;
     background-color: #292626;
     border-radius: 10px;
-    width: 420px;
+
+    width: clamp(320px, 40vw, 460px);
+
+    box-sizing: border-box;
+
     gap: 10px;
-    margin: 15px;
 }
 
 .field{
@@ -119,4 +134,47 @@
     transform: none;
     filter: grayscale(20%);
     opacity: 0.6;
+}
+
+@media (max-width: 768px) {
+
+    .sideImage,
+    .sideImageRight {
+        display: none;
+    }
+
+}
+
+@media (max-width: 768px) {
+
+    .contentWrapper {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding-top: 20px;
+
+        width: 100%;
+        max-width: 100%;
+    }
+
+}
+
+@media (max-width: 768px) {
+    .thanks {
+        max-width: 100%;
+        padding: 16px;
+        font-size: 14px;
+        line-height: 1.5;
+        text-align: left;
+    }
+
+    .contentWrapper {
+        padding-top: 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 12px;
+    }
 }
