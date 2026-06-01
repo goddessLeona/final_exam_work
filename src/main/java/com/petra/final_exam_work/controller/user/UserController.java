@@ -1,9 +1,8 @@
 package com.petra.final_exam_work.controller.user;
 
-import com.petra.final_exam_work.dto.requestDto.ContributorSignUpRequest;
+import com.petra.final_exam_work.dto.requestDto.contributor.ContributorSignUpRequest;
 import com.petra.final_exam_work.dto.responseDto.ContributorSignUpResponse;
 import com.petra.final_exam_work.dto.responseDto.MeResponse;
-import com.petra.final_exam_work.exception.ApiException;
 import com.petra.final_exam_work.security.CustomUserDetails;
 import com.petra.final_exam_work.service.user.UserService;
 import jakarta.validation.Valid;
@@ -33,20 +32,6 @@ public class UserController {
     ) {
 
         return ResponseEntity.ok(userService.getUsername());
-    }
-
-// ################################## Sign up contributor ##############################
-
-    @PostMapping("/signup-contributor")
-    public ResponseEntity<ContributorSignUpResponse> signUpContributor (
-            @Valid @RequestBody ContributorSignUpRequest request
-    ) {
-
-        ContributorSignUpResponse response = userService.signUpContributor(request);
-
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(response);
     }
 
 }

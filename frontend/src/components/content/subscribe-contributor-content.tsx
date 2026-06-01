@@ -1,5 +1,5 @@
 
-import SubscribeContributorForm from "../forms/subscribeContributorForm";
+import ContributorSignUpForm from "../contributor/contributorSignUp/contributorSignUpForm";
 import styles from "./subscribe-contributor-content.module.css"
 
 export default function SubscribeContributorContent() {
@@ -12,7 +12,7 @@ export default function SubscribeContributorContent() {
         Before you can be part of the comunity and contribute with content, 
         you have to fill in this form
       </h2>
-      <SubscribeContributorForm />
+      <ContributorSignUpForm />
     </div>
   );
 }

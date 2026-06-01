@@ -1,9 +1,7 @@
-package com.petra.final_exam_work.dto.requestDto;
+package com.petra.final_exam_work.dto.requestDto.contributor;
 
 import com.petra.final_exam_work.customValidate.PasswordMatches;
 import jakarta.validation.constraints.*;
-
-import java.time.Year;
 
 @PasswordMatches
 public class ContributorSignUpRequest {
@@ -37,34 +35,17 @@ public class ContributorSignUpRequest {
             message = "Last name can only contain letters ")
     private String lastName;
 
-    @NotNull( message = "You have to add the year your where born")
-    @Min(1900)
-    @Max(2100)
-    private Integer birthYear;
-
-    @NotNull(message = "You have to add the month you where born")
-    @Min(1) @Max(12)
-    private Integer birthMonth;
-
-    @NotNull(message = "You have to add the date you where born")
-    @Min(1) @Max(31)
-    private Integer birthDay;
-
     public ContributorSignUpRequest() {
     }
 
     public ContributorSignUpRequest(String username, String password, String confirmPassword, String email,
-                                    String firstName, String lastName, Integer birthYear, Integer birthMonth,
-                                    Integer birthDay) {
+                                    String firstName, String lastName) {
         this.username = username;
         this.password = password;
         this.confirmPassword = confirmPassword;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.birthYear = birthYear;
-        this.birthMonth = birthMonth;
-        this.birthDay = birthDay;
     }
 
     public String getUsername() {
@@ -115,27 +96,4 @@ public class ContributorSignUpRequest {
         this.lastName = lastName;
     }
 
-    public Integer getBirthYear() {
-        return birthYear;
-    }
-
-    public void setBirthYear(Integer birthYear) {
-        this.birthYear = birthYear;
-    }
-
-    public Integer getBirthMonth() {
-        return birthMonth;
-    }
-
-    public void setBirthMonth(Integer birthMonth) {
-        this.birthMonth = birthMonth;
-    }
-
-    public Integer getBirthDay() {
-        return birthDay;
-    }
-
-    public void setBirthDay(Integer birthDay) {
-        this.birthDay = birthDay;
-    }
 }

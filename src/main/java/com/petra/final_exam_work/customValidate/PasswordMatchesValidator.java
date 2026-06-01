@@ -1,6 +1,6 @@
 package com.petra.final_exam_work.customValidate;
 
-import com.petra.final_exam_work.dto.requestDto.ContributorSignUpRequest;
+import com.petra.final_exam_work.dto.requestDto.contributor.ContributorSignUpRequest;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 

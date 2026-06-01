@@ -1,6 +1,6 @@
-package com.petra.final_exam_work.dto.mapperDto;
+package com.petra.final_exam_work.dto.mapperDto.contributor;
 
-import com.petra.final_exam_work.dto.requestDto.ContributorSignUpRequest;
+import com.petra.final_exam_work.dto.requestDto.contributor.ContributorSignUpRequest;
 import com.petra.final_exam_work.entity.user.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

@@ -1,6 +1,7 @@
 
-import SubscribeContributorContent from "@/components/content/subscribe-contributor-content";
+import ContributorSignUpForm from "@/components/contributor/contributorSignUp/contributorSignUpForm";
 
 export default function SubscribeContributorPublicPage() {
-  return <SubscribeContributorContent />
+  
+  return <ContributorSignUpForm />
 }

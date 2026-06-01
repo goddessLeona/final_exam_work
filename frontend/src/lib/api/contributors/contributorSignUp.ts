@@ -1,6 +1,6 @@
 
 export async function signUpContributor(
-    data: SignUpResponse
+    data: SignUpRequest
     ) {
 
     const response = await fetch(
@@ -12,30 +12,24 @@ export async function signUpContributor(
         }
     );
 
+    const json = await response.json();
 
     if (!response.ok) {
-        let errorData;
 
-        try {
-            errorData = await response.json();
-        } catch {
-            throw { message : "UnKnown error"};
-        }
-
-        throw errorData;
+        throw {
+            message: json.message,
+            errors: json.errors ?? null
+        };
     }
-
-    return response.json; 
+    
+    return json; 
 }
 
-export interface SignUpResponse {
+export interface SignUpRequest {
     username: string;
     password: string;
     confirmPassword: string;
     email: string;
     firstName: string;
     lastName: string;
-    birthYear: number | null;
-    birthMonth: number | null;
-    birthDay: number | null;
 }
