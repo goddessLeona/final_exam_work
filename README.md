@@ -56,7 +56,11 @@ When I started the project, I began by drawing my ERD to plan how my database sh
 
 I chose PostgreSQL as my database and Flyway for database migrations. It took me some time to understand how Flyway and migrations worked, but once I learned it, I really enjoyed using it.
 
-After setting up the database, I continued working on the login, logout, and signup functionality.
+For the frontend, I decided to go with Next.js and TypeScript. I had not worked with either of them before, my last project was built with React only. I did some research and chose Next.js for this project since it supports more role-based features and makes it easier to structure pages.
+
+What I also found helpful was how much clearer it became to organize the project between pages and components. Even so, it still took time to get comfortable with it, and with each component I created, I learned something new.
+
+After setting up the database, simple frontend landing page I continued working on the login, logout, and signup functionality.
 
 
 
