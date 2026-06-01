@@ -51,7 +51,7 @@ At the moment, this is only a demo version, so the original website’s content 
 
 * Lucide React (icons)
 
-
+## Getting started
 When I started the project, I began by drawing my ERD to plan how my database should be structured to support my planned MVP. It took me around two weeks before I was satisfied with the design. I ended up with 13 tables, where 7 of them were junction tables, so it was really a puzzle to get everything connected correctly. Even then, I still had to make some changes as the project progressed.
 
 I chose PostgreSQL as my database and Flyway for database migrations. It took me some time to understand how Flyway and migrations worked, but once I learned it, I really enjoyed using it.
