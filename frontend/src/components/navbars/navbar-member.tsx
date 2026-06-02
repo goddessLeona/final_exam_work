@@ -1,6 +1,6 @@
 import Link from "next/link";
 import styles from "./navbar-member.module.css";
-import LogoutButton from "../button/logout-buton";
+import LogoutButton from "../button/logout-button";
 
 export default function NavbarMember() {
   return (

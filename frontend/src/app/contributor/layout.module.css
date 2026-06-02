@@ -1,22 +1,24 @@
 .componentLayout {
   display: grid;
   grid-template-columns: 1fr 3fr 1fr;
-  gap: 16px;
+  gap: 1px;
   padding: 16px;
   background-color: #545454;
 }
 
 .leftSidebar {
   border: 2px solid #000000;
-  background-color: rgb(221, 208, 191);
+  background-color: rgba(205, 180, 219, 0.345);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.30);
+  border-radius: 10px;
+  margin-top: 10px;
 }
 
-.centerContent {
-  border: 2px solid #000000;
-  background-color: rgb(221, 208, 191);
-}
 
 .rightSidebar {
   border: 2px solid #000000;
-  background-color: rgb(221, 208, 191);
+  background-color: rgba(205, 180, 219, 0.345);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.30);
+  border-radius: 10px;
+  margin-top: 10px;
 }

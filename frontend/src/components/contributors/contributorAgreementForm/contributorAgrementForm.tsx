@@ -1,11 +1,22 @@
 "use client"
 
 import { useEffect, useState } from "react";
+import { Inter, Finger_Paint } from "next/font/google"
 import styles from "./contributorAgrementForm.module.css"
 import { ContributorFormResponse, getContributorAgreementForm } from "@/lib/api/contributor";
 import { postContributorAgreementForm } from "@/lib/api/contributor";
 import UploadPhotosForm from "@/components/contributors/uploadAlbumForm/uploadPhotosForm";
-import ContributorAlbums from "../contributors/contentMenu/contributorsContentMenu";
+import ContributorAlbums from "../contentMenu/contributorsContentMenu";
+
+const inter = Inter({
+        subsets: ["latin"],
+        weight: ["400"]
+    });
+
+const fingerPaint = Finger_Paint({
+    subsets: ["latin"],
+    weight: "400",
+}); 
 
 const initialFormState = {
     idCard: null as File | null,
@@ -99,9 +110,11 @@ const generalErrorMessage = error.general || (["idCardFile", "idFaceFile", "face
         <main className={styles.container}>
             <form onSubmit={handleSubmit}>
 
-                <h1>Contributor agrement form</h1>
+                
 
                 <div className={styles.formBox}>
+
+                    <p className= {`${fingerPaint.className} ${styles.title}`}>Contributor agrement form</p>
                     
                     <div className={styles.field}>
                         <p>You have to upload a photo from your id-card

@@ -1,6 +1,6 @@
 
 import Welcome from "@/components/contributors/wellcomeMessage/welcome-message";
-import ContributorAgrementForm from "@/components/forms/contributorAgrementForm";
+import ContributorAgrementForm from "@/components/contributors/contributorAgreementForm/contributorAgrementForm";
 import styles from "@/app/contributor/page.module.css"
 
 export default function ContributorPage() {

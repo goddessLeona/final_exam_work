@@ -8,14 +8,14 @@
   color: white;
 }
 
-.left {
+.left,
+.right {
   display: flex;
+  align-items: center;
   gap: 1rem;
 }
 
 .right {
-  display: flex;
-  gap: 1rem;
   margin-left: auto;
 }
 

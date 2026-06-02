@@ -3,10 +3,14 @@
     flex-direction: column;
     background-color: #545454;
     align-items: center;
-    color: beige;
+    color: #d5cfcf;
     padding-bottom: 20px;
     text-align: center;
-    border-top: 2px solid black;
+}
+
+.title {
+    font-size: 22px;
+    color: #d5cfcf;
 }
 
 .containerDashboard{
