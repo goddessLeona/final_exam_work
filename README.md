@@ -67,6 +67,10 @@ I am using a simple form where the user fill in username and password. Right now
 
 <img width="851" height="315" alt="Log in" src="https://github.com/user-attachments/assets/0c50b6e3-9ba3-43de-b78e-dbf5901812c4" />
 
+### Logout
+Settings for log out during development.
+
+<img width="851" height="315" alt="Log out" src="https://github.com/user-attachments/assets/fa14a6d0-b018-4deb-9a80-4ea96aba3c4c" />
 
 
 
