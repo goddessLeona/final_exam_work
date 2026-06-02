@@ -72,8 +72,10 @@ Settings for log out during development.
 
 <img width="851" height="315" alt="Log out" src="https://github.com/user-attachments/assets/fa14a6d0-b018-4deb-9a80-4ea96aba3c4c" />
 
-### Sign up - role contributor
-A simple form that you have to add all information for before you can post. There are also Validation check on all the inputs to make it harder for a user do anything wrong.
+### Sign up – Contributor role
+Users must fill in all required information before gaining access to the contributor features.
+The form includes validation on all inputs to reduce incorrect submissions and improve user experience.
+After a successful sign up, the user can log in and will be redirected to the contributor dashboard.
 
 <img width="1427" height="957" alt="Skärmbild 2026-06-02 091804" src="https://github.com/user-attachments/assets/ca2cd55b-8b3e-4894-bc7c-6b851904a784" />
 
