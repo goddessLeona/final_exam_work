@@ -62,6 +62,9 @@ What I also found helpful was how much clearer it became to organize the project
 
 After setting up the database, simple frontend landing page I continued working on the login, logout, and signup functionality.
 
+### Login
+I am using a simple form where the user fill in username and password. Right now there is a expiration time of 1h in the upcoming tasks I will add refresh tolken so that a user can stay loged in for 1 week a time. 
+
 <img width="851" height="315" alt="Log in" src="https://github.com/user-attachments/assets/0c50b6e3-9ba3-43de-b78e-dbf5901812c4" />
 
 
