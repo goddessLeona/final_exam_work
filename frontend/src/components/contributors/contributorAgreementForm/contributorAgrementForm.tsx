@@ -3,10 +3,9 @@
 import { useEffect, useState } from "react";
 import { Inter, Finger_Paint } from "next/font/google"
 import styles from "./contributorAgrementForm.module.css"
-import { ContributorFormResponse, getContributorAgreementForm } from "@/lib/api/contributor";
-import { postContributorAgreementForm } from "@/lib/api/contributor";
-import UploadPhotosForm from "@/components/contributors/uploadAlbumForm/uploadPhotosForm";
-import ContributorAlbums from "../contentMenu/contributorsContentMenu";
+import { ContributorFormResponse, getContributorAgreementForm } from "@/lib/api/contributors/contributor-consent-form";
+import { postContributorAgreementForm } from "@/lib/api/contributors/contributor-consent-form";
+
 
 const inter = Inter({
         subsets: ["latin"],
@@ -25,7 +24,11 @@ const initialFormState = {
     agree: false,
 };
 
-export default function ContributorAgrementForm() {
+export default function ContributorAgrementForm({
+        onApproved,
+    }: {
+        onApproved?: () => void;
+    }) {
 
     const [formData, setFormData] = useState(initialFormState);
     const [serverData, setServerData] = useState<ContributorFormResponse | null>(null);
@@ -53,6 +56,8 @@ export default function ContributorAgrementForm() {
                 setServerData(data);
                 setError({});
             }catch (err: any) {
+
+                if (err.message === "Unauthorized") return ;
                 
                 if (err.error) {
                     setError(err.error);
@@ -82,6 +87,11 @@ export default function ContributorAgrementForm() {
         const response = await postContributorAgreementForm(data);
         setServerData(response);
         setSuccess("Submitted successfully!");
+
+        if (response.consentFormStatus === "APPROVED") {
+            onApproved?.();
+        }
+
     } catch (err: any) {
         
         if (err.errors) {
@@ -96,21 +106,10 @@ export default function ContributorAgrementForm() {
 
 const generalErrorMessage = error.general || (["idCardFile", "idFaceFile", "facefffFile", "approvedRules"].some(key => error[key]) ? "Missing document" : "");
 
-    if (isContributorApproved) {
-        return (
-            <main className={styles.containerDashboard}>
-                <div><ContributorAlbums/></div>
-                <div><UploadPhotosForm/></div>
-            </main>
-        );
-    }
-
     return(
 
         <main className={styles.container}>
             <form onSubmit={handleSubmit}>
-
-                
 
                 <div className={styles.formBox}>
 
@@ -244,7 +243,8 @@ const generalErrorMessage = error.general || (["idCardFile", "idFaceFile", "face
             </form>
 
         </main>
-
+        
     )
 
 }
+

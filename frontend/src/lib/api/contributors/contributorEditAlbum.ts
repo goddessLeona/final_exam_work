@@ -1,4 +1,5 @@
-import { CoverPhotoResponse, GetPhotoAlbumsResponse } from "./contributorsPhotoAlbums";
+import { apiFetch } from "../api-fetch";
+import { CoverPhotoResponse, GetPhotoAlbumsResponse } from "./contributorsGetPhotoAlbums";
 
 //######## Edit title and decription on album ############
 export async function editTitleAndDescription (
@@ -6,7 +7,7 @@ export async function editTitleAndDescription (
     request: EditTitleAndDescriptionRequest
 ): Promise <EditTitleAndDescriptionResponse>{
 
-    const res = await fetch(
+    const res = await apiFetch(
         `${process.env.NEXT_PUBLIC_API_URL}/contributor/albums/${albumPublicUuid}/title-description`, 
         {
         method: "PATCH",
@@ -40,7 +41,7 @@ export async function editCoverPhoto(
     request: editCoverPhotoRequest
 ): Promise<editCoverPhotoResponse> {
     
-    const res = await fetch(
+    const res = await apiFetch(
         `${process.env.NEXT_PUBLIC_API_URL}/contributor/albums/${albumPublicUuid}/cover-photo`,
         {
             method: "PATCH",
@@ -81,7 +82,7 @@ export async function deletePhoto (
     request: DeletePhotoRequest
 ): Promise<void> {
 
-    const res = await fetch(
+    const res = await apiFetch(
         `${process.env.NEXT_PUBLIC_API_URL}/contributor/albums/${albumPublicUuid}/photos`,
         {
             method: "DELETE",
@@ -115,7 +116,7 @@ export async function addPhoto(
     albumPublicUuid: string,
     formData: FormData
 ): Promise<GetPhotoAlbumsResponse> {
-    const response = await fetch(
+    const response = await apiFetch(
         `${process.env.NEXT_PUBLIC_API_URL}/contributor/albums/${albumPublicUuid}/photos`,
         {
             method: "POST",
@@ -144,7 +145,7 @@ export async function reorderPhotos(
     request: ReorderPhotoRequest
 ): Promise <GetPhotoAlbumsResponse> {
 
-    const response = await fetch (
+    const response = await apiFetch (
 
          `${process.env.NEXT_PUBLIC_API_URL}/contributor/albums/${albumPublicUuid}/reorder`,
          {
@@ -176,14 +177,14 @@ export interface ReorderPhotoRequest {
 }
 
 //######### Change status on album #######
-import type { ContentStatus } from "./types/content-status";
+import type { ContentStatus } from "../types/content-status";
 
 export async function changeStatus(
     albumPublicUuid: string,
     request: EditStatusRequest
 ): Promise<void> {
 
-    const response = await fetch (
+    const response = await apiFetch (
 
         `${process.env.NEXT_PUBLIC_API_URL}/contributor/albums/${albumPublicUuid}/status`,
         {
@@ -217,7 +218,7 @@ export async function editScheduled(
     request: EditPublishedDateRequest
 ): Promise<GetPhotoAlbumsResponse>{
 
-    const response = await fetch (
+    const response = await apiFetch (
 
          `${process.env.NEXT_PUBLIC_API_URL}/contributor/albums/${albumPublicUuid}/scheduled`,
          {

@@ -1,4 +1,4 @@
-
+import { apiFetch } from "./api-fetch";
 //####### Get all cover photos from all albums that are published #######
 
 export type ContentType = "PHOTO" | "VIDEO";
@@ -28,7 +28,7 @@ export async function memberGetCoverPhotos(
     size: number = 12
 ) : Promise<PageResponse<GetCoverPhotoAlbumsResponse>> {
 
-    const response = await fetch(
+    const response = await apiFetch(
         `http://localhost:8080/member/albums?contentType=${contentType}&page=${page}&size=${size}`,
          {
         credentials: "include",
@@ -71,7 +71,7 @@ export interface GetPhotoAlbumsResponse {
 
 export async function memberGetAlbums(publicUuid: string): Promise<GetPhotoAlbumsResponse> {
 
-    const response = await fetch(
+    const response = await apiFetch(
         `${process.env.NEXT_PUBLIC_API_URL}/member/albums/${publicUuid}`,
          {
         credentials: "include",

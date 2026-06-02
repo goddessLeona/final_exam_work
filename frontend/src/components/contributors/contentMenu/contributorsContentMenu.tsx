@@ -1,16 +1,27 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Inter, Finger_Paint } from "next/font/google"
 import Link from "next/link";
 import { 
             getPhotoAlbums,
             ContributorPhotoAlbumResponse,
             PageResponse,
-        } from "@/lib/api/contributorsPhotoAlbums";
-
-import type {ContentStatus} from "@/lib/api/contributorsPhotoAlbums"; 
+        } from "@/lib/api/contributors/contributorsGetPhotoAlbums";
+ 
+import type { ContentStatus } from "@/types/content-status";
 
 import styles from "./contributorsContentMenu.module.css"
+
+const inter = Inter({
+        subsets: ["latin"],
+        weight: ["600"]
+    });
+
+const fingerPaint = Finger_Paint({
+    subsets: ["latin"],
+    weight: "400",
+}); 
 
 function ContributorAlbums() {
 
@@ -40,75 +51,78 @@ function ContributorAlbums() {
     }, [status]);
 
     return (
-    <div className={styles.container}>
-        
-        <div className={styles.tabs}>
+    <div className={styles.bigContainer}>
+        <p className={`${fingerPaint.className} ${styles.title}`}>Your uploaded content</p>
+        <div className={styles.container}>
+            
+            <div className={styles.tabs}>
 
-            <button
-                type="button"
-                className={styles.btn}
-                onClick={() => setStatus("DRAFT")}
-            >
-                Draft
-            </button>
-
-            <button
-                type="button"
-                className={styles.btn}
-                onClick={() => setStatus("PUBLISHED")}
-            >
-                Published
-            </button>
-
-            <button
-                type="button"
-                className={styles.btn}
-                onClick={() => setStatus("SCHEDULED")}
-            >
-                Scheduled
-            </button>
-
-            <button
-                type="button"
-                className={styles.btn}
-                onClick={() => setStatus("ARCHIVED")}
-            >
-                Archived
-            </button>
-
-        </div>
-        {error && <p>{error}</p>}
-
-        <div className={styles.grid}>
-            {data?.content.map((album) => (
-
-                <Link
-                    key={album.publicUuid}
-                    href={`/contributor/albums/${album.publicUuid}`}
-                    className={styles.cardLink}
+                <button
+                    type="button"
+                    className={styles.btn}
+                    onClick={() => setStatus("DRAFT")}
                 >
+                    Draft
+                </button>
 
-                    <div
-                    className={styles.card}
+                <button
+                    type="button"
+                    className={styles.btn}
+                    onClick={() => setStatus("PUBLISHED")}
+                >
+                    Published
+                </button>
+
+                <button
+                    type="button"
+                    className={styles.btn}
+                    onClick={() => setStatus("SCHEDULED")}
+                >
+                    Scheduled
+                </button>
+
+                <button
+                    type="button"
+                    className={styles.btn}
+                    onClick={() => setStatus("ARCHIVED")}
+                >
+                    Archived
+                </button>
+
+            </div>
+            {error && <p>{error}</p>}
+
+            <div className={styles.grid}>
+                {data?.content.map((album) => (
+
+                    <Link
+                        key={album.publicUuid}
+                        href={`/contributor/albums/${album.publicUuid}`}
+                        className={styles.cardLink}
                     >
-                        <h3>{album.photoAlbumName}</h3>
-                        {album.coverPhoto && (
-                            <img
-                                src={`${process.env.NEXT_PUBLIC_API_URL}/${album.coverPhoto.coverPhotoUrl}`}
-                                alt={album.photoAlbumName}
-                                className={styles.coverPhoto}
-                            />
-                        )}
-                        
-                        <h3>{album.contentType}</h3>
-                        {album.publishedAt && (
-                            <h3>{new Date(album.publishedAt).toLocaleDateString()}</h3>
-                        )}
-                    </div>  
-                </Link>  
-            ))}
+
+                        <div
+                        className={styles.card}
+                        >
+                            <h3>{album.photoAlbumName}</h3>
+                            {album.coverPhoto && (
+                                <img
+                                    src={`${process.env.NEXT_PUBLIC_API_URL}/${album.coverPhoto.coverPhotoUrl}`}
+                                    alt={album.photoAlbumName}
+                                    className={styles.coverPhoto}
+                                />
+                            )}
+                            
+                            <h3>{album.contentType}</h3>
+                            {album.publishedAt && (
+                                <h3>{new Date(album.publishedAt).toLocaleDateString()}</h3>
+                            )}
+                        </div>  
+                    </Link>  
+                ))}
+            </div>
         </div>
-    </div>
+    </div>    
     )
 
 }

@@ -1,8 +1,8 @@
 "use client"
 
 import { useEffect,useRef, useState } from "react";
-import { GetPhotoAlbumsResponse } from "@/lib/api/contributorsPhotoAlbums";
-import { EditTitleAndDescriptionRequest } from "@/lib/api/editAlbum";
+import { GetPhotoAlbumsResponse } from "@/lib/api/contributors/contributorsGetPhotoAlbums";
+import { EditTitleAndDescriptionRequest } from "@/lib/api/contributors/contributorEditAlbum";
 import styles from "./editPhotoAlbum.module.css"
 
 type Props = {

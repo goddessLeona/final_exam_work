@@ -1,9 +1,9 @@
 "use client"
 
 import { useState } from "react";
-import { GetPhotoAlbumsResponse } from "@/lib/api/contributorsPhotoAlbums";
+import { GetPhotoAlbumsResponse } from "@/lib/api/contributors/contributorsGetPhotoAlbums";
 import styles from "./editPhotoAlbum.module.css"
-import type { ContentStatus } from "@/lib/api/types/content-status"
+import { ContentStatus } from "@/types/content-status";
 
 type Props = {
     data: GetPhotoAlbumsResponse;

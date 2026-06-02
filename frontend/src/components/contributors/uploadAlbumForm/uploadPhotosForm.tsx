@@ -1,8 +1,8 @@
 "use client"
 
 import {useEffect, useRef, useState} from "react"
-import { postUploadPhotos } from "@/lib/api/uploadPhoto"
-import {UploadPhotoContentResponse} from "@/lib/api/uploadPhoto"
+import { postUploadPhotos } from "@/lib/api/contributors/contributorUploadPhoto"
+import {UploadPhotoContentResponse} from "@/lib/api/contributors/contributorUploadPhoto"
 import styles from "./uploadPhotosForm.module.css"
 import { ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -142,6 +142,9 @@ function UploadPhotosForm() {
         },3000);
         
     }catch (err:any) {
+
+        if (err.message === "Unauthorized") return ;
+        
         if (err.errors) {
             setError(err.errors);
         }else {

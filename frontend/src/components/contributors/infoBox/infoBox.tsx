@@ -1,24 +1,39 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { Inter, Finger_Paint } from "next/font/google"
 import { ContributorAlbumStatsResponse, getContributorInfo } from "@/lib/api/contributors/contributorGeneralInfo";
-import { ContentType } from "@/lib/api/types/content-types";
+import { ContentType } from "@/types/content-type";
 
 import styles from "./infoBox.module.css"
+
+const inter = Inter({
+        subsets: ["latin"],
+        weight: ["400"]
+    });
+
+const fingerPaint = Finger_Paint({
+    subsets: ["latin"],
+    weight: "400",
+}); 
 
 function InfoBoxStats() {
 
     const [data, setData] = useState<ContributorAlbumStatsResponse | null > (null);
-    const [error, setError] = useState("");
+    const [loading, setLoading] = useState(true);
+    const [error] = useState("");
 
     useEffect(() => {
         getContributorInfo()
             .then((res) => setData(res))
-            .catch(() => setError("Not logged in"));
+            .catch(() => {})
+            .finally(() => setLoading(false))
+            
     }, []);
 
     if (error) return <p>{error}</p>;
-    if (!data) return <p>Loading...</p>;
+    if (loading) return <p>Loading...</p>
+    if (!data) return null;
 
     const contentTypeLabel: Record<ContentType, string> = {
         PHOTO: "Photo albums",
@@ -31,7 +46,7 @@ function InfoBoxStats() {
 
             <div className={styles.name}>
                 <div>
-                    <div className={styles.user}>
+                    <div className= {`${fingerPaint.className} ${styles.title}`}>
                         {data.username}
                     </div>
                 </div>

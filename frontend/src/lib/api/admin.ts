@@ -1,6 +1,6 @@
-
-type consentFormStatus = "NOT_SUBMITTED" | "PENDING" | "APPROVED" | "REJECTED";
-type ReviewStatus = "NOT_SUBMITTED" | "PENDING" | "APPROVED" | "REJECTED";
+import { apiFetch } from "./api-fetch";
+import { ConsentFormStatus } from "@/types/consent-form-status";
+import { ReviewStatus } from "@/types/reviewStatus";
 
 export interface AdminConsentFormItem {
 
@@ -10,7 +10,7 @@ export interface AdminConsentFormItem {
     documentsApproved: number;
     documentsRejected: number;
 
-    consentFormStatus: consentFormStatus;
+    consentFormStatus: ConsentFormStatus;
     consentFormId: string;
 
 }
@@ -31,7 +31,7 @@ export interface AdminDashboardResponse {
 
 export async function getAdminDashboard () : Promise<AdminDashboardResponse> {
 
-    const res = await fetch("http://localhost:8080/admin/dashboard", { 
+    const res = await apiFetch("http://localhost:8080/admin/dashboard", { 
             credentials: "include",
         });
 
@@ -50,7 +50,7 @@ export interface ConsentFormDataResponse {
     documentIdCardFace : DocumentDto;
     documentFaceFFF : DocumentDto;
     approvedRules : boolean;
-    consentFormStatus : consentFormStatus;
+    consentFormStatus : ConsentFormStatus;
     consentFormId : string
 
 }
@@ -62,7 +62,7 @@ export interface DocumentDto {
 
 export async function getConsentFormData (id: string) : Promise <ConsentFormDataResponse> {
 
-    const res = await fetch(`http://localhost:8080/admin/consent/${id}`, {
+    const res = await apiFetch(`http://localhost:8080/admin/consent/${id}`, {
         credentials: "include",
     })
 
@@ -91,7 +91,7 @@ export async function adminConsentFormResponse (
 ) : Promise <void> {
 
    
-    const res = await fetch(`http://localhost:8080/admin/consent/${id}/review`, 
+    const res = await apiFetch(`http://localhost:8080/admin/consent/${id}/review`, 
         {
         method: "PATCH",
         credentials: "include",

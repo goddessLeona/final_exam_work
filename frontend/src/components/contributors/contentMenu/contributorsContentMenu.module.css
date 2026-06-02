@@ -9,13 +9,24 @@
     padding-bottom: 2px;
 }
 
+.bigContainer {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
 .container {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
     padding: 20px;
-    
+    align-items: center;
+}
+
+.title {
+    font-size: 20px;
+    margin-top: 20px;
+    margin-bottom: 0px;
 }
 
 .tabs {
@@ -30,7 +41,7 @@
     box-sizing: border-box;
 
     padding: 12px;
-    border-radius: 18px;
+    border-radius: 10px;
 
     box-shadow:
         0 4px 12px rgba(0,0,0,0.25);

@@ -1,9 +1,10 @@
+import { apiFetch } from "../api-fetch";
 
 export async function signUpContributor(
     data: SignUpRequest
     ) {
 
-    const response = await fetch(
+    const response = await apiFetch(
         `${process.env.NEXT_PUBLIC_API_URL}/user/signup-contributor`,
         {
             method: "POST",

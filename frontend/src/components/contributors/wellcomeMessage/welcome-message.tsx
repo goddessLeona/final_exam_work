@@ -1,21 +1,25 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getWelcomeMessage, WelcomeResponse} from "@/lib/api/contributor";
+import { getWelcomeMessage, WelcomeResponse} from "@/lib/api/contributors/contributor-consent-form";
 import styles from "./welcome-message.module.css"
 
 function Welcome() {
     const [data, setData] = useState<WelcomeResponse | null>(null);
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
 
     useEffect(() => {
         getWelcomeMessage()
             .then(setData)
-            .catch(() => setError("Not logged in"));
+            .catch(() => {})
+            .finally(() => setLoading(false));
     }, []);
 
+    if(loading) return <p>Loading...</p>;
+
     if (error) return <p>{error}</p>;
-    if (!data) return <p>Loading...</p>;
+    if (!data) return null;
 
     return  <div className={styles.container}>
                 <p>{data.message}</p>

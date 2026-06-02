@@ -1,19 +1,14 @@
-
-import { ContentType } from "../types/content-types";
+import { apiFetch } from "../api-fetch";
+import { ContentType } from "@/types/content-type";
 
 export async function getContributorInfo() : Promise<ContributorAlbumStatsResponse>{
 
-    const res = await fetch(
+    const res = await apiFetch(
         `${process.env.NEXT_PUBLIC_API_URL}/contributor/general/info`, { 
             credentials: "include",
-        });
+    });
 
-    if(!res.ok){
-        throw new Error("Unauthorized");
-    }    
-
-    return res.json();
-            
+    return res.json();       
 }
 
 export interface ContributorAlbumStatsResponse {

@@ -2,11 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { GetPhotoAlbumsResponse, contributorGetAlbums } from "@/lib/api/contributorsPhotoAlbums";
-import { EditTitleAndDescriptionRequest } from "@/lib/api/editAlbum";
-import { editTitleAndDescription } from "@/lib/api/editAlbum";
-import { editCoverPhoto, deletePhoto,addPhoto, reorderPhotos, changeStatus, editScheduled } from "@/lib/api/editAlbum";
-import type { ContentStatus } from "@/lib/api/types/content-status"
+import { GetPhotoAlbumsResponse, contributorGetAlbums } from "@/lib/api/contributors/contributorsGetPhotoAlbums";
+import { EditTitleAndDescriptionRequest } from "@/lib/api/contributors/contributorEditAlbum";
+import { editTitleAndDescription } from "@/lib/api/contributors/contributorEditAlbum";
+import { editCoverPhoto, deletePhoto,addPhoto, reorderPhotos, changeStatus, editScheduled } from "@/lib/api/contributors/contributorEditAlbum";
+import { ContentStatus } from "@/types/content-status";
 import ContributorViewAlbum from "./ContributorViewAlbum";
 import ContributorEditAlbum from "./ContributorEditPhotoAlbum";
 

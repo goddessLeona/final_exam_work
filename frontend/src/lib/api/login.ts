@@ -1,9 +1,10 @@
+import { apiFetch } from "./api-fetch";
 
 export async function login(
     data: LoginRequest
     ): Promise<LoginResponse> {
 
-    const res = await fetch(
+    const res = await apiFetch(
         `${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
         method: "POST",
         headers: {
