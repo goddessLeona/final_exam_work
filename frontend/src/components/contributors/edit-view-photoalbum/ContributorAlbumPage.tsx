@@ -36,7 +36,6 @@ function ContributorContentPage (){
             }catch (err) {
 
                 if (handleAuthError(err)) return;
-
                 setError("Failed to load album");
 
             }finally {
@@ -73,6 +72,7 @@ function ContributorContentPage (){
             setIsEditing(false);
 
         } catch (err) {
+            if (handleAuthError(err)) return;
             setError("Failed to update album");
         }
     }
@@ -94,6 +94,8 @@ function ContributorContentPage (){
             });
 
         } catch (err: any) {
+
+            if (handleAuthError(err)) return;
             setError(err.message || "Failed to update cover photo");
         }
     };
@@ -121,6 +123,7 @@ function ContributorContentPage (){
 
         } catch (err: any) {
 
+            if (handleAuthError(err)) return;
             setError(err.message || "Failed to delete photo");
         }
     };
@@ -142,6 +145,7 @@ function ContributorContentPage (){
             setData(updatedAlbum);
 
         }catch (err: any) {
+            if (handleAuthError(err)) return;
             setError(err.message || "Failed to update album")
         }
     }
@@ -162,6 +166,7 @@ function ContributorContentPage (){
 
         } catch (err: any) {
 
+            if (handleAuthError(err)) return;
             setError(err.message || "Failed to reorder photos");
         }
     }
@@ -186,6 +191,8 @@ function ContributorContentPage (){
             );
 
         } catch (err: any) {
+
+            if (handleAuthError(err)) return;
             setError(err.message || "Failed to change status on album");
         }
     }
@@ -202,6 +209,7 @@ function ContributorContentPage (){
             setData(updatedAlbum);
 
         }catch (err: any) {
+            if (handleAuthError(err)) return;
             setError(err.message || "Failed to change scheduled date on album");
         }
     }

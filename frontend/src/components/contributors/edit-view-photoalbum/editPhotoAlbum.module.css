@@ -8,6 +8,11 @@
     align-items: center;
 }
 
+.titleBox {
+    display: flex;
+    flex-direction: column;
+}
+
 .header {
     padding: 20px;
     border: 1px solid rgba(255, 255, 255, 0.12);
@@ -79,6 +84,20 @@
   margin-top: 20px;
   margin: 5px;
   width: 120px;
+}
+
+.coverBtn {
+    background: linear-gradient(135deg, #cdb4db, #b5838d);
+    border-radius: 4px;
+    padding: 5px;
+    margin: 4px;
+}
+
+.removeBtn {
+    background: linear-gradient(135deg, #493c6a, #7974b4);
+    border-radius: 3px;
+    padding: 5px;
+    margin: 2px;
 }
 
 .activeStatus {

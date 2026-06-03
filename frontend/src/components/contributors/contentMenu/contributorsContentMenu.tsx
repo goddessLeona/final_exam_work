@@ -42,11 +42,10 @@ function ContributorAlbums() {
                 const response = await getPhotoAlbums(currentStatus);
                 setData(response);
 
-            }catch (err) {
+            }catch (err: any) {
                  
                 if (handleAuthError(err)) return;
-
-                setError("Failed to load albums");
+                setError(err.message || "Failed to load albums");
             }
             
         }

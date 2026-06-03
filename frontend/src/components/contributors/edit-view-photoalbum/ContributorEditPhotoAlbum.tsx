@@ -43,60 +43,71 @@ function ContributorEditAlbum ({
     const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
     return (
-        <div className={styles.container}>
+        <div>
+            <div className={styles.container}>
 
-            <div className={styles.header}>
-                <form onSubmit={handleSubmit}>
-                    <input
-                        id="title"
-                        name="photoAlbumName"
-                        type="text"
-                        value= {formData.photoAlbumName}
-                        onChange={(e) =>
-                             setFormData({
-                                ...formData, 
-                                photoAlbumName: e.target.value
-                            })
-                        }
+                <div className={styles.header}>
+                    <form onSubmit={handleSubmit}>
 
-                        className={titleTooLong ? styles.inputError : ""}
-                    />
+                        <div className={styles.titleBox}>
+                            <label>Title</label>
+                            <input
+                                id="title"
+                                name="photoAlbumName"
+                                type="text"
+                                value= {formData.photoAlbumName}
+                                onChange={(e) =>
+                                    setFormData({
+                                        ...formData, 
+                                        photoAlbumName: e.target.value
+                                    })
+                                }
 
-                    <p className={titleTooLong ? styles.error : ""}>
-                        {formData.photoAlbumName.length}/20
-                    </p>
+                                className={titleTooLong ? styles.inputError : ""}
+                            />
 
-                    <textarea
-                            id="description"
-                            name="description"
-                            value={formData.description}
-                            onChange={(e) =>
-                                setFormData({
-                                    ...formData,
-                                    description: e.target.value
-                                }) 
-                            }
+                            <p className={titleTooLong ? styles.error : ""}>
+                                {formData.photoAlbumName.length}/20
+                            </p>
+                        </div>
 
-                            className={descriptionTooLong ? styles.inputError : ""}
-                        /> 
+                        <div className={styles.titleBox}>
+                            <label>Description</label>
+                            <textarea
+                                    id="description"
+                                    name="description"
+                                    value={formData.description}
+                                    onChange={(e) =>
+                                        setFormData({
+                                            ...formData,
+                                            description: e.target.value
+                                        }) 
+                                    }
 
-                    <p className={descriptionTooLong ? styles.error : ""}>
-                        {formData.description.length}/50
-                    </p> 
+                                    className={descriptionTooLong ? styles.inputError : ""}
+                                /> 
 
-                    <button
-                        type="submit"
-                    >
-                        Save
-                    </button>
+                            <p className={descriptionTooLong ? styles.error : ""}>
+                                {formData.description.length}/50
+                            </p> 
+                        </div>
 
-                    <button
-                        type="button"
-                        onClick={onCancel}
-                    >
-                        Cancel
-                    </button>
-                </form>
+                        <button
+                            type="submit"
+                            className={styles.editBtn}
+                        >
+                            Save
+                        </button>
+
+                        <button
+                            type="button"
+                            className={styles.editBtn}
+                            onClick={onCancel}
+                        >
+                            Cancel
+                        </button>
+                    </form>
+                </div>    
 
                 {selectedIndex === null && (
                     <div className={styles.grid}>
@@ -129,6 +140,7 @@ function ContributorEditAlbum ({
 
                                 <button
                                     type="button"
+                                    className={styles.coverBtn}
                                     onClick={() => onCoverSelect(photo.publicUuid)}
                                 >
                                     Set cover
@@ -136,6 +148,7 @@ function ContributorEditAlbum ({
 
                                 <button
                                     type="button"
+                                    className={styles.removeBtn}
                                     onClick={() => onRemovePhoto (photo.publicUuid)}
                                 >
                                     Remove photo
@@ -179,7 +192,8 @@ function ContributorEditAlbum ({
 
                 <button
                     type="button"
-                    className={styles.addphotobtn}
+                    className={styles.editBtn}
+                    
                     onClick={() => fileInputRef.current?.click()}
                 >
                     Add more photos
