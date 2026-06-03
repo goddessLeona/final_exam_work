@@ -19,8 +19,18 @@ export async function handleResponse<T>(
         throw error;
     }
 
-    // HANDLE EMPTY BODY
-    const text = await response.text();
+    // No content
+    if (response.status === 204) {
+        return null as T;
+    }
 
-    return text ? JSON.parse(text) : null;
+    const contentType = response.headers.get("content-type");
+
+    // JSON response
+    if (contentType?.includes("application/json")) {
+        return response.json();
+    }
+
+    // Plain text response
+    return response.text() as unknown as T;
 }
