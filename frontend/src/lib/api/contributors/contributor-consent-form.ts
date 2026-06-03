@@ -27,7 +27,8 @@ export interface WelcomeResponse {
 
 //Get form status
 export async function getContributorAgreementForm() : Promise<ContributorFormResponse>{
-   const response = await apiFetch(
+   
+    const response = await apiFetch(
     `${process.env.NEXT_PUBLIC_API_URL}/contributor/consent`, { 
             credentials: "include",
     });
@@ -53,7 +54,8 @@ export interface ContributorFormResponse{
 }
 
 //Upload documents first time or after rejected or approved
-export async function postContributorAgreementForm(formData: FormData){
+export async function postContributorAgreementForm(formData: FormData): Promise<ContributorFormResponse>{
+    
     const response = await apiFetch(
         `${process.env.NEXT_PUBLIC_API_URL}/contributor/consent`,
         {

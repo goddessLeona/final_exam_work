@@ -93,7 +93,6 @@ public class ContributorConsentFormService {
     }
 
     // ################### GET - user consent form ###################
-
     @Transactional(readOnly = true)
     public ContributorConsentFormResponse getConsentFormStatus() {
 
@@ -131,7 +130,6 @@ public class ContributorConsentFormService {
     }
 
     //################### POST - User consent form ######################
-
     @Transactional
     public ContributorConsentFormResponse postConsentForm(
             ContributorConsentFormRequest request
@@ -269,6 +267,13 @@ public class ContributorConsentFormService {
         }
 
         if (consentForm.getApprovedRules() == Boolean.TRUE) {
+        }
+
+        if (!update) {
+            throw new ApiException(
+                    "No new documents uploaded",
+                    HttpStatus.BAD_REQUEST
+            );
         }
 
         // Save consent form

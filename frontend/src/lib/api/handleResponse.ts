@@ -5,32 +5,38 @@ export async function handleResponse<T>(
 
     if (!response.ok) {
 
-        let message = `Request failed (${response.status})`;
+        let errorData: any = {};
 
         try {
-            const data = await response.json();
-            message = data?.message || message;
-        } catch {}
+            errorData = await response.json();
+        } catch {
+            try {
+                errorData = await response.text();
+            } catch {}
+        }
 
-        const error = new Error(message) as Error & { status?: number };
+        const error = new Error(
+            errorData?.message || errorData || `Request failed (${response.status})`
+        ) as Error & {
+            status?: number;
+            errors?: Record<string, string>;
+        };
 
         error.status = response.status;
+        error.errors = errorData?.errors;
 
         throw error;
     }
 
-    // No content
     if (response.status === 204) {
         return null as T;
     }
 
     const contentType = response.headers.get("content-type");
 
-    // JSON response
     if (contentType?.includes("application/json")) {
         return response.json();
     }
 
-    // Plain text response
     return response.text() as unknown as T;
 }

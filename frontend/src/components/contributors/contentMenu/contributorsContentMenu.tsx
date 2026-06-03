@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { handleAuthError } from "@/lib/auth/handleAuthError";
 import { Inter, Finger_Paint } from "next/font/google"
 import Link from "next/link";
 import { 
@@ -42,7 +43,9 @@ function ContributorAlbums() {
                 setData(response);
 
             }catch (err) {
-                
+                 
+                if (handleAuthError(err)) return;
+
                 setError("Failed to load albums");
             }
             

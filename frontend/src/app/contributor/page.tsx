@@ -27,7 +27,7 @@ export default function ContributorPage() {
   }, []);
 
   return (
-    <main>
+    <main className={styles.main}>
       <Welcome />
 
       {view === "loading" && <p>Loading...</p>}

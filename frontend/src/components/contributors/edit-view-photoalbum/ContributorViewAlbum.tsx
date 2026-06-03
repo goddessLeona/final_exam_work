@@ -133,8 +133,9 @@ function ContributorViewAlbum({
             <div className={styles.statusbar}>
 
                 <button
-                    type="button"
-                    className={styles.statusbtn}
+                    className={`${styles.editBtn} ${
+                        data.contentStatus === "DRAFT" ? styles.activeStatus : ""
+                    }`}
                     disabled={data.contentStatus === "DRAFT"}
                     onClick={() => onEditScheduled(null)}
                 >
@@ -143,7 +144,9 @@ function ContributorViewAlbum({
 
                 <button
                     type="button"
-                    className={styles.statusbtn}
+                    className={`${styles.editBtn} ${
+                        data.contentStatus === "PUBLISHED" ? styles.activeStatus : ""
+                    }`}
                     disabled={data.contentStatus === "PUBLISHED"}
                     onClick={() => {
                         onEditScheduled(new Date().toISOString());
@@ -153,12 +156,14 @@ function ContributorViewAlbum({
                 </button>
 
                 <label
-                    className={styles.statusbtn}
+                    className={`${styles.editBtn} ${
+                        data.contentStatus === "SCHEDULED" ? styles.activeStatus : ""
+                    }`}
                     >
-                    Scedule
+                    Scedule:
                     <input
                         type="datetime-local"
-                        className={styles.scedulebtn}
+                        
                         value={data.publishedAt ? data.publishedAt.slice(0, 16) : ""}
                         disabled={false}
                         onChange={(e) => onEditScheduled(
@@ -172,7 +177,9 @@ function ContributorViewAlbum({
                 
                 <button
                     type="button"
-                    className={styles.statusbtn}
+                    className={`${styles.editBtn} ${
+                        data.contentStatus === "ARCHIVED" ? styles.activeStatus : ""
+                    }`}
                     disabled={data.contentStatus === "ARCHIVED"}
                     onClick={() => onEditStatus("ARCHIVED")}
                 >
@@ -182,6 +189,8 @@ function ContributorViewAlbum({
             </div>
 
             <button
+                type="button"
+                className={styles.editBtn}
                 onClick ={onEdit}
             >
                 Edit

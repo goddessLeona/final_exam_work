@@ -3,8 +3,25 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding-top: 10px;
+    padding: 12px;
     gap: 10px;
+    align-items: center;
+}
+
+.header {
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 10px;
+    width: 100%;
+    max-width: 650px;
+    color: #050505;
+    line-height: 1.6;
+    font-weight: 500;
+    background-color: rgba(205, 180, 219, 0.6);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.50);
+    box-sizing: border-box;
+    margin: 10px; 
 }
 
 .grid {
@@ -14,6 +31,7 @@
     width: 100%;
     color:beige;
     text-align: center;
+    margin: 10px;
 }
 
 .card {
@@ -46,4 +64,31 @@
 .photoEdit {
     opacity: 0.9;
     transition: 0.2s ease;
+}
+
+.editBtn {
+  background: linear-gradient(135deg, #cdb4db, #b5838d);
+  color: #1a1a1a;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+  transition: all 0.2s ease;
+  margin-top: 20px;
+  margin: 5px;
+  width: 120px;
+}
+
+.activeStatus {
+  background: linear-gradient(135deg, #8f7cff, #6d5dd3);
+  color: white;
+  box-shadow: 0 0 18px rgba(143, 124, 255, 0.45);
+  transform: scale(1.03);
+}
+
+.editBtn:disabled {
+  opacity: 1;
+  cursor: default;
 }

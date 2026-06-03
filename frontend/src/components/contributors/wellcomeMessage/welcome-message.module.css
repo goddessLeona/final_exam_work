@@ -1,4 +1,21 @@
+
+.main {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
 .container {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+    align-items: center;
+}
+
+.text {
     padding: 20px;
     border: 1px solid rgba(255, 255, 255, 0.12);
     border-radius: 10px;
@@ -9,7 +26,8 @@
     font-weight: 500;
     background-color: rgba(205, 180, 219, 0.6);
     backdrop-filter: blur(8px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.50);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.312);
     box-sizing: border-box;
-    margin: 10px;
+    margin: 10px; 
 }
+

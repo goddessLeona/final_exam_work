@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react";
+import { handleAuthError } from "@/lib/auth/handleAuthError";
 import { useParams } from "next/navigation";
 import { GetPhotoAlbumsResponse, contributorGetAlbums } from "@/lib/api/contributors/contributorsGetPhotoAlbums";
 import { EditTitleAndDescriptionRequest } from "@/lib/api/contributors/contributorEditAlbum";
@@ -33,6 +34,9 @@ function ContributorContentPage (){
                 setData(response);
 
             }catch (err) {
+
+                if (handleAuthError(err)) return;
+
                 setError("Failed to load album");
 
             }finally {

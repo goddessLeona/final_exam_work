@@ -24,9 +24,14 @@ function Welcome() {
     if (error) return <p>{error}</p>;
     if (!data) return null;
 
-    return  <div className={styles.container}>
-                <p>{data.message}</p>
-            </div>;
+    return (
+        <div className={styles.main}>
+            <div className={styles.container}>
+                    <p className={styles.text}>{data.message}</p>
+            </div>
+        </div>
+    );
+    
 }
 
 export default Welcome;
