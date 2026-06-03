@@ -10,10 +10,7 @@ export async function apiFetch(
     });
 
     if (response.status === 401) {
-
-        window.location.href = "/login";
-
-        throw new Error("Unauthorized");
+        throw new Error("UNAUTHORIZED");
     }
 
     return response;

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { handleAuthError } from "@/lib/auth/handleAuthError";
 import { getWelcomeMessage, WelcomeResponse} from "@/lib/api/contributors/contributor-consent-form";
 import styles from "./welcome-message.module.css"
 
@@ -12,12 +13,14 @@ function Welcome() {
     useEffect(() => {
         getWelcomeMessage()
             .then(setData)
-            .catch(() => {})
+            .catch((err) => {
+                if (handleAuthError(err)) return;
+                setError(err.message);
+            })
             .finally(() => setLoading(false));
     }, []);
 
     if(loading) return <p>Loading...</p>;
-
     if (error) return <p>{error}</p>;
     if (!data) return null;
 

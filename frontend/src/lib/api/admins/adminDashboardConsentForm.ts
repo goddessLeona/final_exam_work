@@ -1,4 +1,5 @@
-import { apiFetch } from "./api-fetch";
+import { apiFetch } from "../api-fetch";
+import { handleResponse } from "../handleResponse";
 import { ConsentFormStatus } from "@/types/consent-form-status";
 import { ReviewStatus } from "@/types/reviewStatus";
 
@@ -31,16 +32,13 @@ export interface AdminDashboardResponse {
 
 export async function getAdminDashboard () : Promise<AdminDashboardResponse> {
 
-    const res = await apiFetch("http://localhost:8080/admin/dashboard", { 
+    const response = await apiFetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/admin/dashboard`, { 
             credentials: "include",
-        });
+    });
 
-        if(!res.ok){
-        throw new Error("Failed to fetch dashboard");
-    }    
 
-    return res.json();
-
+    return handleResponse(response);
 }
 
 export interface ConsentFormDataResponse {
@@ -62,15 +60,13 @@ export interface DocumentDto {
 
 export async function getConsentFormData (id: string) : Promise <ConsentFormDataResponse> {
 
-    const res = await apiFetch(`http://localhost:8080/admin/consent/${id}`, {
+    const response = await apiFetch(
+        
+        `${process.env.NEXT_PUBLIC_API_URL}/admin/consent/${id}`, {
         credentials: "include",
     })
 
-    if(!res.ok) {
-        throw new Error("Failed to fetch consent data");
-    }
-
-    return res.json();
+    return handleResponse(response);
 }
 
 
@@ -91,8 +87,10 @@ export async function adminConsentFormResponse (
 ) : Promise <void> {
 
    
-    const res = await apiFetch(`http://localhost:8080/admin/consent/${id}/review`, 
-        {
+    const response = await apiFetch(
+        
+        `${process.env.NEXT_PUBLIC_API_URL}/admin/consent/${id}/review`, {
+
         method: "PATCH",
         credentials: "include",
         headers: {
@@ -101,8 +99,6 @@ export async function adminConsentFormResponse (
         body: JSON.stringify(request),
     });
 
-    if(!res.ok) {
-        throw new Error("Failed to update consent form")
-    }
+    return handleResponse(response);
 
 }

@@ -1,8 +1,9 @@
 "use client"
 
 import { useEffect, useState } from "react";
+import { handleAuthError } from "@/lib/auth/handleAuthError";
 import { useParams } from "next/navigation";
-import { getConsentFormData, ConsentFormDataResponse, adminConsentFormResponse } from "@/lib/api/admin";
+import { getConsentFormData, ConsentFormDataResponse, adminConsentFormResponse } from "@/lib/api/admins/adminDashboardConsentForm";
 import styles from "./admin-getFormData.module.css"
 
 export default function ConsentData () {
@@ -50,8 +51,15 @@ export default function ConsentData () {
                 const result = await getConsentFormData(id);
                 setData (result)
             }catch (err :any) {
-                console.error("Data error :" , err);
-                setError( err.message || "Failed to load any consentform data");
+
+                if (handleAuthError(err)) return;
+
+                setError( 
+                    err?.message ||
+                    err?.error||
+                    "Failed to load any consentform data"
+                );
+
             }finally {
                 setLoading(false);
             }

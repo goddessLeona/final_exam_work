@@ -10,7 +10,7 @@ export default function NavbarAdmin() {
         <Link className={styles.link} href="/admin">Home</Link>
       </div>
       <div className={styles.right}>
-        <Link className={styles.link} href="">Settings</Link>
+        <Link className={styles.link} href="/member">MemberPage</Link>
         <div className={styles.right}>
         <LogoutButton />
       </div>

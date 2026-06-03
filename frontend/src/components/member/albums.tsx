@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { GetPhotoAlbumsResponse, memberGetAlbums } from "@/lib/api/memberGetPhotoAlbums";
+import { GetPhotoAlbumsResponse, memberGetAlbums } from "@/lib/api/members/memberGetPhotoAlbums";
 import styles from "./albums.module.css"
 
 function MemberContentAlbums (){

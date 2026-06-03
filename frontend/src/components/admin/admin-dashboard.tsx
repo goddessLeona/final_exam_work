@@ -1,7 +1,8 @@
 "use client"
 
 import { useEffect, useState } from "react";
-import { getAdminDashboard, AdminDashboardResponse } from "@/lib/api/admin";
+import { handleAuthError } from "@/lib/auth/handleAuthError";
+import { getAdminDashboard, AdminDashboardResponse } from "@/lib/api/admins/adminDashboardConsentForm";
 import Link from "next/link";
 import styles from "./admin-dashboard.module.css"
 
@@ -17,7 +18,8 @@ export default function AdminDashboard () {
                 const result = await getAdminDashboard();
                 setData(result);
             } catch(err : any) {
-                console.error("Dashboard error:", err);
+                if (handleAuthError(err)) return;
+
                 setError(err.message || "Failed to load dashboard");
             } finally {
                 setLoading(false);

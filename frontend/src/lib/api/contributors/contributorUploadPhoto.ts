@@ -1,5 +1,6 @@
 
 import { apiFetch } from "../api-fetch";
+import { handleResponse } from "../handleResponse";
 import { ContentType } from "@/types/content-type";
 import { ContentStatus } from "@/types/content-status";
 
@@ -16,22 +17,7 @@ export async function postUploadPhotos(
             }
         );
 
-        let json = null;
-
-        try {
-            json = await response.json();
-        } catch {
-            json = null;
-        }
-
-        if (!response.ok) {
-            throw {
-                message: json?.message || "Upload failed",
-                errors: json?.errors ?? null,
-            };
-        }
-        
-    return json;
+        return handleResponse(response);
 }
     
 

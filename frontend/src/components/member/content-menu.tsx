@@ -1,9 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { handleAuthError } from "@/lib/auth/handleAuthError";
 import Link from "next/link";
-import { memberGetCoverPhotos, GetCoverPhotoAlbumsResponse, PageResponse } from "@/lib/api/memberGetPhotoAlbums";
-import type {ContentType} from "@/lib/api/memberGetPhotoAlbums";
+import { memberGetCoverPhotos, GetCoverPhotoAlbumsResponse, PageResponse } from "@/lib/api/members/memberGetPhotoAlbums";
+import { ContentType } from "@/types/content-type";
 import styles from "./content-menu.module.css"
 
 function MemberMenuContent(){
@@ -25,7 +26,9 @@ function MemberMenuContent(){
                     setData(response);
     
                 }catch (err) {
-                    
+
+                    if (handleAuthError(err)) return;
+
                     setError("Failed to load albums");
                 }
                 

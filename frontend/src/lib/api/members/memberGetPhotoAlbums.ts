@@ -4,34 +4,33 @@ import { handleResponse } from "../handleResponse";
 import { ContentType } from "@/types/content-type";
 import { ContentStatus } from "@/types/content-status";
 
-//####### Get all cover photos from all albums that are uploaded #######
-export async function getPhotoAlbums(
-    status: ContentStatus,
+
+//####### Get all cover photos from all albums that are published 
+export async function memberGetCoverPhotos(
+    contentType: ContentType,
     page: number = 0,
     size: number = 12
-) : Promise<PageResponse<ContributorPhotoAlbumResponse>> {
+) : Promise<PageResponse<GetCoverPhotoAlbumsResponse>> {
 
     const response = await apiFetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/contributor/albums/cover-photo?status=${status}&page=${page}&size=${size}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/member/albums?contentType=${contentType}&page=${page}&size=${size}`,
          {
         credentials: "include",
     });
 
-    return handleResponse(response);
+   return handleResponse(response);
 
 }
+
 
 export interface CoverPhotoResponse {
     publicUuid: string;
     coverPhotoUrl: string;
 }
 
-export interface ContributorPhotoAlbumResponse {
+export interface GetCoverPhotoAlbumsResponse {
     publicUuid: string;
     photoAlbumName: string;
-    publishedAt: string | null;
-    contentType: ContentType;
-    contentStatus: ContentStatus;
     coverPhoto: CoverPhotoResponse | null;
 }
 
@@ -46,15 +45,15 @@ export interface PageResponse<T> {
 
 
 //######## GET to album from cover photo ############
-export async function contributorGetAlbums(publicUuid: string): Promise<GetPhotoAlbumsResponse> {
+export async function memberGetAlbums(publicUuid: string): Promise<GetPhotoAlbumsResponse> {
 
     const response = await apiFetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/contributor/albums/${publicUuid}`,
+        `${process.env.NEXT_PUBLIC_API_URL}/member/albums/${publicUuid}`,
          {
         credentials: "include",
     });
 
-   return handleResponse(response);
+    return handleResponse(response);
 }
 
 export interface AlbumTagResponse {
@@ -73,11 +72,11 @@ export interface GetPhotoAlbumsResponse {
     description: string;
     username: string;
     publishedAt: string;
-    archivedAt: string;
-
+    archivedAt: string | null;
+    
     albumTags: AlbumTagResponse [];
     photos: PhotoResponse [];
-    coverPhoto: CoverPhotoResponse | null;
+    coverPhoto: CoverPhotoResponse;
     contentStatus: ContentStatus;
 }
 

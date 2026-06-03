@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { handleAuthError } from "@/lib/auth/handleAuthError";
 import { Inter, Finger_Paint } from "next/font/google"
 import { ContributorAlbumStatsResponse, getContributorInfo } from "@/lib/api/contributors/contributorGeneralInfo";
 import { ContentType } from "@/types/content-type";
@@ -21,14 +22,20 @@ function InfoBoxStats() {
 
     const [data, setData] = useState<ContributorAlbumStatsResponse | null > (null);
     const [loading, setLoading] = useState(true);
-    const [error] = useState("");
+    const [error, setError] = useState("");
 
     useEffect(() => {
         getContributorInfo()
-            .then((res) => setData(res))
-            .catch(() => {})
-            .finally(() => setLoading(false))
-            
+            .then((res) => {
+                setData(res);
+            })
+            .catch((err) => {
+                if ( handleAuthError(err)) return;
+                setError(err.message)
+            })
+            .finally(() => {
+                setLoading(false);
+            });
     }, []);
 
     if (error) return <p>{error}</p>;

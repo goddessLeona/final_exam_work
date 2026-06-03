@@ -1,5 +1,9 @@
 import { apiFetch } from "../api-fetch";
+import { handleResponse } from "../handleResponse";
 import { CoverPhotoResponse, GetPhotoAlbumsResponse } from "./contributorsGetPhotoAlbums";
+import { ContentStatus } from "@/types/content-status";
+
+
 
 //######## Edit title and decription on album ############
 export async function editTitleAndDescription (
@@ -7,7 +11,7 @@ export async function editTitleAndDescription (
     request: EditTitleAndDescriptionRequest
 ): Promise <EditTitleAndDescriptionResponse>{
 
-    const res = await apiFetch(
+    const response = await apiFetch(
         `${process.env.NEXT_PUBLIC_API_URL}/contributor/albums/${albumPublicUuid}/title-description`, 
         {
         method: "PATCH",
@@ -18,11 +22,7 @@ export async function editTitleAndDescription (
         body: JSON.stringify(request),
     });
    
-    if(!res.ok) {
-        throw new Error("Failed to update title or decription")
-    }
-
-    return await res.json();
+    return handleResponse(response);
 }
 
 export interface EditTitleAndDescriptionRequest {
@@ -35,13 +35,15 @@ export interface EditTitleAndDescriptionResponse {
     description: string;
 }
 
+
+
 //######### Change cover photo #######
 export async function editCoverPhoto(
     albumPublicUuid: string,
     request: editCoverPhotoRequest
 ): Promise<editCoverPhotoResponse> {
     
-    const res = await apiFetch(
+    const response = await apiFetch(
         `${process.env.NEXT_PUBLIC_API_URL}/contributor/albums/${albumPublicUuid}/cover-photo`,
         {
             method: "PATCH",
@@ -53,28 +55,19 @@ export async function editCoverPhoto(
         }
     );
 
-    const json = await res.json();
-
-    if (!res.ok) {
-        throw {
-            message: json.message,
-            errors: json.errors
-        };
-    }
-
-    return json;
+    return handleResponse(response);
 }
 
 export interface editCoverPhotoRequest {
-
     coverPhotoPublicUuid: string
-
 }
 
 export interface editCoverPhotoResponse {
-    
     coverPhoto: CoverPhotoResponse
 }
+
+
+
 
 //######### Delete photo from album #######
 export async function deletePhoto (
@@ -82,7 +75,7 @@ export async function deletePhoto (
     request: DeletePhotoRequest
 ): Promise<void> {
 
-    const res = await apiFetch(
+    const response = await apiFetch(
         `${process.env.NEXT_PUBLIC_API_URL}/contributor/albums/${albumPublicUuid}/photos`,
         {
             method: "DELETE",
@@ -94,28 +87,22 @@ export async function deletePhoto (
         }
     );
 
-    if (!res.ok) {
-
-        const json = await res.json();
-
-        throw {
-            message: json.message,
-            errors: json.errors
-        };
-    }
+    return handleResponse(response);
 
 }
 
 export interface DeletePhotoRequest {
-
     photoPublicUuid: string
 }
+
+
 
 //######### Add photo to album #######
 export async function addPhoto(
     albumPublicUuid: string,
     formData: FormData
 ): Promise<GetPhotoAlbumsResponse> {
+
     const response = await apiFetch(
         `${process.env.NEXT_PUBLIC_API_URL}/contributor/albums/${albumPublicUuid}/photos`,
         {
@@ -125,19 +112,13 @@ export async function addPhoto(
         }
     );
 
-    const json = await response.json();
-
-    if (!response.ok) {
-
-        throw {
-            message: json.message,
-            errors: json.errors ?? null
-        };
-    }
-
-    return json;
+    return handleResponse(response);
 
 }
+
+
+
+
 
 //######### Reorder photo in album #######
 export async function reorderPhotos(
@@ -158,16 +139,7 @@ export async function reorderPhotos(
          }
     );
 
-    const json = await response.json();
-
-    if (!response.ok) {
-        throw {
-            message: json.message,
-            errors: json.errors
-        };
-    }
-
-    return json;
+    return handleResponse(response);
 
 }
 
@@ -176,9 +148,10 @@ export interface ReorderPhotoRequest {
     targetPosition: number;
 }
 
-//######### Change status on album #######
-import type { ContentStatus } from "../types/content-status";
 
+
+
+//######### Change status on album #######
 export async function changeStatus(
     albumPublicUuid: string,
     request: EditStatusRequest
@@ -197,20 +170,15 @@ export async function changeStatus(
         }
     );
 
-    if (!response.ok) {
-
-        const json = await response.json();
-
-        throw {
-            message: json.message,
-            errors: json.errors
-        };
-    }
+    return handleResponse(response);
 }
 
 export interface EditStatusRequest {
     status: ContentStatus
 }
+
+
+
 
 //######### Change publishing date #######
 export async function editScheduled(
@@ -231,16 +199,7 @@ export async function editScheduled(
          }
     );
 
-    const json = await response.json();
-
-    if (!response.ok) {
-        throw {
-            message: json.message,
-            errors: json.errors
-        };
-    }
-
-    return json;
+    return handleResponse(response);
 }
 
 export interface EditPublishedDateRequest {

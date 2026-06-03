@@ -5,6 +5,7 @@ import { Inter, Finger_Paint } from "next/font/google"
 import styles from "./contributorAgrementForm.module.css"
 import { ContributorFormResponse, getContributorAgreementForm } from "@/lib/api/contributors/contributor-consent-form";
 import { postContributorAgreementForm } from "@/lib/api/contributors/contributor-consent-form";
+import { handleAuthError } from "@/lib/auth/handleAuthError";
 
 
 const inter = Inter({
@@ -57,13 +58,13 @@ export default function ContributorAgrementForm({
                 setError({});
             }catch (err: any) {
 
-                if (err.message === "Unauthorized") return ;
-                
-                if (err.error) {
-                    setError(err.error);
-                }else {
-                    setError({ general: err.message || "Error loading form" });
-                }
+                if (handleAuthError(err)) return;
+
+                setError(
+                    err?.errors
+                        ? err.errors
+                        : { general: err?.message || "Error loading form" }
+                );
             }
         }
 

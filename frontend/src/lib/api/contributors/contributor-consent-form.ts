@@ -1,5 +1,6 @@
 
 import { apiFetch } from "../api-fetch";
+import { handleResponse } from "../handleResponse";
 import { ContributorStatus } from "@/types/contributor-status";
 import { ReviewStatus } from "@/types/reviewStatus";
 import { ConsentFormStatus } from "@/types/consent-form-status";
@@ -7,12 +8,13 @@ import { ConsentFormStatus } from "@/types/consent-form-status";
 //Welcome mesage on top of page, changing depending on form status
 export async function getWelcomeMessage() : Promise<WelcomeResponse>{
 
-    const res = await apiFetch(
+    const response = await apiFetch(
         `${process.env.NEXT_PUBLIC_API_URL}/contributor/welcome`, {
         credentials: "include",
     });
 
-    return res.json();
+    
+    return handleResponse(response);
 }
 
 export interface WelcomeResponse {
@@ -25,13 +27,13 @@ export interface WelcomeResponse {
 
 //Get form status
 export async function getContributorAgreementForm() : Promise<ContributorFormResponse>{
-   const res = await apiFetch(
+   const response = await apiFetch(
     `${process.env.NEXT_PUBLIC_API_URL}/contributor/consent`, { 
             credentials: "include",
     });
 
-      
-    return res.json();
+    
+    return handleResponse(response);
 }
 
 export interface ContributorFormResponse{
@@ -61,11 +63,5 @@ export async function postContributorAgreementForm(formData: FormData){
         }
     );    
 
-    const json = await response.json();
-
-    if (!response.ok) {
-        throw json;
-    }
-
-    return json; 
+    return handleResponse(response);
 }

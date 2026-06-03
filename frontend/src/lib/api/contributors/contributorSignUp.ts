@@ -1,4 +1,5 @@
 import { apiFetch } from "../api-fetch";
+import { handleResponse } from "../handleResponse";
 
 export async function signUpContributor(
     data: SignUpRequest
@@ -13,17 +14,7 @@ export async function signUpContributor(
         }
     );
 
-    const json = await response.json();
-
-    if (!response.ok) {
-
-        throw {
-            message: json.message,
-            errors: json.errors ?? null
-        };
-    }
-    
-    return json; 
+    return handleResponse(response);
 }
 
 export interface SignUpRequest {

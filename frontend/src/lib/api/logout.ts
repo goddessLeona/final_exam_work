@@ -1,4 +1,5 @@
 import { apiFetch } from "./api-fetch";
+import { handleResponse } from "./handleResponse";
 
 export async function logout(): Promise<void> {
 
@@ -10,7 +11,5 @@ export async function logout(): Promise<void> {
         }
     );
 
-    if (!response.ok) {
-        throw new Error("Logout failed");
-    }
+    return handleResponse(response);
 }

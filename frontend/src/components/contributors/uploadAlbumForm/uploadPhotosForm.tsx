@@ -1,6 +1,7 @@
 "use client"
 
 import {useEffect, useRef, useState} from "react"
+import { handleAuthError } from "@/lib/auth/handleAuthError"
 import { postUploadPhotos } from "@/lib/api/contributors/contributorUploadPhoto"
 import {UploadPhotoContentResponse} from "@/lib/api/contributors/contributorUploadPhoto"
 import styles from "./uploadPhotosForm.module.css"
@@ -143,13 +144,14 @@ function UploadPhotosForm() {
         
     }catch (err:any) {
 
-        if (err.message === "Unauthorized") return ;
+        if (handleAuthError(err)) return;
         
-        if (err.errors) {
-            setError(err.errors);
-        }else {
-            setError({ general: err.message || "Error submitting photos" })
-        }
+            setError(
+                err?.errors
+                ? err.errors
+                : { general: err?.message || "Error loading form" }
+            );
+
     }finally {
         setLoading(false);
     }

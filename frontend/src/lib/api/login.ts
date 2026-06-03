@@ -1,10 +1,11 @@
 import { apiFetch } from "./api-fetch";
+import { handleResponse } from "./handleResponse";
 
 export async function login(
     data: LoginRequest
     ): Promise<LoginResponse> {
 
-    const res = await apiFetch(
+    const response = await apiFetch(
         `${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
         method: "POST",
         headers: {
@@ -14,11 +15,7 @@ export async function login(
         credentials: "include",
     });
 
-    if (!res.ok) {
-        throw new Error("Invalid credentials");
-    }
-
-    return res.json();
+    return handleResponse(response);
 }
 
 export interface LoginRequest {
