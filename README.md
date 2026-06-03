@@ -110,10 +110,42 @@ The agreementform will disepair and a new dashboard for the user will take the p
 A user can upload photos in a simple form, in the future the user should be able to use the same form to upload video but did not get that far. But database is already set up for it. 
 
 ### Contributor - Edit album
-To be able to set up so that a user are able to edit a photo album was a real chalange. The user can edit a album so it can go between saved as draft, publish, scedual in the future and archive/delete. User should also be able to change the title and descripton on the album. For a user to ba able to edit one album I needed 7 endpoints. 
+Building the album editing functionality was one of the biggest challenges in the project. Contributors can update album titles and descriptions, reorder photos, change cover photos, add or remove images, and manage album status.
+
+An album can move between several states:
+
+* Draft
+* Published
+* Scheduled for future publishing
+* Archived
+
+To support all editing features for a single album, I ended up creating seven different endpoints. This part of the project taught me a lot about structuring APIs and handling state changes between frontend and backend.
 
 ### Admin - Respond to Contributor form
+Admins can review uploaded verification documents from contributors and either approve or reject them. If a document is rejected, the admin can provide feedback explaining why.
+
 ### Member - See all published photos
+Members can browse published photo albums uploaded by contributors. The application supports viewing album covers, opening albums, and displaying published content in a structured way.
+
+### End words
+I am not fully satisfied with the final result because I originally hoped to complete the entire MVP before the exam. I underestimated both the complexity of the project and the amount of time required to build something properly. I also had limited time available each day, often only working in short sessions.
+
+Even though I did not finish everything I planned, I learned an enormous amount during the process. During the final week, I stopped adding major functionality and instead focused on improving the structure of the project:
+
+* reorganizing folders,
+* renaming files,
+* fixing bugs,
+* improving fetch handling,
+* and making components follow a more consistent pattern.
+
+One important lesson was realizing how to use Next.js better. Early in the project, I did not fully understand how to use its features properly, so later I had to revisit many earlier decisions and refactor large parts of the codebase.
+
+What I learned from that is that if you want it realy good it goin to take time. You have to go back and improve all them time. You move forward and you lean new things, then you have to go back and implement it in the things you have done before. That some times set off a chain effect and thigs that worked before are no longer working. How many times have I not have paniced about a small changed thats et of a domino chain that made everything stop working and my brain expode. 
+
+The page now look a bit like traveling circus many colors all over the place. I did not realy have time to decide color cheamas. A problem for the future. Just wanted somthing to show on the presentation. 
+
+Even if the project is incomplete, I am proud of how much I learned throughout the process.
+
 
 
 
