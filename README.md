@@ -80,13 +80,22 @@ After a successful sign up, the user can log in and will be redirected to the co
 <img width="1427" height="957" alt="Skärmbild 2026-06-02 091804" src="https://github.com/user-attachments/assets/ca2cd55b-8b3e-4894-bc7c-6b851904a784" />
 
 ### Contributor - Agreement form
+The agreement form is working like planed but there is still a lot I could do better. It took me a long time to figure this one out a lot the learn when it came to more flexibale forms, where parts of the form can be updated but others not.
+
+#### Simple explanation how it works for a user:
 First time a new user with role contributor log into the page. They will get a welcome message explaining what the user have to do to do next. 
 The contributor will have the agremment form under where they can upload there documents and agree to rules. To be able to submit form the user have to upload all documenst and agree to rules. 
+status: NOT SUBMITED
 
-<img width="641" height="668" alt="Skärmbild 2026-06-03 182739" src="https://github.com/user-attachments/assets/73ba3224-c6d4-4db3-a754-9eb3a9126237" />
-<img width="539" height="641" alt="Skärmbild 2026-06-03 184411" src="https://github.com/user-attachments/assets/3af3c829-4a24-4c82-818e-e6ae69221ab2" />
+After the form is filled in and sent away, the welcome message will change. 
+status: PENDING
 
+Admin will then look on all the documents and approve or rejct the documents. Admin can aprove 1 document and reject 2 documents. 
+The user then get back the form showing what document got approved and what document got rejected and way it got rejected. 
+The message on top also explain for user what to do next.
+status: REJECTED
 
-After the form is filled in and sent away, the welcome message will change. The form also show the status on the form and if documents are approved by admin or not.
+User can then upload the missing document. and send away to admin again. Admin check that document and approve or reject. If admin have approved all the document.
+The agreementform will disepair and a new dashboard for the user will take the place.
 
 
