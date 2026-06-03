@@ -106,4 +106,15 @@ status: REJECTED
 User can then upload the missing document. and send away to admin again. Admin check that document and approve or reject. If admin have approved all the document.
 The agreementform will disepair and a new dashboard for the user will take the place.
 
+### Contributor - Upload content 
+A user can upload photos in a simple form, in the future the user should be able to use the same form to upload video but did not get that far. But database is already set up for it. 
+
+### Contributor - Edit album
+To be able to set up so that a user are able to edit a photo album was a real chalange. The user can edit a album so it can go between saved as draft, publish, scedual in the future and archive/delete. User should also be able to change the title and descripton on the album. For a user to ba able to edit one album I needed 7 endpoints. 
+
+### Admin - Respond to Contributor form
+### Member - See all published photos
+
+
+
 
