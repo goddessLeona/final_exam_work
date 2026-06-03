@@ -79,4 +79,14 @@ After a successful sign up, the user can log in and will be redirected to the co
 
 <img width="1427" height="957" alt="Skärmbild 2026-06-02 091804" src="https://github.com/user-attachments/assets/ca2cd55b-8b3e-4894-bc7c-6b851904a784" />
 
+### Contributor - Agreement form
+First time a new user with role contributor log into the page. They will get a welcome message explaining what the user have to do to do next. 
+The contributor will have the agremment form under where they can upload there documents and agree to rules. To be able to submit form the user have to upload all documenst and agree to rules. 
+
+<img width="641" height="668" alt="Skärmbild 2026-06-03 182739" src="https://github.com/user-attachments/assets/73ba3224-c6d4-4db3-a754-9eb3a9126237" />
+<img width="539" height="641" alt="Skärmbild 2026-06-03 184411" src="https://github.com/user-attachments/assets/3af3c829-4a24-4c82-818e-e6ae69221ab2" />
+
+
+After the form is filled in and sent away, the welcome message will change. The form also show the status on the form and if documents are approved by admin or not.
+
 
