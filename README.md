@@ -82,6 +82,14 @@ After a successful sign up, the user can log in and will be redirected to the co
 ### Contributor - Agreement form
 The agreement form is working like planed but there is still a lot I could do better. It took me a long time to figure this one out a lot the learn when it came to more flexibale forms, where parts of the form can be updated but others not.
 
+#### Overview
+
+The Contributor Agreement Form is a multi-step verification workflow that allows users to submit identity documents, receive admin review feedback, and progressively complete onboarding until full approval.
+
+The system supports partial approvals, meaning individual documents can be approved or rejected independently.
+
+Submitted → Under Review → Rejected → Resubmitted → Approved
+
 #### Simple explanation how it works for a user:
 First time a new user with role contributor log into the page. They will get a welcome message explaining what the user have to do to do next. 
 The contributor will have the agremment form under where they can upload there documents and agree to rules. To be able to submit form the user have to upload all documenst and agree to rules. 
