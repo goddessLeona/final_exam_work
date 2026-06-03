@@ -80,7 +80,7 @@ After a successful sign up, the user can log in and will be redirected to the co
 <img width="1427" height="957" alt="Skärmbild 2026-06-02 091804" src="https://github.com/user-attachments/assets/ca2cd55b-8b3e-4894-bc7c-6b851904a784" />
 
 ### Contributor - Agreement form
-The agreement form is working like planed but there is still a lot I could do better. It took me a long time to figure this one out a lot the learn when it came to more flexibale forms, where parts of the form can be updated but others not.
+This was a brain nut to solve, both how to upload content in the form using filepath and how to make the form work as my MVP had requeired. It took me many evenings of failing and trying before I got it up and running. The css is still not that great but it helps the user understand how to use the form.
 
 #### Overview
 
@@ -92,7 +92,7 @@ Submitted → Under Review → Rejected → Resubmitted → Approved
 
 #### Simple explanation how it works for a user:
 First time a new user with role contributor log into the page. They will get a welcome message explaining what the user have to do to do next. 
-The contributor will have the agremment form under where they can upload there documents and agree to rules. To be able to submit form the user have to upload all documenst and agree to rules. 
+The Contributor Agreement Form is shown below it, where user can upload 3 independent documents and agree to rules. To be able to submit the form the user have to upload all documenst and agree to rules. 
 status: NOT SUBMITED
 
 After the form is filled in and sent away, the welcome message will change. 
