@@ -25,6 +25,7 @@
 
 .documents img {
     width: 200px;
+    border: 2px solid black;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     cursor: pointer;
 }
@@ -59,7 +60,8 @@
 }
 
 .modal {
-    background: white;
+    background: rgba(131, 132, 173, 0.992);
+    border: 2px solid black;
     padding: 20px;
     border-radius: 8px;
     width: 400px;

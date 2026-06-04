@@ -1,7 +1,7 @@
 .container {
     padding: 20px;
     background-color: #545454;
-    color: beige;
+    color: rgb(206, 210, 220);
     border: 2px solid black;
     margin: 10px;
 }
@@ -9,7 +9,7 @@
 .section {
     margin-bottom: 20px;
     border: 2px solid black;
-    background-color:rgb(221, 208, 191);
+    background-color:rgb(206, 210, 220);
     color: black;
     padding: 10px;
 

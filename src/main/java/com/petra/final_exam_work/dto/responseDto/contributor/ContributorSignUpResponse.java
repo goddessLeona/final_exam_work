@@ -1,8 +1,4 @@
-package com.petra.final_exam_work.dto.responseDto;
-
-import com.petra.final_exam_work.entity.user.Role;
-
-import java.util.UUID;
+package com.petra.final_exam_work.dto.responseDto.contributor;
 
 public class ContributorSignUpResponse {
 

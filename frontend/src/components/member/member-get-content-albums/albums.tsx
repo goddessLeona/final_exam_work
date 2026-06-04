@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react";
+import { handleAuthError } from "@/lib/auth/handleAuthError";
 import { useParams } from "next/navigation";
 import { GetPhotoAlbumsResponse, memberGetAlbums } from "@/lib/api/members/memberGetPhotoAlbums";
 import styles from "./albums.module.css"
@@ -24,6 +25,7 @@ function MemberContentAlbums (){
                 setData(response);
 
             }catch (err) {
+                if (handleAuthError(err)) return;
                 setError("Failed to load album");
 
             }finally {
@@ -85,41 +87,46 @@ function MemberContentAlbums (){
             <p>Published: {data.publishedAt}</p>
 
             {selectedIndex !== null && (
-                <div className={styles.lightbox}>
-                    
-                    
+    <div className={styles.lightbox}>
 
-                    <img
-                        src={`${process.env.NEXT_PUBLIC_API_URL}/${data.photos[selectedIndex].photoUrl}`}
-                        alt="full view"
-                    />
+        <img
+            src={`${process.env.NEXT_PUBLIC_API_URL}/${data.photos[selectedIndex].photoUrl}`}
+            alt="full view"
+            className={styles.lightboxImage}
+        />
 
-                    <button
-                        onClick={() =>
-                            setSelectedIndex((prev) =>
-                                prev !== null && prev > 0 ? prev - 1 : prev
-                            )
-                        }
-                    >
-                        left
-                    </button>
+        <div className={styles.lightboxControls}>
 
-                    <button onClick={() => setSelectedIndex(null)}>X</button>
+            <button
+                onClick={() =>
+                    setSelectedIndex((prev) =>
+                        prev !== null && prev > 0 ? prev - 1 : prev
+                    )
+                }
+            >
+                left
+            </button>
 
-                    <button
-                        onClick={() =>
-                            setSelectedIndex((prev) =>
-                                prev !== null && prev < data.photos.length - 1
-                                    ? prev + 1
-                                    : prev
-                            )
-                        }
-                    >
-                        right
-                    </button>
+            <button onClick={() => setSelectedIndex(null)}>
+                X
+            </button>
 
-                </div>
-            )}
+            <button
+                onClick={() =>
+                    setSelectedIndex((prev) =>
+                        prev !== null && prev < data.photos.length - 1
+                            ? prev + 1
+                            : prev
+                    )
+                }
+            >
+                right
+            </button>
+
+        </div>
+
+    </div>
+)}
 
         </div>
     );

@@ -143,11 +143,14 @@
 .rejectText {
     font-size: 14px;
     font-weight: 600;
-    padding: 3px 8px;
     border-radius: 6px;
-    background: #a79c9c;
-    padding: 5px;
-    color: rgba(173, 11, 11, 0.945);
+    border: 3px solid #871515;
+    background: #3a3a3a30;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    padding-left: 20px;
+    padding-right: 20px;
+    color: rgba(30, 27, 27, 0.945);
     display: inline-block;
     width: fit-content;
 }

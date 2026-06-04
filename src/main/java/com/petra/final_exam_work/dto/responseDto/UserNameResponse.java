@@ -1,13 +1,13 @@
 package com.petra.final_exam_work.dto.responseDto;
 
-public class MeResponse {
+public class UserNameResponse {
 
     private String username;
 
-    public MeResponse() {
+    public UserNameResponse() {
     }
 
-    public MeResponse(String username) {
+    public UserNameResponse(String username) {
         this.username = username;
     }
 

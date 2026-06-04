@@ -1,7 +1,7 @@
 package com.petra.final_exam_work.controller.contributor;
 
 import com.petra.final_exam_work.dto.requestDto.contributor.ContributorSignUpRequest;
-import com.petra.final_exam_work.dto.responseDto.ContributorSignUpResponse;
+import com.petra.final_exam_work.dto.responseDto.contributor.ContributorSignUpResponse;
 import com.petra.final_exam_work.service.contributor.ContributorSignUpService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;

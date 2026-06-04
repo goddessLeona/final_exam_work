@@ -1,4 +1,4 @@
-package com.petra.final_exam_work.dto.responseDto;
+package com.petra.final_exam_work.dto.responseDto.contributor;
 
 import com.petra.final_exam_work.entity.enums.ContributorStatus;
 

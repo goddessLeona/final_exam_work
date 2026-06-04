@@ -96,39 +96,43 @@ function ContributorViewAlbum({
             <p>{getPublishText()}</p>
 
             {selectedIndex !== null && (
-                <div className={styles.lightbox}>
-                    
-                    <img
-                        src={`${process.env.NEXT_PUBLIC_API_URL}/${data.photos[selectedIndex].photoUrl}`}
-                        alt="full view"
-                    />
+    <div className={styles.lightbox}>
+        
+        <img
+            src={`${process.env.NEXT_PUBLIC_API_URL}/${data.photos[selectedIndex].photoUrl}`}
+            alt="full view"
+        />
 
-                    <button
-                        onClick={() =>
-                            setSelectedIndex((prev) =>
-                                prev !== null && prev > 0 ? prev - 1 : prev
-                            )
-                        }
-                    >
-                        left
-                    </button>
+        <div className={styles.lightboxControls}>
+            <button
+                onClick={() =>
+                    setSelectedIndex((prev) =>
+                        prev !== null && prev > 0 ? prev - 1 : prev
+                    )
+                }
+            >
+                left
+            </button>
 
-                    <button onClick={() => setSelectedIndex(null)}>X</button>
+            <button onClick={() => setSelectedIndex(null)}>
+                X
+            </button>
 
-                    <button
-                        onClick={() =>
-                            setSelectedIndex((prev) =>
-                                prev !== null && prev < data.photos.length - 1
-                                    ? prev + 1
-                                    : prev
-                            )
-                        }
-                    >
-                        right
-                    </button>
+            <button
+                onClick={() =>
+                    setSelectedIndex((prev) =>
+                        prev !== null && prev < data.photos.length - 1
+                            ? prev + 1
+                            : prev
+                    )
+                }
+            >
+                right
+            </button>
+        </div>
 
-                </div>
-            )}
+    </div>
+)}
 
             <div className={styles.statusbar}>
 

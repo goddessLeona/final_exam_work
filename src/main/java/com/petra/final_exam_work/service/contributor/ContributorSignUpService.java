@@ -2,7 +2,7 @@ package com.petra.final_exam_work.service.contributor;
 
 import com.petra.final_exam_work.dto.mapperDto.contributor.ContributorSignUpMapper;
 import com.petra.final_exam_work.dto.requestDto.contributor.ContributorSignUpRequest;
-import com.petra.final_exam_work.dto.responseDto.ContributorSignUpResponse;
+import com.petra.final_exam_work.dto.responseDto.contributor.ContributorSignUpResponse;
 import com.petra.final_exam_work.entity.user.Role;
 import com.petra.final_exam_work.entity.user.User;
 import com.petra.final_exam_work.exception.ApiException;

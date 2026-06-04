@@ -1,8 +1,8 @@
 package com.petra.final_exam_work.controller.contributor;
 
 import com.petra.final_exam_work.dto.requestDto.ContributorConsentFormRequest;
-import com.petra.final_exam_work.dto.responseDto.ContributorConsentFormResponse;
-import com.petra.final_exam_work.dto.responseDto.ContributorWelcomeResponse;
+import com.petra.final_exam_work.dto.responseDto.contributor.ContributorConsentFormResponse;
+import com.petra.final_exam_work.dto.responseDto.contributor.ContributorWelcomeResponse;
 import com.petra.final_exam_work.security.CustomUserDetails;
 import com.petra.final_exam_work.service.contributor.ContributorConsentFormService;
 import org.springframework.http.MediaType;
