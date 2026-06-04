@@ -122,10 +122,11 @@ An album can move between several states:
 To support all editing features for a single album, I ended up creating seven different endpoints. This part of the project taught me a lot about structuring APIs and handling state changes between frontend and backend.
 
 ### Admin - Respond to Contributor form
-Admins can review uploaded verification documents from contributors and either approve or reject them. If a document is rejected, the admin can provide feedback explaining why.
+Admin consent-dashboard show a list of all pending forms, rejected forms, and aproved forms showing te username, how many of the documents are pending, rejected and approved. If a form is pending the admin can clikc the link and get to the documents. The document that is pending the admin now can approve or reject.
+If a document is rejected, the admin can provide feedback explaining why.
 
 ### Member - See all published photos
-Members can browse published photo albums uploaded by contributors. The application supports viewing album covers, opening albums, and displaying published content in a structured way.
+Members can browse published photo albums uploaded by contributors. The application supports viewing album covers, opening albums, and displaying published content in a structured way. I wanted to add the search for tags and search for specefic contributor for members as well but as my time was not enough to get that part finish. A member can now only see all users content as a list represented by a cover photo. Cklicking the cover photo you get to the album and klicking on a image you see the images big and can move to next or back. 
 
 ### End words
 I am not fully satisfied with the final result because I originally hoped to complete the entire MVP before the exam. I underestimated both the complexity of the project and the amount of time required to build something properly. I also had limited time available each day, often only working in short sessions.
