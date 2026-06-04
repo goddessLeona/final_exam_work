@@ -54,14 +54,22 @@ function ContributorAlbums() {
 
     return (
     <div className={styles.bigContainer}>
-        <p className={`${fingerPaint.className} ${styles.title}`}>Your uploaded content</p>
+        
+        <div className={styles.titleBox}>
+            
+            <p className={`${fingerPaint.className} ${styles.title}`}>Your uploaded content</p>
+            
+        </div>
+        
         <div className={styles.container}>
             
             <div className={styles.tabs}>
 
                 <button
                     type="button"
-                    className={styles.btn}
+                    className={`${styles.btn} ${
+                        status === "DRAFT" ? styles.activeTab : ""
+                    }`}
                     onClick={() => setStatus("DRAFT")}
                 >
                     Draft
@@ -69,7 +77,9 @@ function ContributorAlbums() {
 
                 <button
                     type="button"
-                    className={styles.btn}
+                    className={`${styles.btn} ${
+                        status === "PUBLISHED" ? styles.activeTab : ""
+                    }`}
                     onClick={() => setStatus("PUBLISHED")}
                 >
                     Published
@@ -77,7 +87,9 @@ function ContributorAlbums() {
 
                 <button
                     type="button"
-                    className={styles.btn}
+                    className={`${styles.btn} ${
+                        status === "SCHEDULED" ? styles.activeTab : ""
+                    }`}
                     onClick={() => setStatus("SCHEDULED")}
                 >
                     Scheduled
@@ -85,7 +97,9 @@ function ContributorAlbums() {
 
                 <button
                     type="button"
-                    className={styles.btn}
+                    className={`${styles.btn} ${
+                        status === "ARCHIVED" ? styles.activeTab : ""
+                    }`}
                     onClick={() => setStatus("ARCHIVED")}
                 >
                     Archived

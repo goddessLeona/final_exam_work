@@ -56,7 +56,7 @@ function MemberContentAlbums (){
 
             <div className={styles.header}>
                 <h1>{data.photoAlbumName}</h1>
-                <p>{data.description}</p>
+                <p className={styles.p}>{data.description}</p>
                 <p>By: {data.username}</p>
             </div>
 
@@ -84,7 +84,7 @@ function MemberContentAlbums (){
                 </div>
             )}
 
-            <p>Published: {data.publishedAt}</p>
+            <p>Published:  {new Date(data.publishedAt).toLocaleDateString("en-GB")}</p>
 
             {selectedIndex !== null && (
     <div className={styles.lightbox}>

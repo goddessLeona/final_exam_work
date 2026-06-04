@@ -2,6 +2,7 @@
 
 import {useEffect, useRef, useState} from "react"
 import { handleAuthError } from "@/lib/auth/handleAuthError"
+import { Inter, Finger_Paint } from "next/font/google"
 import { postUploadPhotos } from "@/lib/api/contributors/contributorUploadPhoto"
 import {UploadPhotoContentResponse} from "@/lib/api/contributors/contributorUploadPhoto"
 import styles from "./uploadPhotosForm.module.css"
@@ -12,6 +13,16 @@ const initialFormState = {
     description: "",
     photos: [] as File[],
 }
+
+const inter = Inter({
+        subsets: ["latin"],
+        weight: ["600"]
+    });
+
+const fingerPaint = Finger_Paint({
+    subsets: ["latin"],
+    weight: "400",
+}); 
 
 function UploadPhotosForm() {
 
@@ -162,7 +173,7 @@ function UploadPhotosForm() {
             <form>
                 <div className={styles.formBox}>
 
-                    <h3>Upload photos</h3>
+                    <p className={`${fingerPaint.className} ${styles.title}`}>Upload photos</p>
 
                     <div className={styles.field}>
                         <label htmlFor="title">Title</label>

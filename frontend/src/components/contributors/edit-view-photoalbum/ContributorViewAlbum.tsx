@@ -67,7 +67,7 @@ function ContributorViewAlbum({
 
             <div className={styles.header}>
                 <h1>{data.photoAlbumName}</h1>
-                <p>{data.description}</p>
+                <p className={styles.p}>{data.description}</p>
                 <p>By: {data.username}</p>
             </div>
 

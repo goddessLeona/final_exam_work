@@ -2,8 +2,19 @@
 
 import { useEffect, useState } from "react";
 import { handleAuthError } from "@/lib/auth/handleAuthError";
+import { Inter, Finger_Paint } from "next/font/google"
 import { getGeneralInfo, memberResponse} from "@/lib/api/members/memberGeneralInfo";
 import styles from "./member-GeneralInfo.module.css"
+
+const inter = Inter({
+        subsets: ["latin"],
+        weight: ["400"]
+    });
+
+const fingerPaint = Finger_Paint({
+    subsets: ["latin"],
+    weight: "400",
+}); 
 
 function GetMemberInfo() {
 
@@ -34,7 +45,7 @@ function GetMemberInfo() {
 
     return (
         <div className={styles.wbox}>
-            <p className={styles.welcome}>Welcome</p>
+            <p className= {`${fingerPaint.className} ${styles.title}`}>Welcome</p>
             <p className={styles.username}>{data.username}</p>
         </div>
     );

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+
 import { signUpContributor } from "@/lib/api/contributors/contributorSignUp";
 import { Inter, Finger_Paint } from "next/font/google"
 import styles from "./contributorSignUpForm.module.css"
@@ -52,16 +53,13 @@ function ContributorSignUpForm() {
 
         }catch (err: any) {
 
+        
             // field validaion errors
             if (err.errors) {
                 setError(err.errors);
                 return;
             }
 
-            if (err.message === "You must be at least 18 years old to upload content") {
-                setError({ birthDay: err.message });
-                return;
-            }
             
             setError({ general: err.message || "Somthing went wrong" });
 
@@ -120,6 +118,7 @@ function ContributorSignUpForm() {
                                 <input
                                     id="username"
                                     name="username"
+                                    autoComplete="off"
                                     type="text"
                                     value={formData.username}
                                     onChange={handleChange}
@@ -159,6 +158,7 @@ function ContributorSignUpForm() {
                                 <input
                                     id="email"
                                     name="email"
+                                    autoComplete="off"
                                     type="text"
                                     value={formData.email}
                                     onChange={handleChange}
@@ -172,6 +172,7 @@ function ContributorSignUpForm() {
                                 <input
                                     id="firstName"
                                     name="firstName"
+                                    autoComplete="off"
                                     type="text"
                                     value={formData.firstName}
                                     onChange={handleChange}
@@ -185,6 +186,7 @@ function ContributorSignUpForm() {
                                 <input
                                     id="lastName"
                                     name="lastName"
+                                    autoComplete="off"
                                     type="text"
                                     value={formData.lastName}
                                     onChange={handleChange}
