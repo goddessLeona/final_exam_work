@@ -58,6 +58,7 @@ function MemberContentAlbums (){
                 <h1>{data.photoAlbumName}</h1>
                 <p className={styles.p}>{data.description}</p>
                 <p>By: {data.username}</p>
+                <p>Published:  {new Date(data.publishedAt).toLocaleDateString("en-GB")}</p>
             </div>
 
             {selectedIndex === null && (

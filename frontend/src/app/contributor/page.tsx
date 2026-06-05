@@ -11,7 +11,7 @@ type ViewState = "loading" | "form" | "dashboard";
 
 export default function ContributorPage() {
   const [view, setView] = useState<ViewState>("loading");
-
+  
   useEffect(() => {
     getContributorAgreementForm()
       .then((data) => {

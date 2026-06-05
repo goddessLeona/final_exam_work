@@ -1,9 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
 import { handleAuthError } from "@/lib/auth/handleAuthError";
+
 import { Inter, Finger_Paint } from "next/font/google"
-import Link from "next/link";
+
 import { 
             getPhotoAlbums,
             ContributorPhotoAlbumResponse,
@@ -24,11 +26,22 @@ const fingerPaint = Finger_Paint({
     weight: "400",
 }); 
 
-function ContributorAlbums() {
+type Props = {};
+
+function ContributorAlbumsMenu({
+   
+}: Props) {
 
     const [data, setData] = useState<PageResponse<ContributorPhotoAlbumResponse> | null> (null);
     const [error, setError] = useState("");
     const [status, setStatus] = useState<ContentStatus |null>(null);
+    const router = useRouter();
+
+    const pathname = usePathname();
+    
+    const isAlbumPage = pathname.startsWith("/contributor/albums/");
+    const showGrid = !isAlbumPage;
+    
 
     useEffect(() => {
 
@@ -50,97 +63,112 @@ function ContributorAlbums() {
             
         }
         loadAlbums()
+
     }, [status]);
 
     return (
-    <div className={styles.bigContainer}>
-        
-        <div className={styles.titleBox}>
+        <div className={styles.bigContainer}>
             
-            <p className={`${fingerPaint.className} ${styles.title}`}>Your uploaded content</p>
-            
-        </div>
-        
-        <div className={styles.container}>
-            
-            <div className={styles.tabs}>
-
-                <button
-                    type="button"
-                    className={`${styles.btn} ${
-                        status === "DRAFT" ? styles.activeTab : ""
-                    }`}
-                    onClick={() => setStatus("DRAFT")}
-                >
-                    Draft
-                </button>
-
-                <button
-                    type="button"
-                    className={`${styles.btn} ${
-                        status === "PUBLISHED" ? styles.activeTab : ""
-                    }`}
-                    onClick={() => setStatus("PUBLISHED")}
-                >
-                    Published
-                </button>
-
-                <button
-                    type="button"
-                    className={`${styles.btn} ${
-                        status === "SCHEDULED" ? styles.activeTab : ""
-                    }`}
-                    onClick={() => setStatus("SCHEDULED")}
-                >
-                    Scheduled
-                </button>
-
-                <button
-                    type="button"
-                    className={`${styles.btn} ${
-                        status === "ARCHIVED" ? styles.activeTab : ""
-                    }`}
-                    onClick={() => setStatus("ARCHIVED")}
-                >
-                    Archived
-                </button>
-
+            <div className={styles.titleBox}>
+                
+                <p className={`${fingerPaint.className} ${styles.title}`}>Your uploaded content</p>
+                
             </div>
-            {error && <p>{error}</p>}
+            
+            <div className={styles.container}>
+                
+                <div className={styles.tabs}>
 
-            <div className={styles.grid}>
-                {data?.content.map((album) => (
-
-                    <Link
-                        key={album.publicUuid}
-                        href={`/contributor/albums/${album.publicUuid}`}
-                        className={styles.cardLink}
+                    <button
+                        type="button"
+                        className={`${styles.btn} ${
+                            status === "DRAFT" ? styles.activeTab : ""
+                        }`}
+                        onClick={() => {
+                            setStatus("DRAFT");
+                            setData(null);
+                        }}
                     >
+                        Draft
+                    </button>
+
+                    <button
+                        type="button"
+                        className={`${styles.btn} ${
+                            status === "PUBLISHED" ? styles.activeTab : ""
+                        }`}
+                        onClick={() => {
+                            setStatus("PUBLISHED");
+                        }}
+                    >
+                        Published
+                    </button>
+
+                    <button
+                        type="button"
+                        className={`${styles.btn} ${
+                            status === "SCHEDULED" ? styles.activeTab : ""
+                        }`}
+                        onClick={() => {
+                            setStatus("SCHEDULED");
+                        }}
+                    >
+                        Scheduled
+                    </button>
+
+                    <button
+                        type="button"
+                        className={`${styles.btn} ${
+                            status === "ARCHIVED" ? styles.activeTab : ""
+                        }`}
+                        onClick={() => {
+                            setStatus("ARCHIVED");
+                        }}
+                    >
+                        Archived
+                    </button>
+
+                </div>
+                <p className={styles.currentTab}>
+                    {status ?? "Select category"}
+                </p>
+                {error && <p>{error}</p>}
+
+                <div className={styles.grid}>
+                    {data?.content.map((album) => (
 
                         <div
-                        className={styles.card}
+                            key={album.publicUuid}
+                            className={styles.cardLink}
+                            onClick={() => {
+                                router.push(`/contributor/albums/${album.publicUuid}`);
+                            }}
                         >
-                            <h3>{album.photoAlbumName}</h3>
-                            {album.coverPhoto && (
-                                <img
-                                    src={`${process.env.NEXT_PUBLIC_API_URL}/${album.coverPhoto.coverPhotoUrl}`}
-                                    alt={album.photoAlbumName}
-                                    className={styles.coverPhoto}
-                                />
-                            )}
-                            
-                            <h3>{album.contentType}</h3>
-                            {album.publishedAt && (
-                                <h3>{new Date(album.publishedAt).toLocaleDateString()}</h3>
-                            )}
+
+                            <div
+                            className={styles.card}
+                            >
+                                <h3>{album.photoAlbumName}</h3>
+                                {album.coverPhoto && (
+                                    <img
+                                        src={`${process.env.NEXT_PUBLIC_API_URL}/${album.coverPhoto.coverPhotoUrl}`}
+                                        alt={album.photoAlbumName}
+                                        className={styles.coverPhoto}
+                                    />
+                                )}
+                                
+                                <h3>{album.contentType}</h3>
+                                {album.publishedAt && (
+                                    <h3>{new Date(album.publishedAt).toLocaleDateString()}</h3>
+                                )}
+                            </div>  
                         </div>  
-                    </Link>  
-                ))}
+                    ))}
+                </div>
             </div>
-        </div>
-    </div>    
+        </div>    
     )
 
 }
 
-export default ContributorAlbums;
+export default ContributorAlbumsMenu;

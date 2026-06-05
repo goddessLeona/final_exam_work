@@ -143,6 +143,11 @@ function UploadPhotosForm() {
         setSuccess("Submitted successfully!");
 
         //reset form
+        setScheduledDate("");
+        setSubmitAction("DRAFT");
+        setCoverPhotoIndex(0);
+        setSelectedPhotos([]);
+
         setFormData(initialFormState);
         
         if (fileInputRef.current) {
@@ -181,6 +186,7 @@ function UploadPhotosForm() {
                             id="title"
                             name="photoAlbumName"
                             type="text"
+                            autoComplete="off"
                             value= {formData.photoAlbumName}
                             onChange={(e) => {
                                 if (e.target.value.length <= 20) {

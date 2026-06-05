@@ -16,7 +16,9 @@ import com.petra.final_exam_work.repository.PhotoAlbumRepository;
 import com.petra.final_exam_work.repository.UserRepository;
 import com.petra.final_exam_work.security.CustomUserDetails;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -42,7 +44,11 @@ public class ContributorPhotoAlbumService {
 
 
     //###### GET all cover photos from albums uploaded by contributor #######
-    public Page<ContributorPhotoAlbumResponse> getPhotoAlbumInfo(CustomUserDetails userDetails, ContentStatus status, Pageable pageable) {
+    public Page<ContributorPhotoAlbumResponse> getPhotoAlbumInfo(
+            CustomUserDetails userDetails,
+            ContentStatus status,
+            Pageable pageable
+    ) {
 
         UUID publicUuid = userDetails.getPublicUuid();
         User user = userRepository.findByPublicUuid(publicUuid)
@@ -56,10 +62,30 @@ public class ContributorPhotoAlbumService {
             );
         }
 
+        Sort sort = switch (status) {
+            case PUBLISHED, SCHEDULED ->
+                    Sort.by(Sort.Direction.DESC, "publishedAt");
+
+            case DRAFT ->
+                    Sort.by(Sort.Direction.DESC, "createdAt");
+
+            case ARCHIVED ->
+                    Sort.by(Sort.Direction.DESC, "archivedAt");
+
+            case DELETED ->
+                    Sort.by(Sort.Direction.DESC, "createdAt");
+        };
+
+        Pageable sortedPageable = PageRequest.of(
+                pageable.getPageNumber(),
+                pageable.getPageSize(),
+                sort
+        );
+
         Page<PhotoAlbum> albums = photoAlbumRepository.findByOwnedByUserAndContentStatus(
                 user,
                 status,
-                pageable
+                sortedPageable
         );
 
         return albums.map(contributorPhotoAlbumMapper::toResponse);

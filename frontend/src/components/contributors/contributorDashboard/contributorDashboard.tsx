@@ -1,10 +1,12 @@
-import ContributorAlbums from "../contentMenu/contributorsContentMenu";
+"use client";
+
+import ContributorAlbumsMenu from "../contentMenu/contributorsContentMenu";
 import UploadPhotosForm from "../uploadAlbumForm/uploadPhotosForm";
 
 export default function ContributorDashboard() {
   return (
     <>
-      <ContributorAlbums />
+      <ContributorAlbumsMenu />
       <UploadPhotosForm />
     </>
   );

@@ -41,6 +41,8 @@ export default function ConsentData () {
             const updated = await getConsentFormData(id);
             setData(updated);
         }catch(err: any) {
+            
+            if (handleAuthError(err)) return;
             setError(err.message || "Failed to update document");
         }
     }
@@ -123,7 +125,7 @@ export default function ConsentData () {
                 <div>
                     <div className={styles.documents}>
                         <div>
-                            <img src={`http://localhost:8080/admin/consent/${id}/document/id-face`} width={200} />
+                            <img src={`${process.env.NEXT_PUBLIC_API_URL}/admin/consent/${id}/document/id-face`} width={200} />
                             <p>ID-Face status: </p>
                         </div>
 
@@ -153,7 +155,7 @@ export default function ConsentData () {
                 <div>
                     <div className={styles.documents}>
                         <div>
-                            <img src={`http://localhost:8080/admin/consent/${id}/document/face-fff`} width={200} />
+                            <img src={`${process.env.NEXT_PUBLIC_API_URL}/admin/consent/${id}/document/face-fff`} width={200} />
                             <p>FFF + Face status : </p>
                         </div>
 

@@ -11,10 +11,15 @@ import { ContentStatus } from "@/types/content-status";
 import ContributorViewAlbum from "./ContributorViewAlbum";
 import ContributorEditAlbum from "./ContributorEditPhotoAlbum";
 
+type Props = {
+    albumUuid: string;
+}
+
 function ContributorContentPage (){
 
     const params = useParams();
     const albumUuid = params.albumUuid as string;
+
     const [data, setData] = useState<GetPhotoAlbumsResponse | null>(null);
     const [formData, setFormData] = useState<EditTitleAndDescriptionRequest>({
         photoAlbumName: "",
@@ -22,10 +27,14 @@ function ContributorContentPage (){
     });
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(true);
+    
 
     const [isEditing, setIsEditing] = useState(false);
 
     useEffect(() => {
+        
+        if (!albumUuid) return;
+        setLoading(true);
 
         async function loadAlbum() {
             try {

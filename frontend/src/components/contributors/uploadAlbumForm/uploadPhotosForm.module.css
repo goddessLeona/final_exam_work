@@ -48,7 +48,7 @@
     width: 200px;
     padding: 10px;
     margin: 10px;
-    background: #988cc888;
+    background: #bdb5dfb8;
     
     color: #1f1f1f;
 
@@ -67,6 +67,12 @@
     display: inline-flex;
     justify-content: center;
     align-items: center;
+}
+
+.btn:hover {
+    background-color: #343434;
+    transform: translateY(-2px);
+    color: #d8caca;
 }
 
 .previewGrid {
