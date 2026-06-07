@@ -98,8 +98,8 @@ The Contributor Agreement Form is shown below it, where user can upload 3 indepe
 status: NOT SUBMITED
 
 <div>
-<img width="845" height="954" alt="Skärmbild 2026-06-07 085434" src="https://github.com/user-attachments/assets/806ea738-70fa-49e6-99b0-bfa40daee3fa" />
-<img width="833" height="274" alt="Skärmbild 2026-06-07 085507" src="https://github.com/user-attachments/assets/4f96842a-3095-4654-8a6d-ccb888256dc5" />
+<img width="733" height="174" alt="Skärmbild 2026-06-07 085507" src="https://github.com/user-attachments/assets/4f96842a-3095-4654-8a6d-ccb888256dc5" />  
+<img width="745" height="854" alt="Skärmbild 2026-06-07 085434" src="https://github.com/user-attachments/assets/806ea738-70fa-49e6-99b0-bfa40daee3fa" />
 </div>
 
 After the form is filled in and sent away, the welcome message will change. 
