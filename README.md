@@ -98,14 +98,14 @@ The Contributor Agreement Form is shown below it, where user can upload 3 indepe
 status: NOT SUBMITED
 
 <div>
-<img width="733" height="174" alt="Skärmbild 2026-06-07 085507" src="https://github.com/user-attachments/assets/4f96842a-3095-4654-8a6d-ccb888256dc5" />  
+<img width="666" height="219" alt="wellcome" src="https://github.com/user-attachments/assets/8b2574b7-fa04-46a0-baf9-83b4b1baacc3" />
 <img width="745" height="854" alt="Skärmbild 2026-06-07 085434" src="https://github.com/user-attachments/assets/806ea738-70fa-49e6-99b0-bfa40daee3fa" />
 </div>
 
 After the form is filled in and sent away, the welcome message will change. 
 status: PENDING
 
-<img width="842" height="107" alt="Skärmbild 2026-06-07 090450" src="https://github.com/user-attachments/assets/0519ee85-7461-46ce-a05a-269fa6d16cb8" />
+<img width="674" height="86" alt="pending" src="https://github.com/user-attachments/assets/f4d316c8-40ad-4fd9-864b-baf4b6c3311a" />
 
 Admin will then look on all the documents and approve or rejct the documents. Admin can aprove 1 document and reject 2 documents. 
 The user then get back the form showing what document got approved and what document got rejected and way it got rejected. 
