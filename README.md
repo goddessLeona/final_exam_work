@@ -141,6 +141,8 @@ If a document is rejected, the admin can provide feedback explaining why.
 ### Member - See all published photos
 Members can browse published photo albums uploaded by contributors. The application supports viewing album covers, opening albums, and displaying published content in a structured way. I wanted to add the search for tags and search for specefic contributor for members as well but as my time was not enough to get that part finish. A member can now only see all users content as a list represented by a cover photo. Cklicking the cover photo you get to the album and klicking on a image you see the images big and can move to next or back. 
 
+<img width="1224" height="474" alt="Skärmbild 2026-06-07 094345" src="https://github.com/user-attachments/assets/b7a094bc-f199-43da-a234-1a17cd29de00" />
+
 ### End words
 I am not fully satisfied with the final result because I originally hoped to complete the entire MVP before the exam. I underestimated both the complexity of the project and the amount of time required to build something properly. I also had limited time available each day, often only working in short sessions.
 
