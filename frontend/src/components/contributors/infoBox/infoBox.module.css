@@ -1,0 +1,41 @@
+.info {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin: 10px;
+}
+
+.title {
+    font-size: 22px;
+    color: #151414;
+}
+
+.name {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.album {
+    padding: 10px;
+    border: 2px solid #564848;
+    border-radius: 8px;
+    background: #f6f6f69e;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.stats {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    font-size: 0.85rem;
+    font-weight: 400;
+}
+
+.type {
+    font-weight: 600;
+    padding-bottom: 5px;
+}

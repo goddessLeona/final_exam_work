@@ -1,6 +1,6 @@
 package com.petra.final_exam_work.dto.mapperDto;
 
-import com.petra.final_exam_work.dto.responseDto.ContributorConsentFormResponse;
+import com.petra.final_exam_work.dto.responseDto.contributor.ContributorConsentFormResponse;
 import com.petra.final_exam_work.entity.consentForm.ConsentForm;
 import com.petra.final_exam_work.entity.consentForm.ConsentFormStatus;
 

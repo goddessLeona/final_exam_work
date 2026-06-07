@@ -1,13 +1,8 @@
 package com.petra.final_exam_work.controller.user;
 
-import com.petra.final_exam_work.dto.requestDto.ContributorSignUpRequest;
-import com.petra.final_exam_work.dto.responseDto.ContributorSignUpResponse;
-import com.petra.final_exam_work.dto.responseDto.MeResponse;
-import com.petra.final_exam_work.exception.ApiException;
+import com.petra.final_exam_work.dto.responseDto.UserNameResponse;
 import com.petra.final_exam_work.security.CustomUserDetails;
 import com.petra.final_exam_work.service.user.UserService;
-import jakarta.validation.Valid;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -28,25 +23,13 @@ public class UserController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/username")
-    public ResponseEntity<MeResponse> getUsername(
+    public ResponseEntity<UserNameResponse> getUsername(
             @AuthenticationPrincipal CustomUserDetails userDetails
     ) {
 
-        return ResponseEntity.ok(userService.getUsername());
-    }
+        UserNameResponse response = userService.getUsername(userDetails);
 
-// ################################## Sign up contributor ##############################
-
-    @PostMapping("/signup-contributor")
-    public ResponseEntity<ContributorSignUpResponse> signUpContributor (
-            @Valid @RequestBody ContributorSignUpRequest request
-    ) {
-
-        ContributorSignUpResponse response = userService.signUpContributor(request);
-
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(response);
+        return ResponseEntity.ok(response);
     }
 
 }

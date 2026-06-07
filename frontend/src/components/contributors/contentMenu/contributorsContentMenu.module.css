@@ -1,0 +1,148 @@
+.card h3,
+.card p {
+    margin: 0;
+}
+
+.card h3 {
+    font-size: 14px;
+    font-weight: 600;
+    padding-bottom: 2px;
+}
+
+.bigContainer {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    background-color: #b9b7c9;
+    margin: 15px;
+    border-radius: 20px;
+    border: 2px solid rgb(37, 35, 35);
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    flex-direction: column;
+    justify-content: center;
+    padding: 20px;
+    align-items: center;
+}
+
+.titleBox {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 0px;
+    padding-top: 10px;;
+}
+
+.title {
+    font-size: 20px;
+    margin-top: 20px;
+    margin-bottom: 0px;
+    padding: 10px;
+}
+
+.tabs {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    gap: 12px;
+
+    padding: 14px;
+
+    background: linear-gradient(
+        to bottom,
+        #7c72a0,
+        #59506f
+    );
+
+    border-radius: 14px;
+    border: 1px solid #8478af;
+
+    box-shadow:
+        inset 0 1px 3px rgba(255,255,255,0.1),
+        0 4px 15px rgba(0,0,0,0.25);
+}
+
+.activeTab {
+    background: linear-gradient(to bottom, #9a8dd1, #54487d);
+    color: white;
+    border: 2px solid #b9a8ff;
+
+    box-shadow:
+        0 0 15px rgba(154, 141, 209, 0.5),
+        inset 0 1px 2px rgba(255,255,255,0.2);
+
+    transform: translateY(-2px);
+}
+
+.activeTab:hover {
+    background: linear-gradient(to bottom, #9a8dd1, #54487d);
+    color: white;
+    transform: translateY(-2px);
+}
+
+.btn {
+    border: none;
+    background: transparent;
+    color: #37393f;
+    padding: 10px 18px;
+    border-radius: 12px;
+
+    cursor: pointer;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    transition:
+        background-color 0.2s ease,
+        transform 0.2s ease,
+        color 0.2s ease;
+}
+
+.btn:hover {
+    background-color: #343434;
+    transform: translateY(-2px);
+    color: #d8caca;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 130px));
+    gap: 10px;
+    width: 100%;
+    color:rgb(220, 238, 245);
+    text-align: center;
+    padding-top: 10px;
+}
+
+.coverPhoto {
+    width: 100%;
+    height:110px;
+    object-fit: cover;
+    border-radius: 8px;
+    padding-bottom: 2px;
+}
+
+.card {
+    background-color: #1e1e1e;
+    border-radius: 12px;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    transition: 0.2s ease;
+}
+
+.card:hover {
+    transform: scale(1.02);
+}
+
+.cardLink {
+    text-decoration: none;
+    color: inherit;
+}
+
+

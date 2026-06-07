@@ -1,0 +1,59 @@
+
+.header {
+  position: relative;
+  z-index: 1; 
+  padding-top: 40px;
+  padding-bottom: 10px;
+  background: #4c4949;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  overflow: visable; 
+}
+
+.title {
+    font-size: 20px;
+}
+
+/* center content (face + text) */
+.centerContent {
+  padding-top: 15px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  z-index: 2; /* above branches */
+}
+
+
+.headerText p {
+  margin-top: 8px;
+  margin-bottom: 0;
+}
+
+
+.branchLeft img,
+.branchRight img {
+  width: 27vw;
+  max-width: 500px;
+  height: auto;
+  opacity: 0.8;
+}
+
+
+/* branch left corner */
+.branchRight {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: scaleX(-1); 
+}
+
+/* branch right corner mirrored */
+.branchLeft {
+  position: absolute;
+  top: 0;
+  right: 0;
+  
+}

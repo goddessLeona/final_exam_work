@@ -4,10 +4,14 @@ import type { NextRequest } from "next/server";
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // Protect /member routes only
-  if (pathname.startsWith("/member")) {
+  // Protect routes
+  if (
+    pathname.startsWith("/member") || 
+    pathname.startsWith("/contributor") ||
+    pathname.startsWith("/admin")
+  ) {
     // Check for auth cookie (replace 'token' with your actual cookie name)
-    const token = request.cookies.get("token");
+    const token = request.cookies.get("jwt");
 
     if (!token) {
       // Redirect unauthorized users to login page

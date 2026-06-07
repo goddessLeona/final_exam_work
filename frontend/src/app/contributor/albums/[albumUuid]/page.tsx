@@ -1,14 +1,16 @@
-
-import ContributorContentPage from "@/components/contributor/edit-view-photoalbum/ContributorAlbumPage";
+import ContributorContentPage from "@/components/contributors/edit-view-photoalbum/ContributorAlbumPage";
+import ContributorAlbumsMenu from "@/components/contributors/contentMenu/contributorsContentMenu";
 
 import styles from "./page.module.css"
 
-export default function ContributorPhotoAlbum() {
+export default function ContributorPhotoAlbumPage() {
+
+    
     return (
-        <main className= {styles.page}>
-            <div>
-                <ContributorContentPage/>
-            </div>
-        </main>
+        <>
+        <ContributorAlbumsMenu />
+        <ContributorContentPage />
+        </>
     );
+
 }

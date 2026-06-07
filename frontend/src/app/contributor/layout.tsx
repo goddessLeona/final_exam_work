@@ -1,6 +1,6 @@
-import Header from "@/components/Header";
-import NavbarContributor from "@/components/navbar/navbar-contributor";
-import Footer from "@/components/footer";
+import Header from "@/components/headers/mainHeader/Header";
+import NavbarContributor from "@/components/navbars/navbar-contributor";
+import Footer from "@/components/footers/footer";
 import styles from "./layout.module.css"
 
 export default function ComponentLayout({

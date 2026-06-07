@@ -48,4 +48,6 @@ public interface PhotoAlbumRepository extends JpaRepository<PhotoAlbum, UserCons
 
     List<PhotoAlbum> findByContentStatusAndArchivedAtBefore(ContentStatus contentStatus, Instant cutoff);
 
+    List<PhotoAlbum> findAllByOwnedByUser_PublicUuid(UUID publicUuid);
+
 }
