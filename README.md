@@ -121,7 +121,8 @@ An album can move between several states:
 * Scheduled for future publishing
 * Archived
 
-To support all editing features for a single album, I ended up creating seven different endpoints. This part of the project taught me a lot about structuring APIs and handling state changes between frontend and backend.
+To support all editing features for a single album, I ended up creating seven different endpoints.  
+I chose to split the functionality across multiple endpoints because different parts of the album are updated independently of each other. This made the code easier to maintain and reduced the risk of unintended changes.
 
 ### Admin - Respond to Contributor form
 Admin consent-dashboard show a list of all pending forms, rejected forms, and aproved forms showing te username, how many of the documents are pending, rejected and approved. If a form is pending the admin can clikc the link and get to the documents. The document that is pending the admin now can approve or reject.
