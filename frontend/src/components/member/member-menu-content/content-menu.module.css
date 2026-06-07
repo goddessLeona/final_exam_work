@@ -29,6 +29,13 @@
     backdrop-filter: blur(10px);
 }
 
+.title {
+    font-size: 20px;
+    margin-top: 20px;
+    margin-bottom: 0px;
+    padding: 10px;
+}
+
 .btn {
     border: none;
     background: transparent;

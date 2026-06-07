@@ -5,7 +5,18 @@ import { handleAuthError } from "@/lib/auth/handleAuthError";
 import Link from "next/link";
 import { memberGetCoverPhotos, GetCoverPhotoAlbumsResponse, PageResponse } from "@/lib/api/members/memberGetPhotoAlbums";
 import { ContentType } from "@/types/content-type";
+import { Inter, Finger_Paint } from "next/font/google"
 import styles from "./content-menu.module.css"
+
+const inter = Inter({
+        subsets: ["latin"],
+        weight: ["400"]
+    });
+
+const fingerPaint = Finger_Paint({
+    subsets: ["latin"],
+    weight: "400",
+}); 
 
 function MemberMenuContent(){
 
@@ -80,6 +91,12 @@ function MemberMenuContent(){
             </div>
 
             {error && <p>{error}</p>}
+
+            <div>
+                <p className={`${fingerPaint.className} ${styles.title}`}>
+                    {status ?? "Select category"}
+                </p>
+            </div>    
 
         <div className={styles.grid}>
             {data?.content.map((album) => (

@@ -37,12 +37,6 @@ function ContributorAlbumsMenu({
     const [status, setStatus] = useState<ContentStatus |null>(null);
     const router = useRouter();
 
-    const pathname = usePathname();
-    
-    const isAlbumPage = pathname.startsWith("/contributor/albums/");
-    const showGrid = !isAlbumPage;
-    
-
     useEffect(() => {
 
         if (!status) return;
