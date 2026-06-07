@@ -121,6 +121,8 @@ The agreementform will disepair and a new dashboard for the user will take the p
 ### Contributor - Upload content 
 A user can upload photos in a simple form, in the future the user should be able to use the same form to upload video but did not get that far. But database is already set up for it. 
 
+<img width="885" height="951" alt="Skärmbild 2026-06-07 095007" src="https://github.com/user-attachments/assets/9fa985a5-061c-441c-b0a2-2c7128d22e66" />
+
 ### Contributor - Edit album
 Building the album editing functionality was one of the biggest challenges in the project. Contributors can update album titles and descriptions, reorder photos, change cover photos, add or remove images, and manage album status.
 
