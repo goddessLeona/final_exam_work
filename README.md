@@ -112,7 +112,7 @@ The user then get back the form showing what document got approved and what docu
 The message on top also explain for user what to do next.
 status: REJECTED
 
-<img width="839" height="122" alt="Skärmbild 2026-06-07 090659" src="https://github.com/user-attachments/assets/e19cf9b9-89d0-4cd1-973a-d913ac6dade0" />
+<img width="420" height="61" alt="reject" src="https://github.com/user-attachments/assets/b91b8f5b-aed7-47df-8cc4-6659b712bbd9" />
 <img width="727" height="358" alt="Skärmbild 2026-06-07 090714" src="https://github.com/user-attachments/assets/8ba8f8c0-9a2e-4510-a162-67cd2331ab5d" />
 
 User can then upload the missing document. and send away to admin again. Admin check that document and approve or reject. If admin have approved all the document.
