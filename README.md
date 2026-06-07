@@ -97,6 +97,11 @@ First time a new user with role contributor log into the page. They will get a w
 The Contributor Agreement Form is shown below it, where user can upload 3 independent documents and agree to rules. To be able to submit the form the user have to upload all documenst and agree to rules. 
 status: NOT SUBMITED
 
+<div>
+<img width="845" height="954" alt="Skärmbild 2026-06-07 085434" src="https://github.com/user-attachments/assets/806ea738-70fa-49e6-99b0-bfa40daee3fa" />
+<img width="833" height="274" alt="Skärmbild 2026-06-07 085507" src="https://github.com/user-attachments/assets/4f96842a-3095-4654-8a6d-ccb888256dc5" />
+</div>
+
 After the form is filled in and sent away, the welcome message will change. 
 status: PENDING
 
