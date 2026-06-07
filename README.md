@@ -12,6 +12,8 @@ The first role is the Contributors, or as the organization prefers to call them,
 
 The content is only displayed on member pages, which can be accessed by members, admins, and approved contributors. In this project, I have not yet connected the external payment system. Instead, I am currently using dummy member accounts to test and verify that everything works correctly.
 
+<img width="891" height="502" alt="Skärmbild 2026-06-07 083831" src="https://github.com/user-attachments/assets/56010277-71f2-49f3-9654-bfe678a5be71" />
+
 One of the most urgent improvements needed on the original platform was the process for new contributors to join. Previously, people had to send emails to the organization, which could easily get lost among other emails or spam. Creating an application form directly on the website was therefore a major improvement.
 
 This also introduced important questions about security, especially regarding how identification documents should be uploaded and protected from unauthorized access. During this project, I learned many new things, such as how to use file paths for uploaded content instead of storing files directly in the database, and how to protect those file paths. Security is still something I plan to continue improving.
