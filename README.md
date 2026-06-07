@@ -105,15 +105,15 @@ status: NOT SUBMITED
 After the form is filled in and sent away, the welcome message will change. 
 status: PENDING
 
-<img width="842" height="107" alt="Skärmbild 2026-06-07 090450" src="https://github.com/user-attachments/assets/df44bb17-4350-428d-b93d-d3707e590062" />
+<img width="742" height="07" alt="Skärmbild 2026-06-07 090450" src="https://github.com/user-attachments/assets/df44bb17-4350-428d-b93d-d3707e590062" />
 
 Admin will then look on all the documents and approve or rejct the documents. Admin can aprove 1 document and reject 2 documents. 
 The user then get back the form showing what document got approved and what document got rejected and way it got rejected. 
 The message on top also explain for user what to do next.
 status: REJECTED
 
-<img width="839" height="122" alt="Skärmbild 2026-06-07 090659" src="https://github.com/user-attachments/assets/48b2cc25-8e73-42da-a77d-222663de0236" />
-<img width="827" height="458" alt="Skärmbild 2026-06-07 090714" src="https://github.com/user-attachments/assets/8ba8f8c0-9a2e-4510-a162-67cd2331ab5d" />
+<img width="139" height="22" alt="Skärmbild 2026-06-07 090659" src="https://github.com/user-attachments/assets/48b2cc25-8e73-42da-a77d-222663de0236" />
+<img width="727" height="358" alt="Skärmbild 2026-06-07 090714" src="https://github.com/user-attachments/assets/8ba8f8c0-9a2e-4510-a162-67cd2331ab5d" />
 
 User can then upload the missing document. and send away to admin again. Admin check that document and approve or reject. If admin have approved all the document.
 The agreementform will disepair and a new dashboard for the user will take the place.
