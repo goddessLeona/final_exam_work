@@ -27,3 +27,5 @@ export interface ContentStatsResponse {
     archived: number;
     scheduled: number;
 }
+
+
