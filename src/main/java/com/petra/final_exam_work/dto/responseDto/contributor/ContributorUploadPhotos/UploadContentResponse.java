@@ -7,7 +7,7 @@ import java.time.Instant;
 import java.util.List;
 import java.util.UUID;
 
-public class UploadPhotoContentResponse {
+public class UploadContentResponse {
 
     private UUID albumUuid;
     private String photoAlbumName;
@@ -19,12 +19,12 @@ public class UploadPhotoContentResponse {
     private List<String> photoUrls;
     private CoverPhotoResponse coverPhoto;
 
-    public UploadPhotoContentResponse() {
+    public UploadContentResponse() {
     }
 
-    public UploadPhotoContentResponse(UUID albumUuid, String photoAlbumName, String description, Instant publishedAt,
-                                      ContentStatus contentStatus, ContentType contentType, String username,
-                                      List<String> photoUrls, CoverPhotoResponse coverPhoto) {
+    public UploadContentResponse(UUID albumUuid, String photoAlbumName, String description, Instant publishedAt,
+                                 ContentStatus contentStatus, ContentType contentType, String username,
+                                 List<String> photoUrls, CoverPhotoResponse coverPhoto) {
         this.albumUuid = albumUuid;
         this.photoAlbumName = photoAlbumName;
         this.description = description;

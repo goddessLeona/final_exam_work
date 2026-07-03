@@ -52,7 +52,7 @@ public class GetPhotoAlbumsMapper {
 
         PhotoResponse response = new PhotoResponse();
         response.setPublicUuid(photo.getPublicUuid());
-        response.setPhotoUrl(photo.getPhotoFilePath());
+        response.setPhotoUrl(photo.getMediumPath());
 
         return response;
     }
@@ -92,7 +92,7 @@ public class GetPhotoAlbumsMapper {
 
         CoverPhotoResponse response = new CoverPhotoResponse();
         response.setPublicUuid(photo.getPublicUuid());
-        response.setCoverPhotoUrl(photo.getPhotoFilePath());
+        response.setCoverPhotoUrl(photo.getMediumPath());
 
         return response;
     }

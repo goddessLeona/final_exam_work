@@ -1,7 +1,7 @@
 package com.petra.final_exam_work.controller.contributor;
 
 import com.petra.final_exam_work.dto.requestDto.contributor.UploadPhotoContentRequest;
-import com.petra.final_exam_work.dto.responseDto.contributor.ContributorUploadPhotos.UploadPhotoContentResponse;
+import com.petra.final_exam_work.dto.responseDto.contributor.ContributorUploadPhotos.UploadContentResponse;
 import com.petra.final_exam_work.security.CustomUserDetails;
 import com.petra.final_exam_work.service.contributor.ContributorUploadPhotosService;
 import jakarta.validation.Valid;
@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/contributor/upload")
@@ -30,12 +32,12 @@ public class ContributorUploadPhotosController {
             value = "/photo",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE
     )
-    public ResponseEntity<UploadPhotoContentResponse> uploadPhotos (
+    public ResponseEntity<UploadContentResponse> uploadPhotos (
             @Valid @ModelAttribute UploadPhotoContentRequest request,
             @AuthenticationPrincipal CustomUserDetails userDetails
-    ) {
+    ) throws IOException {
 
-        UploadPhotoContentResponse response = contributorUploadPhotosService.uploadPhotos(userDetails, request);
+        UploadContentResponse response = contributorUploadPhotosService.uploadContent(userDetails, request);
 
         return ResponseEntity.ok(response);
     }

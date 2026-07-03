@@ -2,7 +2,7 @@ package com.petra.final_exam_work.service.contributor;
 
 import com.petra.final_exam_work.dto.mapperDto.contributor.UploadPhotoContentMapper;
 import com.petra.final_exam_work.dto.requestDto.contributor.UploadPhotoContentRequest;
-import com.petra.final_exam_work.dto.responseDto.contributor.ContributorUploadPhotos.UploadPhotoContentResponse;
+import com.petra.final_exam_work.dto.responseDto.contributor.ContributorUploadPhotos.UploadContentResponse;
 import com.petra.final_exam_work.entity.enums.ContentStatus;
 import com.petra.final_exam_work.entity.enums.ContentType;
 import com.petra.final_exam_work.entity.enums.ContributorStatus;
@@ -22,6 +22,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -46,83 +49,80 @@ public class ContributorUploadPhotosService {
         this.fileStorageService = fileStorageService;
     }
 
-    //######### CONTRIBUTOR POST-PHOTOS ########
+    //######### CONTRIBUTOR POST-CONTENT ########
     @Transactional
-    public UploadPhotoContentResponse uploadPhotos (CustomUserDetails userDetails, UploadPhotoContentRequest request) {
+    public UploadContentResponse uploadContent (
+            CustomUserDetails userDetails,
+            UploadPhotoContentRequest request) throws IOException {
 
-        UUID publicUuid = userDetails.getPublicUuid();
-        User user = userRepository.findByPublicUuid(publicUuid)
-                .orElseThrow(() -> new ApiException("User was not found", HttpStatus.NOT_FOUND));
+        User user = getValidatedContributor(userDetails);
 
+        ContentType type = resolveContentType(request);
 
-        if (user.getContributorStatus() != ContributorStatus.APPROVED) {
-            throw new ApiException(
-                    "You are not approved to upload content",
-                    HttpStatus.FORBIDDEN
-            );
-        }
+        validateUploadRequest(request, type);
 
-        ContentType type = request.getContentType() != null
-                ? request.getContentType()
-                : ContentType.PHOTO;
+        validateAlbumName(request, user);
 
-        if (type == ContentType.PHOTO) {
-            if(request.getPhotos() == null || request.getPhotos().isEmpty() || request.getPhotos().size() < 7) {
-                throw new ApiException(
-                        "You have to have minimum 7 photo to create a photo album",
-                        HttpStatus.BAD_REQUEST
-                );
+        switch (type) {
+            case PHOTO -> {
+                return uploadPhotoAlbum(user, request);
             }
 
-            if (request.getPhotos().size() > 30) {
-                throw new ApiException(
-                        "Can max be 30 photos in a photo album",
-                        HttpStatus.BAD_REQUEST
-                );
+            case VIDEO -> {
+                //return uploadVideoAlbum(user, request);
             }
         }
 
-        boolean exists = photoAlbumRepository
-                .existsByOwnedByUserAndPhotoAlbumName(
-                        user,
-                        request.getPhotoAlbumName()
-                );
+        throw new IllegalStateException("unsupported content type");
 
-        if (exists) {
-            throw new ApiException(
-                    "You already have an album with this name",
-                    HttpStatus.BAD_REQUEST
-            );
-        }
+    }
 
-        if (type == ContentType.VIDEO) {
+    // ---------------UPLOAD PHOTO ALBUM--------------
+    private UploadContentResponse uploadPhotoAlbum(
+            User user,
+            UploadPhotoContentRequest request
+    ) throws IOException {
 
-            if (request.getPhotos() == null || request.getPhotos().isEmpty()) {
-                throw new ApiException("Video file is required", HttpStatus.BAD_REQUEST);
-            }
+        // upload and save album
+        PhotoAlbum photoAlbum = createPhotoAlbum(user, request);
 
-            if (request.getPhotos() != null && request.getPhotos().size()>1) {
-                throw new ApiException("Only one video allowed per upload", HttpStatus.BAD_REQUEST);
-            }
-        }
+        // save photos
+        List<Photo> savedPhotos = savePhotos( user, request, photoAlbum);
 
+        // create links between db and where file is stored
+        createPhotoAlbumLinks(photoAlbum, savedPhotos);
+
+
+
+        return uploadPhotoContentMapper.toResponse(
+                photoAlbum,
+                savedPhotos
+        );
+
+    }
+
+    // Create a photo album and saving it
+    private PhotoAlbum createPhotoAlbum(
+            User user,
+            UploadPhotoContentRequest request
+    ) {
         PhotoAlbum photoAlbum = new PhotoAlbum();
+
         Instant now = Instant.now();
         Instant publishedAt = request.getPublishedAt();
 
-        if (
-           publishedAt != null &&
-           publishedAt.isBefore(now.minusSeconds(60))
+        if (publishedAt != null &&
+                publishedAt.isBefore(now.minusSeconds(60))
         ){
             throw new ApiException(
-                "Published date can not be in the past",
-                HttpStatus.BAD_REQUEST
+                    "Published date can not be in the past",
+                    HttpStatus.BAD_REQUEST
             );
         }
 
         photoAlbum.setPhotoAlbumName(request.getPhotoAlbumName());
         photoAlbum.setDescription(request.getDescription());
-        photoAlbum.setContentType(type);
+        photoAlbum.setContentType(ContentType.PHOTO);
         photoAlbum.setOwnedByUser(user);
         photoAlbum.setRulesVerified(false);
 
@@ -138,6 +138,16 @@ public class ContributorUploadPhotosService {
 
         photoAlbumRepository.save(photoAlbum);
 
+        return photoAlbum;
+    }
+
+    // save photos
+    private List<Photo> savePhotos(
+            User user,
+            UploadPhotoContentRequest request,
+            PhotoAlbum photoAlbum) throws IOException
+    {
+
         List<Photo> photosToSave = new ArrayList<>();
 
         for (MultipartFile file : request.getPhotos()) {
@@ -149,11 +159,26 @@ public class ContributorUploadPhotosService {
                     "photo"
             );
 
+            BufferedImage image;
+
+            try {
+                image = ImageIO.read(file.getInputStream());
+            } catch (IOException ex) {
+                throw new ApiException(
+                        "Unable to read uploaded image",
+                        HttpStatus.BAD_REQUEST
+                );
+            }
+
             Photo photo = new Photo();
 
             photo.setUploadedByUser(user);
-            photo.setPhotoFilePath(path);
+            photo.setThumbnailPath(path);
+            photo.setMediumPath(path);
+            photo.setLargePath(path);
             photo.setFileName(file.getOriginalFilename());
+            photo.setHeight(image.getHeight());
+            photo.setWidth(image.getWidth());
             photo.setMimeType(file.getContentType());
             photo.setSizeBytes(file.getSize());
 
@@ -167,8 +192,8 @@ public class ContributorUploadPhotosService {
 
             if(
                     coverPhotoIndex != null &&
-                    coverPhotoIndex >= 0 &&
-                    coverPhotoIndex < savedPhotos.size()
+                            coverPhotoIndex >= 0 &&
+                            coverPhotoIndex < savedPhotos.size()
             ) {
                 photoAlbum.setCoverPhoto(savedPhotos.get(coverPhotoIndex));
             } else {
@@ -176,6 +201,14 @@ public class ContributorUploadPhotosService {
             }
         }
 
+        return savedPhotos;
+    }
+
+    // links
+    private void createPhotoAlbumLinks(
+            PhotoAlbum photoAlbum,
+            List<Photo> savedPhotos
+    ){
         List<PhotoAlbumPhoto> links = new ArrayList<>();
 
         int position = 0;
@@ -193,12 +226,16 @@ public class ContributorUploadPhotosService {
         }
 
         photoAlbumPhotoRepository.saveAll(links);
-
-        return uploadPhotoContentMapper.toResponse(
-                photoAlbum,
-                savedPhotos
-        );
     }
+
+    //--------------------UPLOAD VIDEO ALBUM ---------------------------
+    private void uploadVideoAlbum(
+            User user,
+            UploadPhotoContentRequest request
+    ) {
+
+    }
+
 
     // ---------------- Private helper ----------------
     private String handleImageUpload(
@@ -218,5 +255,97 @@ public class ContributorUploadPhotosService {
         fileStorageService.validateImage(file);
 
         return fileStorageService.save(file, userUuid, category, filePrefix);
+    }
+
+    // ----------------VALIDATIONS-------------------
+
+    //validate the contributors access rights
+    private User getValidatedContributor (CustomUserDetails userDetails) {
+        UUID publicUuid = userDetails.getPublicUuid();
+        User user = userRepository.findByPublicUuid(publicUuid)
+                .orElseThrow(() -> new ApiException("User was not found", HttpStatus.NOT_FOUND));
+
+
+        if (user.getContributorStatus() != ContributorStatus.APPROVED) {
+            throw new ApiException(
+                    "You are not approved to upload content",
+                    HttpStatus.FORBIDDEN
+            );
+        }
+        return user;
+    }
+
+    // validate and split the how to validate different depending on photo or video
+    private void validateUploadRequest(
+            UploadPhotoContentRequest request,
+            ContentType type
+    ) {
+        if (type == ContentType.PHOTO) {
+            validatePhotoAlbumUpload(request);
+        } else {
+            validateVideoAlbumUpload(request);
+        }
+    }
+
+    // validate how uploaded photos
+    private void validatePhotoAlbumUpload(
+            UploadPhotoContentRequest request
+    ) {
+        if(request.getPhotos() == null || request.getPhotos().isEmpty() || request.getPhotos().size() < 7) {
+            throw new ApiException(
+                    "You have to have minimum 7 photo to create a photo album",
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+
+        if (request.getPhotos().size() > 30) {
+            throw new ApiException(
+                    "Can max be 30 photos in a photo album",
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+    }
+
+    //Validation for uploaded videos
+    private void validateVideoAlbumUpload(
+            UploadPhotoContentRequest request
+    ) {
+        if (request.getPhotos() == null || request.getPhotos().isEmpty()) {
+            throw new ApiException("Video file is required", HttpStatus.BAD_REQUEST);
+        }
+
+        if (request.getPhotos() != null && request.getPhotos().size()>1) {
+            throw new ApiException("Only one video allowed per upload", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    //Validate album name
+    private void validateAlbumName(
+            UploadPhotoContentRequest request,
+            User user
+
+    ) {
+
+        boolean exists = photoAlbumRepository
+                .existsByOwnedByUserAndPhotoAlbumName(
+                        user,
+                        request.getPhotoAlbumName()
+                );
+
+        if (exists) {
+            throw new ApiException(
+                    "You already have an album with this name",
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+    }
+
+    // method checking what type the content is
+    private ContentType resolveContentType(
+            UploadPhotoContentRequest request
+    ) {
+        return request.getContentType() !=null
+                ? request.getContentType()
+                : ContentType.PHOTO;
     }
 }
