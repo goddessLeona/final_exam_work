@@ -26,8 +26,14 @@ public class Photo {
     @JoinColumn(name = "uploaded_by_user_id", nullable = false)
     private User uploadedByUser;
 
-    @Column(name = "photo_file_path", nullable = false)
-    private String photoFilePath;
+    @Column(name = "thumbnail_path", nullable = false)
+    private String thumbnailPath;
+
+    @Column(name = "medium_path", nullable = false)
+    private String mediumPath;
+
+    @Column(name = "large_path", nullable = false)
+    private String largePath;
 
     @Column(name = "size_bytes", nullable = false)
     private Long sizeBytes;
@@ -37,6 +43,12 @@ public class Photo {
 
     @Column(name = "file_name", nullable = false)
     private String fileName;
+
+    @Column(name = "width", nullable = false)
+    private Integer width;
+
+    @Column(name = "height", nullable = false)
+    private Integer height;
 
     @Column(name = "created_at", updatable = false, insertable = false)
     private Instant createdAt;
@@ -51,15 +63,20 @@ public class Photo {
     public Photo() {
     }
 
-    public Photo(Long id, UUID publicUuid, User uploadedByUser, String photoFilePath, Long sizeBytes, String mimeType,
-                 String fileName, Instant createdAt) {
+    public Photo(Long id, UUID publicUuid, User uploadedByUser, String thumbnailPath, String mediumPath,
+                 String largePath, Long sizeBytes, String mimeType, String fileName, Integer width, Integer height,
+                 Instant createdAt) {
         this.id = id;
         this.publicUuid = publicUuid;
         this.uploadedByUser = uploadedByUser;
-        this.photoFilePath = photoFilePath;
+        this.thumbnailPath = thumbnailPath;
+        this.mediumPath = mediumPath;
+        this.largePath = largePath;
         this.sizeBytes = sizeBytes;
         this.mimeType = mimeType;
         this.fileName = fileName;
+        this.width = width;
+        this.height = height;
         this.createdAt = createdAt;
     }
 
@@ -87,12 +104,28 @@ public class Photo {
         this.uploadedByUser = uploadedByUser;
     }
 
-    public String getPhotoFilePath() {
-        return photoFilePath;
+    public String getThumbnailPath() {
+        return thumbnailPath;
     }
 
-    public void setPhotoFilePath(String photoFilePath) {
-        this.photoFilePath = photoFilePath;
+    public void setThumbnailPath(String thumbnailPath) {
+        this.thumbnailPath = thumbnailPath;
+    }
+
+    public String getMediumPath() {
+        return mediumPath;
+    }
+
+    public void setMediumPath(String mediumPath) {
+        this.mediumPath = mediumPath;
+    }
+
+    public String getLargePath() {
+        return largePath;
+    }
+
+    public void setLargePath(String largePath) {
+        this.largePath = largePath;
     }
 
     public Long getSizeBytes() {
@@ -117,6 +150,22 @@ public class Photo {
 
     public void setFileName(String fileName) {
         this.fileName = fileName;
+    }
+
+    public Integer getWidth() {
+        return width;
+    }
+
+    public void setWidth(Integer width) {
+        this.width = width;
+    }
+
+    public Integer getHeight() {
+        return height;
+    }
+
+    public void setHeight(Integer height) {
+        this.height = height;
     }
 
     public Instant getCreatedAt() {
