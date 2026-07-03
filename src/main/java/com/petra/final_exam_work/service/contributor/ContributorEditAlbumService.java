@@ -321,7 +321,7 @@ public class ContributorEditAlbumService {
             Photo photo = new Photo();
 
             photo.setUploadedByUser(user);
-            photo.setPhotoFilePath(path);
+            photo.setLargePath(path);
             photo.setFileName(file.getOriginalFilename());
             photo.setMimeType(file.getContentType());
             photo.setSizeBytes(file.getSize());
