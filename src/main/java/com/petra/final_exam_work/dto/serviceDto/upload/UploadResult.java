@@ -19,4 +19,15 @@ public class UploadResult {
     public int failureCount() {
         return failed.size();
     }
+
+    public UploadResult() {
+    }
+
+    public List<UploadedPhoto> getUploaded() {
+        return uploaded;
+    }
+
+    public List<FailedUpload> getFailed() {
+        return failed;
+    }
 }

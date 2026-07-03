@@ -3,6 +3,8 @@ package com.petra.final_exam_work.service.contributor;
 import com.petra.final_exam_work.dto.mapperDto.contributor.UploadPhotoContentMapper;
 import com.petra.final_exam_work.dto.requestDto.contributor.UploadPhotoContentRequest;
 import com.petra.final_exam_work.dto.responseDto.contributor.ContributorUploadPhotos.UploadContentResponse;
+import com.petra.final_exam_work.dto.serviceDto.upload.UploadResult;
+import com.petra.final_exam_work.dto.serviceDto.upload.UploadedPhoto;
 import com.petra.final_exam_work.entity.enums.ContentStatus;
 import com.petra.final_exam_work.entity.enums.ContentType;
 import com.petra.final_exam_work.entity.enums.ContributorStatus;
@@ -31,7 +33,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class ContributorUploadPhotosService {
+public class ContributorUploadContentService {
 
     private final UploadPhotoContentMapper uploadPhotoContentMapper;
     private final UserRepository userRepository;
@@ -40,7 +42,7 @@ public class ContributorUploadPhotosService {
     private final PhotoAlbumPhotoRepository photoAlbumPhotoRepository;
     private final FileStorageService fileStorageService;
 
-    public ContributorUploadPhotosService(UploadPhotoContentMapper uploadPhotoContentMapper, UserRepository userRepository, PhotoAlbumRepository photoAlbumRepository, PhotoRepository photoRepository, PhotoAlbumPhotoRepository photoAlbumPhotoRepository, FileStorageService fileStorageService) {
+    public ContributorUploadContentService(UploadPhotoContentMapper uploadPhotoContentMapper, UserRepository userRepository, PhotoAlbumRepository photoAlbumRepository, PhotoRepository photoRepository, PhotoAlbumPhotoRepository photoAlbumPhotoRepository, FileStorageService fileStorageService) {
         this.uploadPhotoContentMapper = uploadPhotoContentMapper;
         this.userRepository = userRepository;
         this.photoAlbumRepository = photoAlbumRepository;
@@ -53,7 +55,7 @@ public class ContributorUploadPhotosService {
     @Transactional
     public UploadContentResponse uploadContent (
             CustomUserDetails userDetails,
-            UploadPhotoContentRequest request) throws IOException {
+            UploadPhotoContentRequest request) {
 
         User user = getValidatedContributor(userDetails);
 
@@ -81,13 +83,17 @@ public class ContributorUploadPhotosService {
     private UploadContentResponse uploadPhotoAlbum(
             User user,
             UploadPhotoContentRequest request
-    ) throws IOException {
+    ) {
 
         // upload and save album
         PhotoAlbum photoAlbum = createPhotoAlbum(user, request);
 
+        // upload result
+
+        UploadResult uploadResult = uploadPhotos(user, photoAlbum, request);
+
         // save photos
-        List<Photo> savedPhotos = savePhotos( user, request, photoAlbum);
+        List<Photo> savedPhotos = savePhotos( user, photoAlbum, uploadResult, request);
 
         // create links between db and where file is stored
         createPhotoAlbumLinks(photoAlbum, savedPhotos);
@@ -144,43 +150,28 @@ public class ContributorUploadPhotosService {
     // save photos
     private List<Photo> savePhotos(
             User user,
-            UploadPhotoContentRequest request,
-            PhotoAlbum photoAlbum) throws IOException
+            PhotoAlbum photoAlbum,
+            UploadResult uploadResult,
+            UploadPhotoContentRequest request
+            )
     {
 
         List<Photo> photosToSave = new ArrayList<>();
 
-        for (MultipartFile file : request.getPhotos()) {
 
-            String path = handleImageUpload(
-                    file,
-                    user.getPublicUuid(),
-                    "albums/photo/" + photoAlbum.getPublicUuid(),
-                    "photo"
-            );
-
-            BufferedImage image;
-
-            try {
-                image = ImageIO.read(file.getInputStream());
-            } catch (IOException ex) {
-                throw new ApiException(
-                        "Unable to read uploaded image",
-                        HttpStatus.BAD_REQUEST
-                );
-            }
+        for (UploadedPhoto uploaded : uploadResult.getUploaded()) {
 
             Photo photo = new Photo();
 
             photo.setUploadedByUser(user);
-            photo.setThumbnailPath(path);
-            photo.setMediumPath(path);
-            photo.setLargePath(path);
-            photo.setFileName(file.getOriginalFilename());
-            photo.setHeight(image.getHeight());
-            photo.setWidth(image.getWidth());
-            photo.setMimeType(file.getContentType());
-            photo.setSizeBytes(file.getSize());
+            photo.setThumbnailPath(uploaded.getThumbnailPath());
+            photo.setMediumPath(uploaded.getMediumPath());
+            photo.setLargePath(uploaded.getLargePath());
+            photo.setFileName(uploaded.getFileName());
+            photo.setHeight(uploaded.getHeight());
+            photo.setWidth(uploaded.getWidth());
+            photo.setMimeType(uploaded.getMimeType());
+            photo.setSizeBytes(uploaded.getSizeBytes());
 
             photosToSave.add(photo);
         }
@@ -202,6 +193,50 @@ public class ContributorUploadPhotosService {
         }
 
         return savedPhotos;
+    }
+
+    // upload photo
+    private UploadResult uploadPhotos(
+            User user,
+            PhotoAlbum photoAlbum,
+            UploadPhotoContentRequest request
+    ) {
+        UploadResult result = new UploadResult();
+
+        for (MultipartFile file : request.getPhotos()) {
+
+            String path = handleImageUpload(
+                    file,
+                    user.getPublicUuid(),
+                    "albums/photo/" + photoAlbum.getPublicUuid(),
+                    "photo"
+            );
+
+            BufferedImage image;
+
+            try {
+                image = ImageIO.read(file.getInputStream());
+            } catch (IOException ex) {
+                throw new ApiException(
+                        "Unable to read uploaded image",
+                        HttpStatus.BAD_REQUEST
+                );
+            }
+
+            UploadedPhoto uploaded = new UploadedPhoto();
+
+            uploaded.setThumbnailPath(path);
+            uploaded.setMediumPath(path);
+            uploaded.setLargePath(path);
+            uploaded.setFileName(file.getOriginalFilename());
+            uploaded.setHeight(image.getHeight());
+            uploaded.setWidth(image.getWidth());
+            uploaded.setMimeType(file.getContentType());
+            uploaded.setSizeBytes(file.getSize());
+
+            result.getUploaded().add(uploaded);
+        }
+        return result;
     }
 
     // links

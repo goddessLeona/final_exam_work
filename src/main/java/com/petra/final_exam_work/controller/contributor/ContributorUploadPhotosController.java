@@ -3,7 +3,7 @@ package com.petra.final_exam_work.controller.contributor;
 import com.petra.final_exam_work.dto.requestDto.contributor.UploadPhotoContentRequest;
 import com.petra.final_exam_work.dto.responseDto.contributor.ContributorUploadPhotos.UploadContentResponse;
 import com.petra.final_exam_work.security.CustomUserDetails;
-import com.petra.final_exam_work.service.contributor.ContributorUploadPhotosService;
+import com.petra.final_exam_work.service.contributor.ContributorUploadContentService;
 import jakarta.validation.Valid;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -20,10 +20,10 @@ import java.io.IOException;
 @RequestMapping("/contributor/upload")
 public class ContributorUploadPhotosController {
 
-    private final ContributorUploadPhotosService contributorUploadPhotosService;
+    private final ContributorUploadContentService contributorUploadContentService;
 
-    public ContributorUploadPhotosController(ContributorUploadPhotosService contributorUploadPhotosService) {
-        this.contributorUploadPhotosService = contributorUploadPhotosService;
+    public ContributorUploadPhotosController(ContributorUploadContentService contributorUploadContentService) {
+        this.contributorUploadContentService = contributorUploadContentService;
     }
 
     // ##### POST -UPLOAD PHOTOS TO ALBUM ######
@@ -35,9 +35,9 @@ public class ContributorUploadPhotosController {
     public ResponseEntity<UploadContentResponse> uploadPhotos (
             @Valid @ModelAttribute UploadPhotoContentRequest request,
             @AuthenticationPrincipal CustomUserDetails userDetails
-    ) throws IOException {
+    ) {
 
-        UploadContentResponse response = contributorUploadPhotosService.uploadContent(userDetails, request);
+        UploadContentResponse response = contributorUploadContentService.uploadContent(userDetails, request);
 
         return ResponseEntity.ok(response);
     }
