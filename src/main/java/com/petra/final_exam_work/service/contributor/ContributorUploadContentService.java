@@ -85,12 +85,15 @@ public class ContributorUploadContentService {
             UploadPhotoContentRequest request
     ) {
 
-        // upload and save album
+        // upload and save album temporary
         PhotoAlbum photoAlbum = createPhotoAlbum(user, request);
 
         // upload result
         UploadResult uploadResult = uploadPhotos(user, photoAlbum, request);
         validateUploadedPhotoResult(uploadResult);
+
+        //move uploaded photos to permanent all good
+        moveUploadedPhotosToPermanent(uploadResult, user, photoAlbum);
 
         // save photos
         List<Photo> savedPhotos = savePhotos( user, photoAlbum, uploadResult, request);
@@ -248,6 +251,26 @@ public class ContributorUploadContentService {
         return result;
     }
 
+    //move temporary file
+    private void moveUploadedPhotosToPermanent(
+            UploadResult uploadResult,
+            User user,
+            PhotoAlbum photoAlbum
+    ) {
+        for(UploadedPhoto uploaded : uploadResult.getUploaded()) {
+
+            String newPath = fileStorageService.moveToPermanent(
+                    uploaded.getMediumPath(),
+                    user.getPublicUuid(),
+                    "albums/photo/" + photoAlbum.getPublicUuid()
+            );
+
+            uploaded.setMediumPath(newPath);
+            uploaded.setLargePath(newPath);
+            uploaded.setThumbnailPath(newPath);
+        }
+    }
+
     // links
     private void createPhotoAlbumLinks(
             PhotoAlbum photoAlbum,
@@ -298,7 +321,7 @@ public class ContributorUploadContentService {
 
         fileStorageService.validateImage(file);
 
-        return fileStorageService.save(file, userUuid, category, filePrefix);
+        return fileStorageService.storeTemporary(file, userUuid, category, filePrefix);
     }
 
     // ----------------VALIDATIONS-------------------
@@ -353,6 +376,9 @@ public class ContributorUploadContentService {
     // validate uploadedResults
     private void validateUploadedPhotoResult(UploadResult result) {
         if (result.successCount() < 7) {
+
+            // fileStorageService.deleteTemporaryFiles(result);
+
             throw new ApiException(
                     "You have to have minimum 7 photo to create a photo album, one or many files are not working",
             HttpStatus.BAD_REQUEST
