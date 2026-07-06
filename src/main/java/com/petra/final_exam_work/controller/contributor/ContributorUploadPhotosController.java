@@ -26,7 +26,7 @@ public class ContributorUploadPhotosController {
         this.contributorUploadContentService = contributorUploadContentService;
     }
 
-    // ##### POST -UPLOAD PHOTOS TO ALBUM ######
+    // ##### POST -UPLOAD CONTENT TO ALBUM ######
     @PreAuthorize("hasRole('CONTRIBUTOR')")
     @PostMapping(
             value = "/photo",
@@ -36,7 +36,7 @@ public class ContributorUploadPhotosController {
             @Valid @ModelAttribute UploadPhotoContentRequest request,
             @AuthenticationPrincipal CustomUserDetails userDetails
     ) {
-
+        System.out.println("Controller reached");
         UploadContentResponse response = contributorUploadContentService.uploadContent(userDetails, request);
 
         return ResponseEntity.ok(response);

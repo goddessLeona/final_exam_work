@@ -3,6 +3,7 @@ package com.petra.final_exam_work.service.contributor;
 import com.petra.final_exam_work.dto.mapperDto.contributor.UploadPhotoContentMapper;
 import com.petra.final_exam_work.dto.requestDto.contributor.UploadPhotoContentRequest;
 import com.petra.final_exam_work.dto.responseDto.contributor.ContributorUploadPhotos.UploadContentResponse;
+import com.petra.final_exam_work.dto.serviceDto.upload.FailedUpload;
 import com.petra.final_exam_work.dto.serviceDto.upload.UploadResult;
 import com.petra.final_exam_work.dto.serviceDto.upload.UploadedPhoto;
 import com.petra.final_exam_work.entity.enums.ContentStatus;
@@ -26,7 +27,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -89,16 +89,14 @@ public class ContributorUploadContentService {
         PhotoAlbum photoAlbum = createPhotoAlbum(user, request);
 
         // upload result
-
         UploadResult uploadResult = uploadPhotos(user, photoAlbum, request);
+        validateUploadedPhotoResult(uploadResult);
 
         // save photos
         List<Photo> savedPhotos = savePhotos( user, photoAlbum, uploadResult, request);
 
         // create links between db and where file is stored
         createPhotoAlbumLinks(photoAlbum, savedPhotos);
-
-
 
         return uploadPhotoContentMapper.toResponse(
                 photoAlbum,
@@ -205,36 +203,47 @@ public class ContributorUploadContentService {
 
         for (MultipartFile file : request.getPhotos()) {
 
-            String path = handleImageUpload(
-                    file,
-                    user.getPublicUuid(),
-                    "albums/photo/" + photoAlbum.getPublicUuid(),
-                    "photo"
-            );
-
-            BufferedImage image;
-
             try {
-                image = ImageIO.read(file.getInputStream());
-            } catch (IOException ex) {
-                throw new ApiException(
-                        "Unable to read uploaded image",
-                        HttpStatus.BAD_REQUEST
+                String path = handleImageUpload(
+                        file,
+                        user.getPublicUuid(),
+                        "albums/photo/" + photoAlbum.getPublicUuid(),
+                        "photo"
                 );
+
+                BufferedImage image;
+                image = ImageIO.read(file.getInputStream());
+
+                if (image == null) {
+                    throw new ApiException(
+                            "Invalid or corrupted image",
+                            HttpStatus.BAD_REQUEST
+                    );
+                }
+
+                UploadedPhoto uploaded = new UploadedPhoto();
+
+                uploaded.setThumbnailPath(path);
+                uploaded.setMediumPath(path);
+                uploaded.setLargePath(path);
+                uploaded.setFileName(file.getOriginalFilename());
+                uploaded.setHeight(image.getHeight());
+                uploaded.setWidth(image.getWidth());
+                uploaded.setMimeType(file.getContentType());
+                uploaded.setSizeBytes(file.getSize());
+
+                result.getUploaded().add(uploaded);
+
+            } catch (Exception ex) {
+
+                FailedUpload failed = new FailedUpload();
+
+                failed.setFileName(file.getOriginalFilename());
+                failed.setReason(ex.getMessage());
+
+                result.getFailed().add(failed);
             }
 
-            UploadedPhoto uploaded = new UploadedPhoto();
-
-            uploaded.setThumbnailPath(path);
-            uploaded.setMediumPath(path);
-            uploaded.setLargePath(path);
-            uploaded.setFileName(file.getOriginalFilename());
-            uploaded.setHeight(image.getHeight());
-            uploaded.setWidth(image.getWidth());
-            uploaded.setMimeType(file.getContentType());
-            uploaded.setSizeBytes(file.getSize());
-
-            result.getUploaded().add(uploaded);
         }
         return result;
     }
@@ -337,6 +346,16 @@ public class ContributorUploadContentService {
             throw new ApiException(
                     "Can max be 30 photos in a photo album",
                     HttpStatus.BAD_REQUEST
+            );
+        }
+    }
+
+    // validate uploadedResults
+    private void validateUploadedPhotoResult(UploadResult result) {
+        if (result.successCount() < 7) {
+            throw new ApiException(
+                    "You have to have minimum 7 photo to create a photo album, one or many files are not working",
+            HttpStatus.BAD_REQUEST
             );
         }
     }
