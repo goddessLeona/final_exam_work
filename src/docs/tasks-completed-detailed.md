@@ -307,6 +307,26 @@ Exam paper
 Improve user experience
 Add minimal css all over project to look more synchronized 
 
+Project first demo 11/6 went ok
+
+# Part 2 project
+
+-------------- working on now -------------------
+## Task 17 - improve upload content
+
+* clean up upload content service, from on big to many small methods 
+* add partial success handling, if an images fail to upload skipp them
+* add upload to temp folder to prevent that if upload fail a lot of photos will be left in the upload folder.
+
+* Delete temporary files on failed upload.
+* Remove empty temporary directories after cleanup.
+
+## task 18 add a converter, if photos are to big resize before saving
+also add in db (to optimaze and make faster to load tumbernails)
+
+private string photoThumbernailPath and save 300px
+privet string photoMediumPath 800px
+private string originalPath but max 900px (or something)
 
 ------------------Future tasks---------------------------------------
 ## Task - Time zon safe
@@ -317,8 +337,6 @@ Add minimal css all over project to look more synchronized
   * add tags other contributors
 
 
-## task -  Look over project and clean up folders 
-
 ## task - cleanup service
 
 Planned background cleanup system for remove unused files:
@@ -328,20 +346,7 @@ Planned background cleanup system for remove unused files:
 * banned/deleted users
 * orphaned files no longer connected to database records
 
-## task  - add a converter, if photos are to big resize before saving
-also add in db (to optimaze and make faster to load tumbernails)
 
-private string photoThumbernailPath and save 300px 
-privet string photoMediumPath 800px
-private string originalPath but max 900px (or something)
-
-## task  - Improve upload photos
- add partial success handling, to show what images failed to upload and skipp them
-
-upload valid images
-skip broken ones
-return list of failed files
-add upload to temp folder to prevent that if upload fail a lot of photos will be left in the upload folder.
 
 ## task - frontend browser updates (realtime sync)
 immediate optimistic updates

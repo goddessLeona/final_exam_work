@@ -27,6 +27,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
@@ -90,7 +93,17 @@ public class ContributorUploadContentService {
 
         // upload result
         UploadResult uploadResult = uploadPhotos(user, photoAlbum, request);
-        validateUploadedPhotoResult(uploadResult);
+        if (uploadResult.successCount() < 7) {
+
+            cleanupTemporaryUploads(uploadResult);
+
+            throw new ApiException(
+                    "You have to have minimum 7 photos to create a photo album. One or more files could not be uploaded.",
+                    HttpStatus.BAD_REQUEST
+            );
+        }
+
+        //validateUploadedPhotoResult(uploadResult);
 
         //move uploaded photos to permanent all good
         moveUploadedPhotosToPermanent(uploadResult, user, photoAlbum);
@@ -374,14 +387,24 @@ public class ContributorUploadContentService {
     }
 
     // validate uploadedResults
+    /*
     private void validateUploadedPhotoResult(UploadResult result) {
         if (result.successCount() < 7) {
 
-            // fileStorageService.deleteTemporaryFiles(result);
-
             throw new ApiException(
-                    "You have to have minimum 7 photo to create a photo album, one or many files are not working",
+                    "You have to have minimum 7 photos to create a photo album. One or more files could not be uploaded.",
             HttpStatus.BAD_REQUEST
+            );
+        }
+    }*/
+
+    //
+    public void cleanupTemporaryUploads(
+            UploadResult result
+    ) {
+        for (UploadedPhoto uploaded : result.getUploaded()) {
+            fileStorageService.deleteTemporaryFiles(
+                    uploaded.getMediumPath()
             );
         }
     }
