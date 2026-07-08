@@ -103,9 +103,7 @@ public class ContributorUploadContentService {
             );
         }
 
-        //validateUploadedPhotoResult(uploadResult);
-
-        //move uploaded photos to permanent all good
+        //move uploaded photos to permanent folder if all good
         moveUploadedPhotosToPermanent(uploadResult, user, photoAlbum);
 
         // save photos
@@ -308,6 +306,17 @@ public class ContributorUploadContentService {
         photoAlbumPhotoRepository.saveAll(links);
     }
 
+    //
+    public void cleanupTemporaryUploads(
+            UploadResult result
+    ) {
+        for (UploadedPhoto uploaded : result.getUploaded()) {
+            fileStorageService.deleteTemporaryFiles(
+                    uploaded.getMediumPath()
+            );
+        }
+    }
+
     //--------------------UPLOAD VIDEO ALBUM ---------------------------
     private void uploadVideoAlbum(
             User user,
@@ -382,29 +391,6 @@ public class ContributorUploadContentService {
             throw new ApiException(
                     "Can max be 30 photos in a photo album",
                     HttpStatus.BAD_REQUEST
-            );
-        }
-    }
-
-    // validate uploadedResults
-    /*
-    private void validateUploadedPhotoResult(UploadResult result) {
-        if (result.successCount() < 7) {
-
-            throw new ApiException(
-                    "You have to have minimum 7 photos to create a photo album. One or more files could not be uploaded.",
-            HttpStatus.BAD_REQUEST
-            );
-        }
-    }*/
-
-    //
-    public void cleanupTemporaryUploads(
-            UploadResult result
-    ) {
-        for (UploadedPhoto uploaded : result.getUploaded()) {
-            fileStorageService.deleteTemporaryFiles(
-                    uploaded.getMediumPath()
             );
         }
     }
