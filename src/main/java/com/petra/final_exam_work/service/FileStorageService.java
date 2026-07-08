@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -62,6 +63,97 @@ public class FileStorageService {
         }catch (IOException e) {
             throw new RuntimeException("Failed to store file", e);
         }
+    }
+
+    public String storeTemporary(
+            MultipartFile file,
+            UUID userUuid,
+            String category,
+            String filePrefix
+    ){
+
+        try{
+
+            Path userDir = Paths.get(
+                    baseUploadDir,
+                    "temp",
+                    userUuid.toString(),
+                    category
+            );
+
+            if (!Files.exists(userDir)) {
+                Files.createDirectories(userDir);
+            }
+
+            // Generate safe unique filename
+            String extension = getFileExtension(file.getOriginalFilename());
+            String uniqueName = filePrefix + "_" + UUID.randomUUID() + extension;
+
+            Path filePath = userDir.resolve(uniqueName);
+
+            Files.copy(
+                    file.getInputStream(),
+                    filePath,
+                    StandardCopyOption.REPLACE_EXISTING
+            );
+
+            return baseUploadDir + "/temp/"
+                    + userUuid + "/"
+                    + category + "/"
+                    + uniqueName;
+
+        }catch (IOException e) {
+            throw new RuntimeException("Failed to store file", e);
+        }
+    }
+
+    public String moveToPermanent(
+            String tempPath,
+            UUID userUuid,
+            String category
+    ) {
+
+        try {
+            Path source = Paths.get(tempPath);
+
+            Path destinationDir = Paths.get(
+                    baseUploadDir,
+                    "users",
+                    userUuid.toString(),
+                    category
+            );
+
+            if(!Files.exists(destinationDir)) {
+                Files.createDirectories(destinationDir);
+            }
+
+            Path destination = destinationDir.resolve(source.getFileName());
+
+            // move the files
+            Files.move(
+                    source,
+                    destination,
+                    StandardCopyOption.REPLACE_EXISTING
+            );
+
+            return destination.toString();
+
+        }catch (IOException e) {
+            throw new RuntimeException("Failed to store file", e);
+        }
+
+    }
+
+    public void deleteTemporaryFiles(
+            String tempPath
+    ) {
+        try {
+            Files.deleteIfExists(Paths.get(tempPath));
+        } catch (IOException e) {
+            throw new RuntimeException(
+                    "Failed to delete temporary file",
+                    e);
+        };
     }
 
     private String getFileExtension(String filename) {

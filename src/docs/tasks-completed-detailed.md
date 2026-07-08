@@ -307,17 +307,45 @@ Exam paper
 Improve user experience
 Add minimal css all over project to look more synchronized 
 
+Project first demo 11/6 went ok, pass my exam
+### Finished my education- and got my diploma 
+
+///////////////////////////////////////////////////////////////////////////////////
+-----------------------------------------------------------------------------------
+# PART 2 PROJECT - Improve what is already build
+-----------------------------------------------------------------------------------
+\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
+
+## Task 17 - improve upload content - add temp folder
+
+* clean up upload content service, from on big to many small methods 
+* add partial success handling, if an images fail to upload skipp them
+* add upload to temp folder to prevent that if upload fail a lot of photos will be left in the upload folder.
+* Delete temporary files on failed upload.
+
+-------------- working on now -------------------
+## task 18 add a converter, if photos are to big resize before saving
+also add in db (to optimaze and make faster to load tumbernails)
+
+private string photoThumbernailPath and save 300px
+privet string photoMediumPath 800px
+private string originalPath but max 900px (or something)
+
 
 ------------------Future tasks---------------------------------------
+## task - frontend browser updates (realtime sync)
+immediate optimistic updates
+periodic background refresh
+
 ## Task - Time zon safe
 ## Task - admin do the final delete of album that are removed
+## Task - hash folders for id-documents
+## Task - remove geolocation on photos
 
 ## Task  - Make possible to tag photos
   * add tags -general album
   * add tags other contributors
 
-
-## task -  Look over project and clean up folders 
 
 ## task - cleanup service
 
@@ -327,21 +355,9 @@ Planned background cleanup system for remove unused files:
 * deleted contributor content
 * banned/deleted users
 * orphaned files no longer connected to database records
+* Remove empty temporary directories after cleanup.
 
-## task  - add a converter, if photos are to big resize before saving
-also add in db (to optimaze and make faster to load tumbernails)
 
-private string photoThumbernailPath and save 300px 
-privet string photoMediumPath 800px
-private string originalPath but max 900px (or something)
-
-## task  - Improve upload photos
- add partial success handling, to show what images failed to upload and skipp them
-
-upload valid images
-skip broken ones
-return list of failed files
-add upload to temp folder to prevent that if upload fail a lot of photos will be left in the upload folder.
 
 ## task - frontend browser updates (realtime sync)
 immediate optimistic updates

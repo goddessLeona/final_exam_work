@@ -71,10 +71,14 @@ CREATE TABLE tags(
     public_uuid UUID NOT NULL DEFAULT gen_random_uuid() UNIQUE,
 
     uploaded_by_user_id BIGINT NOT NULL,
-    photo_file_path TEXT NOT NULL,
+    thumbnail_path TEXT NOT NULL,
+    medium_path TEXT NOT NULL,
+    large_path TEXT NOT NULL,
     size_bytes BIGINT NOT NULL,
     mime_type TEXT NOT NULL,
     file_name TEXT NOT NULL,
+    width INTEGER NOT NULL,
+    height INTEGER NOT NULL,
     created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
 
     CONSTRAINT fk_photos_uploaded_by_user

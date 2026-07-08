@@ -1,7 +1,7 @@
 package com.petra.final_exam_work.dto.mapperDto.contributor;
 
 import com.petra.final_exam_work.dto.responseDto.contributor.ContributorUploadPhotos.CoverPhotoResponse;
-import com.petra.final_exam_work.dto.responseDto.contributor.ContributorUploadPhotos.UploadPhotoContentResponse;
+import com.petra.final_exam_work.dto.responseDto.contributor.ContributorUploadPhotos.UploadContentResponse;
 import com.petra.final_exam_work.entity.photo.Photo;
 import com.petra.final_exam_work.entity.photo.PhotoAlbum;
 import org.mapstruct.Mapper;
@@ -19,14 +19,14 @@ public interface UploadPhotoContentMapper {
     @Mapping(target = "username", source = "photoAlbum.ownedByUser.username")
     @Mapping(target = "photoUrls", source = "photos" )
     @Mapping(target = "coverPhoto", source = "photoAlbum.coverPhoto")
-    UploadPhotoContentResponse toResponse (
+    UploadContentResponse toResponse (
         PhotoAlbum photoAlbum,
         List<Photo> photos
     );
 
     default List<String> mapPhotoUrls(List<Photo> photos) {
         return photos.stream()
-                .map(Photo::getPhotoFilePath)
+                .map(Photo::getMediumPath)
                 .toList();
     }
 
@@ -38,7 +38,7 @@ public interface UploadPhotoContentMapper {
 
         CoverPhotoResponse response = new CoverPhotoResponse();
         response.setPublicUuid(photo.getPublicUuid());
-        response.setCoverPhotoUrl(photo.getPhotoFilePath());
+        response.setCoverPhotoUrl(photo.getMediumPath());
 
         return response;
     }

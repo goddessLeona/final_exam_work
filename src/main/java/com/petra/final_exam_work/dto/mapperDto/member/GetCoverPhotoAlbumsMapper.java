@@ -27,7 +27,7 @@ public class GetCoverPhotoAlbumsMapper {
 
         CoverPhotoResponse response = new CoverPhotoResponse();
         response.setPublicUuid(photo.getPublicUuid());
-        response.setCoverPhotoUrl(photo.getPhotoFilePath());
+        response.setCoverPhotoUrl(photo.getMediumPath());
 
         return response;
     }
