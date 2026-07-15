@@ -20,6 +20,7 @@ import com.petra.final_exam_work.repository.UserRepository;
 import com.petra.final_exam_work.security.CustomUserDetails;
 import com.petra.final_exam_work.exception.ApiException;
 import com.petra.final_exam_work.service.FileStorageService;
+import com.petra.final_exam_work.service.ImageResizeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,14 +45,16 @@ public class ContributorUploadContentService {
     private final PhotoRepository photoRepository;
     private final PhotoAlbumPhotoRepository photoAlbumPhotoRepository;
     private final FileStorageService fileStorageService;
+    private final ImageResizeService imageResizeService;
 
-    public ContributorUploadContentService(UploadPhotoContentMapper uploadPhotoContentMapper, UserRepository userRepository, PhotoAlbumRepository photoAlbumRepository, PhotoRepository photoRepository, PhotoAlbumPhotoRepository photoAlbumPhotoRepository, FileStorageService fileStorageService) {
+    public ContributorUploadContentService(UploadPhotoContentMapper uploadPhotoContentMapper, UserRepository userRepository, PhotoAlbumRepository photoAlbumRepository, PhotoRepository photoRepository, PhotoAlbumPhotoRepository photoAlbumPhotoRepository, FileStorageService fileStorageService, ImageResizeService imageResizeService) {
         this.uploadPhotoContentMapper = uploadPhotoContentMapper;
         this.userRepository = userRepository;
         this.photoAlbumRepository = photoAlbumRepository;
         this.photoRepository = photoRepository;
         this.photoAlbumPhotoRepository = photoAlbumPhotoRepository;
         this.fileStorageService = fileStorageService;
+        this.imageResizeService = imageResizeService;
     }
 
     //######### CONTRIBUTOR POST-CONTENT ########
@@ -102,6 +105,9 @@ public class ContributorUploadContentService {
                     HttpStatus.BAD_REQUEST
             );
         }
+
+        //resize photos
+        resizePhoto(uploadResult);
 
         //move uploaded photos to permanent folder if all good
         moveUploadedPhotosToPermanent(uploadResult, user, photoAlbum);
@@ -157,6 +163,42 @@ public class ContributorUploadContentService {
         photoAlbumRepository.save(photoAlbum);
 
         return photoAlbum;
+    }
+
+    //resize photos
+    private void resizePhoto(UploadResult uploadResult) {
+
+        for (UploadedPhoto uploaded : uploadResult.getUploaded()) {
+
+            //create thumbnail
+            String thumbnailPath = imageResizeService.resizeAndSave(
+                    uploaded.getLargePath(),
+                    300,
+                    "_thumb"
+            );
+
+            //create medium
+            String mediumPath =
+                    imageResizeService.resizeAndSave(
+                            uploaded.getLargePath(),
+                            800,
+                            "_medium"
+                    );
+
+            //create Large
+            String largePath =
+                    imageResizeService.resizeAndSave(
+                            uploaded.getLargePath(),
+                            1200,
+                            "_large"
+                    );
+
+            //update the UploadedPhoto paths
+            uploaded.setThumbnailPath(thumbnailPath);
+            uploaded.setMediumPath(mediumPath);
+            uploaded.setLargePath(largePath);
+        }
+
     }
 
     // save photos
