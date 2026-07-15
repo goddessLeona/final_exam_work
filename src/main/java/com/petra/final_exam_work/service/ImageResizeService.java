@@ -93,6 +93,7 @@ public class ImageResizeService {
                     "jpg",
                     outputFile);
 
+
             return outputFile.getPath();
 
         } catch (IOException e) {

@@ -170,6 +170,8 @@ public class ContributorUploadContentService {
 
         for (UploadedPhoto uploaded : uploadResult.getUploaded()) {
 
+            String originalPath = uploaded.getLargePath();
+
             //create thumbnail
             String thumbnailPath = imageResizeService.resizeAndSave(
                     uploaded.getLargePath(),
@@ -192,6 +194,8 @@ public class ContributorUploadContentService {
                             1200,
                             "_large"
                     );
+
+            fileStorageService.deleteTemporaryFiles(originalPath);
 
             //update the UploadedPhoto paths
             uploaded.setThumbnailPath(thumbnailPath);
@@ -312,15 +316,27 @@ public class ContributorUploadContentService {
     ) {
         for(UploadedPhoto uploaded : uploadResult.getUploaded()) {
 
-            String newPath = fileStorageService.moveToPermanent(
+            String thumbnailPath = fileStorageService.moveToPermanent(
+                    uploaded.getThumbnailPath(),
+                    user.getPublicUuid(),
+                    "albums/photo/" + photoAlbum.getPublicUuid()
+            );
+
+            String mediumPath = fileStorageService.moveToPermanent(
                     uploaded.getMediumPath(),
                     user.getPublicUuid(),
                     "albums/photo/" + photoAlbum.getPublicUuid()
             );
 
-            uploaded.setMediumPath(newPath);
-            uploaded.setLargePath(newPath);
-            uploaded.setThumbnailPath(newPath);
+            String largePath = fileStorageService.moveToPermanent(
+                    uploaded.getLargePath(),
+                    user.getPublicUuid(),
+                    "albums/photo/" + photoAlbum.getPublicUuid()
+            );
+
+            uploaded.setThumbnailPath(thumbnailPath);
+            uploaded.setMediumPath(mediumPath);
+            uploaded.setLargePath(largePath);
         }
     }
 
@@ -353,8 +369,17 @@ public class ContributorUploadContentService {
             UploadResult result
     ) {
         for (UploadedPhoto uploaded : result.getUploaded()) {
+
+            fileStorageService.deleteTemporaryFiles(
+                    uploaded.getThumbnailPath()
+            );
+
             fileStorageService.deleteTemporaryFiles(
                     uploaded.getMediumPath()
+            );
+
+            fileStorageService.deleteTemporaryFiles(
+                    uploaded.getLargePath()
             );
         }
     }
