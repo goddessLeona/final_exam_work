@@ -80,6 +80,13 @@ public class ImageResizeService {
             BufferedImage resized = resize(original, maxWidth);
 
             System.out.println(
+                    "Original: "
+                            + original.getWidth()
+                            + " x "
+                            + original.getHeight()
+            );
+
+            System.out.println(
                     "Resized: " + resized.getWidth() + " x " + resized.getHeight()
             );
 

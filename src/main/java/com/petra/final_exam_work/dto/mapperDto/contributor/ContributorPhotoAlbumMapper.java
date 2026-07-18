@@ -26,7 +26,7 @@ public interface ContributorPhotoAlbumMapper {
         CoverPhotoResponse response = new CoverPhotoResponse();
 
         response.setPublicUuid(photo.getPublicUuid());
-        response.setCoverPhotoUrl(photo.getMediumPath());
+        response.setCoverPhotoUrl(photo.getThumbnailPath());
 
         return response;
     }

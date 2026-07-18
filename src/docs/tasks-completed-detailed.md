@@ -340,6 +340,7 @@ Project first demo 11/6 went ok, pass my exam
 * Album cover images should always use the thumbnail version.
 
 ------------------Future tasks---------------------------------------
+### task - rotate images if they are the wrong way
 ## task - frontend browser updates (realtime sync)
 immediate optimistic updates
 periodic background refresh
@@ -369,3 +370,7 @@ Planned background cleanup system for remove unused files:
 ## task - frontend browser updates (realtime sync)
 immediate optimistic updates
 periodic background refresh
+
+## task profile - contributor
+## task member save favorite albums
+## task watermark - photos
