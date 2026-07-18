@@ -324,7 +324,7 @@ Project first demo 11/6 went ok, pass my exam
 * Delete temporary files on failed upload.
 
 -------------- working on now -------------------
-## task 18 add a converter, if photos are to big resize before saving
+## task 18 - resize images
 
 * When a photo is uploaded, generate three resized versions:
   - Thumbnail: max 300px
@@ -338,6 +338,12 @@ Project first demo 11/6 went ok, pass my exam
   - mediumPath
   - largePath
 * Album cover images should always use the thumbnail version.
+
+## task 19 - rotate images if they are the wrong way
+
+* Read EXIF orientation from uploaded images.
+* Rotate the image before resizing.
+* Save all generated versions with the correct orientation.
 
 ------------------Future tasks---------------------------------------
 ### task - rotate images if they are the wrong way
