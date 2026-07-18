@@ -79,17 +79,6 @@ public class ImageResizeService {
             BufferedImage original = ImageIO.read(new File(imagePath));
             BufferedImage resized = resize(original, maxWidth);
 
-            System.out.println(
-                    "Original: "
-                            + original.getWidth()
-                            + " x "
-                            + original.getHeight()
-            );
-
-            System.out.println(
-                    "Resized: " + resized.getWidth() + " x " + resized.getHeight()
-            );
-
             File outputFile = new File(
                     originalFile.getParent(),
                     newFileName
