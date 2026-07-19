@@ -324,15 +324,29 @@ Project first demo 11/6 went ok, pass my exam
 * Delete temporary files on failed upload.
 
 -------------- working on now -------------------
-## task 18 add a converter, if photos are to big resize before saving
-also add in db (to optimaze and make faster to load tumbernails)
+## task 18 - resize images
 
-private string photoThumbernailPath and save 300px
-privet string photoMediumPath 800px
-private string originalPath but max 900px (or something)
+* When a photo is uploaded, generate three resized versions:
+  - Thumbnail: max 300px
+  - Medium: max 800px
+  - Large: max 1200px
+* Never upscale images. If the uploaded image is smaller than a target size, keep its original dimensions.
+* Preserve the image aspect ratio when resizing.
+* Delete the temporary original after the resized versions have been created.
+* Save the paths to the three generated images in the database:
+  - thumbnailPath
+  - mediumPath
+  - largePath
+* Album cover images should always use the thumbnail version.
 
+## task 19 - rotate images if they are the wrong way
+
+* Read EXIF orientation from uploaded images.
+* Rotate the image before resizing.
+* Save all generated versions with the correct orientation.
 
 ------------------Future tasks---------------------------------------
+### task - rotate images if they are the wrong way
 ## task - frontend browser updates (realtime sync)
 immediate optimistic updates
 periodic background refresh
@@ -362,3 +376,7 @@ Planned background cleanup system for remove unused files:
 ## task - frontend browser updates (realtime sync)
 immediate optimistic updates
 periodic background refresh
+
+## task profile - contributor
+## task member save favorite albums
+## task watermark - photos

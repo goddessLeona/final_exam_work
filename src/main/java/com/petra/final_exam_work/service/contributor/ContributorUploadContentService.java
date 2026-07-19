@@ -20,6 +20,7 @@ import com.petra.final_exam_work.repository.UserRepository;
 import com.petra.final_exam_work.security.CustomUserDetails;
 import com.petra.final_exam_work.exception.ApiException;
 import com.petra.final_exam_work.service.FileStorageService;
+import com.petra.final_exam_work.service.ImageResizeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,14 +45,16 @@ public class ContributorUploadContentService {
     private final PhotoRepository photoRepository;
     private final PhotoAlbumPhotoRepository photoAlbumPhotoRepository;
     private final FileStorageService fileStorageService;
+    private final ImageResizeService imageResizeService;
 
-    public ContributorUploadContentService(UploadPhotoContentMapper uploadPhotoContentMapper, UserRepository userRepository, PhotoAlbumRepository photoAlbumRepository, PhotoRepository photoRepository, PhotoAlbumPhotoRepository photoAlbumPhotoRepository, FileStorageService fileStorageService) {
+    public ContributorUploadContentService(UploadPhotoContentMapper uploadPhotoContentMapper, UserRepository userRepository, PhotoAlbumRepository photoAlbumRepository, PhotoRepository photoRepository, PhotoAlbumPhotoRepository photoAlbumPhotoRepository, FileStorageService fileStorageService, ImageResizeService imageResizeService) {
         this.uploadPhotoContentMapper = uploadPhotoContentMapper;
         this.userRepository = userRepository;
         this.photoAlbumRepository = photoAlbumRepository;
         this.photoRepository = photoRepository;
         this.photoAlbumPhotoRepository = photoAlbumPhotoRepository;
         this.fileStorageService = fileStorageService;
+        this.imageResizeService = imageResizeService;
     }
 
     //######### CONTRIBUTOR POST-CONTENT ########
@@ -103,9 +106,10 @@ public class ContributorUploadContentService {
             );
         }
 
-        //validateUploadedPhotoResult(uploadResult);
+        //resize photos
+        resizePhoto(uploadResult);
 
-        //move uploaded photos to permanent all good
+        //move uploaded photos to permanent folder if all good
         moveUploadedPhotosToPermanent(uploadResult, user, photoAlbum);
 
         // save photos
@@ -159,6 +163,46 @@ public class ContributorUploadContentService {
         photoAlbumRepository.save(photoAlbum);
 
         return photoAlbum;
+    }
+
+    //resize photos
+    private void resizePhoto(UploadResult uploadResult) {
+
+        for (UploadedPhoto uploaded : uploadResult.getUploaded()) {
+
+            String originalPath = uploaded.getLargePath();
+
+            //create thumbnail
+            String thumbnailPath = imageResizeService.resizeAndSave(
+                    uploaded.getLargePath(),
+                    300,
+                    "_thumb"
+            );
+
+            //create medium
+            String mediumPath =
+                    imageResizeService.resizeAndSave(
+                            uploaded.getLargePath(),
+                            800,
+                            "_medium"
+                    );
+
+            //create Large
+            String largePath =
+                    imageResizeService.resizeAndSave(
+                            uploaded.getLargePath(),
+                            1200,
+                            "_large"
+                    );
+
+            fileStorageService.deleteTemporaryFiles(originalPath);
+
+            //update the UploadedPhoto paths
+            uploaded.setThumbnailPath(thumbnailPath);
+            uploaded.setMediumPath(mediumPath);
+            uploaded.setLargePath(largePath);
+        }
+
     }
 
     // save photos
@@ -272,15 +316,27 @@ public class ContributorUploadContentService {
     ) {
         for(UploadedPhoto uploaded : uploadResult.getUploaded()) {
 
-            String newPath = fileStorageService.moveToPermanent(
+            String thumbnailPath = fileStorageService.moveToPermanent(
+                    uploaded.getThumbnailPath(),
+                    user.getPublicUuid(),
+                    "albums/photo/" + photoAlbum.getPublicUuid()
+            );
+
+            String mediumPath = fileStorageService.moveToPermanent(
                     uploaded.getMediumPath(),
                     user.getPublicUuid(),
                     "albums/photo/" + photoAlbum.getPublicUuid()
             );
 
-            uploaded.setMediumPath(newPath);
-            uploaded.setLargePath(newPath);
-            uploaded.setThumbnailPath(newPath);
+            String largePath = fileStorageService.moveToPermanent(
+                    uploaded.getLargePath(),
+                    user.getPublicUuid(),
+                    "albums/photo/" + photoAlbum.getPublicUuid()
+            );
+
+            uploaded.setThumbnailPath(thumbnailPath);
+            uploaded.setMediumPath(mediumPath);
+            uploaded.setLargePath(largePath);
         }
     }
 
@@ -306,6 +362,26 @@ public class ContributorUploadContentService {
         }
 
         photoAlbumPhotoRepository.saveAll(links);
+    }
+
+    //
+    public void cleanupTemporaryUploads(
+            UploadResult result
+    ) {
+        for (UploadedPhoto uploaded : result.getUploaded()) {
+
+            fileStorageService.deleteTemporaryFiles(
+                    uploaded.getThumbnailPath()
+            );
+
+            fileStorageService.deleteTemporaryFiles(
+                    uploaded.getMediumPath()
+            );
+
+            fileStorageService.deleteTemporaryFiles(
+                    uploaded.getLargePath()
+            );
+        }
     }
 
     //--------------------UPLOAD VIDEO ALBUM ---------------------------
@@ -382,29 +458,6 @@ public class ContributorUploadContentService {
             throw new ApiException(
                     "Can max be 30 photos in a photo album",
                     HttpStatus.BAD_REQUEST
-            );
-        }
-    }
-
-    // validate uploadedResults
-    /*
-    private void validateUploadedPhotoResult(UploadResult result) {
-        if (result.successCount() < 7) {
-
-            throw new ApiException(
-                    "You have to have minimum 7 photos to create a photo album. One or more files could not be uploaded.",
-            HttpStatus.BAD_REQUEST
-            );
-        }
-    }*/
-
-    //
-    public void cleanupTemporaryUploads(
-            UploadResult result
-    ) {
-        for (UploadedPhoto uploaded : result.getUploaded()) {
-            fileStorageService.deleteTemporaryFiles(
-                    uploaded.getMediumPath()
             );
         }
     }
