@@ -106,6 +106,8 @@ public class ContributorUploadContentService {
             );
         }
 
+        //rotate image if wrong way
+
         //resize photos
         resizePhoto(uploadResult);
 
