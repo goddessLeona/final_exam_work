@@ -323,7 +323,6 @@ Project first demo 11/6 went ok, pass my exam
 * add upload to temp folder to prevent that if upload fail a lot of photos will be left in the upload folder.
 * Delete temporary files on failed upload.
 
--------------- working on now -------------------
 ## task 18 - resize images
 
 * When a photo is uploaded, generate three resized versions:
@@ -339,6 +338,7 @@ Project first demo 11/6 went ok, pass my exam
   - largePath
 * Album cover images should always use the thumbnail version.
 
+-------------- working on now -------------------
 ## task 19 - rotate images if they are the wrong way
 
 * Read EXIF orientation from uploaded images.
@@ -346,7 +346,7 @@ Project first demo 11/6 went ok, pass my exam
 * Save all generated versions with the correct orientation.
 
 ------------------Future tasks---------------------------------------
-### task - rotate images if they are the wrong way
+### task - upload video
 ## task - frontend browser updates (realtime sync)
 immediate optimistic updates
 periodic background refresh
@@ -354,8 +354,9 @@ periodic background refresh
 ## Task - Time zon safe
 ## Task - admin do the final delete of album that are removed
 ## Task - hash folders for id-documents
-## Task - remove geolocation on photos
-
+## Task - remove geolocation on photos, done on photos but not on id-documents
+## Task - add watermark
+ 
 ## Task  - Make possible to tag photos
   * add tags -general album
   * add tags other contributors
@@ -379,4 +380,3 @@ periodic background refresh
 
 ## task profile - contributor
 ## task member save favorite albums
-## task watermark - photos
