@@ -362,6 +362,7 @@ while keeping the tag vocabulary clean and manageable for members.
  * Ensure each normalized tag can only exist once.
  * Provide endpoints for retrieving available tags and managing album tags.
 
+
 -------------------------------------------------------------------------------
 Task 21 — Edit/manage album tags
 Allow contributors to manage the tags belonging to their albums.
