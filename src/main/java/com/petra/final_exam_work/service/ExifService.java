@@ -93,10 +93,10 @@ public class ExifService {
 
             case 6:
                 return rotate90(image);
-            /*
+
             case 8:
                 return rotate270(image);
-            */
+
             default:
                 return image;
         }
@@ -173,11 +173,42 @@ public class ExifService {
         return rotated;
     }
 
-    /*
+
     private BufferedImage rotate270(
             BufferedImage image
     ) {
 
+        int width = image.getWidth();
+        int height = image.getHeight();
+
+        int newHeight = width;
+        int newWidth = height;
+
+        BufferedImage rotated = new BufferedImage(
+                newWidth,
+                newHeight,
+                BufferedImage.TYPE_INT_RGB
+        );
+
+        Graphics2D graphics = rotated.createGraphics();
+
+        try {
+            graphics.translate(0, height);
+            graphics.rotate(Math.toRadians(270));
+
+            graphics.drawImage(
+                    image,
+                    0,
+                    0,
+                    null
+            );
+
+        }finally {
+            graphics.dispose();
+        }
+
+        return rotated;
+
     }
-    */
+
 }
