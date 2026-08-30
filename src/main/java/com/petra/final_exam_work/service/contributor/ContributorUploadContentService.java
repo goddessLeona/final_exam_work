@@ -19,6 +19,7 @@ import com.petra.final_exam_work.repository.PhotoRepository;
 import com.petra.final_exam_work.repository.UserRepository;
 import com.petra.final_exam_work.security.CustomUserDetails;
 import com.petra.final_exam_work.exception.ApiException;
+import com.petra.final_exam_work.service.ExifService;
 import com.petra.final_exam_work.service.FileStorageService;
 import com.petra.final_exam_work.service.ImageResizeService;
 import org.springframework.http.HttpStatus;
@@ -46,8 +47,9 @@ public class ContributorUploadContentService {
     private final PhotoAlbumPhotoRepository photoAlbumPhotoRepository;
     private final FileStorageService fileStorageService;
     private final ImageResizeService imageResizeService;
+    private final ExifService exifService;
 
-    public ContributorUploadContentService(UploadPhotoContentMapper uploadPhotoContentMapper, UserRepository userRepository, PhotoAlbumRepository photoAlbumRepository, PhotoRepository photoRepository, PhotoAlbumPhotoRepository photoAlbumPhotoRepository, FileStorageService fileStorageService, ImageResizeService imageResizeService) {
+    public ContributorUploadContentService(UploadPhotoContentMapper uploadPhotoContentMapper, UserRepository userRepository, PhotoAlbumRepository photoAlbumRepository, PhotoRepository photoRepository, PhotoAlbumPhotoRepository photoAlbumPhotoRepository, FileStorageService fileStorageService, ImageResizeService imageResizeService, ExifService exifService) {
         this.uploadPhotoContentMapper = uploadPhotoContentMapper;
         this.userRepository = userRepository;
         this.photoAlbumRepository = photoAlbumRepository;
@@ -55,6 +57,7 @@ public class ContributorUploadContentService {
         this.photoAlbumPhotoRepository = photoAlbumPhotoRepository;
         this.fileStorageService = fileStorageService;
         this.imageResizeService = imageResizeService;
+        this.exifService = exifService;
     }
 
     //######### CONTRIBUTOR POST-CONTENT ########
@@ -105,6 +108,9 @@ public class ContributorUploadContentService {
                     HttpStatus.BAD_REQUEST
             );
         }
+
+        //rotate image if wrong way
+        correctPhotoOrientation(uploadResult);
 
         //resize photos
         resizePhoto(uploadResult);
@@ -163,6 +169,18 @@ public class ContributorUploadContentService {
         photoAlbumRepository.save(photoAlbum);
 
         return photoAlbum;
+    }
+
+    //rotate image
+    private void correctPhotoOrientation(
+            UploadResult uploadResult
+    ) {
+        for (UploadedPhoto uploadedPhoto : uploadResult.getUploaded()) {
+
+            exifService.correctOrientation(
+                    uploadedPhoto.getLargePath()
+            );
+        }
     }
 
     //resize photos
