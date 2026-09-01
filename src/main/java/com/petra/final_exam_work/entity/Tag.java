@@ -25,11 +25,16 @@ public class Tag {
 
     @Column(
             name = "name_tag",
-            nullable = false,
-            unique = true,
-            columnDefinition = "citext"
+            nullable = false
     )
     private String nameTag;
+
+    @Column(
+            name = "normalized_tag",
+            nullable = false,
+            unique = true
+    )
+    private String normalizedTag;
 
     @ManyToMany
     @JoinTable(
@@ -47,6 +52,14 @@ public class Tag {
     }
 
     public Tag() {
+    }
+
+    public Tag(Long id, UUID publicUuid, String nameTag, String normalizedTag, Set<PhotoAlbum> photoAlbums) {
+        this.id = id;
+        this.publicUuid = publicUuid;
+        this.nameTag = nameTag;
+        this.normalizedTag = normalizedTag;
+        this.photoAlbums = photoAlbums;
     }
 
     public Long getId() {
@@ -71,5 +84,21 @@ public class Tag {
 
     public void setNameTag(String nameTag) {
         this.nameTag = nameTag;
+    }
+
+    public String getNormalizedTag() {
+        return normalizedTag;
+    }
+
+    public void setNormalizedTag(String normalizedTag) {
+        this.normalizedTag = normalizedTag;
+    }
+
+    public Set<PhotoAlbum> getPhotoAlbums() {
+        return photoAlbums;
+    }
+
+    public void setPhotoAlbums(Set<PhotoAlbum> photoAlbums) {
+        this.photoAlbums = photoAlbums;
     }
 }
