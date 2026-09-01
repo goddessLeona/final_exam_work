@@ -338,12 +338,57 @@ Project first demo 11/6 went ok, pass my exam
   - largePath
 * Album cover images should always use the thumbnail version.
 
--------------- working on now -------------------
 ## task 19 - rotate images if they are the wrong way
 
 * Read EXIF orientation from uploaded images.
 * Rotate the image before resizing.
 * Save all generated versions with the correct orientation.
+
+-------------- working on now -------------------
+## Task 20 — Tag photo albums
+Allow contributors to add tags to their photo albums.
+Create a simple, searchable tagging system that allows contributors to describe their content
+while keeping the tag vocabulary clean and manageable for members.
+
+###Contributor
+ * Select existing tags from a searchable/autocomplete list.
+ * Add multiple tags to an album.
+ * Create a new tag if no suitable existing tag is available.
+ * Prevent duplicate tags (case/spacing differences should not create duplicates).
+
+###Backend
+ * Connect photo albums and tags with a many-to-many relationship.
+ * Normalize tag names before creating them.
+ * Ensure each normalized tag can only exist once.
+ * Provide endpoints for retrieving available tags and managing album tags.
+
+
+-------------------------------------------------------------------------------
+Task 21 — Edit/manage album tags
+Allow contributors to manage the tags belonging to their albums.
+
+ * View tags currently assigned to an album.
+ * Add tags to an existing album.
+ * Remove tags from an album.
+ * Change/update tags if needed. 
+
+Task 22 - Admin monitor tags
+Give admins tools to monitor and maintain the platform's tag vocabulary.
+
+ * View all tags.
+ * See newly created tags.
+ * Monitor tag usage.
+ * Remove inappropriate or unnecessary tags.
+ * Identify and clean up duplicate or very similar tags.
+ * Keep the tag vocabulary clean and useful for members.
+
+Task 23 — Member album search/filtering
+Allow members to discover photo albums using tags.
+
+ * Search albums by tag.
+ * Filter albums using one or more tags.
+ * See the tags associated with an album.
+ * Select a tag to find other albums using the same tag.
 
 ------------------Future tasks---------------------------------------
 ### task - upload video

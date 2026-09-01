@@ -59,7 +59,8 @@ CREATE TABLE tags(
     id BIGSERIAL PRIMARY KEY,
     public_uuid UUID NOT NULL DEFAULT gen_random_uuid() UNIQUE,
 
-    name_tag CITEXT NOT NULL UNIQUE
+    name_tag TEXT NOT NULL,
+    normalized_tag TEXT NOT NULL UNIQUE
 );
 
 -- DEPENDENT TABLES (FK) 2
